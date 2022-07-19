@@ -1,0 +1,15 @@
+com.charitysm.configs.HibernateConfig=org.springframework.stereotype.Component
+com.charitysm.configs.WebAppContextConfig=org.springframework.stereotype.Component
+com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
+com.charitysm.pojo.Category=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
+com.charitysm.pojo.Category_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
+com.charitysm.pojo.OrderDetail=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
+com.charitysm.pojo.OrderDetail_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
+com.charitysm.pojo.Product=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
+com.charitysm.pojo.Product_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
+com.charitysm.pojo.SaleOrder=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
+com.charitysm.pojo.SaleOrder_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
+com.charitysm.pojo.User=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
+com.charitysm.pojo.User_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
+com.charitysm.repository.impl.CategoryRepositoryImpl=org.springframework.stereotype.Component
+com.charitysm.service.impl.CategoryServiceImpl=org.springframework.stereotype.Component
