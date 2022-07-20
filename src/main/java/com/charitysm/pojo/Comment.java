@@ -21,17 +21,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
-@Table(name = "order_detail")
+@Table(name = "comment")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o"),
-    @NamedQuery(name = "OrderDetail.findById", query = "SELECT o FROM OrderDetail o WHERE o.id = :id"),
-    @NamedQuery(name = "OrderDetail.findByUnitPrice", query = "SELECT o FROM OrderDetail o WHERE o.unitPrice = :unitPrice"),
-    @NamedQuery(name = "OrderDetail.findByNum", query = "SELECT o FROM OrderDetail o WHERE o.num = :num")})
-public class OrderDetail implements Serializable {
+    @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
+    @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
+    @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content")})
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,22 +38,20 @@ public class OrderDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "unit_price")
-    private Long unitPrice;
-    @Size(max = 45)
-    @Column(name = "num")
-    private String num;
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @Size(max = 200)
+    @Column(name = "content")
+    private String content;
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @ManyToOne
+    private Post postId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Product productId;
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private SaleOrder orderId;
+    private User userId;
 
-    public OrderDetail() {
+    public Comment() {
     }
 
-    public OrderDetail(Integer id) {
+    public Comment(Integer id) {
         this.id = id;
     }
 
@@ -66,36 +63,28 @@ public class OrderDetail implements Serializable {
         this.id = id;
     }
 
-    public Long getUnitPrice() {
-        return unitPrice;
+    public String getContent() {
+        return content;
     }
 
-    public void setUnitPrice(Long unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getNum() {
-        return num;
+    public Post getPostId() {
+        return postId;
     }
 
-    public void setNum(String num) {
-        this.num = num;
+    public void setPostId(Post postId) {
+        this.postId = postId;
     }
 
-    public Product getProductId() {
-        return productId;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
-
-    public SaleOrder getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(SaleOrder orderId) {
-        this.orderId = orderId;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -108,10 +97,10 @@ public class OrderDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OrderDetail)) {
+        if (!(object instanceof Comment)) {
             return false;
         }
-        OrderDetail other = (OrderDetail) object;
+        Comment other = (Comment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -120,7 +109,7 @@ public class OrderDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "com.charitysm.pojo.OrderDetail[ id=" + id + " ]";
+        return "com.charitysm.pojo.Comment[ id=" + id + " ]";
     }
     
 }
