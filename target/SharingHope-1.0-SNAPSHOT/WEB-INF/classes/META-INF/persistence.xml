@@ -7,6 +7,12 @@
     <class>com.charitysm.pojo.OrderDetail</class>
     <class>com.charitysm.pojo.SaleOrder</class>
     <class>com.charitysm.pojo.Category</class>
+    <class>com.charitysm.pojo.Auction</class>
+    <class>com.charitysm.pojo.Comment</class>
+    <class>com.charitysm.pojo.Post</class>
+    <class>com.charitysm.pojo.Bid</class>
+    <class>com.charitysm.pojo.Notification</class>
+    <class>com.charitysm.pojo.React</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/saledb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
