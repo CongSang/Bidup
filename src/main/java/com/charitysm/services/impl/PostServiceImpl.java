@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.service;
+package com.charitysm.services.impl;
 
-import java.util.List;
+import com.charitysm.services.PostService;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
-public interface CategoryService {
+@Service
+public class PostServiceImpl implements PostService{
+    
 }

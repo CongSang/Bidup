@@ -6,14 +6,13 @@ import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.Notification;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
-import com.charitysm.pojo.User;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-20T21:38:10")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-21T11:39:51")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -22,12 +21,10 @@ public class User_ {
     public static volatile SingularAttribute<User, String> hometown;
     public static volatile SingularAttribute<User, Date> birthdate;
     public static volatile SingularAttribute<User, String> address;
-    public static volatile SetAttribute<User, User> userSet1;
     public static volatile SingularAttribute<User, Short> active;
     public static volatile SetAttribute<User, React> reactSet;
     public static volatile SingularAttribute<User, String> avatar;
     public static volatile SetAttribute<User, Post> postSet;
-    public static volatile SetAttribute<User, User> userSet;
     public static volatile SingularAttribute<User, String> lastname;
     public static volatile SingularAttribute<User, String> password;
     public static volatile SingularAttribute<User, Date> createdDate;

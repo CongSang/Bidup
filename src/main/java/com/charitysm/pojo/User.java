@@ -12,9 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -94,7 +91,7 @@ public class User implements Serializable {
     @Size(max = 45)
     @Column(name = "job")
     private String job;
-    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+     @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 45)
     @Column(name = "phone")
     private String phone;
@@ -112,13 +109,6 @@ public class User implements Serializable {
     private short userRole;
     @Column(name = "active")
     private Short active;
-    @JoinTable(name = "follow", joinColumns = {
-        @JoinColumn(name = "follower_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "followed_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Set<User> userSet;
-    @ManyToMany(mappedBy = "userSet")
-    private Set<User> userSet1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Notification> notificationSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -260,24 +250,6 @@ public class User implements Serializable {
 
     public void setActive(Short active) {
         this.active = active;
-    }
-
-    @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
-
-    @XmlTransient
-    public Set<User> getUserSet1() {
-        return userSet1;
-    }
-
-    public void setUserSet1(Set<User> userSet1) {
-        this.userSet1 = userSet1;
     }
 
     @XmlTransient
