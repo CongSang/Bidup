@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ADMIN
+ * @author CÔNG SANG
  */
 @Embeddable
 public class BidPK implements Serializable {
