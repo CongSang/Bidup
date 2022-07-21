@@ -1,24 +1,43 @@
 package com.charitysm.pojo;
 
-import com.charitysm.pojo.SaleOrder;
+import com.charitysm.pojo.Auction;
+import com.charitysm.pojo.Bid;
+import com.charitysm.pojo.Comment;
+import com.charitysm.pojo.Notification;
+import com.charitysm.pojo.Post;
+import com.charitysm.pojo.React;
+import com.charitysm.pojo.User;
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-19T22:08:28")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-20T21:38:10")
 @StaticMetamodel(User.class)
 public class User_ { 
 
-    public static volatile SingularAttribute<User, String> firstName;
-    public static volatile SingularAttribute<User, String> lastName;
+    public static volatile SetAttribute<User, Auction> auctionSet;
+    public static volatile SingularAttribute<User, String> firstname;
+    public static volatile SingularAttribute<User, String> hometown;
+    public static volatile SingularAttribute<User, Date> birthdate;
+    public static volatile SingularAttribute<User, String> address;
+    public static volatile SetAttribute<User, User> userSet1;
+    public static volatile SingularAttribute<User, Short> active;
+    public static volatile SetAttribute<User, React> reactSet;
+    public static volatile SingularAttribute<User, String> avatar;
+    public static volatile SetAttribute<User, Post> postSet;
+    public static volatile SetAttribute<User, User> userSet;
+    public static volatile SingularAttribute<User, String> lastname;
     public static volatile SingularAttribute<User, String> password;
+    public static volatile SingularAttribute<User, Date> createdDate;
+    public static volatile SetAttribute<User, Notification> notificationSet;
+    public static volatile SetAttribute<User, Comment> commentSet;
+    public static volatile SetAttribute<User, Bid> bidSet;
     public static volatile SingularAttribute<User, String> phone;
-    public static volatile SetAttribute<User, SaleOrder> saleOrderSet;
-    public static volatile SingularAttribute<User, Boolean> active;
-    public static volatile SingularAttribute<User, Integer> id;
-    public static volatile SingularAttribute<User, String> userRole;
+    public static volatile SingularAttribute<User, String> id;
+    public static volatile SingularAttribute<User, String> job;
+    public static volatile SingularAttribute<User, Short> userRole;
     public static volatile SingularAttribute<User, String> email;
-    public static volatile SingularAttribute<User, String> username;
 
 }

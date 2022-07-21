@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,8 +19,21 @@
         <script src="${mainJs}"></script>
     </head>
     <body>
-        <tiles:insertAttribute name="header" />
-        <tiles:insertAttribute name="content" />
-        <tiles:insertAttribute name="footer" />
+        <div class="login">
+            <div class="container">
+                <div class="d-flex">
+                    <c:url value="/resources/img/bg.png" var="bgLogin" />
+                    <img src="${bgLogin}" />
+
+                    <div>
+                        <form:form method="post" modelAttribute="user">
+                            <div>
+                                <form:input path="email" type="text" />
+                            </div>
+                        </form:form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

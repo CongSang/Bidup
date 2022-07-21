@@ -4,7 +4,6 @@
  */
 package com.charitysm.repository;
 
-import com.charitysm.pojo.Category;
 import java.util.List;
 
 /**
@@ -12,5 +11,5 @@ import java.util.List;
  * @author CÔNG SANG
  */
 public interface CategoryRepository {
-    List<Category> getCategories();
+    
 }

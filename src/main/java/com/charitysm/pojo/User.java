@@ -5,18 +5,24 @@
 package com.charitysm.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -31,104 +37,125 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
-    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active"),
-    @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")})
+    @NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
+    @NamedQuery(name = "User.findByLastname", query = "SELECT u FROM User u WHERE u.lastname = :lastname"),
+    @NamedQuery(name = "User.findByBirthdate", query = "SELECT u FROM User u WHERE u.birthdate = :birthdate"),
+    @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address"),
+    @NamedQuery(name = "User.findByHometown", query = "SELECT u FROM User u WHERE u.hometown = :hometown"),
+    @NamedQuery(name = "User.findByJob", query = "SELECT u FROM User u WHERE u.job = :job"),
+    @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
+    @NamedQuery(name = "User.findByCreatedDate", query = "SELECT u FROM User u WHERE u.createdDate = :createdDate"),
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole"),
+    @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "first_name")
-    private String firstName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "last_name")
-    private String lastName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    private String id;
+     @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "password")
+    private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "firstname")
+    private String firstname;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "lastname")
+    private String lastname;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "birthdate")
+    @Temporal(TemporalType.DATE)
+    private Date birthdate;
+    @Size(max = 45)
+    @Column(name = "address")
+    private String address;
+    @Size(max = 45)
+    @Column(name = "hometown")
+    private String hometown;
+    @Size(max = 45)
+    @Column(name = "job")
+    private String job;
+    @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 45)
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "username")
-    private String username;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @Size(max = 100)
+    @Column(name = "avatar")
+    private String avatar;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "password")
-    private String password;
-    @Column(name = "active")
-    private Boolean active;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "user_role")
-    private String userRole;
-    @OneToMany(mappedBy = "userId")
-    private Set<SaleOrder> saleOrderSet;
+    private short userRole;
+    @Column(name = "active")
+    private Short active;
+    @JoinTable(name = "follow", joinColumns = {
+        @JoinColumn(name = "follower_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "followed_id", referencedColumnName = "id")})
+    @ManyToMany
+    private Set<User> userSet;
+    @ManyToMany(mappedBy = "userSet")
+    private Set<User> userSet1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Notification> notificationSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Post> postSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Comment> commentSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<React> reactSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Bid> bidSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Auction> auctionSet;
 
     public User() {
     }
 
-    public User(Integer id) {
+    public User(String id) {
         this.id = id;
     }
 
-    public User(Integer id, String firstName, String lastName, String email, String phone, String username, String password, String userRole) {
+    public User(String id, String email, String password, String firstname, String lastname, Date birthdate, Date createdDate, short userRole) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
-        this.phone = phone;
-        this.username = username;
         this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.createdDate = createdDate;
         this.userRole = userRole;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -139,22 +166,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -163,29 +174,164 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Boolean getActive() {
-        return active;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getUserRole() {
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public short getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(short userRole) {
         this.userRole = userRole;
     }
 
-    @XmlTransient
-    public Set<SaleOrder> getSaleOrderSet() {
-        return saleOrderSet;
+    public Short getActive() {
+        return active;
     }
 
-    public void setSaleOrderSet(Set<SaleOrder> saleOrderSet) {
-        this.saleOrderSet = saleOrderSet;
+    public void setActive(Short active) {
+        this.active = active;
+    }
+
+    @XmlTransient
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
+
+    @XmlTransient
+    public Set<User> getUserSet1() {
+        return userSet1;
+    }
+
+    public void setUserSet1(Set<User> userSet1) {
+        this.userSet1 = userSet1;
+    }
+
+    @XmlTransient
+    public Set<Notification> getNotificationSet() {
+        return notificationSet;
+    }
+
+    public void setNotificationSet(Set<Notification> notificationSet) {
+        this.notificationSet = notificationSet;
+    }
+
+    @XmlTransient
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
+    }
+
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    @XmlTransient
+    public Set<React> getReactSet() {
+        return reactSet;
+    }
+
+    public void setReactSet(Set<React> reactSet) {
+        this.reactSet = reactSet;
+    }
+
+    @XmlTransient
+    public Set<Bid> getBidSet() {
+        return bidSet;
+    }
+
+    public void setBidSet(Set<Bid> bidSet) {
+        this.bidSet = bidSet;
+    }
+
+    @XmlTransient
+    public Set<Auction> getAuctionSet() {
+        return auctionSet;
+    }
+
+    public void setAuctionSet(Set<Auction> auctionSet) {
+        this.auctionSet = auctionSet;
     }
 
     @Override

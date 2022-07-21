@@ -5,10 +5,7 @@
 package com.charitysm.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,27 +15,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author CÔNG SANG
  */
 @Entity
-@Table(name = "sale_order")
+@Table(name = "notification")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SaleOrder.findAll", query = "SELECT s FROM SaleOrder s"),
-    @NamedQuery(name = "SaleOrder.findById", query = "SELECT s FROM SaleOrder s WHERE s.id = :id"),
-    @NamedQuery(name = "SaleOrder.findByAmount", query = "SELECT s FROM SaleOrder s WHERE s.amount = :amount"),
-    @NamedQuery(name = "SaleOrder.findByCreatedDate", query = "SELECT s FROM SaleOrder s WHERE s.createdDate = :createdDate")})
-public class SaleOrder implements Serializable {
+    @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
+    @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id"),
+    @NamedQuery(name = "Notification.findByContent", query = "SELECT n FROM Notification n WHERE n.content = :content"),
+    @NamedQuery(name = "Notification.findByIsRead", query = "SELECT n FROM Notification n WHERE n.isRead = :isRead")})
+public class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,29 +40,27 @@ public class SaleOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "amount")
-    private Long amount;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @Size(min = 1, max = 100)
+    @Column(name = "content")
+    private String content;
+    @Column(name = "is_read")
+    private Short isRead;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId")
-    private Set<OrderDetail> orderDetailSet;
 
-    public SaleOrder() {
+    public Notification() {
     }
 
-    public SaleOrder(Integer id) {
+    public Notification(Integer id) {
         this.id = id;
     }
 
-    public SaleOrder(Integer id, Date createdDate) {
+    public Notification(Integer id, String content) {
         this.id = id;
-        this.createdDate = createdDate;
+        this.content = content;
     }
 
     public Integer getId() {
@@ -79,20 +71,20 @@ public class SaleOrder implements Serializable {
         this.id = id;
     }
 
-    public Long getAmount() {
-        return amount;
+    public String getContent() {
+        return content;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Short getIsRead() {
+        return isRead;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setIsRead(Short isRead) {
+        this.isRead = isRead;
     }
 
     public User getUserId() {
@@ -101,15 +93,6 @@ public class SaleOrder implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }
-
-    @XmlTransient
-    public Set<OrderDetail> getOrderDetailSet() {
-        return orderDetailSet;
-    }
-
-    public void setOrderDetailSet(Set<OrderDetail> orderDetailSet) {
-        this.orderDetailSet = orderDetailSet;
     }
 
     @Override
@@ -122,10 +105,10 @@ public class SaleOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SaleOrder)) {
+        if (!(object instanceof Notification)) {
             return false;
         }
-        SaleOrder other = (SaleOrder) object;
+        Notification other = (Notification) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +117,7 @@ public class SaleOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "com.charitysm.pojo.SaleOrder[ id=" + id + " ]";
+        return "com.charitysm.pojo.Notification[ id=" + id + " ]";
     }
     
 }
