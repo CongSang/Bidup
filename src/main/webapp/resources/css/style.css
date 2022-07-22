@@ -1,6 +1,186 @@
-
-.login {
+.main {
     background-color: #f0f2f5;
-    height: 100vh; 
+    margin: 0;
+    padding: 0;
 }
 
+/*header css*/
+header {
+    background-color: var(--white-color);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 8px 16px rgb(0 0 0 / 8%);
+}
+
+.logo-img {
+    height: 40px;
+    width: 40px;
+}
+
+.form-search input {
+    border-radius: 50px;
+    height: 40px;
+}
+
+.form-control:focus {
+    color: #212529;
+    border-color: #ced4da;
+    outline: 0;
+    box-shadow: none;
+}
+
+.notify-icon {
+    font-size: 1.2rem;
+    color: var(--primary-color-300);
+} 
+
+.user-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.menu-icon {
+    margin-right: 2px;
+    
+}
+
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+    color: var(--primary-color-200);
+}
+
+
+/*navbar mobile*/
+.navbar-toggler {
+    border-color: #ffffff !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.navbar-toggler-animation {
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-image: none;
+    position: relative;
+    height: 20px;
+    width: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+
+.navbar-toggler .navbar-toggler-animation span:nth-child(1) {
+    top: 10%;
+}
+
+.navbar-toggler .navbar-toggler-animation span:nth-child(2) {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.navbar-toggler .navbar-toggler-animation span:nth-child(3) {
+    bottom: 10%;
+}
+
+.navbar-toggler .navbar-toggler-animation span {
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+    height: 2px;
+    background: #676a79;
+    display: block;
+    position: absolute;
+    width: 100%;
+    border-radius: 30px;
+}
+
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(1) {
+    -webkit-transform: rotateZ(45deg) translateY(-50%);
+    transform: rotateZ(45deg) translateY(-50%);
+    top: 47%;
+    -webkit-transform-origin: 47% 0;
+    transform-origin: 47% 0;
+    width: 100%;
+}
+
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(3) {
+    -webkit-transform: rotateZ(-45deg) translateY(-50%);
+    transform: rotateZ(-45deg) translateY(-50%);
+    bottom: 42%;
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    width: 100%;
+}
+
+.navbar-toggler[data-bs-toggle=collapse][aria-expanded=true] .navbar-toggler-animation span:nth-child(2) {
+    visibility: hidden;
+    -webkit-transition: all 0s ease-in-out;
+    transition: all 0s ease-in-out;
+}
+
+/*sidebar right css*/
+.card-header {
+    background-color: var(--white-color);
+}
+
+.hashtag-side {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 0;
+    color: var(--primary-color-300);
+}
+
+.post-count {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.chat-icon {
+    font-size: 24px;
+    color: var(--primary-color-100);
+    cursor: pointer;
+}
+
+/*sidebar left css*/
+.auction-card {
+    min-height: 70vh;
+}
+
+/*content css*/
+.content {
+    padding-top: 80px;
+}
+
+/*footer css*/
+.footer {
+    background-color: var(--primary-color-300);
+    color: var(--white-color);
+    padding: 14px 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.author {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 6px 0;
+}
+
+.overview {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.footer-link {
+    text-decoration: none;
+    font-size: 32px;
+    color: #000;
+}
+
+.footer-link:hover {
+    color: #222;
+}

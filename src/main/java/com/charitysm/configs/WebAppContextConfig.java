@@ -28,10 +28,10 @@ import org.springframework.web.servlet.view.JstlView;
     "com.charitysm.repository",
     "com.charitysm.service",})
 public class WebAppContextConfig implements WebMvcConfigurer {
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer conf) {
-//        conf.enable();
-//    }
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer conf) {
+        conf.enable();
+    }
 //    
 //    @Bean
 //    public InternalResourceViewResolver viewResolver() {
