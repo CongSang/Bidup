@@ -72,6 +72,19 @@
     padding: 0 16px;
 }
 
+.btn-facebook {
+    outline: none;
+    border: none;
+    background-color: #1877f2;
+    font-size: 17px;
+    line-height: 48px;
+    width: 100%;
+    color: var(--white-color);
+    border-radius: 6px;
+    font-weight: bold;
+    padding: 0 16px;
+}
+
 .line {
     align-items: center;
     border-bottom: 1px solid #dadde1;

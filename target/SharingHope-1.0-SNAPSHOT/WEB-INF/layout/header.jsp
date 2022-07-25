@@ -75,8 +75,18 @@
                     <i class="fa-solid fa-bell me-4 notify-icon"></i>
                 </div>
                 <div>
-                    <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                    <img src="${avatar}" alt="avatar" class="user-img" />
+                    <c:if test="${user == null}">
+                    <a href="/SharingHope/login">DAng nhap</a>
+                    </c:if>
+                    <c:if test="${user != null}">
+                        <span>${user.getName()}</span>
+                        <c:url value="/login" var="login" />
+                        <a href="<c:url value="/logout"/>" onclick="FB.logout();">Logout</a> 
+                    </c:if>
+                        <c:url value="https://graph.facebook.com/${user.getId()}/picture" var="avatar" />
+                        <img src="${user.getPicture().getUrl()}" alt="avatar" class="user-img" />
+                        
+                    
                 </div>
             </div>
         </div>

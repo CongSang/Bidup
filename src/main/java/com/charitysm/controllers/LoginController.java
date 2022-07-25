@@ -1,7 +1,10 @@
 package com.charitysm.controllers;
 
 import com.charitysm.pojo.User;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login(Model model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -37,4 +40,10 @@ public class LoginController {
 //            
 //            return "redirect:/login";
 //    }
+    
+    @GetMapping("/logout")
+    public void logout(HttpSession session, HttpServletResponse response) throws IOException {
+        session.removeAttribute("current_user");
+        response.sendRedirect("login"); 
+    }
 }

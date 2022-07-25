@@ -1,5 +1,7 @@
 package com.charitysm.controllers;
 
+import com.restfb.types.User;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,9 @@ public class IndexController {
 //    }
 
     @RequestMapping("/")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        User u = (User) session.getAttribute("current_user");
+        model.addAttribute("user", u);
         return "home";
     }
 }
