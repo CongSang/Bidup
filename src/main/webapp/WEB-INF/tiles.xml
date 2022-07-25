@@ -16,16 +16,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
     
-     <definition name="login" template="/WEB-INF/pages/login.jsp">
+    <definition name="login" template="/WEB-INF/pages/login.jsp">
         <put-attribute name="title" value="Login" />
         <put-attribute name="footer"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
     
     <definition name="home" extends="baseLayout">
-        <put-attribute name="title" value="Home" />
+        <put-attribute name="title" value="SharingHope" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/index.jsp" />
+    </definition>
+        
+    <definition name="admin" template="/WEB-INF/pages/admin.jsp">
+        <put-attribute name="title" value="Quan tri" />
     </definition>
 </tiles-definitions>
 

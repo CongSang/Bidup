@@ -40,7 +40,7 @@
                     <div class="col-sm-12 col-md-8 col-lg-6 g-3">
                         <tiles:insertAttribute name="content" />
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-md-4 col-lg-3">
                         <tiles:insertAttribute name="sidebarRight" />
                     </div>
                 </div>
@@ -49,6 +49,8 @@
         </div>
 
         <c:url value="/resources/js/main.js" var="mainJs" />
-        <script src="${mainJs}"></script>
+         <c:url value="/resources/js/home.js" var="homeJs" />
+         <script type="module" src="${mainJs}"></script>
+         <script src="${homeJs}"></script>
     </body>
 </html>

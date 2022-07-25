@@ -49,6 +49,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")})
 public class User implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "user_role")
+    private String userRole;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -103,10 +109,6 @@ public class User implements Serializable {
     @Size(max = 100)
     @Column(name = "avatar")
     private String avatar;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "user_role")
-    private short userRole;
     @Column(name = "active")
     private Short active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -129,7 +131,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(String id, String email, String password, String firstname, String lastname, Date birthdate, Date createdDate, short userRole) {
+    public User(String id, String email, String password, String firstname, String lastname, Date birthdate, Date createdDate, String userRole) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -236,11 +238,11 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public short getUserRole() {
+    public String getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(short userRole) {
+    public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
 
@@ -330,5 +332,4 @@ public class User implements Serializable {
     public String toString() {
         return "com.charitysm.pojo.User[ id=" + id + " ]";
     }
-    
 }

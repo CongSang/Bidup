@@ -4,7 +4,7 @@
 <header class="navbar-light fixed-top header-static">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/SharingHope">
                 <c:url value="/resources/img/logo.png" var="logo" />
                 <img class="light-mode-item navbar-brand-item logo-img" src="${logo}" alt="logo">
             </a>
@@ -44,14 +44,14 @@
                             Đấu giá
                         </a>
                     </li>
-                    
+
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
-<!--                    <li class="nav-item px-2">
-                        <a class="nav-link" href="#" id="chart">
-                            <i class="fa-solid fa-chart-simple menu-icon"></i>
-                            Thống kê & báo cáo
-                        </a>
-                    </li>-->
+                    <!--                    <li class="nav-item px-2">
+                                            <a class="nav-link" href="#" id="chart">
+                                                <i class="fa-solid fa-chart-simple menu-icon"></i>
+                                                Thống kê & báo cáo
+                                            </a>
+                                        </li>-->
 
 
                     <li class="d-lg-none d-block nav-item px-2">
@@ -71,22 +71,28 @@
             </div>
 
             <div class="d-lg-flex d-none flex-nowrap align-items-center ms-4">
-                <div>
-                    <i class="fa-solid fa-bell me-4 notify-icon"></i>
+                <div class="dropdown">
+                    <a href="#" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell me-4 notify-icon"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                        <li  class="dropdown-item d-flex justify-content-center align-items-center">
+                            Công Sang vừa thích bài viết của bạn
+                        </li>
+                    </ul>
                 </div>
-                <div>
-                    <c:if test="${user == null}">
-                    <a href="/SharingHope/login">DAng nhap</a>
-                    </c:if>
-                    <c:if test="${user != null}">
-                        <span>${user.getName()}</span>
-                        <c:url value="/login" var="login" />
-                        <a href="<c:url value="/logout"/>" onclick="FB.logout();">Logout</a> 
-                    </c:if>
-                        <c:url value="https://graph.facebook.com/${user.getId()}/picture" var="avatar" />
-                        <img src="${user.getPicture().getUrl()}" alt="avatar" class="user-img" />
-                        
-                    
+                <div class="dropdown">
+                    <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="${avatar}" alt="avatar" class="user-img" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                        <li>
+                            <a class="dropdown-item d-flex justify-content-center align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
+                                <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                                Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

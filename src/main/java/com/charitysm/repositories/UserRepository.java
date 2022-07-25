@@ -4,10 +4,12 @@
  */
 package com.charitysm.repositories;
 
+import com.charitysm.pojo.User;
+
 /**
  *
  * @author ADMIN
  */
 public interface UserRepository {
-    
+    User getUser(String email);
 }

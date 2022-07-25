@@ -1,6 +1,6 @@
-const modal = document.querySelector(".modal");
-const modalContainer = document.querySelector(".modal-container");
-const btn_close = document.querySelector(".modal--close");
+const modal = document.querySelector(".modal-login");
+const modalContainer = document.querySelector(".modal-container-login");
+const btn_close = document.querySelector(".modal--close-login");
 const btn_auth = document.querySelector(".btn-show--register");
 
 function showModal() {
