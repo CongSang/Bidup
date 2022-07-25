@@ -25,8 +25,8 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
     "com.charitysm.controllers",
-    "com.charitysm.repository",
-    "com.charitysm.service",})
+    "com.charitysm.repositories",
+    "com.charitysm.services",})
 public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer conf) {
