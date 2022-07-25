@@ -35,8 +35,8 @@
                 <h5 class="card-title mb-0">Trò chuyện</h5>
             </div>
 
-            <div class="card-body pb-2">
-                <div class="d-flex justify-content-between align-items-center mb-3 user-chat">
+            <div class="card-body pb-3">
+                <div class="d-flex justify-content-between align-items-center user-chat">
                     <div>
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img src="${avatar}" alt="avatar" class="user-img" />
@@ -46,7 +46,7 @@
                         <i class="fa-brands fa-facebook-messenger chat-icon"></i>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3 user-chat">
+                <div class="d-flex justify-content-between align-items-center user-chat">
                     <div>
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img src="${avatar}" alt="avatar" class="user-img" />
@@ -56,7 +56,7 @@
                         <i class="fa-brands fa-facebook-messenger chat-icon"></i>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3 user-chat">
+                <div class="d-flex justify-content-between align-items-center user-chat">
                     <div>
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img src="${avatar}" alt="avatar" class="user-img" />
@@ -66,7 +66,7 @@
                         <i class="fa-brands fa-facebook-messenger chat-icon"></i>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3 user-chat">
+                <div class="d-flex justify-content-between align-items-center user-chat">
                     <div>
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img src="${avatar}" alt="avatar" class="user-img" />

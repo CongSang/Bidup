@@ -1,8 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,18 +28,32 @@
                     </div>
 
                     <div class="form-login">
-                        <form:form method="post" modelAttribute="user">
+                        <c:if test="${param.error != null}">
+                            <div class="alert alert-danger">
+                                <fmt:bundle basename = "messages">
+                                    <fmt:message key = "user.login.error1"/><br/>
+                                </fmt:bundle>
+                            </div>
+                        </c:if>
+                        <c:if test="${param.accessDenied != null}">
+                            <div class="alert alert-danger">
+                                <fmt:bundle basename = "messages">
+                                    <fmt:message key = "user.login.error2"/><br/>
+                                </fmt:bundle>
+                            </div>
+                        </c:if>
+                        <c:url value="/login" var="action" />
+                        <form action="${action}" method="post">
                             <div class="form-group">
-                                <form:input path="email" type="text" placeholder="Email"  cssClass="form-control" />
+                                <input type="text" name="email" placeholder="Email"  class="form-control" />
                             </div>
                             <div class="form-group">
-                                <form:password path="password" placeholder="Mật khẩu" cssClass="form-control" />
+                                <input type="password" name="password" placeholder="Mật khẩu" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <form:button type="submit" class="b btn-login">Đăng nhập</form:button>
-                                </div>
-
-                        </form:form>
+                                <input type="submit" class="b btn-login" value="Đăng nhập" />
+                            </div>
+                        </form>
 
                         <p class="text-center my-2 text-secondary">Hoặc</p>
                         <div class="form-group">
@@ -63,11 +76,11 @@
         </div>
         <tiles:insertAttribute name="footer" />
 
-        <div class="modal">
-            <div class="modal-container">
+        <div class="modal modal-login">
+            <div class="modal-container modal-container-login">
                 <div class="modal-header">
                     <h3 class="my-2">Đăng kí</h3>
-                    <div class="modal--close">
+                    <div class="modal--close modal--close-login">
                         <i class="fa-solid fa-xmark p-2"></i>
                     </div>
                 </div>

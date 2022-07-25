@@ -30,17 +30,19 @@ header {
 .notify-icon {
     font-size: 1.2rem;
     color: var(--primary-color-300);
-} 
+    cursor: pointer;
+}
 
 .user-img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .menu-icon {
     margin-right: 2px;
-    
+
 }
 
 .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
@@ -123,8 +125,13 @@ header {
 }
 
 /*sidebar right css*/
+.card {
+    border-radius: 6px;
+}
+
 .card-header {
     background-color: var(--white-color);
+    border-radius: calc(6px  - 1px) calc(6px - 1px) 0 0 !important;
 }
 
 .hashtag-side {
@@ -145,6 +152,16 @@ header {
     cursor: pointer;
 }
 
+.user-chat {
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.user-chat:hover {
+    background-color: var(--light-gray-color);
+}
+
 /*sidebar left css*/
 .auction-card {
     min-height: 70vh;
@@ -152,7 +169,7 @@ header {
 
 /*content css*/
 .content {
-    padding-top: 80px;
+    padding: 86px 0 20px;
 }
 
 /*footer css*/
@@ -183,4 +200,20 @@ header {
 
 .footer-link:hover {
     color: #222;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 5px;
 }

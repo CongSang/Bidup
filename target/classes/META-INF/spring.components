@@ -1,4 +1,6 @@
 com.charitysm.configs.HibernateConfig=org.springframework.stereotype.Component
+com.charitysm.configs.SecurityConfig=org.springframework.stereotype.Component
+com.charitysm.configs.TilesConfig=org.springframework.stereotype.Component
 com.charitysm.configs.WebAppContextConfig=org.springframework.stereotype.Component
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
 com.charitysm.controllers.LoginController=org.springframework.stereotype.Component
