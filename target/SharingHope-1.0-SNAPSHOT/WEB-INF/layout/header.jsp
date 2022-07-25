@@ -82,13 +82,12 @@
                     </ul>
                 </div>
                 <div class="dropdown">
-                    <c:url value="/resources/img/non-avatar.png" var="avatar" />
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="${avatar}" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li>
-                            <a class="dropdown-item d-flex justify-content-center align-items-center" href="#">
+                            <a class="dropdown-item d-flex justify-content-center align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                 Đăng xuất
                             </a>

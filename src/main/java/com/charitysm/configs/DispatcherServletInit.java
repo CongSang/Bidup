@@ -17,7 +17,7 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
         return new Class[] {
             SecurityConfig.class,
             HibernateConfig.class,
-            TilesConfig.class
+            TilesConfig.class,
         };
     }
 

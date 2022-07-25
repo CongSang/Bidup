@@ -26,6 +26,7 @@ com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\services\impl\AuctionServiceImpl.class
 com\charitysm\configs\HibernateConfig.class
 com\charitysm\pojo\React_.class
+com\charitysm\utils\RestFB.class
 com\charitysm\repositories\impl\ReactRepositoryImpl.class
 com\charitysm\services\UserService.class
 com\charitysm\configs\SecurityWebApplicationInit.class
@@ -47,7 +48,9 @@ com\charitysm\repositories\impl\NotificationRepositoryImpl.class
 com\charitysm\services\impl\PostServiceImpl.class
 com\charitysm\repositories\ReactRepository.class
 com\charitysm\services\impl\NotificationServiceImpl.class
+com\charitysm\controllers\AdminController.class
 com\charitysm\pojo\Auction.class
+com\charitysm\controllers\APILoginFbController.class
 com\charitysm\services\ReactService.class
 com\charitysm\pojo\Notification.class
 com\charitysm\pojo\User.class

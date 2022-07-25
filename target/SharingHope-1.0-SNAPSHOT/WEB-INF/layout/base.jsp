@@ -19,6 +19,17 @@
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '800114437619089',
+                    autoLogAppEvents: true,
+                    xfbml: true,
+                    version: 'v14.0'
+                });
+            };
+        </script>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
         <div class="main">
             <tiles:insertAttribute name="header" />
             <div class="container content">
@@ -36,7 +47,7 @@
             </div>
             <tiles:insertAttribute name="footer" />
         </div>
-        
+
         <c:url value="/resources/js/main.js" var="mainJs" />
          <c:url value="/resources/js/home.js" var="homeJs" />
          <script type="module" src="${mainJs}"></script>
