@@ -1,13 +1,21 @@
 package com.charitysm.controllers;
 
+import com.charitysm.pojo.User;
 import com.charitysm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -20,23 +28,37 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        return "login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        
+        return "redirect:/";
     }
-//    @PostMapping(value = "/login")
-//    public String addProductProcess(Model model,
-//            @ModelAttribute(value = "user") @Valid User user,
-//            BindingResult result, HttpServletRequest request) {
-//        if (result.hasErrors()) {
-//            
-//            return "login";
-//        }
-//            
-//            return "redirect:/login";
-//    }
+    
+    @GetMapping("/register")
+    public String register(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        
+        return "register";
+    }
+    
+    @PostMapping("/register")
+    public String submitRegister (@Valid @ModelAttribute("user") User user, 
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            
+            return "register";
+        } else {
+            return "redirect:/login";
+        }
+    }
     
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) throws IOException {
-        session.removeAttribute("current_user");
+        session.removeAttribute("currentUser");
         response.sendRedirect("login"); 
     }
 }

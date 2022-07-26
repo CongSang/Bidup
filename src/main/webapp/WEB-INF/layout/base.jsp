@@ -37,10 +37,10 @@
                     <div class="d-lg-block d-none col-lg-3">
                         <tiles:insertAttribute name="sidebarLeft" />
                     </div>
-                    <div class="col-sm-12 col-md-8 col-lg-6 g-3">
+                    <div class="col-sm-12 col-md-12 col-lg-6 g-3">
                         <tiles:insertAttribute name="content" />
                     </div>
-                    <div class="col-md-4 col-lg-3">
+                    <div class="col-lg-3 sidebar-right">
                         <tiles:insertAttribute name="sidebarRight" />
                     </div>
                 </div>

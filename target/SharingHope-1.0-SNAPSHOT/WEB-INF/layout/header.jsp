@@ -1,10 +1,12 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <header class="navbar-light fixed-top header-static">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="/SharingHope">
+            <c:url value="/" var="mainUrl" />
+            <a class="navbar-brand" href="${mainUrl}">
                 <c:url value="/resources/img/logo.png" var="logo" />
                 <img class="light-mode-item navbar-brand-item logo-img" src="${logo}" alt="logo">
             </a>
@@ -33,7 +35,7 @@
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <li class="nav-item px-2">
-                        <a class="nav-link active" href="/SharingHope" id="homeMenu">
+                        <a class="nav-link active" href="${mainUrl}" id="homeMenu">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
@@ -44,15 +46,24 @@
                             Đấu giá
                         </a>
                     </li>
+                    <li class="d-lg-none d-block nav-item px-2">
+                        <a class="nav-link" href="#" id="chat">
+                            <i class="fa-solid fa-comment menu-icon"></i>
+                            Trò chuyện
+                        </a>
+                    </li>
 
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                    <!--                    <li class="nav-item px-2">
-                                            <a class="nav-link" href="#" id="chart">
-                                                <i class="fa-solid fa-chart-simple menu-icon"></i>
-                                                Thống kê & báo cáo
-                                            </a>
-                                        </li>-->
-
+                    
+                    <c:if test="${currentUser.getUserRole() == 'ROLE_ADMIN'}">
+                        <li class="nav-item px-2">
+                            <c:url value="/admin" var="adminUrl" />
+                            <a class="nav-link" href="${adminUrl}" id="chart">
+                                <i class="fa-solid fa-chart-simple menu-icon"></i>
+                                Thống kê & báo cáo
+                            </a>
+                        </li>
+                    </c:if>
 
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link" href="#" id="notify">
@@ -63,8 +74,8 @@
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center" href="#" id="userMenu">
                             <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                            <img src="${avatar}" alt="avatar" class="user-img me-2" />
-                            Username
+                            <img src="${currentUser.getAvatar()}" alt="avatar" class="user-img me-2" />
+                            ${currentUser.getFirstname()}
                         </a>
                     </li>
                 </ul>
@@ -83,11 +94,20 @@
                 </div>
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="${avatar}" alt="avatar" class="user-img" />
+                        <img src="${currentUser.getAvatar()}" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                        <li class="dropdown-item">
+                            <span>Xin chào ${currentUser.getFirstname()}</span>
+                        </li>
                         <li>
-                            <a class="dropdown-item d-flex justify-content-center align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <i class="fa-solid fa-user me-2"></i>
+                                Trang cá nhân
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                 Đăng xuất
                             </a>

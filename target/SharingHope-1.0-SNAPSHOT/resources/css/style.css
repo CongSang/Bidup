@@ -28,7 +28,7 @@ header {
 }
 
 .notify-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--primary-color-300);
     cursor: pointer;
 }
@@ -38,6 +38,7 @@ header {
     width: 40px;
     border-radius: 50%;
     cursor: pointer;
+    object-fit: cover;
 }
 
 .menu-icon {
@@ -134,32 +135,44 @@ header {
     border-radius: calc(6px  - 1px) calc(6px - 1px) 0 0 !important;
 }
 
-.hashtag-side {
+.chat-side {
     font-weight: bold;
-    font-size: 17px;
+    font-size: 16px;
     margin-bottom: 0;
-    color: var(--primary-color-300);
+    color: #333;
 }
 
-.post-count {
+.chat--item {
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.chat--item:hover {
+    background-color: var(--light-gray-color);
+}
+
+.go-search {
     font-size: 13px;
     margin-bottom: 0;
 }
 
-.chat-icon {
-    font-size: 24px;
-    color: var(--primary-color-100);
-    cursor: pointer;
-}
-
-.user-chat {
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.user-chat:hover {
-    background-color: var(--light-gray-color);
+@media (max-width: 992px) {
+    .chat-card {
+        position: fixed;
+        z-index: 1050;
+        width: 60vw;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100vh;
+        border-radius: 0;
+        transition: all 0.3s;
+    }
+    
+    .sidebar-right {
+        display: none;
+    }
 }
 
 /*sidebar left css*/

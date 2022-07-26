@@ -4,6 +4,7 @@
  */
 package com.charitysm.configs;
 
+import com.charitysm.handlers.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,11 +28,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     "com.charitysm.controllers",
     "com.charitysm.repositories",
     "com.charitysm.services",
+    "com.charitysm.handlers",
 })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -46,26 +50,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http)
-            throws Exception {
-        http.formLogin().loginPage("/login")
+    protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin()
+                .loginPage("/login")
                 .usernameParameter("email")
-                .passwordParameter("password");
-        
-        http.formLogin().defaultSuccessUrl("/")
-                .failureUrl("/login?error");
-        
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error")
+                .successHandler(loginSuccessHandler);
+
         http.logout().logoutSuccessUrl("/login");
-        
+
         http.exceptionHandling()
                 .accessDeniedPage("/login?accessDenied");
-        
+
         http.authorizeRequests().antMatchers("/").permitAll()
                 .antMatchers("/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        
+
         http.csrf().disable();
     }
 }

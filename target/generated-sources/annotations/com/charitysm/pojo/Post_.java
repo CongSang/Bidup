@@ -9,7 +9,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-25T18:45:54")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-26T23:01:11")
 @StaticMetamodel(Post.class)
 public class Post_ { 
 
@@ -20,6 +20,7 @@ public class Post_ {
     public static volatile SingularAttribute<Post, Integer> id;
     public static volatile SingularAttribute<Post, User> userId;
     public static volatile SingularAttribute<Post, String> content;
+    public static volatile SingularAttribute<Post, String> hashtag;
     public static volatile SingularAttribute<Post, Date> postedDate;
 
 }

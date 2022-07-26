@@ -28,6 +28,7 @@ com\charitysm\configs\HibernateConfig.class
 com\charitysm\pojo\React_.class
 com\charitysm\utils\RestFB.class
 com\charitysm\repositories\impl\ReactRepositoryImpl.class
+com\charitysm\handlers\LoginSuccessHandler.class
 com\charitysm\services\UserService.class
 com\charitysm\configs\SecurityWebApplicationInit.class
 com\charitysm\pojo\Bid.class

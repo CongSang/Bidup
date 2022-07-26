@@ -11,10 +11,12 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,6 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByPostedDate", query = "SELECT p FROM Post p WHERE p.postedDate = :postedDate"),
     @NamedQuery(name = "Post.findByActive", query = "SELECT p FROM Post p WHERE p.active = :active")})
 public class Post implements Serializable {
+
+    @Size(max = 100)
+    @Column(name = "hashtag")
+    private String hashtag;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -171,6 +177,14 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Post[ id=" + id + " ]";
+    }
+
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
     
 }
