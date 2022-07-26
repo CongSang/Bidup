@@ -1,7 +1,11 @@
 package com.charitysm.controllers;
 
-import com.restfb.types.User;
+import com.charitysm.pojo.User;
+import com.charitysm.services.UserService;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,22 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-//    @Autowired
-//    private CategoryService categoryService;
-//
-//    @RequestMapping("/")
-//    public String index(Model model,
-//            @RequestParam Map<String, String> params) {
-//
-//        model.addAttribute("categories", this.categoryService.getCategories());
-//
-//        return "index";
-//    }
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public String home(Model model, HttpSession session) {
-        User u = (User) session.getAttribute("current_user");
-        model.addAttribute("user", u);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            String email = auth.getName();
+            User user = userService.getUserByEmail(email);
+            session.setAttribute("currentUser", user);
+        }
+        
         return "home";
     }
 }

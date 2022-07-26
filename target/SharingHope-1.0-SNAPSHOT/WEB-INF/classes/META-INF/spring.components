@@ -6,6 +6,7 @@ com.charitysm.controllers.APILoginFbController=org.springframework.stereotype.Co
 com.charitysm.controllers.AdminController=org.springframework.stereotype.Component
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
 com.charitysm.controllers.LoginController=org.springframework.stereotype.Component
+com.charitysm.handlers.LoginSuccessHandler=org.springframework.stereotype.Component
 com.charitysm.pojo.Auction=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries
 com.charitysm.pojo.Auction_=javax.annotation.Generated,javax.persistence.metamodel.StaticMetamodel
 com.charitysm.pojo.Bid=javax.persistence.Entity,javax.persistence.Table,javax.xml.bind.annotation.XmlRootElement,javax.persistence.NamedQueries

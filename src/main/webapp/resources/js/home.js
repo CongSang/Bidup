@@ -3,6 +3,9 @@ const modalContainer = document.querySelector(".modal-container-post");
 const btn_close = document.querySelectorAll(".modal--close-post");
 const btn_show = document.querySelectorAll(".btn-show--post");
 const comment = document.querySelector(".comment");
+const chat_menu = document.querySelector("#chat");
+const sidebar_right = document.querySelector(".sidebar-right");
+const close_chat = document.querySelector(".chat--close");
 
 function showModal() {
     modal.classList.add('open');
@@ -51,5 +54,11 @@ function showComment() {
     }
 };
 
+//chat menu
+chat_menu.addEventListener("click", () => {
+    sidebar_right.style.display = "block";
+});
 
-
+close_chat.addEventListener("click", () => {
+    sidebar_right.style.display = "none";
+});

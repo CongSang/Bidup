@@ -7,8 +7,7 @@
     <div class="create-post card card-body">
         <div class="d-flex align-items-center mb-3">
             <div>
-                <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                <a href="#"> <img class="avatar-img rounded-circle" src="${avatar}" alt=""> </a>
+                <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
             </div>
             <div class="btn-post w-100 d-flex align-items-center btn-show--post">
                 <span class="pe-4 border-0 text-secondary">Bạn đang nghĩ gì thế?</input>
@@ -177,8 +176,7 @@
             <div class="modal-body ">
                 <div class="d-flex mb-3">
                     <div>
-                        <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                        <a href="#"> <img class="avatar-img rounded-circle" src="${avatar}" alt=""> </a>
+                        <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
                     <form class="w-100">
                         <textarea class="form-control pe-4 fs-4 lh-1 border-0" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>

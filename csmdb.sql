@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
 -- Host: localhost    Database: csmdb
 -- ------------------------------------------------------
--- Server version	8.0.28
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `auction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `auction` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `starting_price` decimal(10,0) NOT NULL,
   `end_date` datetime NOT NULL,
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -53,10 +53,10 @@ DROP TABLE IF EXISTS `bid`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bid` (
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `auction_id` int NOT NULL,
   `money` decimal(10,0) NOT NULL,
-  `message` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`,`auction_id`),
   KEY `fk_bid_auction_idx` (`auction_id`),
   CONSTRAINT `bid_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
@@ -82,8 +82,8 @@ DROP TABLE IF EXISTS `comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comment` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_comment_post_idx` (`post_id`),
@@ -110,8 +110,8 @@ DROP TABLE IF EXISTS `follow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `follow` (
-  `follower_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `followed_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `follower_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `followed_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`follower_id`,`followed_id`),
   KEY `follow_ibfk_2` (`followed_id`),
   CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`follower_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
@@ -137,8 +137,8 @@ DROP TABLE IF EXISTS `notification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notification` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_read` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -164,15 +164,16 @@ DROP TABLE IF EXISTS `post`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `post` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `posted_date` datetime NOT NULL,
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint DEFAULT '1',
+  `hashtag` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `post_ibfk_1` (`user_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +182,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
+INSERT INTO `post` VALUES (1,'Bữa sáng của tôi','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-4.jpg','2022-07-26 00:00:00','abcd',1,NULL),(2,'Chuyến đi đầu tiên','https://res.cloudinary.com/dynupxxry/image/upload/v1657817637/sample.jpg','2022-07-26 00:00:00','abcd',1,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +194,7 @@ DROP TABLE IF EXISTS `react`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `react` (
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_id` int NOT NULL,
   `type` smallint DEFAULT '1',
   PRIMARY KEY (`user_id`,`post_id`),
@@ -219,21 +221,22 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `birthdate` date NOT NULL,
-  `address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hometown` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `job` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hometown` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `job` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_date` date NOT NULL,
-  `avatar` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT 'https://res.cloudinary.com/quoc2401/image/upload/v1658299648/images_vjrz9q.png',
-  `user_role` smallint NOT NULL,
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'https://res.cloudinary.com/quoc2401/image/upload/v1658299648/images_vjrz9q.png',
+  `user_role` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `active` tinyint DEFAULT '1',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -243,6 +246,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('abcd','honguyencongsang723@gmail.com','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công Sang','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817661/cld-sample.jpg','ROLE_USER',1),('abcde','1951052169sang@ou.edu.vn','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công Sang','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-2.jpg','ROLE_ADMIN',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -255,4 +259,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-20 14:31:25
+-- Dump completed on 2022-07-27  0:11:28

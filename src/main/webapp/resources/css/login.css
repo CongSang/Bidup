@@ -1,3 +1,11 @@
+a {
+    text-decoration: none;
+    color: var(--white-color);
+}
+
+a:hover {
+    color: var(--white-color);
+}
 
 .login {
     background-color: #f0f2f5;
@@ -25,7 +33,7 @@
 
 .form-group {
     width: 100%;
-    padding: 6px 0;
+    padding: 5px 0;
     text-align: center;
 }
 
@@ -44,6 +52,11 @@
     border-radius: 6px;
     border: 1px solid #ced4da;
     width: 100%;
+}
+
+.err-validate {
+    font-size: 12px;
+    margin-left: 2px;
 }
 
 .btn-login {
@@ -119,7 +132,7 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 10000;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     transition: all linear 0.4s;
@@ -130,7 +143,7 @@
 }
 
 .modal-container {
-    width: 450px;
+    width: 500px;
     max-width: calc(100% - 16px);
     min-height: 500px;
     background-color: var(--white-color);
