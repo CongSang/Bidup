@@ -2,7 +2,6 @@ const modal = document.querySelector(".modal-post");
 const modalContainer = document.querySelector(".modal-container-post");
 const btn_close = document.querySelectorAll(".modal--close-post");
 const btn_show = document.querySelectorAll(".btn-show--post");
-const comment = document.querySelector(".comment");
 const chat_menu = document.querySelector("#chat");
 const sidebar_right = document.querySelector(".sidebar-right");
 const close_chat = document.querySelector(".chat--close");
@@ -44,12 +43,13 @@ function showFull(element) {
 
 
 var is_show = false;
-function showComment() {
+function showComment(element) {
+    var comment = $(element).parents("div.post").find("div.comment");
     if(is_show) {
-        comment.style.display = "none";
+        comment.css("display", "none");
         is_show = false;
     } else {
-        comment.style.display = "block";
+        comment.css("display", "block");
         is_show = true;
     }
 };

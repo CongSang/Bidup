@@ -85,12 +85,13 @@ CREATE TABLE `comment` (
   `content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_id` int DEFAULT NULL,
+  `comment_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_comment_post_idx` (`post_id`),
   KEY `comment_ibfk_1` (`user_id`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_comment_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +100,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,'like','abcde',1,'2022-07-27 00:00:00');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +175,7 @@ CREATE TABLE `post` (
   PRIMARY KEY (`id`),
   KEY `post_ibfk_1` (`user_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +184,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'Bữa sáng của tôi','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-4.jpg','2022-07-26 00:00:00','abcd',1,NULL),(2,'Chuyến đi đầu tiên','https://res.cloudinary.com/dynupxxry/image/upload/v1657817637/sample.jpg','2022-07-26 00:00:00','abcd',1,NULL);
+INSERT INTO `post` VALUES (1,'Bữa sáng của tôi #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-4.jpg','2022-07-26 00:00:00','abcd',1,'#sharinghope'),(2,'Chuyến đi đầu tiên #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817637/sample.jpg','2022-07-26 00:00:00','abcd',1,'#sharinghope'),(3,'Ngày mới #love','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-3.jpg','2022-07-27 00:00:00','abcde',1,'#love');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,6 +212,7 @@ CREATE TABLE `react` (
 
 LOCK TABLES `react` WRITE;
 /*!40000 ALTER TABLE `react` DISABLE KEYS */;
+INSERT INTO `react` VALUES ('abcd',3,1);
 /*!40000 ALTER TABLE `react` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-27  0:11:28
+-- Dump completed on 2022-07-28  1:06:52

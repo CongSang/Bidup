@@ -83,11 +83,15 @@ a {
 }
 
 .post--action-icon {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .post--action-like {
     cursor: pointer;
+}
+
+.liked {
+    color: red !important;
 }
 
 .post--action-comment {
@@ -95,10 +99,13 @@ a {
 }
 
 .post--action-hover {
-    width: 130px;
+    width: 160px;
     max-width: 100%;
     padding: 6px 24px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .post--action-hover:hover {
@@ -106,8 +113,8 @@ a {
 }
 
 .post--action-text {
-    font-size: 13px;
-    margin-left: 2px;
+    font-size: 14px;
+    margin-left: 3px;
 }
 
 .modal {
@@ -228,4 +235,8 @@ a {
     padding: 12px;
     border-radius: 6px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.feeds-container {
+    margin-bottom: 100px;
 }

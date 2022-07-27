@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ADMIN
  */
 @Repository
-@Transactional
 @PropertySource("classpath:messages.properties")
+@Transactional
 public class PostRepositoryImpl implements PostRepository {
 
     @Autowired

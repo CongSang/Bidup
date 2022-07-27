@@ -10,6 +10,11 @@
         <title><tiles:insertAttribute name="title" /></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js"
+                integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/locale/vi.min.js" integrity="sha512-KFhB7C5HhK+ySzLQNJveDmB1h8qlsd51JX0p5o/PwL4EPdbj+TlhdVENbR9SFn+sz2sX30M4nqchhtPmz/wtiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
         <c:url value="/resources/css/home.css" var="homeCss" />
@@ -49,10 +54,8 @@
         </div>
 
         <c:url value="/resources/js/main.js" var="mainJs" />
-         <c:url value="/resources/js/home.js" var="homeJs" />
-         <c:url value="/resources/js/post.js" var="postJs" />
-         <script type="module" src="${mainJs}"></script>
-         <script src="${homeJs}"></script>
-         <script src="${postJs}"></script>
+        <c:url value="/resources/js/home.js" var="homeJs" />
+        <script type="module" src="${mainJs}"></script>
+        <script src="${homeJs}"></script>
     </body>
 </html>

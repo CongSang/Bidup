@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -36,6 +37,7 @@ public class React implements Serializable {
     private Short type;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Post post;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
