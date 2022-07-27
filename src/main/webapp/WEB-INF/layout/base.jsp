@@ -50,7 +50,9 @@
 
         <c:url value="/resources/js/main.js" var="mainJs" />
          <c:url value="/resources/js/home.js" var="homeJs" />
+         <c:url value="/resources/js/post.js" var="postJs" />
          <script type="module" src="${mainJs}"></script>
          <script src="${homeJs}"></script>
+         <script src="${postJs}"></script>
     </body>
 </html>

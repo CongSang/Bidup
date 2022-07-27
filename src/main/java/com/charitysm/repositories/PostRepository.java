@@ -4,10 +4,15 @@
  */
 package com.charitysm.repositories;
 
+import com.charitysm.pojo.Post;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author ADMIN
  */
 public interface PostRepository {
-    
+    List<Post> getPosts(Map<String, String> params, int page);
+    int countPosts();
 }

@@ -73,7 +73,7 @@ public class Post implements Serializable {
     private User userId;
     @OneToMany(mappedBy = "postId")
     private Set<Comment> commentSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", fetch = FetchType.EAGER)
     private Set<React> reactSet;
 
     public Post() {

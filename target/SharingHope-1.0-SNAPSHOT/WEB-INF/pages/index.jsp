@@ -211,3 +211,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    <c:url value="/api/posts" var="endpoint" />
+    window.onload = function () {
+        getPosts('${endpoint}');
+    };
+</script>
