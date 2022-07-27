@@ -22,10 +22,12 @@
         </div>
     </div>
     <div id="feeds-container">
-        
+
     </div>
-    <div class="spinner-border text-muted" id="post-loading"></div>
-    
+
+    <div class="text-center mt-3 post-loading">
+        <div class="spinner-border text-muted"></div>
+    </div>
 
     <!--modal create post-->
     <div class="modal modal-post">
@@ -75,9 +77,12 @@
         </div>
     </div>
 </div>
-                    
+
+
+<script src="<c:url value="/resources/js/post.js" />"></script>
 <script>
-    window.onload = function () {
-        loadFeeds();
-    }
+        <c:url value="/api/posts" var="endpoint" />
+        $(function () {
+            loadPosts('${endpoint}', '${currentUser.id}');
+        });
 </script>

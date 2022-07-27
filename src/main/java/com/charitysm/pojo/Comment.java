@@ -4,7 +4,9 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,6 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content")})
 public class Comment implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "comment_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date commentDate;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +54,7 @@ public class Comment implements Serializable {
     private String content;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -110,6 +122,14 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Comment[ id=" + id + " ]";
+    }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
     
 }
