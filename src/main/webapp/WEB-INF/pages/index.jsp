@@ -80,9 +80,21 @@
 
 
 <script src="<c:url value="/resources/js/post.js" />"></script>
+<script src="<c:url value="/resources/js/comment.js" />"></script>
 <script>
         <c:url value="/api/posts" var="endpoint" />
         $(function () {
-            loadPosts('${endpoint}', '${currentUser.id}');
+            var dataLenght;
+            loadPosts('${endpoint}', '${currentUser.getId()}');
+            
         });
+        window.addEventListener("scroll", jQuery(function($) {
+                       $('.home-content').on('scroll', function() {
+                           if($(this).scrollTop() + $(this).innerHeight() >= ($(this)[0].scrollHeight-0.4)) {
+                               $('.post-loading').css("display", "block");
+                               loadPosts('${endpoint}', '${currentUser.getId()}');
+                           }
+                       });
+                   }));
+                
 </script>

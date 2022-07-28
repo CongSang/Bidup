@@ -5,9 +5,10 @@ function loadPosts(endpoint, currentUser) {
         url: endpoint,
         dataType: 'json',
         success: function (data) {
-            console.log(data[2].reactSet.length);
             loadFeeds(data, currentUser);
-            document.querySelector('.post-loading').style.display = "none";
+            console.log(data.length);
+            if(data.length !== 0)
+                $('.post-loading').css("display", "none");
         }
     });
 }
@@ -104,8 +105,8 @@ function loadFeeds(posts, currentUser) {
                                         <img class="comment--avatar rounded-circle" src="${post.userId.avatar}" alt="">
                                     </a>
                                 </div>
-                                <form class="w-100">
-                                    <input type="text" placeholder="Thêm bình luận" class="add-comment" />
+                                <form class="w-100" onsubmit="addComment('${currentUser}', '${post.id}')" id="commentForm">
+                                    <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
                                 </form>
                             </div>
                             
@@ -123,14 +124,12 @@ function loadFeeds(posts, currentUser) {
                                                     <h6 class="mb-1 me-2"><a href="#">${comment.userId.firstname}</a></h6>
                                                     <small>${moment(comment.commentDate).fromNow()}</small>
                                                 </div>
-
                                                 <p class="small mb-0">
                                                     ${comment.content}
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
-                                `;
+                                    </div>`;
                           })}
                             
                         </div>
