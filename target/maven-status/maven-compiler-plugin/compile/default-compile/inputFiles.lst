@@ -19,6 +19,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\LoginContro
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\CommentRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\BidServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\AuctionServiceImpl.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\CommentRequest.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\ReactRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\AuctionRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\ApiPostController.java

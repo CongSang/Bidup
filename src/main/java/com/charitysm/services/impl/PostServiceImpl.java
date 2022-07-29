@@ -30,5 +30,10 @@ public class PostServiceImpl implements PostService{
     public int countPosts() {
         return this.postRepository.countPosts();
     }
+
+    @Override
+    public Post getPostById(int id) {
+        return this.postRepository.getPostById(id);
+    }
     
 }

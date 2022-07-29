@@ -4,10 +4,12 @@
  */
 package com.charitysm.repositories;
 
+import com.charitysm.pojo.Comment;
+
 /**
  *
  * @author ADMIN
  */
 public interface CommentRepository {
-    
+    Comment createComment(Comment c);
 }

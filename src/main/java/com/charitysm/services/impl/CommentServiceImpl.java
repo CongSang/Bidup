@@ -4,7 +4,10 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.pojo.Comment;
+import com.charitysm.repositories.CommentRepository;
 import com.charitysm.services.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,5 +16,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CommentServiceImpl implements CommentService{
+    @Autowired
+    private CommentRepository commentRepository;
+    
+    @Override
+    public Comment createComment(Comment c) {
+        return commentRepository.createComment(c);
+    }
     
 }

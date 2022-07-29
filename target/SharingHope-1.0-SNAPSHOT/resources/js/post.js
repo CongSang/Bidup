@@ -1,11 +1,11 @@
 
-function loadPosts(endpoint, currentUser) {
+function loadPosts(endpoint, currentUserId) {
     $.ajax({
         type: 'get',
         url: endpoint,
         dataType: 'json',
         success: function (data) {
-            loadFeeds(data, currentUser);
+            loadFeeds(data, currentUserId);
             console.log(data.length);
             if(data.length !== 0)
                 $('.post-loading').css("display", "none");
@@ -13,7 +13,8 @@ function loadPosts(endpoint, currentUser) {
     });
 }
 
-function loadFeeds(posts, currentUser) {
+function loadFeeds(posts, currentUserId) {
+    var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
         const html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
@@ -41,7 +42,7 @@ function loadFeeds(posts, currentUser) {
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                    ${(currentUser === post.userId.id) ?
+                                    ${(currentUserId === post.userId.id) ?
                                             `<li>
                                                 <a class="dropdown-item" href="#">
                                                     Chỉnh sửa bài viết
@@ -80,7 +81,7 @@ function loadFeeds(posts, currentUser) {
                                             `<i class="fa-regular fa-heart post--action-icon"></i>`
                                         ) : (
                                             (post.reactSet).map((react, index) => {
-                                                return (currentUser === react.user.id) ?
+                                                return (currentUserId === react.user.id) ?
                                                          `<i class="fa-solid fa-heart post--action-icon liked"></i>`
                                                          : `<i class="fa-regular fa-heart post--action-icon"></i>`;
                                             })
@@ -102,10 +103,10 @@ function loadFeeds(posts, currentUser) {
                                 <div class="me-2">
                                     <c:url value="/resources/img/non-avatar.png" var="avatar" />
                                     <a href="#">
-                                        <img class="comment--avatar rounded-circle" src="${post.userId.avatar}" alt="">
+                                        <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="">
                                     </a>
                                 </div>
-                                <form class="w-100" onsubmit="addComment('${currentUser}', '${post.id}')" id="commentForm">
+                                <form class="w-100" onsubmit="addComment('${currentUserId}', '${post.id}', this)" id="commentForm">
                                     <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
                                 </form>
                             </div>
@@ -121,7 +122,7 @@ function loadFeeds(posts, currentUser) {
                                         <div>
                                             <div class="bg-light comment--item-content">
                                                 <div class="d-flex justify-content-between">
-                                                    <h6 class="mb-1 me-2"><a href="#">${comment.userId.firstname}</a></h6>
+                                                    <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                     <small>${moment(comment.commentDate).fromNow()}</small>
                                                 </div>
                                                 <p class="small mb-0">

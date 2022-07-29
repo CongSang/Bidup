@@ -8,7 +8,9 @@ import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.CommentRequest;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
+import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiPostController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private CommentService commentService;
     
     @Async
     @GetMapping("/posts")
@@ -46,8 +50,18 @@ public class ApiPostController {
     }
     
     @Async
-    @PostMapping("/add-comment")
-    public ResponseEntity<CommentRequest> addComment(@RequestBody CommentRequest c) {
-        return new ResponseEntity<>(c, HttpStatus.OK);
+    @PostMapping("/create-comment")
+    public ResponseEntity<Comment> addComment(@RequestBody CommentRequest c, HttpSession session) {
+        Comment comm = new Comment();
+        comm.setContent(c.getContent());
+        comm.setCommentDate(new Date());
+        
+        Post p = postService.getPostById(c.getPostId());
+        User u = (User)session.getAttribute("currentUser");
+        
+        comm.setPostId(p);
+        comm.setUserId(u);
+        
+        return new ResponseEntity<>(commentService.createComment(comm), HttpStatus.CREATED);
     }
 }
