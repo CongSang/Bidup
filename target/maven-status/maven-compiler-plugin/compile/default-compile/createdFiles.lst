@@ -49,11 +49,13 @@ com\charitysm\controllers\ApiPostController.class
 com\charitysm\repositories\impl\NotificationRepositoryImpl.class
 com\charitysm\services\impl\PostServiceImpl.class
 com\charitysm\repositories\ReactRepository.class
+com\charitysm\controllers\UserInfoController.class
 com\charitysm\services\impl\NotificationServiceImpl.class
 com\charitysm\controllers\AdminController.class
 com\charitysm\pojo\Auction.class
 com\charitysm\controllers\APILoginFbController.class
 com\charitysm\services\ReactService.class
+com\charitysm\controllers\AuctionController.class
 com\charitysm\pojo\Notification.class
 com\charitysm\pojo\User.class
 com\charitysm\configs\WebAppContextConfig.class

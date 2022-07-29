@@ -1,0 +1,25 @@
+.auction--action-hover {
+    width: 100%;
+    padding: 8px 24px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.auction--action-hover:hover {
+    background-color: #e1e1e1;
+}
+
+.auction--action-text {
+    font-size: 16px;
+}
+
+.auction--price {
+    font-weight: bold;
+}
+
+.auction-user-join {
+    border-top: solid 1px #e1e1e1;
+}
