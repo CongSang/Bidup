@@ -8,7 +8,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-29T16:49:27")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-07-29T22:29:14")
 @StaticMetamodel(Auction.class)
 public class Auction_ { 
 
@@ -20,5 +20,7 @@ public class Auction_ {
     public static volatile SingularAttribute<Auction, Long> startingPrice;
     public static volatile SingularAttribute<Auction, User> userId;
     public static volatile SingularAttribute<Auction, String> content;
+    public static volatile SingularAttribute<Auction, Date> auctionDate;
+    public static volatile SingularAttribute<Auction, String> hashtag;
 
 }

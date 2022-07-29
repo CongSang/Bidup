@@ -4,6 +4,7 @@ com.charitysm.configs.TilesConfig=org.springframework.stereotype.Component
 com.charitysm.configs.WebAppContextConfig=org.springframework.stereotype.Component
 com.charitysm.controllers.APILoginFbController=org.springframework.stereotype.Component
 com.charitysm.controllers.AdminController=org.springframework.stereotype.Component
+com.charitysm.controllers.ApiAuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.ApiPostController=org.springframework.stereotype.Component
 com.charitysm.controllers.AuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component

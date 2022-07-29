@@ -54,6 +54,7 @@
         </div>
 
         <c:url value="/resources/js/main.js" var="mainJs" />
-        <script type="module" src="${mainJs}"></script>
+        <script src="${mainJs}"></script>
+        <script src="<c:url value="/resources/js/auction.js" />"></script>
     </body>
 </html>

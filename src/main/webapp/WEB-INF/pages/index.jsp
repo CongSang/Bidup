@@ -86,7 +86,6 @@
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
             loadPosts('${endpoint}', '${currentUser.getId()}');
-
         });
         window.addEventListener("scroll", jQuery(function ($) {
             $('.home-content').on('scroll', function () {
