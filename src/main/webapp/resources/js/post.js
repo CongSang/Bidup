@@ -15,6 +15,18 @@ function loadPosts(endpoint, currentUserId) {
 function loadFeeds(posts, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
+        
+        let userComment = post.commentSet.filter(c => c.userId.id === currentUserId);
+        userComment.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.commentDate) - new Date(a.commentDate);
+        });
+        let othersComment = post.commentSet.filter(c => c.userId.id !== currentUserId);
+        othersComment.sort(function(a,b){
+            return new Date(b.commentDate) - new Date(a.commentDate);
+        });
+        
         const html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
@@ -75,7 +87,7 @@ function loadFeeds(posts, currentUserId) {
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover">
+                                <div class="post--action-hover" id="likeAction" onclick="createReact('${currentUserId}', '${post.id}', this)">
                                     ${((post.reactSet).length === 0) ? (
                                             `<i class="fa-regular fa-heart post--action-icon"></i>`
                                         ) : (
@@ -86,7 +98,7 @@ function loadFeeds(posts, currentUserId) {
                                             })
                                         )
                                     }
-                                    <span class="post--action-text ms-2">Thích (${post.reactSet.length})</span>
+                                    <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>
                                 </div>
                             </div>
                             <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
@@ -105,32 +117,55 @@ function loadFeeds(posts, currentUserId) {
                                         <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="">
                                     </a>
                                 </div>
-                                <form class="w-100" onsubmit="addComment('${currentUserId}', '${post.id}', this)" id="commentForm">
+                                <form class="w-100" onsubmit="addComment('${post.id}', this)" id="commentForm">
                                     <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
                                 </form>
                             </div>
-                            
-                          ${(post.commentSet).map((comment, index) => {
-                              return `
-                                    <div class="d-flex comment--item py-2">
-                                        <div class="me-2">
-                                            <a href="#">
-                                                <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <div class="bg-light comment--item-content">
-                                                <div class="d-flex justify-content-between">
-                                                    <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
-                                                    <small>${moment(comment.commentDate).fromNow()}</small>
-                                                </div>
-                                                <p class="small mb-0">
-                                                    ${comment.content}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                          }).join('')}
+                            <div id="commentedComment">
+                                ${(userComment).map((comment, index) => {
+                                    return `
+                                          <div class="d-flex comment--item py-2">
+                                              <div class="me-2">
+                                                  <a href="#">
+                                                      <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <div class="bg-light comment--item-content">
+                                                      <div class="d-flex justify-content-between">
+                                                          <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <small>${moment(comment.commentDate).fromNow()}</small>
+                                                      </div>
+                                                      <p class="small mb-0">
+                                                          ${comment.content}
+                                                      </p>
+                                                  </div>
+                                              </div>
+                                          </div>`;
+                                }).join('')}
+                                
+                                ${(othersComment).map((comment, index) => {
+                                    return `
+                                          <div class="d-flex comment--item py-2">
+                                              <div class="me-2">
+                                                  <a href="#">
+                                                      <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <div class="bg-light comment--item-content">
+                                                      <div class="d-flex justify-content-between">
+                                                          <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <small>${moment(comment.commentDate).fromNow()}</small>
+                                                      </div>
+                                                      <p class="small mb-0">
+                                                          ${comment.content}
+                                                      </p>
+                                                  </div>
+                                              </div>
+                                          </div>`;
+                                }).join('')}
+                            </div>
                             
                         </div>
                     </div>

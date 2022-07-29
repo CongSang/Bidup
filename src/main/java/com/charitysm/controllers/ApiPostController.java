@@ -7,12 +7,23 @@ package com.charitysm.controllers;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.CommentRequest;
 import com.charitysm.pojo.Post;
+import com.charitysm.pojo.React;
+import com.charitysm.pojo.ReactPK;
+import com.charitysm.pojo.ReactRequest;
 import com.charitysm.pojo.User;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
+import com.charitysm.services.ReactService;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,23 +46,26 @@ public class ApiPostController {
     private PostService postService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ReactService reactService;
     
     @Async
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> getPosts(HttpSession session) {
-        User currentUser = (User)session.getAttribute("currentUser");
+        //load post theo follow
+//        User currentUser = (User)session.getAttribute("currentUser");
+//        String userId = currentUser.getId();
         int page = Integer.parseInt(session.getAttribute("page").toString());
-   
-        String userId = currentUser.getId();
+        
         ResponseEntity<List<Post>> res = new ResponseEntity<>(this.postService.getPosts(null, page), HttpStatus.OK);
+        
         session.setAttribute("page", ++page);
-        System.out.println(page);
         return res;
     }
     
     @Async
     @PostMapping("/create-comment")
-    public ResponseEntity<Comment> addComment(@RequestBody CommentRequest c, HttpSession session) {
+    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c, HttpSession session) {
         Comment comm = new Comment();
         comm.setContent(c.getContent());
         comm.setCommentDate(new Date());
@@ -63,5 +77,35 @@ public class ApiPostController {
         comm.setUserId(u);
         
         return new ResponseEntity<>(commentService.createComment(comm), HttpStatus.CREATED);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/create-react")
+    public void createReact(@RequestBody ReactRequest r, HttpSession session) {
+        React react = new React();
+        react.setType((short)1);
+
+        Post p = postService.getPostById(r.getPostId());
+        User u = (User)session.getAttribute("currentUser");
+        ReactPK rPK = new ReactPK();
+        rPK.setPostId(r.getPostId());
+        rPK.setUserId(u.getId());
+
+        react.setReactPK(rPK);
+        react.setPost(p);
+        react.setUser(u);
+
+        reactService.createReact(react);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("/delete-react")
+    public void deleteReact(@RequestBody ReactRequest r, HttpSession session) {
+        User u = (User)session.getAttribute("currentUser");
+        React react = reactService.findReact(u.getId(), r.getPostId());
+        if (react != null)
+            reactService.deleteReact(react);
     }
 }
