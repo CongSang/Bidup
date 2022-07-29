@@ -30,6 +30,7 @@ public class IndexController {
             String email = auth.getName();
             User user = userService.getUserByEmail(email);
             session.setAttribute("currentUser", user);
+            session.setAttribute("page", 1);
         }
         
 //        model.addAttribute("posts", this.postService.getPosts(null, 0));

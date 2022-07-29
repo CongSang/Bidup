@@ -74,5 +74,14 @@ public class PostRepositoryImpl implements PostRepository {
 
         return Integer.parseInt(q.getSingleResult().toString());
     }
+    
+    @Override
+    public Post getPostById(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNamedQuery("Post.findById");
+        q.setParameter("id", id);
+        
+        return (Post)q.getSingleResult();
+    }
 
 }
