@@ -2,9 +2,6 @@ const modal = document.querySelector(".modal-post");
 const modalContainer = document.querySelector(".modal-container-post");
 const btn_close = document.querySelectorAll(".modal--close-post");
 const btn_show = document.querySelectorAll(".btn-show--post");
-const chat_menu = document.querySelector("#chat");
-const sidebar_right = document.querySelector(".sidebar-right");
-const close_chat = document.querySelector(".chat--close");
 
 function showModal() {
     modal.classList.add('open');
@@ -29,10 +26,10 @@ modalContainer.addEventListener("click", function (event) {
 //Show image after pick picture
 function previewImage() {
     var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+    oFReader.readAsDataURL(document.querySelector("#uploadImage").files[0]);
 
     oFReader.onload = function (oFREvent) {
-        document.getElementById("uploadPreview").src = oFREvent.target.result;
+        document.querySelector("#uploadPreview").src = oFREvent.target.result;
     };
 };
 
@@ -53,12 +50,3 @@ function showComment(element) {
         is_show = true;
     }
 };
-
-//chat menu
-chat_menu.addEventListener("click", () => {
-    sidebar_right.style.display = "block";
-});
-
-close_chat.addEventListener("click", () => {
-    sidebar_right.style.display = "none";
-});

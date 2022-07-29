@@ -6,7 +6,6 @@ function loadPosts(endpoint, currentUserId) {
         dataType: 'json',
         success: function (data) {
             loadFeeds(data, currentUserId);
-            console.log(data.length);
             if(data.length !== 0)
                 $('.post-loading').css("display", "none");
         }
@@ -42,7 +41,7 @@ function loadFeeds(posts, currentUserId) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="#">${post.userId.firstname}</a>
+                                            <a href="#">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>

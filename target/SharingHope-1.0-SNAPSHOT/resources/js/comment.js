@@ -2,7 +2,6 @@ function addComment(currentUser, currentPost, formEl) {
     event.preventDefault();
 //    var form = document.forms.commentForm;
     var formData = new FormData(formEl);
-    console.log(`${currentUser} commented on ${currentPost}: ${formData.get('commentContent')}`);
     
     $.ajax({
         type: 'post',
@@ -15,7 +14,6 @@ function addComment(currentUser, currentPost, formEl) {
         contentType: 'application/json',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             var h = `<div class="d-flex comment--item py-2">
                         <div class="me-2">
                             <a href="#">

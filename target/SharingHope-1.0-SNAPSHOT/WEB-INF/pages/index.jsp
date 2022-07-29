@@ -49,9 +49,9 @@
                     </form>
                 </div>
 
-                <div class="dropzone card shadow-none position-relative">
-                    <img id="uploadPreview" />
-                    <label class="d-flex align-items-center" style="cursor: pointer;">
+                <div class="dropzone card shadow-none w-100">
+                    <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                        <img id="uploadPreview" />
                         <div class="d-flex justify-content-center align-items-center h-100">
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <i class="fa-solid fa-images images-icon"></i>
@@ -72,13 +72,14 @@
 
     <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
         <div class="modal--picture position-relative">
-            <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 2px; font-size: 20px"></i>
+            <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
             <img id="img01" style="width:100%">
         </div>
     </div>
 </div>
 
 
+<script src="<c:url value="/resources/js/home.js" />"></script>
 <script src="<c:url value="/resources/js/post.js" />"></script>
 <script src="<c:url value="/resources/js/comment.js" />"></script>
 <script>
