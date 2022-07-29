@@ -42,7 +42,6 @@ com\charitysm\services\impl\UserServiceImpl.class
 com\charitysm\pojo\BidPK.class
 com\charitysm\repositories\PostRepository.class
 com\charitysm\repositories\NotificationRepository.class
-.netbeans_automatic_build
 com\charitysm\repositories\BidRepository.class
 com\charitysm\pojo\Comment_.class
 com\charitysm\pojo\Notification_.class
