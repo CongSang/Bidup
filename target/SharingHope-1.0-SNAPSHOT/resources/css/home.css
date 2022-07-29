@@ -71,6 +71,7 @@ a {
     width: 100%;
     aspect-ratio: 16/10;
     transition: all 0.2s ease-in;
+    object-fit: cover;
 }
 
 .post--img:hover {
@@ -183,7 +184,9 @@ a {
 }
 
 .dropzone {
-    min-height: 210px;
+    position: relative;
+    height: 240px;
+    max-height: 100%;
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -192,13 +195,21 @@ a {
 }
 
 #uploadPreview {
-    width: 30%;
-    border-radius: 5px;
     position: absolute;
-    top:0;
+    top: 0;
     bottom: 0;
-    left: 0;
-    margin: auto;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+#uploadPreview1 {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
 }
 
 .images-icon {
@@ -219,6 +230,7 @@ a {
 .comment--avatar {
     width: 36px;
     height: 36px;
+    object-fit: cover;
 }
 
 .add-comment {

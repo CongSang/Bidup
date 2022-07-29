@@ -41,7 +41,8 @@
                         </a>
                     </li>
                     <li class="nav-item px-2">
-                        <a class="nav-link" href="#" id="auction">
+                        <c:url value="/auction" var="auctionUrl" />
+                        <a class="nav-link" href="${auctionUrl}" id="auction">
                             <i class="fa-solid fa-gavel menu-icon"></i>
                             Đấu giá
                         </a>
@@ -101,7 +102,8 @@
                             <span>Xin chào ${currentUser.getFirstname()}</span>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <c:url value="/user" var="userInfoUrl" />
+                            <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
                                 <i class="fa-solid fa-user me-2"></i>
                                 Trang cá nhân
                             </a>
