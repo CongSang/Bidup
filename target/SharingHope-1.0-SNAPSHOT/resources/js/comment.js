@@ -35,8 +35,8 @@ function addComment(currentUser, currentPost, formEl) {
                         </div>
                     </div>`;
             
-            var commentSection = $(formEl).parents('.comment');
-            $(commentSection).append(h);
+            var commentSection = $(formEl).parents('.comment').find('#commentedComment');
+            $(commentSection).prepend(h);
         }
     });
     

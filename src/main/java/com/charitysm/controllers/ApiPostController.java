@@ -10,9 +10,16 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,19 +46,20 @@ public class ApiPostController {
     @Async
     @GetMapping("/posts")
     public ResponseEntity<List<Post>> getPosts(HttpSession session) {
-        User currentUser = (User)session.getAttribute("currentUser");
+        //load post theo follow
+//        User currentUser = (User)session.getAttribute("currentUser");
+//        String userId = currentUser.getId();
         int page = Integer.parseInt(session.getAttribute("page").toString());
-   
-        String userId = currentUser.getId();
+        
         ResponseEntity<List<Post>> res = new ResponseEntity<>(this.postService.getPosts(null, page), HttpStatus.OK);
+        
         session.setAttribute("page", ++page);
-        System.out.println(page);
         return res;
     }
     
     @Async
     @PostMapping("/create-comment")
-    public ResponseEntity<Comment> addComment(@RequestBody CommentRequest c, HttpSession session) {
+    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c, HttpSession session) {
         Comment comm = new Comment();
         comm.setContent(c.getContent());
         comm.setCommentDate(new Date());
