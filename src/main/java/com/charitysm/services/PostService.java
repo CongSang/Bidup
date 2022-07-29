@@ -15,4 +15,5 @@ import java.util.Map;
 public interface PostService {
     List<Post> getPosts(Map<String, String> params, int page);
     int countPosts();
+    Post getPostById(int id);
 }

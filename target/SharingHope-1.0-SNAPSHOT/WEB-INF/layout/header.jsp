@@ -95,7 +95,7 @@
                 </div>
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="${currentUser.getAvatar()}" alt="avatar" class="user-img" />
+                        <img id="userAvatar" src="${currentUser.getAvatar()}" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="dropdown-item">
