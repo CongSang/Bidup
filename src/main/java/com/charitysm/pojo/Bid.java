@@ -4,7 +4,9 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,6 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message")})
 public class Bid implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bid_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bidDate;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected BidPK bidPK;
@@ -45,6 +55,7 @@ public class Bid implements Serializable {
     private String message;
     @JoinColumn(name = "auction_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Auction auction;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -129,6 +140,14 @@ public class Bid implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Bid[ bidPK=" + bidPK + " ]";
+    }
+
+    public Date getBidDate() {
+        return bidDate;
+    }
+
+    public void setBidDate(Date bidDate) {
+        this.bidDate = bidDate;
     }
     
 }

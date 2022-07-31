@@ -29,22 +29,28 @@ function addComment(currentPostId, formEl) {
                                     ${data.content}
                                 </p>
                             </div>
+                            <div class="d-flex justify-content-end me-2 comment-delete">
+                                Xóa
+                            </div>
                         </div>
                     </div>`;
             
             var commentSection = $(formEl).parents('.comment').find('#commentedComment');
             $(commentSection).prepend(h);
+            
+            const countComment = $(formEl).parents('.post').find('#commentCounter');
+            countComment.text(parseInt(countComment.text()) + 1);
+            $(formEl).parents('.comment').find('.add-comment').val("");
         }
     });
 }   
 
 function createReact(currentUserId, currentPostId, element) {
-    var heartReact = $(element).find(".fa-heart");
+    var heartReact = $(element).find(".heart-like-button");
     
     if ($(heartReact).hasClass("liked")) {
         
-        $(heartReact).removeClass("liked fa-solid");
-        $(heartReact).addClass("fa-regular");
+        $(heartReact).removeClass("liked");
         likeCounter = parseInt($(element).find('#likeCounter').text()) - 1;
         $(element).find('#likeCounter').text(likeCounter);
         
@@ -59,8 +65,7 @@ function createReact(currentUserId, currentPostId, element) {
         });
     }
     else {
-        $(heartReact).removeClass("fa-regular");
-        $(heartReact).addClass("fa-solid liked");
+        $(heartReact).addClass("liked");
         likeCounter = parseInt($(element).find('#likeCounter').text()) + 1;
         $(element).find('#likeCounter').text(likeCounter);
         

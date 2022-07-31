@@ -1,13 +1,48 @@
 
-function loadPosts(endpoint, currentUserId) {
+//Load theo trang cho trang chu
+var postPage = 1;
+var postFetching = false;
+var disableLoadMorePost = false;
+
+function postNextPage() {
+    if (postFetching) return;
+    
+    postPage++;
+}
+
+function customHashtag(element) {
+    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
+    var str_content_origin = $(element).text();
+    var str_content = str_content_origin.match(rgxp);
+    $.each(str_content, function(index, v){
+        var hashtag = v.trim();
+        var repl = `<span class="tag">${v}</span>`;
+        console.log(hashtag);
+        $(element).html($(element).html().replace(hashtag, repl));
+    });
+}
+
+function loadPosts(endpoint, currentUserId, page) {
+    if (!page) {
+        page = 1;
+    }
+    
+    $('.post-loading').css("display", "block");
+    auctionFetching = true;
+
     $.ajax({
         type: 'get',
-        url: endpoint,
+        url: endpoint + '?page=' + page,
         dataType: 'json',
         success: function (data) {
+            
+            if (data.length === 0) {
+                disableLoadMorePost = true;
+            }
+            
             loadFeeds(data, currentUserId);
-            if(data.length !== 0)
-                $('.post-loading').css("display", "none");
+            $('.post-loading').css("display", "none");
+            postFetching = false;
         }
     });
 }
@@ -15,18 +50,18 @@ function loadPosts(endpoint, currentUserId) {
 function loadFeeds(posts, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
-        
+
         let userComment = post.commentSet.filter(c => c.userId.id === currentUserId);
-        userComment.sort(function(a,b){
+        userComment.sort(function (a, b) {
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
             return new Date(b.commentDate) - new Date(a.commentDate);
         });
         let othersComment = post.commentSet.filter(c => c.userId.id !== currentUserId);
-        othersComment.sort(function(a,b){
+        othersComment.sort(function (a, b) {
             return new Date(b.commentDate) - new Date(a.commentDate);
         });
-        
+
         const html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
@@ -64,7 +99,7 @@ function loadFeeds(posts, currentUserId) {
                                                     Xóa bài viết
                                                 </a>
                                             </li>` : ``
-                                   }
+                                        }
                                     <li>
                                         <a class="dropdown-item" href="#">
                                             Báo cáo
@@ -77,7 +112,7 @@ function loadFeeds(posts, currentUserId) {
                     </div>
 
                     <div class="card-body pb-2">
-                        <p class="post--content mb-3">
+                        <p class="post--content mb-3 content--hashtag post-${post.id}">
                             ${post.content}
                         </p>
         
@@ -89,14 +124,14 @@ function loadFeeds(posts, currentUserId) {
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                 <div class="post--action-hover" id="likeAction" onclick="createReact('${currentUserId}', '${post.id}', this)">
                                     ${((post.reactSet).length === 0) ? (
-                                            `<i class="fa-regular fa-heart post--action-icon"></i>`
-                                        ) : (
+                                            `<div class="heart-like-button"></div>`
+                                            ) : (
                                             (post.reactSet).map((react, index) => {
-                                                return (currentUserId === react.user.id) ?
-                                                         `<i class="fa-solid fa-heart post--action-icon liked"></i>`
-                                                         : `<i class="fa-regular fa-heart post--action-icon"></i>`;
-                                            })
-                                        )
+                                        return (currentUserId === react.user.id) ?
+                                                `<div class="heart-like-button liked"></div>`
+                                                : `<div class="heart-like-button"></div>`;
+                                    })
+                                            )
                                     }
                                     <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>
                                 </div>
@@ -104,7 +139,7 @@ function loadFeeds(posts, currentUserId) {
                             <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
                                 <div class="post--action-hover" onclick="showComment(this)">
                                     <i class="fa-regular fa-message post--action-icon"></i>
-                                    <span class="post--action-text ms-2">Bình luận (${post.commentSet.length})</span>
+                                    <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">${post.commentSet.length}</span>)</span>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +158,7 @@ function loadFeeds(posts, currentUserId) {
                             </div>
                             <div id="commentedComment">
                                 ${(userComment).map((comment, index) => {
-                                    return `
+                                        return `
                                           <div class="d-flex comment--item py-2">
                                               <div class="me-2">
                                                   <a href="#">
@@ -140,12 +175,15 @@ function loadFeeds(posts, currentUserId) {
                                                           ${comment.content}
                                                       </p>
                                                   </div>
+                                                  <div class="d-flex justify-content-end me-2 comment-delete">
+                                                        Xóa
+                                                    </div>
                                               </div>
                                           </div>`;
                                 }).join('')}
                                 
                                 ${(othersComment).map((comment, index) => {
-                                    return `
+                                     return `
                                           <div class="d-flex comment--item py-2">
                                               <div class="me-2">
                                                   <a href="#">
@@ -173,7 +211,7 @@ function loadFeeds(posts, currentUserId) {
             </div>
             `;
 
-
         $('#feeds-container').append(html);
+        customHashtag(`.post-${post.id}`);
     });
 };

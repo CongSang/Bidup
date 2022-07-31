@@ -4,10 +4,16 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.Auction;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author ADMIN
  */
 public interface AuctionService {
-    
+
+    List<Auction> getAuctionSideBar();
+    List<Auction> getAuctions(Map<String, String> params, int page);
 }

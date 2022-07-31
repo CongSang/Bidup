@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -11,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,6 +46,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active")})
 public class Auction implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "auction_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date auctionDate;
+    @Size(max = 100)
+    @Column(name = "hashtag")
+    private String hashtag;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +78,7 @@ public class Auction implements Serializable {
     private Date endDate;
     @Column(name = "active")
     private Short active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auction")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auction", fetch = FetchType.EAGER)
     private Set<Bid> bidSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -174,6 +185,22 @@ public class Auction implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Auction[ id=" + id + " ]";
+    }
+
+    public Date getAuctionDate() {
+        return auctionDate;
+    }
+
+    public void setAuctionDate(Date auctionDate) {
+        this.auctionDate = auctionDate;
+    }
+
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
     
 }
