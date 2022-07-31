@@ -22,7 +22,11 @@
     </div>
 
     <div class="auction-container">
-        
+
+    </div>
+
+    <div class="text-center mt-3 auction-loading">
+        <div class="spinner-border text-muted"></div>
     </div>
 
 
@@ -41,8 +45,8 @@
                     <div>
                         <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
-                    <form class="w-100">
-                        <textarea class="form-control pe-4 fs-4 lh-1 border-0" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                    <form class="w-100 ms-1">
+                        <textarea class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
 
                         <div class="form-group">
                             <label for="start-price">Giá khởi điểm</label>
@@ -80,9 +84,22 @@
     </div>
 </div>
 
+<script src="<c:url value="/resources/js/auction.js" />"></script>
 <script>
     <c:url value="/api/auctions" var="endpoint" />
-    $(function () {
-        loadAuctions('${endpoint}', '${currentUser.getId()}');
-    });
+        $(function () {
+            loadAuctions('${endpoint}', '${currentUser.getId()}');
+            $("textarea").hashtags();
+        });
+
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var windowHeight = $(this).height();
+            var documentHeight = $(document).height();
+
+            if ((windowHeight + scrollTop) >= documentHeight) {
+                auctionNextPage();
+                !disableLoadMoreAuction && loadAuctions('${endpoint}', '${currentUser.getId()}', auctionPage);
+            }
+        });
 </script>

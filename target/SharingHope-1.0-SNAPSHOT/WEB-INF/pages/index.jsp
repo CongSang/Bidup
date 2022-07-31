@@ -44,8 +44,8 @@
                     <div>
                         <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
-                    <form class="w-100">
-                        <textarea class="form-control pe-4 fs-4 lh-1 border-0" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                    <form class="w-100 ms-1">
+                        <textarea class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
                     </form>
                 </div>
 
@@ -86,14 +86,18 @@
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
             loadPosts('${endpoint}', '${currentUser.getId()}');
+            $("textarea").hashtags();
         });
-        window.addEventListener("scroll", jQuery(function ($) {
-            $('.home-content').on('scroll', function () {
-                if ($(this).scrollTop() + $(this).innerHeight() >= ($(this)[0].scrollHeight - 0.4)) {
-                    $('.post-loading').css("display", "block");
-                    loadPosts('${endpoint}', '${currentUser.getId()}');
-                }
-            });
-        }));
+        
+        $(window).scroll(function () {
+            var scrollTop = $(document).scrollTop();
+            var windowHeight = $(this).height();
+            var documentHeight = $(document).height();
+
+            if ((windowHeight + scrollTop) >= documentHeight) {
+                postNextPage();
+                !disableLoadMorePost && loadPosts('${endpoint}', '${currentUser.getId()}', postPage);
+            }
+        });
 
 </script>

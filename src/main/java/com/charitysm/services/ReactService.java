@@ -4,10 +4,14 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.React;
+
 /**
  *
  * @author ADMIN
  */
 public interface ReactService {
-    
+    void createReact(React r);
+    void deleteReact(React r);
+    React findReact(String userId, int postId);
 }

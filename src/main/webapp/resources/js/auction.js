@@ -49,42 +49,55 @@ function showFollowAuction(element) {
     }
 };
 
-function loadSideBarLeft() {
-    $.ajax({
-        type: 'get',
-        url: '/SharingHope/api/auction-side',
-        dataType: 'json',
-        success: function (data) {
-            $.each(data, function (index, item) {
-                let html = `
-                    <div class="d-flex align-items-center pt-4">
-                        <div class="p-1">
-                            <a href="#">
-                                <img src="${item.userId.avatar}" alt="avatar" class="avatar-img rounded-circle"/>
-                            </a>
-                        </div>
-                        <div class="ms-2 small">
-                            <h6 class="card-title mb-0"><a href="#">${item.userId.lastname} ${item.userId.firstname}</a></h6>
-                            đã đăng đấu giá
-                            <span>${moment(item.auctionDate).fromNow()}</span>
-                        </div>
-                    </div>
-                `;
-            
-                $('.auction-side--item').append(html);
-                $('.sideleft-loading').css("display", "none");
-            });
-        }
+//Load theo trang cho trang dau gia
+var auctionPage = 1;
+var auctionFetching = false;
+var disableLoadMoreAuction = false;
+
+function auctionNextPage() {
+    if (auctionFetching) return;
+    
+    auctionPage++;
+}
+
+function formatMoney (value) {
+    const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+    
+    return money;
+}
+
+
+function customHashtag(element) {
+    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
+    var str_content_origin = $(element).text();
+    var str_content = str_content_origin.match(rgxp);
+    $.each(str_content, function(index, v){
+        var hashtag = v.trim();
+        var repl = `<span class="tag">${v}</span>`;
+        $(element).html($(element).html().replace(hashtag, repl));
     });
 }
 
-function loadAuctions(endpoint, currentUserId) {
+function loadAuctions(endpoint, currentUserId, page) {
+    if (!page) {
+        page = 1;
+    }
+    
+    $('.auction-loading').css("display", "block");
+    auctionFetching = true;
+    
     $.ajax({
         type: 'get',
-        url: endpoint,
+        url: endpoint + '?page=' + page,
         dataType: 'json',
         success: function (data) {
+            if (data.length === 0) {
+                disableLoadMoreAuction = true;
+            }
+            
             loadAuctionFeeds(data, currentUserId);
+            $('.auction-loading').css("display", "none");
+            auctionFetching = false;
         }
     });
 }
@@ -141,12 +154,12 @@ function loadAuctionFeeds(auctions, currentUserId) {
                             </div>
                         </div>
                         <div class="card-body pb-2">
-                            <p class="post--content mb-3">
+                            <p class="post--content mb-3 auction-${auction.id}">
                                 ${auction.content}
                             </p>
-
+        
                             <p class="auction--price mb-3">
-                                Giá khởi điểm:<span class="ms-2">${auction.startingPrice} VNĐ</span>
+                                Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>
                             </p>
 
                             <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
@@ -180,7 +193,7 @@ function loadAuctionFeeds(auctions, currentUserId) {
                                                     </div>
 
                                                     <p class="small mb-0">
-                                                        ${bid.money}
+                                                        ${formatMoney(bid.money)}
                                                     </p>
                                                 </div>
                                             </div>
@@ -232,12 +245,12 @@ function loadAuctionFeeds(auctions, currentUserId) {
                             </div>
                         </div>
                         <div class="card-body pb-2">
-                            <p class="post--content mb-3">
+                            <p class="post--content mb-3 auction-${auction.id}">
                                 ${auction.content}
                             </p>
-
+                            
                             <p class="auction--price mb-3">
-                                Giá khởi điểm:<span class="ms-2">${auction.startingPrice} VNĐ</span>
+                                Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>
                             </p>
 
                             <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
@@ -273,5 +286,6 @@ function loadAuctionFeeds(auctions, currentUserId) {
         `;
         
         $('.auction-container').append(html);
+        customHashtag(`.auction-${auction.id}`);
     });
 }

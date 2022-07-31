@@ -4,33 +4,16 @@
  */
 package com.charitysm.pojo;
 
-import java.io.Serializable;
-
 /**
  *
  * @author ADMIN
  */
-public class CommentRequest implements Serializable{
-    private String content;
+public class ReactRequest {
     private int postId;
 
-    public CommentRequest() {
+    public ReactRequest() {
     }
-
-    /**
-     * @return the content
-     */
-    public String getContent() {
-        return content;
-    }
-
-    /**
-     * @param content the content to set
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
-
+    
     /**
      * @return the postId
      */
@@ -44,5 +27,6 @@ public class CommentRequest implements Serializable{
     public void setPostId(int postId) {
         this.postId = postId;
     }
+    
     
 }

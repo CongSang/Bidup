@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,8 +36,8 @@ public class ApiAuctionController {
     
     @Async
     @GetMapping("/auctions")
-    public ResponseEntity<List<Auction>> getPosts() {
+    public ResponseEntity<List<Auction>> getPosts(@RequestParam("page") int page) {
    
-        return new ResponseEntity<>(this.auctionService.getAuctions(null, 0), HttpStatus.OK);
+        return new ResponseEntity<>(this.auctionService.getAuctions(null, page), HttpStatus.OK);
     }
 }

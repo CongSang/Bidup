@@ -19,6 +19,7 @@ com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\User_.class
 com\charitysm\pojo\CommentRequest.class
 com\charitysm\pojo\Bid_.class
+com\charitysm\pojo\ReactRequest.class
 com\charitysm\pojo\Post_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
