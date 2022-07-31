@@ -10,6 +10,7 @@ com\charitysm\services\impl\CommentServiceImpl.class
 com\charitysm\services\CommentService.class
 com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\controllers\IndexController.class
+com\charitysm\pojo\BidRequest.class
 com\charitysm\pojo\Post.class
 com\charitysm\services\PostService.class
 com\charitysm\repositories\impl\UserRepositoryImpl.class

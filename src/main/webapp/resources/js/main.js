@@ -1,5 +1,24 @@
 
-const chat_menu = document.querySelector("#chat");
+$(function () {
+    let pathName = location.pathname.split("/").find(function (element) {
+        if (element.indexOf("SharingHope"))
+            return element;
+    });
+    
+    switch (pathName) {
+        case undefined:
+            $('#homeMenu').addClass('active');
+            break;
+        case "auction":
+            $('#auctionMenu').addClass('active');
+            break;
+        case "admin":
+            $('#chartMenu').addClass('active');
+            break;
+    }
+});
+
+const chat_menu = document.querySelector("#chatMenu");
 const sidebar_right = document.querySelector(".sidebar-right");
 const close_chat = document.querySelector(".chat--close");
 

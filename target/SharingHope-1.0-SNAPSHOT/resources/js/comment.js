@@ -1,6 +1,5 @@
 function addComment(currentPostId, formEl) {
     event.preventDefault();
-//    var form = document.forms.commentForm;
     var formData = new FormData(formEl);
     
     $.ajax({
@@ -55,7 +54,7 @@ function createReact(currentUserId, currentPostId, element) {
         $(element).find('#likeCounter').text(likeCounter);
         
         $.ajax({
-            type: 'post',
+            type: 'delete',
             url: '/SharingHope/api/delete-react',
             data:JSON.stringify({
                 'postId':currentPostId

@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId"),
     @NamedQuery(name = "Bid.findByAuctionId", query = "SELECT b FROM Bid b WHERE b.bidPK.auctionId = :auctionId"),
     @NamedQuery(name = "Bid.findByMoney", query = "SELECT b FROM Bid b WHERE b.money = :money"),
-    @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message")})
+    @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message"),
+    @NamedQuery(name = "Bid.findForUser", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId AND b.bidPK.auctionId = :auctionId")})
 public class Bid implements Serializable {
 
     @Basic(optional = false)

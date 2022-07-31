@@ -4,12 +4,8 @@
  */
 package com.charitysm.repositories.impl;
 
-import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.repositories.ReactRepository;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -54,6 +54,8 @@ public class PostRepositoryImpl implements PostRepository {
 
             q.where(predicates.toArray(Predicate[]::new));
         }
+        
+        q.orderBy(b.desc(root.get("postedDate")));
 
         Query query = session.createQuery(q);
         if (page > 0) {
@@ -61,9 +63,7 @@ public class PostRepositoryImpl implements PostRepository {
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);
-
         }
-
         return query.getResultList();
     }
 
