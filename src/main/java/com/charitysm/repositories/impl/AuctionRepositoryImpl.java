@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ADMIN
  */
 @Repository
+@PropertySource("classpath:messages.properties")
 @Transactional
 public class AuctionRepositoryImpl implements AuctionRepository{
     
@@ -60,6 +62,8 @@ public class AuctionRepositoryImpl implements AuctionRepository{
 
             q.where(predicates.toArray(Predicate[]::new));
         }
+        
+        q.orderBy(b.desc(root.get("auctionDate")));
 
         Query query = session.createQuery(q);
         if (page > 0) {
@@ -68,8 +72,15 @@ public class AuctionRepositoryImpl implements AuctionRepository{
             query.setFirstResult(start);
             query.setMaxResults(size);
         }
-
         return query.getResultList();
     }
-    
+
+    @Override
+    public Auction getAuctionById(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNamedQuery("Auction.findById");
+        q.setParameter("id", id);
+        
+        return (Auction)q.getSingleResult();
+    }   
 }

@@ -35,31 +35,31 @@
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <li class="nav-item px-2">
-                        <a class="nav-link active" href="${mainUrl}" id="homeMenu">
+                        <a class="nav-link" href="${mainUrl}" id="homeMenu">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
                     </li>
                     <li class="nav-item px-2">
                         <c:url value="/auction" var="auctionUrl" />
-                        <a class="nav-link" href="${auctionUrl}" id="auction">
+                        <a class="nav-link" href="${auctionUrl}" id="auctionMenu">
                             <i class="fa-solid fa-gavel menu-icon"></i>
                             Đấu giá
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
-                        <a class="nav-link" href="#" id="chat">
+                        <a class="nav-link" href="#" id="chatMenu">
                             <i class="fa-solid fa-comment menu-icon"></i>
                             Trò chuyện
                         </a>
                     </li>
 
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                    
+
                     <c:if test="${currentUser.getUserRole() == 'ROLE_ADMIN'}">
                         <li class="nav-item px-2">
                             <c:url value="/admin" var="adminUrl" />
-                            <a class="nav-link" href="${adminUrl}" id="chart">
+                            <a class="nav-link" href="${adminUrl}" id="chartMenu">
                                 <i class="fa-solid fa-chart-simple menu-icon"></i>
                                 Thống kê & báo cáo
                             </a>
@@ -67,17 +67,33 @@
                     </c:if>
 
                     <li class="d-lg-none d-block nav-item px-2">
-                        <a class="nav-link" href="#" id="notify">
+                        <a class="nav-link" href="#" id="notifyMenu">
                             <i class="fa-solid fa-bell menu-icon"></i>
                             Thông báo
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
-                        <a class="nav-link d-flex align-items-center" href="#" id="userMenu">
+                        <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
                             <c:url value="/resources/img/non-avatar.png" var="avatar" />
                             <img src="${currentUser.getAvatar()}" alt="avatar" class="user-img me-2" />
                             ${currentUser.getFirstname()}
                         </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end drop" aria-labelledby="userMenu">
+                            <li>
+                                <c:url value="/user" var="userInfoUrl" />
+                                <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    Trang cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
+                                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                                    Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

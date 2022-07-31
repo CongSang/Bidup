@@ -17,7 +17,6 @@ function customHashtag(element) {
     $.each(str_content, function(index, v){
         var hashtag = v.trim();
         var repl = `<span class="tag">${v}</span>`;
-        console.log(hashtag);
         $(element).html($(element).html().replace(hashtag, repl));
     });
 }
@@ -126,11 +125,9 @@ function loadFeeds(posts, currentUserId) {
                                     ${((post.reactSet).length === 0) ? (
                                             `<div class="heart-like-button"></div>`
                                             ) : (
-                                            (post.reactSet).map((react, index) => {
-                                        return (currentUserId === react.user.id) ?
+                                            ((post.reactSet).some((react) => react.user.id === currentUserId)) ?
                                                 `<div class="heart-like-button liked"></div>`
-                                                : `<div class="heart-like-button"></div>`;
-                                    })
+                                                : `<div class="heart-like-button"></div>`
                                             )
                                     }
                                     <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>

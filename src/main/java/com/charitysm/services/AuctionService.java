@@ -16,4 +16,5 @@ public interface AuctionService {
 
     List<Auction> getAuctionSideBar();
     List<Auction> getAuctions(Map<String, String> params, int page);
+    Auction getAuctionById(int id);
 }

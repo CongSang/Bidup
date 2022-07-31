@@ -76,7 +76,7 @@
         </div>
     </div>  
 
-    <div id="modal02" class="modal align-items-center" onclick="this.style.display = 'none'">
+    <div id="modal02" class="modal align-items-center justify-content-center" onclick="this.style.display = 'none'">
         <div class="modal--picture position-relative">
             <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
             <img id="img02" style="width:100%">
@@ -85,6 +85,7 @@
 </div>
 
 <script src="<c:url value="/resources/js/auction.js" />"></script>
+<script src="<c:url value="/resources/js/bid.js" />"></script>
 <script>
     <c:url value="/api/auctions" var="endpoint" />
         $(function () {

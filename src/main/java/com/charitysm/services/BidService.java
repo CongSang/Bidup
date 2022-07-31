@@ -4,10 +4,14 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.Bid;
+
 /**
  *
  * @author ADMIN
  */
 public interface BidService {
-    
+    Bid createBid(Bid b);
+    void deleteBid(Bid b);
+    Bid findBid(String userId, int auctionId);
 }

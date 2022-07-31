@@ -105,6 +105,13 @@ function loadAuctions(endpoint, currentUserId, page) {
 function loadAuctionFeeds(auctions, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(auctions, function (index, auction) {
+        
+        let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
+        let bidSort = auction.bidSet.filter(c => c.user.id !== currentUserId);
+        bidSort.sort(function (a, b) {
+            return b.money - a.money;
+        });
+        
         let html = `
             ${(auction.userId.id === currentUserId) ? `
                 <div class="post">
@@ -177,7 +184,7 @@ function loadAuctionFeeds(auctions, currentUserId) {
 
                             <div class="auction-user-join auction-follow-list">
         
-                                ${(auction.bidSet).map((bid, index) => {
+                                ${(bidSort).map((bid, index) => {
                                     return `
                                           <div class="d-flex comment--item py-2">
                                             <div class="me-2">
@@ -258,25 +265,59 @@ function loadAuctionFeeds(auctions, currentUserId) {
                             <div class="line"></div>
 
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
-                                <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                    <div class="auction--action-hover">
-                                        <i class="fa-solid fa-gavel"></i>
-                                        <span class="auction--action-text ms-2">Đấu giá (${auction.bidSet.length})</span>
-                                    </div>
+                                <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
+                                    
+                                    ${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                                            `<div class="auction--action-hover" onclick="deleteBid(${auction.id}, this)">
+                                                <i class="fa-solid fa-circle-xmark"></i>
+                                                <span class="auction--action-text ms-2">Hủy tham gia</span>
+                                            </div>
+                                            ` : `
+                                            <div class="auction--action-hover">
+                                                <i class="fa-solid fa-gavel"></i>
+                                                <span class="auction--action-text ms-2">Đấu giá (${auction.bidSet.length} người đã tham gia)</span>
+                                            </div>
+                                            `
+                                    }
                                 </div>
                             </div>
-
+                            
                             <div class="auction-user-join">
-                                <div class="d-flex align-items-center my-2">
-                                    <div class="me-2">
-                                        <a href="#">
-                                            <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="avatar">
-                                        </a>
-                                    </div>
-                                    <form class="w-100">
-                                        <input type="number" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
-                                    </form>
-                                </div>
+                            ${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                                    `${userAuction && `
+                                            <div class="d-flex comment--item py-2">
+                                                <div class="me-2">
+                                                    <a href="#">
+                                                        <img class="comment--avatar rounded-circle" src="${userAuction[0].user.avatar}" alt="avatar">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div class="bg-light comment--item-content">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h6 class="mb-1 me-2"><a href="#">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
+                                                            <small>${moment(userAuction[0].bidDate).fromNow()}</small>
+                                                        </div>
+
+                                                        <p class="small mb-0">
+                                                            ${formatMoney(userAuction[0].money)}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `}
+                                    ` : `
+                                        <div class="d-flex align-items-center my-2">
+                                            <div class="me-2">
+                                                <a href="#">
+                                                    <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="avatar">
+                                                </a>
+                                            </div>
+                                            <form class="w-100" onsubmit="addBid(${auction.id}, this)">
+                                                <input type="number" name="bidValue" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
+                                            </form>
+                                        </div>
+                                    `
+                            }
                             </div>
 
                         </div>
