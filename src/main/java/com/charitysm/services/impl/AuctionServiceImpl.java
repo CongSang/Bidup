@@ -36,5 +36,10 @@ public class AuctionServiceImpl implements AuctionService{
     public Auction getAuctionById(int id) {
         return this.auctionRepository.getAuctionById(id);
     }
+
+    @Override
+    public void deleteAuction(int id) {
+        this.auctionRepository.deleteAuction(id);
+    }
     
 }

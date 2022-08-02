@@ -81,7 +81,7 @@
 
                         <ul class="dropdown-menu dropdown-menu-end drop" aria-labelledby="userMenu">
                             <li>
-                                <c:url value="/user" var="userInfoUrl" />
+                                <c:url value="/user/${currentUser.getId()}" var="userInfoUrl" />
                                 <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
                                     <i class="fa-solid fa-user me-2"></i>
                                     Trang cá nhân
@@ -118,7 +118,7 @@
                             <span>Xin chào ${currentUser.getFirstname()}</span>
                         </li>
                         <li>
-                            <c:url value="/user" var="userInfoUrl" />
+                            <c:url value="/user/${currentUser.getId()}" var="userInfoUrl" />
                             <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
                                 <i class="fa-solid fa-user me-2"></i>
                                 Trang cá nhân

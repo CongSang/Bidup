@@ -83,4 +83,15 @@ public class AuctionRepositoryImpl implements AuctionRepository{
         
         return (Auction)q.getSingleResult();
     }   
+
+    @Override
+    public void deleteAuction(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Auction auction = session.get(Auction.class, id);
+            session.delete(auction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

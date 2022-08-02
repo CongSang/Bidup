@@ -29,7 +29,7 @@ public class BidServiceImpl implements BidService{
     public void deleteBid(Bid b) {
         this.bidRepository.deleteBid(b);
     }
-
+    
     @Override
     public Bid findBid(String userId, int auctionId) {
         return bidRepository.findBid(userId, auctionId);
