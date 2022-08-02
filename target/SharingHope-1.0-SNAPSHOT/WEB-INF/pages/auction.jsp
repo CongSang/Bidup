@@ -21,6 +21,10 @@
         </div>
     </div>
 
+    <div class="text-center mt-3 post-loading" id="auctionLoadingTop" style="display:none;">
+        <div class="spinner-border text-muted"></div>
+    </div>
+
     <div class="auction-container">
 
     </div>
@@ -41,37 +45,43 @@
             </div>
 
             <div class="modal-body ">
-                <div class="d-flex mb-3">
-                    <div>
-                        <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
+                <form class="w-100" id="postAuctionForm">
+                    <div class="d-flex mb-2">
+                        <div>
+                            <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
+                        </div>
+                        <textarea class="form-control ms-2 pe-1 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
                     </div>
-                    <form class="w-100 ms-1">
-                        <textarea class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
-
-                        <div class="form-group">
-                            <label for="start-price">Giá khởi điểm</label>
-                            <input id="start-price" type="number" class="form-control"/>
+                    <div class="form-group mt-2">
+                        <label for="start-price" class="small">Giá khởi điểm</label>
+                        <input id="start-price" type="number" class="form-control"/>
+                        <span class="text-danger err-validate" style="display: none">Số tiền đấu giá tối thiểu phải là 1.000.000đ</span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="end-date" class="small">Ngày kết thúc</label>
+                        <div class="d-flex align-items-center">
+                            <input id="end-date" type="date" class="form-control me-1"/>
+                            <input id="end-date" type="time" class="form-control"/>
                         </div>
-                    </form>
-                </div>
-
-                <div class="dropzone card shadow-none position-relative">
-                    <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
-                        <img id="uploadPreview1" />
-                        <div class="d-flex justify-content-center align-items-center h-100">
-                            <div class="d-flex flex-column justify-content-center align-items-center">
-                                <i class="fa-solid fa-images images-icon"></i>
-                                <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
+                    </div>
+                    <div class="dropzone card shadow-none position-relative mt-4">
+                        <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                            <img id="uploadPreview1" />
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fa-solid fa-images images-icon"></i>
+                                    <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
+                                </div>
                             </div>
-                        </div>
-                        <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1()" />
-                    </label>
-                </div>
-            </div>
+                            <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1()" />
+                        </label>
+                    </div>
 
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-danger me-2 modal--close-auction">Huỷ</button>
-                <button type="button" class="btn btn-success">Đăng</button>
+                    <div class="d-flex align-items-center justify-content-end mt-3">
+                        <button type="button" class="btn btn-danger me-2 modal--close-auction">Huỷ</button>
+                        <button type="submit" class="btn btn-success">Đăng</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>  

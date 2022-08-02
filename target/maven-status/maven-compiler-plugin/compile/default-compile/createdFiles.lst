@@ -1,9 +1,11 @@
 com\charitysm\services\BidService.class
 com\charitysm\services\impl\BidServiceImpl.class
+com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
 META-INF\spring.components
 com\charitysm\repositories\CommentRepository.class
+com\charitysm\pojo\reobj\ReactRequest.class
 com\charitysm\controllers\LoginController.class
 com\charitysm\services\impl\ReactServiceImpl.class
 com\charitysm\services\impl\CommentServiceImpl.class
@@ -13,6 +15,7 @@ com\charitysm\controllers\IndexController.class
 com\charitysm\pojo\Post.class
 com\charitysm\services\PostService.class
 com\charitysm\repositories\impl\UserRepositoryImpl.class
+com\charitysm\pojo\reobj\BidRequest.class
 com\charitysm\configs\SecurityConfig.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\repositories\AuctionRepository.class
@@ -21,6 +24,7 @@ com\charitysm\pojo\Bid_.class
 com\charitysm\pojo\Post_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
+com\charitysm\utils\CloudinaryUtils.class
 com\charitysm\pojo\ReactPK_.class
 com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\services\impl\AuctionServiceImpl.class
@@ -53,6 +57,7 @@ com\charitysm\repositories\ReactRepository.class
 com\charitysm\controllers\UserInfoController.class
 com\charitysm\services\impl\NotificationServiceImpl.class
 com\charitysm\controllers\AdminController.class
+com\charitysm\pojo\reobj\FileUploadResponse.class
 com\charitysm\pojo\Auction.class
 com\charitysm\controllers\APILoginFbController.class
 com\charitysm\services\ReactService.class
@@ -61,3 +66,4 @@ com\charitysm\pojo\Notification.class
 com\charitysm\pojo\User.class
 com\charitysm\configs\WebAppContextConfig.class
 com\charitysm\pojo\Auction_.class
+com\charitysm\pojo\reobj\PostRequest.class

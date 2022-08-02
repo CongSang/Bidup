@@ -41,17 +41,25 @@
                             <div class="user-avatar d-flex flex-lg-row flex-column align-items-center justify-content-between w-100">
                                 <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center position-relative">
                                     <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                                    <img src="${avatar}" alt="avatar" class="user-avatar-img" />
+                                    <img src="${userInfo.avatar}" alt="avatar" class="user-avatar-img" />
                                     <div class="height-element d-flex align-items-center justify-content-center">
-                                        <h1 class="user-profile-name">Cong Sang</h1>
+                                        <h1 class="user-profile-name">${userInfo.lastname} ${userInfo.firstname}</h1>
                                     </div>
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <div class="btn-fix-profile">
-                                        <i class="fa-solid fa-pen me-2"></i>
-                                        Cập nhật trang cá nhân
-                                    </div>
+                                    <c:if test="${userInfo.id == currentUser.id}">
+                                        <div class="btn-fix-profile">
+                                            <i class="fa-solid fa-pen me-2"></i>
+                                            Cập nhật trang cá nhân
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${userInfo.id != currentUser.id}">
+                                        <div class="btn-report-user">
+                                            <i class="fa-solid fa-flag me-2"></i>
+                                            Báo cáo người dùng
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -84,31 +92,31 @@
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-a"></i>
                                         </div>
-                                        <span class="intro-text">Ho Nguyen Cong Sang</span>
+                                        <span class="intro-text">${userInfo.lastname} ${userInfo.firstname}</span>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-envelope"></i>
                                         </div>
-                                        <span class="intro-text">abc@gmail.com</span>
+                                        <span class="intro-text">${userInfo.email}</span>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-house"></i>
                                         </div>
-                                        <span class="intro-text">Sống tại hehehehe</span>
+                                        <span class="intro-text">Sống tại ${userInfo.address}</span>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-user"></i>
                                         </div>
-                                        <span class="intro-text">Sinh vien</span>
+                                        <span class="intro-text">${userInfo.job}</span>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-phone"></i>
                                         </div>
-                                        <span class="intro-text">0123456789</span>
+                                        <span class="intro-text">${userInfo.phone}</span>
                                     </div>
                                 </div>
                             </div>

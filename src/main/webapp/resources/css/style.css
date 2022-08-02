@@ -5,6 +5,10 @@
     overflow: hidden;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /*header css*/
 header {
     background-color: var(--white-color);
@@ -283,6 +287,7 @@ header {
     min-height:48px !important;
     line-height:20px;
     resize: none;
+    min-width: 280px;
 }
 
 .jqueryHashtags .hashtag{
@@ -292,4 +297,9 @@ header {
     font-size:18px;
     white-space: pre-wrap;
     line-height:20px;
+}
+
+.err-validate {
+    font-size: 12px;
+    margin-left: 4px;
 }

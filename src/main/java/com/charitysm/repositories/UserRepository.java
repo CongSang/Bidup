@@ -12,5 +12,6 @@ import com.charitysm.pojo.User;
  */
 public interface UserRepository {
     User getUser(String email);
-    User getUser(int id);
+
+    User getUserById(String id);
 }

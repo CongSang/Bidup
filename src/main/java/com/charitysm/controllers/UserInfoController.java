@@ -4,9 +4,13 @@
  */
 package com.charitysm.controllers;
 
+import com.charitysm.pojo.User;
+import com.charitysm.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -15,8 +19,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserInfoController {
     
-    @GetMapping("/user")
-    public String userinfo(Model model) {
+    @Autowired
+    private UserService userService;
+    
+    @GetMapping("/user/{userId}")
+    public String userinfo(Model model, @PathVariable(value = "userId") String id) {
+        
+        model.addAttribute("userInfo", this.userService.getUserById(id));
+        
         return "userinfo";
     }
 }

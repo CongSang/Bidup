@@ -75,7 +75,7 @@ function loadFeeds(posts, currentUserId) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="#">
+                                    <a href="/SharingHope/user/${post.userId.id}">
                                         <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
                                     </a>
                                 </div>
@@ -83,7 +83,7 @@ function loadFeeds(posts, currentUserId) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="#">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="/SharingHope/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -111,8 +111,6 @@ function loadFeeds(posts, currentUserId) {
                                                             </a>
                                                         </li>`
                                         }
-                                    
-                                    
                                 </ul>
                             </div>
                         </div>
@@ -131,7 +129,7 @@ function loadFeeds(posts, currentUserId) {
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover" id="likeAction" onclick="createReact('${currentUserId}', '${post.id}', this)">
+                                <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
                                     ${((post.reactSet).length === 0) ? (
                                             `<div class="heart-like-button"></div>`
                                             ) : (
@@ -171,14 +169,14 @@ function loadFeeds(posts, currentUserId) {
                                         return `
                                           <div class="d-flex comment--item py-2">
                                               <div class="me-2">
-                                                  <a href="#">
+                                                  <a href="/SharingHope/user/${comment.userId.id}">
                                                       <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
                                                   </a>
                                               </div>
                                               <div>
                                                 <div class="bg-light comment--item-content">
                                                     <div class="d-flex justify-content-between">
-                                                        <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                        <h6 class="mb-1 me-2"><a href="/SharingHope/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                         <small>${moment(comment.commentDate).fromNow()}</small>
                                                     </div>
                                                     <p class="small mb-0">
@@ -196,14 +194,14 @@ function loadFeeds(posts, currentUserId) {
                                      return `
                                           <div class="d-flex comment--item py-2">
                                               <div class="me-2">
-                                                  <a href="#">
+                                                  <a href="/SharingHope/user/${comment.userId.id}">
                                                       <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
                                                   </a>
                                               </div>
                                               <div>
                                                   <div class="bg-light comment--item-content">
                                                       <div class="d-flex justify-content-between">
-                                                          <h6 class="mb-1 me-2"><a href="#">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="/SharingHope/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                           <small>${moment(comment.commentDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">
@@ -226,65 +224,81 @@ function loadFeeds(posts, currentUserId) {
     });
 };
 
+function findHashtags(searchText) {
+    var regexp = /(\s|^)\#\w\w+\b/gm
+    result = searchText.match(regexp);
+    if (result) {
+        result = result.map(function(s){ return s.trim(); }).join(' ');
+        return result;
+    } else {
+        return "";
+    }
+}
+
 function createPost() {
     var formData = new FormData();
     var fs = document.getElementById('uploadImage');
+    var content = $('#statusContent').val();
     
-    if(fs.files[0] === undefined) {
-        createStatus();
-    }
-    else {
-        var fileType = fs.files[0]['type'];
-        var validImageTypes = ['image/jpeg', 'image/png'];
-        if (!validImageTypes.includes(fileType)) {
-            alert("Không thể nhận loại file này!");
-    }
+    if (content !== "" || fs.files[0] !== undefined)  {
+        if(fs.files[0] === undefined) {
+            createStatus();
+        }
         else {
-            $('#loadingTop').css('display', 'block');
-
-            for (const file of fs.files) {
-                formData.append("file", file);
+            var fileType = fs.files[0]['type'];
+            var validImageTypes = ['image/jpeg', 'image/png'];
+            if (!validImageTypes.includes(fileType)) {
+                alert("Không thể nhận loại file này!");
             }
+            else {
+                $('#loadingTop').css('display', 'block');
 
-            $.ajax({
-                type: 'post',
-                url: '/SharingHope/api/post-img',
-                data: formData,
-                dataType : "json",
-                processData : false,
-                cache : false,
-                contentType : false
-            })
-            .done(function(data){
-                var content = $('#statusContent').val();
+                for (const file of fs.files) {
+                    formData.append("file", file);
+                }
 
                 $.ajax({
                     type: 'post',
-                    url: '/SharingHope/api/create-post',
-                    data: JSON.stringify({
-                        'content':content,
-                        'imgUrl':data.url
-                    }),
-                    dataType : 'json',
-                    contentType : 'application/json',
-                    success: function (data) {
+                    url: '/SharingHope/api/post-img',
+                    data: formData,
+                    dataType : "json",
+                    processData : false,
+                    cache : false,
+                    contentType : false
+                })
+                .done(function(data){
+
+                    $.ajax({
+                        type: 'post',
+                        url: '/SharingHope/api/create-post',
+                        data: JSON.stringify({
+                            'content':content,
+                            'hashtag': findHashtags(content),
+                            'imgUrl':data.url
+                        }),
+                        dataType : 'json',
+                        contentType : 'application/json',
+                        success: function (data) {
+                            $('#loadingTop').css('display', 'none');
+                            $('#statusContent').val(null);
+                            $('.highlighter').html('');
+                            $('uploadImage').val(null);
+                            $('#uploadPreview').attr("src", "");
+                            prependFeeds(data);
+                        }
+                    })
+                    .fail(function(){
                         $('#loadingTop').css('display', 'none');
-                        $('#statusContent').val(null);
-                        $('uploadImage').val(null);
-                        prependFeeds(data);
-                    }
+                        $('#feeds-container').prepend(errorHtml);
+                    });
                 })
                 .fail(function(){
                     $('#loadingTop').css('display', 'none');
                     $('#feeds-container').prepend(errorHtml);
                 });
-            })
-            .fail(function(){
-                $('#loadingTop').css('display', 'none');
-                $('#feeds-container').prepend(errorHtml);
-            });
 
-            $('.modal-post').removeClass('open');
+                $('.modal-post').removeClass('open');
+            }
         }
     }
 }
@@ -297,13 +311,15 @@ function createStatus() {
             url: '/SharingHope/api/create-post',
             data: JSON.stringify({
                 'content':content,
+                'hashtag': findHashtags(content),
                 'imgUrl':''
             }),
             dataType : 'json',
             contentType : 'application/json',
             success: function (data) {
                 $('#loadingTop').css('display', 'none');
-                $('#statusContent').val(null);
+                $('#statusContent').val("");
+                $('.highlighter').html('');
                 prependFeeds(data);
             }
         })
@@ -311,6 +327,8 @@ function createStatus() {
             $('#loadingTop').css('display', 'none');
             $('#feeds-container').prepend(errorHtml);
         });
+        
+        $('.modal-post').removeClass('open');
 }
 
 function deletePost(id, el) {
@@ -325,7 +343,7 @@ function prependFeeds(post) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="#">
+                                    <a href="/SharingHope/user/${post.userId.id}">
                                         <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
                                     </a>
                                 </div>
@@ -333,7 +351,7 @@ function prependFeeds(post) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="#">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="/SharingHope/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -375,7 +393,7 @@ function prependFeeds(post) {
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover" id="likeAction" onclick="createReact('${post.userId.id}', '${post.id}', this)">
+                                <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
                                     <div class="heart-like-button"></div>
                                     <span class="post--action-text ms-2">Thích (<span id="likeCounter">0</span>)</span>
                                 </div>

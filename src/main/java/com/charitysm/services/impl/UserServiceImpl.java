@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author ADMIN
  */
-@Service("userDetailsService")
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("Người dùng không tồn tại");
         }
-        
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getUserRole())));
         return new org.springframework.security.core.userdetails.User(
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int id) {
-        return this.userRepository.getUser(id);
+    public User getUserById(String id) {
+        return this.userRepository.getUserById(id);
     }
 }

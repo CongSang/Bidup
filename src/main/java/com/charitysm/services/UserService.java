@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.charitysm.services;
+
 import com.charitysm.pojo.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -12,5 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService {
     User getUser(String email);
-    User getUser(int id);
+
+    User getUserById(String id);
 }

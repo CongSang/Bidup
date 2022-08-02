@@ -11,6 +11,7 @@ package com.charitysm.pojo.reobj;
 public class PostRequest {
     private String content;
     private String imgUrl;
+    private String hashtag;
 
     public PostRequest() {
     }
@@ -41,6 +42,20 @@ public class PostRequest {
      */
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    /**
+     * @return the hashtag
+     */
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    /**
+     * @param hashtag the hashtag to set
+     */
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
     
     

@@ -14,12 +14,14 @@ import com.charitysm.services.BidService;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,8 +57,15 @@ public class ApiAuctionController {
     }
     
     @Async
+    @DeleteMapping("/auctions/{auctionId}")
+     @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuction(@PathVariable(value = "auctionId") int id) {
+        this.auctionService.deleteAuction(id);
+    }
+    
+    @Async
     @PostMapping("/create-bid")
-    public ResponseEntity<Bid> createComment(@RequestBody BidRequest b, HttpSession session) {
+    public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
         Bid bid = new Bid();
         bid.setBidDate(new Date());
         bid.setMessage("");

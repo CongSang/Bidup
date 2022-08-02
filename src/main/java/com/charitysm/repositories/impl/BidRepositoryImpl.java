@@ -34,7 +34,11 @@ public class BidRepositoryImpl implements BidRepository{
     @Override
     public void deleteBid(Bid b) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        session.delete(b);
+        try {
+            session.delete(b);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -139,6 +139,7 @@ public class ApiPostController {
         
         Post p = new Post();
         p.setContent(pr.getContent());
+        p.setHashtag(pr.getHashtag());
         p.setImage(pr.getImgUrl());
         p.setPostedDate(new Date());
         p.setUserId(u);

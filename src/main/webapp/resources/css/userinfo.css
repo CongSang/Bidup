@@ -48,7 +48,17 @@
     margin-top: 20px;
 }
 
-.btn-fix-profile:hover {
+.btn-report-user {
+    background-color: #bb1d1d;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn-fix-profile:hover,
+.btn-report-user:hover {
     filter: brightness(1.1);
 }
 

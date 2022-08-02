@@ -1,7 +1,6 @@
 package com.charitysm.controllers;
 
 import com.charitysm.pojo.User;
-import com.charitysm.services.PostService;
 import com.charitysm.services.UserService;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class IndexController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private PostService postService;
 
     @RequestMapping("/")
     public String home(Model model, HttpSession session) {
@@ -32,8 +29,6 @@ public class IndexController {
             session.setAttribute("currentUser", user);
             session.setAttribute("page", 1);
         }
-        
-//        model.addAttribute("posts", this.postService.getPosts(null, 0));
         
         return "home";
     }

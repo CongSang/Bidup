@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-02T17:40:19")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-02T22:17:40")
 @StaticMetamodel(ReactPK.class)
 public class ReactPK_ { 
 
