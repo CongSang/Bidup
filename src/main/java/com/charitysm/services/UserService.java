@@ -11,5 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author ADMIN
  */
 public interface UserService extends UserDetailsService {
-    User getUserByEmail(String email);
+    User getUser(String email);
+    User getUser(int id);
 }

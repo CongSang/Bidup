@@ -84,4 +84,10 @@ public class PostRepositoryImpl implements PostRepository {
         return (Post)q.getSingleResult();
     }
 
+    @Override
+    public int createPost(Post p) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        return (int) session.save(p);
+    }
+
 }

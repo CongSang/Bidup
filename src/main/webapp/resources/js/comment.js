@@ -1,6 +1,7 @@
 function addComment(currentPostId, formEl) {
     event.preventDefault();
     var formData = new FormData(formEl);
+    $(formEl).parents('.comment').find('.comment-loading').css("display", "block");
     
     $.ajax({
         type: 'post',
@@ -12,6 +13,8 @@ function addComment(currentPostId, formEl) {
         contentType: 'application/json',
         dataType: 'json',
         success: function (data) {
+            $(formEl).parents('.comment').find('.comment-loading').css("display", "none");
+            
             var h = `<div class="d-flex comment--item py-2">
                         <div class="me-2">
                             <a href="#">
@@ -28,8 +31,8 @@ function addComment(currentPostId, formEl) {
                                     ${data.content}
                                 </p>
                             </div>
-                            <div class="d-flex justify-content-end me-2 comment-delete">
-                                Xóa
+                            <div class="d-flex justify-content-end me-2">
+                                <div class="comment-delete" onclick="deleteComment(${data.id}, this)">Xóa</div>
                             </div>
                         </div>
                     </div>`;
@@ -79,3 +82,5 @@ function createReact(currentUserId, currentPostId, element) {
         });
     }
 }
+
+function deleteComment(id, el) {}

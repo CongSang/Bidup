@@ -311,3 +311,13 @@ a {
     transform: scale(1);
   }
 }
+
+.post-loading {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.comment-loading {
+    padding: 20px;
+    background-color: #f0f2f5;
+}

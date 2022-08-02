@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getUserByEmail(String email) {
-        return userRepository.getUser(email);
+    public User getUser(String email) {
+        return this.userRepository.getUser(email);
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.getUser(email);
+        User user = this.userRepository.getUser(email);
         if (user == null) {
             throw new UsernameNotFoundException("Người dùng không tồn tại");
         }
@@ -48,5 +48,10 @@ public class UserServiceImpl implements UserService {
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getUserRole())));
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(), user.getPassword(), authorities);
+    }
+
+    @Override
+    public User getUser(int id) {
+        return this.userRepository.getUser(id);
     }
 }
