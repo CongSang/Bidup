@@ -7,7 +7,7 @@ package com.charitysm.controllers;
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.BidPK;
-import com.charitysm.pojo.BidRequest;
+import com.charitysm.pojo.reobj.BidRequest;
 import com.charitysm.pojo.User;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;

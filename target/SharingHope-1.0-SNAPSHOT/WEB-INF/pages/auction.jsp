@@ -21,6 +21,10 @@
         </div>
     </div>
 
+    <div class="text-center mt-3 post-loading" id="auctionLoadingTop" style="display:none;">
+        <div class="spinner-border text-muted"></div>
+    </div>
+
     <div class="auction-container">
 
     </div>

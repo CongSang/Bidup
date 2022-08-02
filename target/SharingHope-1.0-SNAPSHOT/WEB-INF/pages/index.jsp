@@ -21,16 +21,19 @@
             </div>
         </div>
     </div>
+    <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
+        <div class="spinner-border text-muted"></div>
+    </div>
     <div id="feeds-container">
 
     </div>
 
-    <div class="text-center mt-3 post-loading">
+    <div class="text-center mt-3 post-loading" id="loadingBottom">
         <div class="spinner-border text-muted"></div>
     </div>
 
     <!--modal create post-->
-    <div class="modal modal-post">
+    <div id="modalCreatePost" class="modal modal-post">
         <div class="modal-container modal-container-post">
             <div class="modal-header">
                 <h5 class="my-2">Thêm bài viết</h5>
@@ -45,7 +48,7 @@
                         <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
                     <form class="w-100 ms-1">
-                        <textarea class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                        <textarea id="statusContent" class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
                     </form>
                 </div>
 
@@ -65,7 +68,7 @@
 
             <div class="modal-footer ">
                 <button type="button" class="btn btn-danger me-2 modal--close-post">Huỷ</button>
-                <button type="button" class="btn btn-success">Đăng</button>
+                <button type="button" class="btn btn-success" onclick="createPost()">Đăng</button>
             </div>
         </div>
     </div>

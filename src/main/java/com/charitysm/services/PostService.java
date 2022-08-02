@@ -16,4 +16,5 @@ public interface PostService {
     List<Post> getPosts(Map<String, String> params, int page);
     int countPosts();
     Post getPostById(int id);
+    int createPost(Post p);
 }

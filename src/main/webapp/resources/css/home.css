@@ -311,3 +311,15 @@ a {
     transform: scale(1);
   }
 }
+
+.post-loading {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.comment-loading {
+    padding: 20px;
+    background-color: #fff;
+}

@@ -48,10 +48,18 @@
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <div class="btn-fix-profile">
-                                        <i class="fa-solid fa-pen me-2"></i>
-                                        Cập nhật trang cá nhân
-                                    </div>
+                                    <c:if test="${userInfo.id == currentUser.id}">
+                                        <div class="btn-fix-profile">
+                                            <i class="fa-solid fa-pen me-2"></i>
+                                            Cập nhật trang cá nhân
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${userInfo.id != currentUser.id}">
+                                        <div class="btn-report-user">
+                                            <i class="fa-solid fa-flag me-2"></i>
+                                            Báo cáo người dùng
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

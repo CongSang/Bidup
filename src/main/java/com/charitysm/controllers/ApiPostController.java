@@ -5,17 +5,26 @@
 package com.charitysm.controllers;
 
 import com.charitysm.pojo.Comment;
-import com.charitysm.pojo.CommentRequest;
+import com.charitysm.pojo.reobj.CommentRequest;
+import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactPK;
-import com.charitysm.pojo.ReactRequest;
+import com.charitysm.pojo.reobj.ReactRequest;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.PostRequest;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
+import com.charitysm.utils.CloudinaryUtils;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -60,13 +70,15 @@ public class ApiPostController {
         comm.setContent(c.getContent());
         comm.setCommentDate(new Date());
         
-        Post p = postService.getPostById(c.getPostId());
+        Post p = this.postService.getPostById(c.getPostId());
         User u = (User)session.getAttribute("currentUser");
         
         comm.setPostId(p);
         comm.setUserId(u);
+        if(this.commentService.createComment(comm) < 1)
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         
-        return new ResponseEntity<>(commentService.createComment(comm), HttpStatus.CREATED);
+        return new ResponseEntity<>(comm, HttpStatus.CREATED);
     }
     
     @Async
@@ -76,7 +88,7 @@ public class ApiPostController {
         React react = new React();
         react.setType((short)1);
 
-        Post p = postService.getPostById(r.getPostId());
+        Post p = this.postService.getPostById(r.getPostId());
         User u = (User)session.getAttribute("currentUser");
         ReactPK rPK = new ReactPK();
         rPK.setPostId(r.getPostId());
@@ -86,7 +98,7 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
 
-        reactService.createReact(react);
+        this.reactService.createReact(react);
     }
     
     @Async
@@ -94,8 +106,48 @@ public class ApiPostController {
     @DeleteMapping("/delete-react")
     public void deleteReact(@RequestBody ReactRequest r, HttpSession session) {
         User u = (User)session.getAttribute("currentUser");
-        React react = reactService.findReact(u.getId(), r.getPostId());
+        React react = this.reactService.findReact(u.getId(), r.getPostId());
         if (react != null)
-            reactService.deleteReact(react);
+            this.reactService.deleteReact(react);
+    }
+    
+    @Async
+    @RequestMapping("/post-img")
+    public ResponseEntity<FileUploadResponse> imagePosting(
+            @RequestParam("file") MultipartFile image) {
+        FileUploadResponse res = new FileUploadResponse();
+        try {
+            Map rs = CloudinaryUtils.getCloudinary().uploader().upload(image.getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            
+            res.setFileName("fileName");
+            res.setUrl((String) rs.get("secure_url"));
+            res.setSize(12);
+        } catch (IOException ex) {
+            Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(res, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        
+        
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+    
+    @Async
+    @RequestMapping("/create-post")
+    public ResponseEntity<Post> createPost(@RequestBody PostRequest pr, HttpSession session) {
+        User u = (User)session.getAttribute("currentUser");
+        
+        Post p = new Post();
+        p.setContent(pr.getContent());
+        p.setHashtag(pr.getHashtag());
+        p.setImage(pr.getImgUrl());
+        p.setPostedDate(new Date());
+        p.setUserId(u);
+        p.setActive((short)1);
+        
+        if(this.postService.createPost(p) < 1)
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        
+        return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 }

@@ -1,7 +1,6 @@
 package com.charitysm.controllers;
 
 import com.charitysm.pojo.User;
-import com.charitysm.services.PostService;
 import com.charitysm.services.UserService;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             String email = auth.getName();
-            User user = userService.getUserByEmail(email);
+            User user = userService.getUser(email);
             session.setAttribute("currentUser", user);
             session.setAttribute("page", 1);
         }

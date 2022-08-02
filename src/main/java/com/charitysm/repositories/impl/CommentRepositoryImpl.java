@@ -24,11 +24,9 @@ public class CommentRepositoryImpl implements CommentRepository{
     private LocalSessionFactoryBean sessionFactory;
     
     @Override
-    public Comment createComment(Comment c) {
+    public int createComment(Comment c) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        session.save(c);
-        Comment inserted = c;
-        return c;
+        return (int)session.save(c);
     }
     
 }

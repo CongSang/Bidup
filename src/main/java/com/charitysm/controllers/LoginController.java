@@ -23,42 +23,40 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class LoginController {
-    @Autowired 
-    private UserService userService;
 
     @GetMapping("/login")
     public String login(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        
+
         return "redirect:/";
     }
-    
+
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        
+
         return "register";
     }
-    
+
     @PostMapping("/register")
-    public String submitRegister (@Valid @ModelAttribute("user") User user, 
+    public String submitRegister(@Valid @ModelAttribute("user") User user,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            
+
             return "register";
         } else {
             return "redirect:/login";
         }
     }
-    
+
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) throws IOException {
         session.removeAttribute("currentUser");
-        response.sendRedirect("login"); 
+        response.sendRedirect("login");
     }
 }
