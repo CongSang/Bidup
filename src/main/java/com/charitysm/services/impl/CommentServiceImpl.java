@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService{
     private CommentRepository commentRepository;
     
     @Override
-    public Comment createComment(Comment c) {
+    public int createComment(Comment c) {
         return commentRepository.createComment(c);
     }
     

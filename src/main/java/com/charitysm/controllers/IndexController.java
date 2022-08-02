@@ -28,7 +28,7 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             String email = auth.getName();
-            User user = userService.getUserByEmail(email);
+            User user = userService.getUser(email);
             session.setAttribute("currentUser", user);
             session.setAttribute("page", 1);
         }

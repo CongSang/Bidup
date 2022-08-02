@@ -10,7 +10,6 @@ com\charitysm\services\impl\CommentServiceImpl.class
 com\charitysm\services\CommentService.class
 com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\controllers\IndexController.class
-com\charitysm\pojo\BidRequest.class
 com\charitysm\pojo\Post.class
 com\charitysm\services\PostService.class
 com\charitysm\repositories\impl\UserRepositoryImpl.class
@@ -18,9 +17,7 @@ com\charitysm\configs\SecurityConfig.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\User_.class
-com\charitysm\pojo\CommentRequest.class
 com\charitysm\pojo\Bid_.class
-com\charitysm\pojo\ReactRequest.class
 com\charitysm\pojo\Post_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
