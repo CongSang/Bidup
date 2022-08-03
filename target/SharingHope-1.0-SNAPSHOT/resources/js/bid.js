@@ -35,19 +35,22 @@ function addBid(currentAuctionId, formEl, startPrice) {
                                                            <img class="comment--avatar rounded-circle" src="${data.user.avatar}" alt="avatar">
                                                        </a>
                                                    </div>
-                                                   <div>
-                                                       <div class="bg-light comment--item-content">
-                                                           <div class="d-flex justify-content-between">
-                                                               <h6 class="mb-1 me-2"><a href="#">${data.user.lastname} ${data.user.firstname}</a></h6>
-                                                               <small>${moment(data.bidDate).fromNow()}</small>
-                                                           </div>
-
-                                                           <p class="small mb-0">
-                                                               ${formatMoney(data.money)}
-                                                           </p>
-                                                       </div>
-                                                   </div>
-                                               </div>`);
+                                                    <div class="comment--item-content">
+                                                  <div class="bg-light comment-content">
+                                                      <div class="d-flex justify-content-start">
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${data.user.id}">${data.user.lastname} ${data.user.firstname}</a></h6>
+                                                          <small>${moment(data.bidDate).fromNow()}</small>
+                                                      </div>
+                                                      <p class="small mb-0">
+                                                          ${formatMoney(data.money)}
+                                                      </p>
+                                                  </div>
+                                                    <div class="d-flex justify-content-end me-2 report-user">
+                                                        Báo cáo
+                                                    </div>
+                                                </div>
+                                                
+                                          </div>`);
            }
        });
     } else {

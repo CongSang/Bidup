@@ -9,12 +9,17 @@ import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.BidPK;
 import com.charitysm.pojo.reobj.BidRequest;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
+import com.charitysm.utils.CloudinaryUtils;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,10 +62,41 @@ public class ApiAuctionController {
     }
     
     @Async
+    @RequestMapping("/create-auction")
+    public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest ar, HttpSession session) throws ParseException {
+        User u = (User)session.getAttribute("currentUser");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
+        
+        Auction a = new Auction();
+        a.setActive((short)1);
+        a.setContent(ar.getContent());
+        a.setStartingPrice(ar.getStartPrice());
+        a.setHashtag(ar.getHashtag());
+        a.setAuctionDate(new Date());
+        a.setEndDate(endDate);
+        a.setImage(ar.getImgUrl());
+        a.setUserId(u);
+        
+        if(this.auctionService.createAuction(a) < 1)
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        
+        return new ResponseEntity<>(a, HttpStatus.CREATED);
+    }
+    
+    @Async
     @DeleteMapping("/auctions/{auctionId}")
      @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuction(@PathVariable(value = "auctionId") int id) {
-        this.auctionService.deleteAuction(id);
+    public void deleteAuction(@PathVariable(value = "auctionId") int id) throws IOException {
+        Auction a = this.auctionService.getAuctionById(id);
+         if (a != null) {
+            this.auctionService.deleteAuction(id);
+            if (!a.getImage().isEmpty()) {
+                String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
+                System.out.println(public_id);
+                deleteImg(public_id);
+            }
+        }
     }
     
     @Async
@@ -92,5 +128,10 @@ public class ApiAuctionController {
         Bid bid = bidService.findBid(u.getId(), b.getAuctionId());
         if (bid != null)
             bidService.deleteBid(bid);
+    }
+    
+    public void deleteImg(String public_id) throws IOException {
+        CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
+                ObjectUtils.asMap("resource_type", "image"));
     }
 }

@@ -7,13 +7,12 @@ const feedContainer = $('#feeds-container');
 var postPage = 1;
 var postFetching = false;
 var disableLoadMorePost = false;
-
 var errorHtml =  `<div class="text-center mt-3 post-loading">
-                    <p class="post--content mb-3" style="font-size:30xp;">
-                        Có lỗi xảy ra, không thể đăng bài ngay lúc này!
-                    </p>
-                    <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Post image" onclick="showFull(this)">
-                </div>`;
+                                <p class="post--content mb-3" style="font-size:30xp;">
+                                    Có lỗi xảy ra, không thể đăng bài ngay lúc này!
+                                </p>
+                                <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
+                            </div>`;
 
 function postNextPage() {
     if (postFetching) return;
@@ -167,9 +166,9 @@ function deletePost(id, el) {
     event.preventDefault();
     
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
-                                    <div class="spinner-border text-muted"></div>
-                            </div>
-                        `; 
+                                            <div class="spinner-border text-muted"></div>
+                                        </div>
+                                    `; 
     var clickedPost = $(el).parents('.post');
     var clickedPostHtml = $(clickedPost).html();
     
@@ -192,9 +191,9 @@ function editPost(id, el) {
     event.preventDefault();
     
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
-                                    <div class="spinner-border text-muted"></div>
-                            </div>
-                        `; 
+                                            <div class="spinner-border text-muted"></div>
+                                        </div>
+                                    `; 
     var clickedPost = $(el).parents('.post');
     var clickedPostHtml = $(clickedPost).html();
     

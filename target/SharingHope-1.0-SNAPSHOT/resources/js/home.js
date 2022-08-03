@@ -196,8 +196,8 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                                       <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
                                                   </a>
                                               </div>
-                                              <div>
-                                                  <div class="bg-light comment--item-content">
+                                              <div class="comment--item-content">
+                                                  <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
                                                           <h6 class="mb-1 me-2"><a href="${ctxPath}user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                           <small>${moment(comment.commentDate).fromNow()}</small>
@@ -206,7 +206,11 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                                           ${comment.content}
                                                       </p>
                                                   </div>
-                                              </div>
+                                                    <div class="d-flex justify-content-end me-2">
+                                                        <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
+                                                    </div>
+                                                </div>
+                                                
                                           </div>`;
                                 }).join('')}
                             </div>
@@ -222,7 +226,7 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
     });
 };
 
-const prependFeeds = function prependFeeds(post) {
+function prependFeeds(post) {
     var userAvatar = $("#userAvatar").attr("src");
     const html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
@@ -320,4 +324,4 @@ const prependFeeds = function prependFeeds(post) {
             `;
     $(feedContainer).prepend(html);
     customHashtag(`.post-${post.id}`);
-}
+};

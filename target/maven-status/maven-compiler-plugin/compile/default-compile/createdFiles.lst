@@ -1,3 +1,4 @@
+com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\services\BidService.class
 com\charitysm\services\impl\BidServiceImpl.class
 com\charitysm\pojo\reobj\CommentRequest.class
@@ -5,7 +6,6 @@ com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
 META-INF\spring.components
 com\charitysm\repositories\CommentRepository.class
-com\charitysm\pojo\reobj\ReactRequest.class
 com\charitysm\controllers\LoginController.class
 com\charitysm\services\impl\ReactServiceImpl.class
 com\charitysm\services\impl\CommentServiceImpl.class

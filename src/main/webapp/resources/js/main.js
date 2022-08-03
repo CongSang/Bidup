@@ -1,6 +1,6 @@
 const isBlank = function isBlank(str) {
     return (!str || /^\s*$/.test(str));
-}
+};
 
 $(function () {
     let pathName = location.pathname.split("/").find(function (element) {
@@ -35,21 +35,22 @@ close_chat.addEventListener("click", () => {
 });
 
 function loadSideBarLeft() {
+    const path = '/SharingHope/';
     $.ajax({
         type: 'get',
-        url: '/SharingHope/api/auction-side',
+        url: path + 'api/auction-side',
         dataType: 'json',
         success: function (data) {
             $.each(data, function (index, item) {
                 let html = `
                     <div class="d-flex align-items-center pt-4">
                         <div class="p-1">
-                            <a href="#">
+                            <a href="${path}user/${item.userId.id}">
                                 <img src="${item.userId.avatar}" alt="avatar" class="avatar-img rounded-circle"/>
                             </a>
                         </div>
                         <div class="ms-2 small">
-                            <h6 class="card-title mb-0"><a href="#">${item.userId.lastname} ${item.userId.firstname}</a></h6>
+                            <h6 class="card-title mb-0"><a href="${path}user/${item.userId.id}">${item.userId.lastname} ${item.userId.firstname}</a></h6>
                             đã đăng đấu giá
                             <span>${moment(item.auctionDate).fromNow()}</span>
                         </div>

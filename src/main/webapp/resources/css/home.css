@@ -249,8 +249,7 @@ a {
     cursor: pointer;
 }
 .comment--item-content{
-    width: 100%;
-    margin-right: 2rem;
+    margin-right: 4px;
 }
 
 .comment-content {
@@ -326,8 +325,8 @@ a {
 
 .comment-loading {
     width: 100%;
-    padding: 20px;
-    background-color: #f0f2f5;
+    padding: 10px;
+    background-color: #fff;
 }
 
 /*#commentedComment {

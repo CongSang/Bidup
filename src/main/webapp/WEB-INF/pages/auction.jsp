@@ -45,55 +45,58 @@
             </div>
 
             <div class="modal-body ">
-                <form class="w-100" id="postAuctionForm">
-                    <div class="d-flex mb-2">
-                        <div>
-                            <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
-                        </div>
-                        <textarea class="form-control ms-2 pe-1 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="start-price" class="small">Giá khởi điểm</label>
-                        <input id="start-price" type="number" class="form-control"/>
-                        <span class="text-danger err-validate" style="display: none">Số tiền đấu giá tối thiểu phải là 1.000.000đ</span>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="end-date" class="small">Ngày kết thúc</label>
-                        <div class="d-flex align-items-center">
-                            <input id="end-date" type="date" class="form-control me-1"/>
-                            <input id="end-date" type="time" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="dropzone card shadow-none position-relative mt-4">
-                        <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
-                            <img id="uploadPreview1" />
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <i class="fa-solid fa-images images-icon"></i>
-                                    <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
-                                </div>
-                            </div>
-                            <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1()" />
-                        </label>
+                <div class="d-flex mb-2">
+                    <div>
+                        <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
 
-                    <div class="d-flex align-items-center justify-content-end mt-3">
-                        <button type="button" class="btn btn-danger me-2 modal--close-auction">Huỷ</button>
-                        <button type="submit" class="btn btn-success">Đăng</button>
+                    <form class="w-100" id="postAuctionForm">
+                        <textarea id="statusContent1" class="form-control ms-2 pe-1 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                    </form>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="start-price" class="small">Giá khởi điểm</label>
+                    <input id="start-price" type="number" class="form-control"/>
+                    <span class="text-danger err-validate start-price-validate" style="display: none">Số tiền đấu giá tối thiểu phải là 1.000.000đ</span>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="end-date" class="small">Ngày kết thúc</label>
+                    <div class="d-flex align-items-center">
+                        <input id="end-date" type="date" class="form-control me-1"/>
+                        <input id="end-time" type="time" class="form-control"/>
                     </div>
-                </form>
+                    <span class="text-danger err-validate endDate-validate" style="display: none">Ngày giờ phải lớn hơn ngày giờ hiện tại</span>
+                </div>
+                <div class="dropzone card shadow-none position-relative mt-4">
+                    <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                        <img id="uploadPreview1" />
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-images images-icon"></i>
+                                <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
+                            </div>
+                        </div>
+                        <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1()" />
+                    </label>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-end mt-3">
+                    <button type="button" class="btn btn-danger me-2 modal--close-auction">Huỷ</button>
+                    <button type="button" class="btn btn-success" onclick="createAuction()">Đăng</button>
+                </div>
             </div>
         </div>
     </div>  
 
     <div id="modal02" class="modal align-items-center justify-content-center" onclick="this.style.display = 'none'">
-        <div class="modal--picture position-relative">
-            <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
-            <img id="img02" style="width:100%">
+        <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 24px"></i>
+            <img id="img02" style="max-width:100%; max-height:100vh;">
         </div>
     </div>
 </div>
 
+<script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
 <script src="<c:url value="/resources/js/auction.js" />"></script>
 <script src="<c:url value="/resources/js/bid.js" />"></script>
 <script>
@@ -108,7 +111,7 @@
             var windowHeight = $(this).height();
             var documentHeight = $(document).height();
 
-            if ((windowHeight + scrollTop) >= documentHeight) {
+            if ((windowHeight + scrollTop) >= documentHeight - 10) {
                 auctionNextPage();
                 !disableLoadMoreAuction && loadAuctions('${endpoint}', '${currentUser.getId()}', auctionPage);
             }
