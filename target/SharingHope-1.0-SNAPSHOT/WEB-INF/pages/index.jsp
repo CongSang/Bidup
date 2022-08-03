@@ -97,7 +97,7 @@
             var windowHeight = $(this).height();
             var documentHeight = $(document).height();
 
-            if ((windowHeight + scrollTop) >= documentHeight) {
+            if ((windowHeight + scrollTop) >= documentHeight - 10) {
                 postNextPage();
                 !disableLoadMorePost && loadPosts('${endpoint}', '${currentUser.getId()}', postPage);
             }

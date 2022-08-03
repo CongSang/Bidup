@@ -21,7 +21,12 @@ public class CommentServiceImpl implements CommentService{
     
     @Override
     public int createComment(Comment c) {
-        return commentRepository.createComment(c);
+        return this.commentRepository.createComment(c);
+    }
+
+    @Override
+    public void deleteComment(int id) {
+        this.commentRepository.deleteComment(id);
     }
     
 }

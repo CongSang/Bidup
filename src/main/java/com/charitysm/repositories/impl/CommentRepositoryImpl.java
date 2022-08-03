@@ -25,8 +25,15 @@ public class CommentRepositoryImpl implements CommentRepository{
     
     @Override
     public int createComment(Comment c) {
-        Session session = sessionFactory.getObject().getCurrentSession();
+        Session session = this.sessionFactory.getObject().getCurrentSession();
         return (int)session.save(c);
+    }
+
+    @Override
+    public void deleteComment(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Comment c = session.get(Comment.class, id);
+        session.delete(c);
     }
     
 }

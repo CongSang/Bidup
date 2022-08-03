@@ -1,3 +1,6 @@
+const isBlank = function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
 
 $(function () {
     let pathName = location.pathname.split("/").find(function (element) {
