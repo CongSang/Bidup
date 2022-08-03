@@ -90,4 +90,11 @@ public class PostRepositoryImpl implements PostRepository {
         return (int) session.save(p);
     }
 
+    @Override
+    public void deletePost(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Post p = session.get(Post.class, id);
+        session.delete(p);
+    }
+
 }

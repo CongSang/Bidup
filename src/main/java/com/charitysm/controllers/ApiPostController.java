@@ -10,7 +10,6 @@ import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactPK;
-import com.charitysm.pojo.reobj.ReactRequest;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.PostRequest;
 import com.charitysm.services.CommentService;
@@ -32,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,15 +83,15 @@ public class ApiPostController {
     
     @Async
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/create-react")
-    public void createReact(@RequestBody ReactRequest r, HttpSession session) {
+    @PostMapping("/create-react/{postId}")
+    public void createReact(@PathVariable(value="postId") int postId, HttpSession session) {
         React react = new React();
         react.setType((short)1);
 
-        Post p = this.postService.getPostById(r.getPostId());
+        Post p = this.postService.getPostById(postId);
         User u = (User)session.getAttribute("currentUser");
         ReactPK rPK = new ReactPK();
-        rPK.setPostId(r.getPostId());
+        rPK.setPostId(postId);
         rPK.setUserId(u.getId());
 
         react.setReactPK(rPK);
@@ -103,10 +103,10 @@ public class ApiPostController {
     
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete-react")
-    public void deleteReact(@RequestBody ReactRequest r, HttpSession session) {
+    @DeleteMapping("/delete-react/{postId}")
+    public void deleteReact(@PathVariable(value="postId") int postId, HttpSession session) {
         User u = (User)session.getAttribute("currentUser");
-        React react = this.reactService.findReact(u.getId(), r.getPostId());
+        React react = this.reactService.findReact(u.getId(), postId);
         if (react != null)
             this.reactService.deleteReact(react);
     }
@@ -121,7 +121,7 @@ public class ApiPostController {
                     ObjectUtils.asMap("resource_type", "auto"));
             
             res.setFileName("fileName");
-            res.setUrl((String) rs.get("secure_url"));
+            res.setUrl((String) rs.get("secure_url")+ "?public_id="+ rs.get("public_id"));
             res.setSize(12);
         } catch (IOException ex) {
             Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,5 +149,32 @@ public class ApiPostController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         
         return new ResponseEntity<>(p, HttpStatus.CREATED);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/delete-comment/{id}")
+    public void deleteComment(@PathVariable(value="id") int id) {
+        this.commentService.deleteComment(id);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/delete-post/{id}")
+    public void deletePost(@PathVariable(value="id") int id) throws IOException {
+        Post p = this.postService.getPostById(id);
+        if (p != null) {
+            this.postService.deletePost(id);
+            if (!p.getImage().isEmpty()) {
+                String public_id = p.getImage().substring(p.getImage().lastIndexOf("public_id=") + 10);
+                System.out.println(public_id);
+                deleteImg(public_id);
+            }
+        }
+    }
+    
+    public void deleteImg(String public_id) throws IOException {
+        CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
+                ObjectUtils.asMap("resource_type", "image"));
     }
 }

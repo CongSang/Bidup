@@ -12,4 +12,5 @@ import com.charitysm.pojo.Comment;
  */
 public interface CommentService {
     int createComment(Comment c);
+    void deleteComment(int id);
 }

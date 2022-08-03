@@ -1,13 +1,14 @@
+
 function addComment(currentPostId, formEl) {
     event.preventDefault();
     var formData = new FormData(formEl);
     const commentContent = formData.get('commentContent');
     
-    if(commentContent !== "" && commentContent !== null) {
+    if(commentContent !== "" && !isBlank(commentContent)) {
         $(formEl).parents('.comment').find('.comment-loading').css("display", "block");
         $.ajax({
             type: 'post',
-            url: '/SharingHope/api/create-comment',
+            url: `${ctxPath}api/create-comment`,
             data:JSON.stringify({
                 'content':commentContent,
                 'postId':currentPostId
@@ -23,9 +24,9 @@ function addComment(currentPostId, formEl) {
                                     <img class="comment--avatar rounded-circle" src="${data.userId.avatar}" alt="avatar">
                                 </a>
                             </div>
-                            <div>
-                                <div class="bg-light comment--item-content">
-                                    <div class="d-flex justify-content-between">
+                            <div class="comment--item-content">
+                                <div class="bg-light comment-content">
+                                    <div class="d-flex justify-content-start">
                                         <h6 class="mb-1 me-2"><a href="#">${data.userId.lastname} ${data.userId.firstname}</a></h6>
                                         <small>${moment(data.commentDate).fromNow()}</small>
                                     </div>
@@ -61,11 +62,7 @@ function createReact(currentPostId, element) {
         
         $.ajax({
             type: 'delete',
-            url: '/SharingHope/api/delete-react',
-            data:JSON.stringify({
-                'postId':currentPostId
-            }),
-            contentType: 'application/json',
+            url: `${ctxPath}api/delete-react/${currentPostId}`,
             dataType: 'json'
         });
     }
@@ -76,14 +73,34 @@ function createReact(currentPostId, element) {
         
         $.ajax({
             type: 'post',
-            url: '/SharingHope/api/create-react',
-            data:JSON.stringify({
-                'postId':currentPostId
-            }),
-            contentType: 'application/json',
+            url: `${ctxPath}api/create-react/${currentPostId}`,
             dataType: 'json'
         });
     }
 }
 
-function deleteComment(id, el) {}
+function deleteComment(id, el) {
+    var loadingHtml =   `   <div class="text-center mt-3 comment-loading">
+                            <div class="spinner-border text-muted"></div>
+                        </div>
+                    `; 
+    var clickedComment = $(el).parents('.comment--item');
+    var clickedCommentHtml = $(clickedComment).html();
+    
+    clickedComment.html(loadingHtml);
+    
+    $.ajax({
+            type: 'delete',
+            url: `${ctxPath}api/delete-comment/${id}`,
+            dataType: 'json',
+            success: function () {
+                var commentCounter = $(clickedComment).parents('.post').find('#commentCounter');
+                var counter = parseInt($(commentCounter).text()) - 1;
+                $(commentCounter).text(counter);
+                $(clickedComment).remove();
+            }
+    })
+    .fail(function (){
+        $(clickedComment).html(clickedCommentHtml);
+    });
+}

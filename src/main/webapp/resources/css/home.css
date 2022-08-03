@@ -248,8 +248,12 @@ a {
     color: #999;
     cursor: pointer;
 }
+.comment--item-content{
+    width: 100%;
+    margin-right: 2rem;
+}
 
-.comment--item-content {
+.comment-content {
     padding: 12px;
     border-radius: 6px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
@@ -313,6 +317,7 @@ a {
 }
 
 .post-loading {
+    width: 100%;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
@@ -320,6 +325,13 @@ a {
 }
 
 .comment-loading {
+    width: 100%;
     padding: 20px;
-    background-color: #fff;
+    background-color: #f0f2f5;
 }
+
+/*#commentedComment {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}*/
