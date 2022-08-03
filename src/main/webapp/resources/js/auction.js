@@ -2,6 +2,13 @@ const modal1 =  document.querySelector(".modal-auction");
 const modalContainer1 = $(".modal-container-auction");
 const btn_close1 = document.querySelectorAll(".modal--close-auction");
 const btn_show1 = document.querySelectorAll(".btn-show--auction");
+var userAvatar = $("#userAvatar").attr("src");
+var errorHtml =  `<div class="text-center mt-3 post-loading">
+                                <p class="post--content mb-3" style="font-size:30xp;">
+                                    Có lỗi xảy ra, không thể đăng bài ngay lúc này!
+                                </p>
+                               <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
+                            </div>`;
 
 function showModal() {
     modal1.classList.add('open');
@@ -74,8 +81,8 @@ function formatDate(value) {
    const date = new Date(value);
   return (
     [
-      padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
       date.getFullYear()
     ].join('/') +
     ' lúc ' +
@@ -99,13 +106,11 @@ function customHashtag(element) {
 }
 
 function deleteAuction(endpoint, auctionId) {
-    const confirmDelete = "Bạn có chắc chắn xóa bài viết này?";
-    
     swal({
         title: "Bạn có chắc là hủy đấu giá bài viết này?",
         icon: "warning",
         buttons: true,
-        dangerMode: true,
+        dangerMode: true
       })
       .then((isDeleted) => {
           if (isDeleted) {
@@ -127,49 +132,105 @@ function deleteAuction(endpoint, auctionId) {
     });
 }
 
-function loadAuctions(endpoint, currentUserId, page) {
-    if (!page) {
-        page = 1;
+function findHashtags(searchText) {
+    var regexp = /(\s|^)\#\w\w+\b/gm
+    result = searchText.match(regexp);
+    if (result) {
+        result = result.map(function(s){ return s.trim(); }).join(' ');
+        return result;
+    } else {
+        return "";
     }
-    
-    $('.auction-loading').css("display", "block");
-    auctionFetching = true;
-    
-    $.ajax({
-        type: 'get',
-        url: endpoint + '?page=' + page,
-        dataType: 'json',
-        success: function (data) {
-            if (data.length === 0) {
-                disableLoadMoreAuction = true;
-            }
-            
-            loadAuctionFeeds(data, currentUserId, endpoint);
-            $('.auction-loading').css("display", "none");
-            auctionFetching = false;
-        }
-    });
 }
 
-function loadAuctionFeeds(auctions, currentUserId, endpoint) {
-    var userAvatar = $("#userAvatar").attr("src");
-    $.each(auctions, function (index, auction) {
-        
-        let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
-        let bidSort = auction.bidSet.filter(c => c.user.id !== currentUserId);
-        bidSort.sort(function (a, b) {
-            return b.money - a.money;
-        });
-        
-        let html = `
-            ${(auction.userId.id === currentUserId) ? `
-                <div class="post auction-post-${auction.id}">
+function createAuction() {
+    const formData = new FormData();
+    const fs = document.getElementById('uploadImage1');
+    const content = $('#statusContent1').val();
+    const startPrice = $('#start-price').val();
+    const endDate = $('#end-date').val();
+    const endTime = $('#end-time').val();
+    const q = new Date;
+    const currentDate = new Date(q.getFullYear(),q.getMonth(),q.getDate());
+    
+    if(startPrice < 1000000) {
+        $('.start-price-validate').css("display", "block");
+        return;
+    }
+    
+    if((new Date(endDate)) < currentDate) {
+        $('.endDate-validate').css("display", "block");
+        return;
+    }
+    
+    if (startPrice !== "" && endDate !== "" && endTime !== "" && fs.files[0] !== undefined)  {
+        var fileType = fs.files[0]['type'];
+        var validImageTypes = ['image/jpeg', 'image/png'];
+        if (!validImageTypes.includes(fileType)) {
+            alert("Không thể nhận loại file này!");
+        }
+        else {
+            $('#auctionLoadingTop').css('display', 'block');
+
+            for (const file of fs.files) {
+                formData.append("file", file);
+            }
+            $.ajax({
+                type: 'post',
+                url: `${ctxPath}api/post-img`,
+                data: formData,
+                dataType : "json",
+                processData : false,
+                cache : false,
+                contentType : false
+            })
+            .done(function(data){
+
+                $.ajax({
+                    type: 'post',
+                    url: `${ctxPath}api/create-auction`,
+                    data: JSON.stringify({
+                        'content':content,
+                        'hashtag': findHashtags(content),
+                        'imgUrl':data.url,
+                        'startPrice': startPrice,
+                        'endDate': endDate,
+                        'endTime': endTime + ':00'
+                    }),
+                    dataType : 'json',
+                    contentType : 'application/json',
+                    success: function (data) {
+                        $('#auctionLoadingTop').css('display', 'none');
+                        $('#statusContent1').val(null);
+                        $('.highlighter').html('');
+                        $('uploadImage1').val(null);
+                        $('#uploadPreview1').attr("src", "");
+                         prependAuctionFeeds(data);
+                    }
+                })
+                .fail(function(){
+                    $('#auctionLoadingTop').css('display', 'none');
+                        $('.auction-container').prepend(errorHtml);
+                });
+            })
+            .fail(function(){
+                $('#auctionLoadingTop').css('display', 'none');
+                    $('.auction-container').prepend(errorHtml);
+            });
+
+            $('.modal-auction').removeClass('open');
+        }
+    }
+}
+
+function prependAuctionFeeds(auction) {
+    const html = `<div class="post auction-post-${auction.id}">
                     <div class="card post--item">
                         <div class="card-header border-0 pb-0 pt-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="/SharingHope/user/${auction.userId.id}">
+                                        <a href="${ctxPath}user/${auction.userId.id}">
                                             <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
                                         </a>
                                     </div>
@@ -177,10 +238,10 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="/SharingHope/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
-                                            <div class="text-center ms-2 auction-del-loading-${auction.id}" style="display: none">
+                                            <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
                                                 <div class="spinner-border text-muted"></div>
                                             </div>
                                         </div>
@@ -210,7 +271,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${endpoint}', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}api/auctions', ${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}
@@ -242,7 +303,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     ${(auction.active) ? 
                                     `<div class="auction--action-hover" onclick="showFollowAuction(this)">
                                         <i class="fa-solid fa-eye"></i>
-                                        <span class="auction--action-text auction-follow ms-2">Theo dõi (${auction.bidSet.length} người đã tham gia)</span>
+                                        <span class="auction--action-text auction-follow ms-2">Theo dõi (0 người đã tham gia)</span>
                                     </div>` : 
                                     `<div class="btn-disable">
                                         <i class="fa-solid fa-check"></i>
@@ -253,166 +314,13 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                             </div>
 
                             <div class="auction-user-join auction-follow-list">
-        
-                                ${(bidSort).map((bid, index) => {
-                                    return `
-                                          <div class="d-flex comment--item py-2">
-                                            <div class="me-2">
-                                                <a href="/SharingHope/user/${bid.user.id}">
-                                                    <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <div class="bg-light comment--item-content">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h6 class="mb-1 me-2"><a href="/SharingHope/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
-                                                        <small>${moment(bid.bidDate).fromNow()}</small>
-                                                    </div>
-
-                                                    <p class="small mb-0">
-                                                        ${formatMoney(bid.money)}
-                                                    </p>
-                                                </div>
-                                                <div class="d-flex justify-content-end me-2 report-user">
-                                                    Báo cáo
-                                                </div>
-                                            </div>
-                                        </div>`;
-                                }).join('')}
-
                                 
                             </div>
 
                         </div>
                     </div>
-                </div>
-            ` : `
-                <div class="post auction-post-${auction.id}">
-                    <div class="card post--item">
-                        <div class="card-header border-0 pb-0 pt-3">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-start">
-                                    <div class="me-2">
-                                        <a href="/SharingHope/user/${auction.userId.id}">
-                                            <c:url value="/resources/img/non-avatar.png" var="a" />
-                                            <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Info -->
-                                    <div>
-                                        <div class="nav nav-divider">
-                                            <h6 class="nav-item card-title mb-0">
-                                                <a href="/SharingHope/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
-                                            </h6>
-                                            <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Menu-->
-                                <div class="dropdown">
-                                    <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                Báo cáo
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pb-2">
-                            <p class="post--content mb-3 auction-${auction.id}">
-                                ${auction.content}
-                            </p>
-                            
-                            <p class="auction--price mb-1">
-                                ${(auction.active) ? `Giá khởi điểm:<span class="ms-2 auction-start-price">${formatMoney(auction.startingPrice)}</span>` 
-                                : `Hoạt động từ thiện đã được hoàn thành`}
-                            </p>
-                            <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
-
-                            <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
-
-                            <div class="line"></div>
-
-                            <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
-                                <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
-                                    ${auction.endDate > Date.now() ?
-                                    `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
-                                            `<div class="auction--action-hover" onclick="deleteBid(${auction.id}, this, ${auction.startingPrice})">
-                                                <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
-                                                    <div class="spinner-border text-muted"></div>
-                                                </div>
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <span class="auction--action-text ms-2">Hủy tham gia</span>
-                                            </div>
-                                            ` : `
-                                            <div class="auction--action-hover">
-                                                <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
-                                                    <div class="spinner-border text-muted"></div>
-                                                </div>
-                                                <i class="fa-solid fa-gavel"></i>
-                                                <span class="auction--action-text ms-2">Đấu giá (${auction.bidSet.length} người đã tham gia)</span>
-                                            </div>
-                                            `
-                                    }` : `<div class="btn-disable">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <span class="auction--action-text ms-2">Bài đấu giá đã kết thúc</span>
-                                            </div>`}
-                                </div>
-                            </div>
-                            
-                            <div class="auction-user-join">
-                            ${auction.endDate > Date.now() ?
-                            `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
-                                    `${userAuction && `
-                                            <div class="d-flex comment--item py-2">
-                                                <div class="me-2">
-                                                    <a href="/SharingHope/user/${auction.userId.id}">
-                                                        <img class="comment--avatar rounded-circle" src="${userAuction[0].user.avatar}" alt="avatar">
-                                                    </a>
-                                                </div>
-                                                <div>
-                                                    <div class="bg-light comment--item-content">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h6 class="mb-1 me-2"><a href="/SharingHope/user/${auction.userId.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
-                                                            <small>${moment(userAuction[0].bidDate).fromNow()}</small>
-                                                        </div>
-
-                                                        <p class="small mb-0">
-                                                            ${formatMoney(userAuction[0].money)}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        `}
-                                    ` : `
-                                        <div class="d-flex align-items-center my-2">
-                                            <div class="me-2">
-                                                <a href="#">
-                                                    <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="avatar">
-                                                </a>
-                                            </div>
-                                            <form class="w-100" onsubmit="addBid(${auction.id}, this, ${auction.startingPrice})">
-                                                <input type="number" name="bidValue" autocomplete="off" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
-                                                <span class="text-danger err-validate" style="display: none">Số tiền đấu giá tối thiểu phải là ${formatMoney(auction.startingPrice)}</span>
-                                            </form>
-                                        </div>
-                                    `
-                            }` : ``}
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            `}
-        `;
-        
-        $('.auction-container').append(html);
-        customHashtag(`.auction-${auction.id}`);
-    });
+                </div>`;
+            
+        $('.auction-container').prepend(html);
+        customHashtag(`.auction-${auction.id}`);         
 }

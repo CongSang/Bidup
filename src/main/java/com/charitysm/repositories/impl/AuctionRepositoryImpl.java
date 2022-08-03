@@ -94,4 +94,11 @@ public class AuctionRepositoryImpl implements AuctionRepository{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int createAuction(Auction a) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+            
+            return (int) session.save(a);
+    }
 }
