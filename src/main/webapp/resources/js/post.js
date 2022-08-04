@@ -73,7 +73,7 @@ function createPost() {
     var content = $('#statusContent').val();
     var imgSrc = $('#uploadPreview').prop('src');
     console.log(imgSrc);
-    if (content !== "" || imgSrc !== undefined)  {
+    if (!isBlank(content) || imgSrc !== undefined)  {
         if(fs.files[0] === undefined) {
             createStatus();
         }
@@ -218,7 +218,7 @@ function comfirmEditPost(id) {
         var fs = document.getElementById('editImage');
         var content = $('#editingStatusContent').val();
 
-        if (content !== "" || imgSrc !== undefined)  {
+        if (!isBlank(content) || imgSrc !== undefined)  {
             if(fs.files[0] === undefined) {
                 editStatus(id);
             }
@@ -289,6 +289,7 @@ function comfirmEditPost(id) {
             contentType : 'application/json',
             success: function (data2) {
                 $(clickedPost).html(clickedPostHtml);
+                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
             }
@@ -312,23 +313,24 @@ function editStatus(id) {
     $(clickedPost).html(loadingHtml);
     removeEditModal();
     $.ajax({
-            type: 'put',
-            url: `${ctxPath}/api/edit-post/${id}`,
-            data: JSON.stringify({
-                'content':content,
-                'hashtag': findHashtags(content),
-                'imgUrl':''
-            }),
-            dataType : 'json',
-            contentType : 'application/json',
-            success: function (data) {
-                $(clickedPost).html(clickedPostHtml);
-                $(clickedPost).find('.post--content').text(data.content);
-                $(clickedPost).find('.post--img').css('display', 'none');
-                $(clickedPost).find('.post--img').attr('src', '');
-            }
-        })
-        .fail(function(){
+        type: 'put',
+        url: `${ctxPath}/api/edit-post/${id}`,
+        data: JSON.stringify({
+            'content':content,
+            'hashtag': findHashtags(content),
+            'imgUrl':''
+        }),
+        dataType : 'json',
+        contentType : 'application/json',
+        success: function (data) {
             $(clickedPost).html(clickedPostHtml);
-        });
+            $(clickedPost).find("#timeFromNow").text(moment(data.postedDate).fromNow());
+            $(clickedPost).find('.post--content').text(data.content);
+            $(clickedPost).find('.post--img').css('display', 'none');
+            $(clickedPost).find('.post--img').attr('src', '');
+        }
+    })
+    .fail(function(){
+        $(clickedPost).html(clickedPostHtml);
+    });
 }
