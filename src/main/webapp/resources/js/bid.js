@@ -4,7 +4,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
     var formData = new FormData(formEl);
     const money = formData.get('bidValue');
     
-    if (money !== null && money >= startPrice) {
+    if (!isBlank(money) && money !== "" && money >= startPrice) {
          $(`.bid-loading-${currentAuctionId}`).css("display", "block");
         $.ajax({
            type: 'post',
@@ -59,7 +59,6 @@ function addBid(currentAuctionId, formEl, startPrice) {
 }
 
 function deleteBid(currentAuctionId, element, startPrice) {
-    let textConfirm = "Bạn có chắc là hủy đấu giá bài viết này?";
     var userAvatar = $("#userAvatar").attr("src");
     swal({
         title: "Bạn có chắc là hủy đấu giá bài viết này?",
