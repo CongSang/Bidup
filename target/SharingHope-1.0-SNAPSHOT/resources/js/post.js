@@ -199,6 +199,7 @@ function editPost(id, el) {
     if (imgSrc.toLowerCase().indexOf('https://') === -1 )
         imgSrc = '';
     modalEditPost(id, $(el), content.trim(), imgSrc);
+    $("textarea").hashtags();
 }
 
 function comfirmEditPost(id) {
@@ -256,9 +257,11 @@ function comfirmEditPost(id) {
                             contentType : 'application/json',
                             success: function (data2) {
                                 $(clickedPost).html(clickedPostHtml);
+                                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
                                 $(clickedPost).find('.post--content').text(data2.content);
                                 $(clickedPost).find('.post--img').attr('src', data2.image);
                                 $(clickedPost).find('.post--img').css('display', 'block');
+                                customHashtag(`#post${id}`);
                             }
                         })
                         .fail(function(){
@@ -292,6 +295,7 @@ function comfirmEditPost(id) {
                 $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
+                customHashtag(`#post${id}`);
             }
         })
         .fail(function(){
@@ -328,6 +332,7 @@ function editStatus(id) {
             $(clickedPost).find('.post--content').text(data.content);
             $(clickedPost).find('.post--img').css('display', 'none');
             $(clickedPost).find('.post--img').attr('src', '');
+            customHashtag(`#post${id}`);
         }
     })
     .fail(function(){

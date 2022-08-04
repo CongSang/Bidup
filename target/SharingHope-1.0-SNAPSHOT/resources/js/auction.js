@@ -237,7 +237,7 @@ function prependAuctionFeeds(auction) {
                             </p>
                             <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
 
-                            <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
+                            <img class="card-img post--img auction--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
 
                             <div class="line"></div>
 
