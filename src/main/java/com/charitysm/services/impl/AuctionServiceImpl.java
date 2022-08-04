@@ -46,5 +46,10 @@ public class AuctionServiceImpl implements AuctionService{
     public int createAuction(Auction a) {
         return this.auctionRepository.createAuction(a);
     }
+
+    @Override
+    public int updateAuction(Auction a) {
+        return this.auctionRepository.updateAuction(a);
+    }
     
 }

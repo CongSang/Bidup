@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,35 +42,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiAuctionController {
-    
+
     @Autowired
     private AuctionService auctionService;
     @Autowired
     private BidService bidService;
-    
+
     @Async
     @GetMapping("/auction-side")
     public ResponseEntity<List<Auction>> getActionSideBar() {
-        
+
         return new ResponseEntity<>(this.auctionService.getAuctionSideBar(), HttpStatus.OK);
     }
-    
+
     @Async
     @GetMapping("/auctions")
     public ResponseEntity<List<Auction>> getPosts(@RequestParam("page") int page) {
-   
+
         return new ResponseEntity<>(this.auctionService.getAuctions(null, page), HttpStatus.OK);
     }
-    
+
     @Async
     @RequestMapping("/create-auction")
     public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest ar, HttpSession session) throws ParseException {
-        User u = (User)session.getAttribute("currentUser");
+        User u = (User) session.getAttribute("currentUser");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
-        
+
         Auction a = new Auction();
-        a.setActive((short)1);
+        a.setActive((short) 1);
         a.setContent(ar.getContent());
         a.setStartingPrice(ar.getStartPrice());
         a.setHashtag(ar.getHashtag());
@@ -77,19 +78,47 @@ public class ApiAuctionController {
         a.setEndDate(endDate);
         a.setImage(ar.getImgUrl());
         a.setUserId(u);
-        
-        if(this.auctionService.createAuction(a) < 1)
+
+        if (this.auctionService.createAuction(a) < 1) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        
+        }
+
         return new ResponseEntity<>(a, HttpStatus.CREATED);
     }
-    
+
+    @Async
+    @PutMapping("/edit-auction/{auctionId}")
+    public ResponseEntity<Auction> editPost(@PathVariable(value = "auctionId") int id,
+             @RequestBody AuctionRequest ar, HttpSession session) throws IOException, ParseException {
+        User u = (User) session.getAttribute("currentUser");
+        Auction a = auctionService.getAuctionById(id);
+
+        if (!a.getUserId().getId().equals(u.getId())) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        if (a != null) {
+            a.setContent(ar.getContent());
+            a.setHashtag(ar.getHashtag());
+            a.setAuctionDate(new Date());
+            if (!a.getImage().isEmpty() && !a.getImage().equals(ar.getImgUrl())) {
+                String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
+                deleteImg(public_id);
+            }
+
+            a.setImage(ar.getImgUrl());
+            if (this.auctionService.updateAuction(a) >= 1) {
+                return new ResponseEntity<>(a, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @Async
     @DeleteMapping("/auctions/{auctionId}")
-     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAuction(@PathVariable(value = "auctionId") int id) throws IOException {
         Auction a = this.auctionService.getAuctionById(id);
-         if (a != null) {
+        if (a != null) {
             this.auctionService.deleteAuction(id);
             if (!a.getImage().isEmpty()) {
                 String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
@@ -98,7 +127,7 @@ public class ApiAuctionController {
             }
         }
     }
-    
+
     @Async
     @PostMapping("/create-bid")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
@@ -106,30 +135,31 @@ public class ApiAuctionController {
         bid.setBidDate(new Date());
         bid.setMessage("");
         bid.setMoney(b.getMoney());
-        
-         User u = (User)session.getAttribute("currentUser");
-         Auction a = auctionService.getAuctionById(b.getAuctionId());
-         
-         BidPK bidPK = new BidPK();
-         bidPK.setUserId(u.getId());
-         bidPK.setAuctionId(b.getAuctionId());
-         
-         bid.setBidPK(bidPK);
-         bid.setUser(u);
-         bid.setAuction(a);
+
+        User u = (User) session.getAttribute("currentUser");
+        Auction a = auctionService.getAuctionById(b.getAuctionId());
+
+        BidPK bidPK = new BidPK();
+        bidPK.setUserId(u.getId());
+        bidPK.setAuctionId(b.getAuctionId());
+
+        bid.setBidPK(bidPK);
+        bid.setUser(u);
+        bid.setAuction(a);
         return new ResponseEntity<>(this.bidService.createBid(bid), HttpStatus.CREATED);
     }
-    
+
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete-bid")
     public void deleteReact(@RequestBody BidRequest b, HttpSession session) {
-        User u = (User)session.getAttribute("currentUser");
+        User u = (User) session.getAttribute("currentUser");
         Bid bid = bidService.findBid(u.getId(), b.getAuctionId());
-        if (bid != null)
+        if (bid != null) {
             bidService.deleteBid(bid);
+        }
     }
-    
+
     public void deleteImg(String public_id) throws IOException {
         CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
                 ObjectUtils.asMap("resource_type", "image"));

@@ -98,7 +98,18 @@ public class AuctionRepositoryImpl implements AuctionRepository{
     @Override
     public int createAuction(Auction a) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-            
-            return (int) session.save(a);
+        return (int) session.save(a);
+    }
+
+    @Override
+    public int updateAuction(Auction a) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(a);
+            return a.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
