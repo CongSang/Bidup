@@ -53,15 +53,18 @@
                 </div>
 
                 <div class="dropzone card shadow-none w-100">
+                    <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)">
+                        <i class="fa-solid fa-xmark p-2"></i>
+                    </div>
                     <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
-                        <img id="uploadPreview" />
+                        <img class="imagePreview" id="uploadPreview" />
                         <div class="d-flex justify-content-center align-items-center h-100">
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <i class="fa-solid fa-images images-icon"></i>
                                 <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
                             </div>
                         </div>
-                        <input id="uploadImage" type='file' name='upload-image' class='upload-image' onchange="previewImage()" />
+                        <input id="uploadImage" type='file' name='upload-image' class='upload-image' onchange="previewImage(this)" />
                     </label>
                 </div>
             </div>

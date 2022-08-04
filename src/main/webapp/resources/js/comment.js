@@ -8,7 +8,7 @@ function addComment(currentPostId, formEl) {
         $(formEl).parents('.comment').find('.comment-loading').css("display", "block");
         $.ajax({
             type: 'post',
-            url: `${ctxPath}api/create-comment`,
+            url: `${ctxPath}/api/create-comment`,
             data:JSON.stringify({
                 'content':commentContent,
                 'postId':currentPostId
@@ -62,7 +62,7 @@ function createReact(currentPostId, element) {
         
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}api/delete-react/${currentPostId}`,
+            url: `${ctxPath}/api/delete-react/${currentPostId}`,
             dataType: 'json'
         });
     }
@@ -73,7 +73,7 @@ function createReact(currentPostId, element) {
         
         $.ajax({
             type: 'post',
-            url: `${ctxPath}api/create-react/${currentPostId}`,
+            url: `${ctxPath}/api/create-react/${currentPostId}`,
             dataType: 'json'
         });
     }
@@ -91,7 +91,7 @@ function deleteComment(id, el) {
     
     $.ajax({
             type: 'delete',
-            url: `${ctxPath}api/delete-comment/${id}`,
+            url: `${ctxPath}/api/delete-comment/${id}`,
             dataType: 'json',
             success: function () {
                 var commentCounter = $(clickedComment).parents('.post').find('#commentCounter');

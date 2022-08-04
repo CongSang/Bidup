@@ -165,6 +165,18 @@ a {
     opacity: 0.6;
 }
 
+.modal--remove-img {
+    z-index: 1000;
+    position: absolute;
+    width: 2px;
+    color: red;
+    top: -8px;
+    right: -2px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0;
+}
+
 .modal--picture {
     width: 900px;
     max-width: calc(100% - 16px);
@@ -193,7 +205,7 @@ a {
     border: 2px dashed #eef0f2;
 }
 
-#uploadPreview {
+.imagePreview {
     position: absolute;
     top: 0;
     bottom: 0;

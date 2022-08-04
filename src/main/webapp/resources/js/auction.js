@@ -177,7 +177,7 @@ function createAuction() {
             }
             $.ajax({
                 type: 'post',
-                url: `${ctxPath}api/post-img`,
+                url: `${ctxPath}/api/post-img`,
                 data: formData,
                 dataType : "json",
                 processData : false,
@@ -188,7 +188,7 @@ function createAuction() {
 
                 $.ajax({
                     type: 'post',
-                    url: `${ctxPath}api/create-auction`,
+                    url: `${ctxPath}/api/create-auction`,
                     data: JSON.stringify({
                         'content':content,
                         'hashtag': findHashtags(content),
@@ -230,7 +230,7 @@ function prependAuctionFeeds(auction) {
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}user/${auction.userId.id}">
+                                        <a href="${ctxPath}/user/${auction.userId.id}">
                                             <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
                                         </a>
                                     </div>
@@ -238,7 +238,7 @@ function prependAuctionFeeds(auction) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                             <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
@@ -271,7 +271,7 @@ function prependAuctionFeeds(auction) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}api/auctions', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}/api/auctions', ${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}

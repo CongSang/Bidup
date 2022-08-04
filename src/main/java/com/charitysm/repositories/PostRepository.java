@@ -18,4 +18,5 @@ public interface PostRepository {
     Post getPostById(int id);
     int createPost(Post p);
     void deletePost(int id);
+    int updatePost(Post p);
 }

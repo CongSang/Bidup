@@ -1,4 +1,4 @@
-const modal = document.querySelector(".modal-post");
+const modal = document.querySelector("#modalCreatePost");
 const modalContainer = document.querySelector(".modal-container-post");
 const btn_close = document.querySelectorAll(".modal--close-post");
 const btn_show = document.querySelectorAll(".btn-show--post");
@@ -24,14 +24,32 @@ modalContainer.addEventListener("click", function (event) {
 });
 
 //Show image after pick picture
-function previewImage() {
+function previewImage(el) {
     var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.querySelector("#uploadImage").files[0]);
+    if (el.id === 'uploadImage') {
+        oFReader.readAsDataURL(document.querySelector("#uploadImage").files[0]);
 
-    oFReader.onload = function (oFREvent) {
-        document.querySelector("#uploadPreview").src = oFREvent.target.result;
-    };
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#uploadPreview").src = oFREvent.target.result;
+        };
+        
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+    else {
+        oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#editPreview").src = oFREvent.target.result;
+        };
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
 };
+
+function removeImg(el) {
+    $(el).parents('.modal-post').find('.imagePreview').attr('src', '');
+    $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0');
+    $(el).parents('.modal-post').find('.upload-image').val(undefined);
+}
 
 function showFull(element) {
   document.getElementById("img01").src = element.src;
@@ -66,13 +84,13 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
             return new Date(b.commentDate) - new Date(a.commentDate);
         });
 
-        var html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
+        var html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}user/${post.userId.id}">
+                                    <a href="${ctxPath}/user/${post.userId.id}">
                                         <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
                                     </a>
                                 </div>
@@ -80,7 +98,7 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="${ctxPath}user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -118,7 +136,9 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                             ${post.content}
                         </p>
         
-                        ${(post.image === '') ?``:(`
+                        ${(post.image === '') ?`
+                        <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
+                        `:(`
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
 
@@ -166,14 +186,14 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                         return `
                                           <div class="d-flex comment--item py-2">
                                                 <div class="me-2">
-                                                    <a href="${ctxPath}user/${comment.userId.id}">
+                                                    <a href="${ctxPath}/user/${comment.userId.id}">
                                                         <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
                                                     </a>
                                                 </div>
                                                 <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                           <small>${moment(comment.commentDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">
@@ -192,14 +212,14 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                      return `
                                           <div class="d-flex comment--item py-2">
                                               <div class="me-2">
-                                                  <a href="${ctxPath}user/${comment.userId.id}">
+                                                  <a href="${ctxPath}/user/${comment.userId.id}">
                                                       <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
                                                   </a>
                                               </div>
                                               <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
                                                           <small>${moment(comment.commentDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">
@@ -228,13 +248,13 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
 
 function prependFeeds(post) {
     var userAvatar = $("#userAvatar").attr("src");
-    const html = `<div class="post">      <!--Phan nay fecth du lieu de render-->
+    const html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}user/${post.userId.id}">
+                                    <a href="${ctxPath}/user/${post.userId.id}">
                                         <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
                                     </a>
                                 </div>
@@ -242,7 +262,7 @@ function prependFeeds(post) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/${ctxPath}user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="/${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -275,7 +295,9 @@ function prependFeeds(post) {
                         <p class="post--content mb-3 content--hashtag post-${post.id}">
                             ${post.content}
                         </p>
-                        ${(post.image === '') ?``:(`
+                        ${(post.image === '') ?`
+                        <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
+                        `:(`
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
                         

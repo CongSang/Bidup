@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -176,5 +177,33 @@ public class ApiPostController {
     public void deleteImg(String public_id) throws IOException {
         CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
                 ObjectUtils.asMap("resource_type", "image"));
+    }
+    
+    @Async
+    @PutMapping("/edit-post/{id}")
+    public ResponseEntity<Post> editPost(@PathVariable(value="id") int id
+            , @RequestBody PostRequest pr, HttpSession session) throws IOException {
+        User u = (User)session.getAttribute("currentUser");
+        Post p = postService.getPostById(id);
+        
+        if (!p.getUserId().getId().equals(u.getId()))
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        if (p != null) {
+            p.setContent(pr.getContent());
+            p.setHashtag(pr.getHashtag());
+            p.setPostedDate(new Date());
+            if (!p.getImage().isEmpty()) {
+                String public_id = p.getImage().substring(p.getImage().lastIndexOf("public_id=") + 10);
+                deleteImg(public_id);
+            }
+            
+            p.setImage(pr.getImgUrl());
+            System.out.println(pr.getImgUrl());
+            if(this.postService.updatePost(p) >= 1)
+                return new ResponseEntity<>(p, HttpStatus.OK);
+        }
+        
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        
     }
 }
