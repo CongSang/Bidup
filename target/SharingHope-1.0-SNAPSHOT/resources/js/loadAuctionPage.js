@@ -43,7 +43,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}user/${auction.userId.id}">
+                                        <a href="${ctxPath}/user/${auction.userId.id}">
                                             <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
                                         </a>
                                     </div>
@@ -51,7 +51,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                             <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
@@ -132,14 +132,14 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     return `
                                           <div class="d-flex comment--item py-2">
                                             <div class="me-2">
-                                                <a href="${ctxPath}user/${bid.user.id}">
+                                                <a href="${ctxPath}/user/${bid.user.id}">
                                                     <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
                                                 </a>
                                             </div>
                                             <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
                                                           <small>${moment(bid.bidDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">
@@ -167,7 +167,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}user/${auction.userId.id}">
+                                        <a href="${ctxPath}/user/${auction.userId.id}">
                                             <c:url value="/resources/img/non-avatar.png" var="a" />
                                             <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
                                         </a>
@@ -176,7 +176,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                         </div>
@@ -246,14 +246,14 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     `${userAuction && `
                                             <div class="d-flex comment--item py-2">
                                                 <div class="me-2">
-                                                    <a href="${ctxPath}user/${auction.userId.id}">
+                                                    <a href="${ctxPath}/user/${auction.userId.id}">
                                                         <img class="comment--avatar rounded-circle" src="${userAuction[0].user.avatar}" alt="avatar">
                                                     </a>
                                                 </div>
                                                  <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${auction.userId.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${auction.userId.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
                                                           <small>${moment(userAuction[0].bidDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">

@@ -38,7 +38,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
                                                     <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}user/${data.user.id}">${data.user.lastname} ${data.user.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${data.user.id}">${data.user.lastname} ${data.user.firstname}</a></h6>
                                                           <small>${moment(data.bidDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">
