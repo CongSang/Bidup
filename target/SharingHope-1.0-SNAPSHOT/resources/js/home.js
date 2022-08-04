@@ -100,7 +100,7 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                         <h6 class="nav-item card-title mb-0">
                                             <a href="${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
                                         </h6>
-                                        <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
+                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
                                     </div>
                                 </div>
                             </div>
