@@ -64,7 +64,7 @@ function deleteAuction(endpoint, auctionId) {
                 url: endpoint + "/" + auctionId,
                 dataType: 'json',
                 success: function() {
-                    swal("Poof! Your imaginary file has been deleted!", {
+                    swal("Xóa bài đấu giá thành công", {
                     icon: "success"
                     });
                     $(`.auction-post-${auctionId}`).remove();
@@ -411,5 +411,55 @@ function editStatus(id, clickedPost, clickedPostHtml, content) {
         })
         .fail(function(){
             $(clickedPost).html(clickedPostHtml);
+        });
+}
+
+function confirmWinnerAndSendEmail(auctionId, element) {
+    swal({
+        title: "Gửi email cho người chiến thắng và người thua?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((isDeleted) => {
+          if (isDeleted) {
+            $(`.auction-del-loading-${auctionId}`).css("display", "block");
+
+            $.ajax({
+                type: 'put',
+                url: `${ctxPath}/api/send-email/${auctionId}`,
+                dataType: 'json'
+            }).done(function () {
+                $(`.auction-del-loading-${auctionId}`).css("display", "none");
+                swal("Gửi email thành công", {
+                icon: "success"
+                });
+                $(element).parents('li').css("display", "none");
+            }).fail(function () {
+                $(`.auction-del-loading-${auctionId}`).css("display", "none");
+                swal("Gửi email thất bại", {
+                icon: "warning"
+                });
+            });
+        }
+    });
+}
+
+function confirmCompleteCharity(auctionId) {
+    $(`.bid-loading-${auctionId}`).css("display", "block");
+    
+    $.ajax({
+            type: 'put',
+            url: `${ctxPath}/api/confirm-auction/${auctionId}`,
+            dataType : 'json',
+            success: function () {
+                $(`.bid-loading-${auctionId}`).css("display", "none");
+                $(`.auction-post-${auctionId}`).find('.post--action-like').html(`
+                    <div class="btn-disable">
+                        <i class="fa-solid fa-check"></i>
+                        <span class="auction--action-text auction-follow ms-2">Hoàn thành</span>
+                    </div>
+                `);
+            }
         });
 }

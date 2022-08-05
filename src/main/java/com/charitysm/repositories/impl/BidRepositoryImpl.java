@@ -50,5 +50,15 @@ public class BidRepositoryImpl implements BidRepository{
         
         return (Bid)q.getSingleResult();
     }
+
+    @Override
+    public void updateWinner(Bid b) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
 }

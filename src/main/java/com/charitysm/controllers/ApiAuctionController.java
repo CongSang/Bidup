@@ -14,15 +14,23 @@ import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
 import com.charitysm.utils.CloudinaryUtils;
 import com.cloudinary.utils.ObjectUtils;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +55,8 @@ public class ApiAuctionController {
     private AuctionService auctionService;
     @Autowired
     private BidService bidService;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Async
     @GetMapping("/auction-side")
@@ -78,6 +88,7 @@ public class ApiAuctionController {
         a.setEndDate(endDate);
         a.setImage(ar.getImgUrl());
         a.setUserId(u);
+        a.setMailTo((short) 1);
 
         if (this.auctionService.createAuction(a) < 1) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,7 +100,7 @@ public class ApiAuctionController {
     @Async
     @PutMapping("/edit-auction/{auctionId}")
     public ResponseEntity<Auction> editPost(@PathVariable(value = "auctionId") int id,
-             @RequestBody AuctionRequest ar, HttpSession session) throws IOException, ParseException {
+            @RequestBody AuctionRequest ar, HttpSession session) throws IOException, ParseException {
         User u = (User) session.getAttribute("currentUser");
         Auction a = auctionService.getAuctionById(id);
 
@@ -128,6 +139,91 @@ public class ApiAuctionController {
         }
     }
 
+    public void sendEmail(String from, String to, String subject, String content, boolean isHtmlMail) {
+//        SimpleMailMessage mailMessage = new SimpleMailMessage();
+//        mailMessage.setFrom(from);
+//        mailMessage.setTo(to);
+//        mailMessage.setSubject(subject);
+//        mailMessage.setText(content);
+//        
+//        mailSender.send(mailMessage);
+
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            
+            if (isHtmlMail) {
+                helper.setText("<html><body>" + content + "</html></body>", true);
+            } else {
+                helper.setText(content);
+            }
+            
+            mailSender.send(mimeMessage);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Async
+    @PutMapping("/send-email/{auctionId}")
+    public ResponseEntity<Auction> sendEmailAuction(@PathVariable(value = "auctionId") int id,
+            HttpSession session) throws IOException, ParseException {
+        User u = (User) session.getAttribute("currentUser");
+        Auction a = auctionService.getAuctionById(id);
+
+        if (!a.getUserId().getId().equals(u.getId())) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        if (a != null) {
+            for (Bid b : a.getBidSet()) {
+                if (b.getIsWinner() == 1) {
+                    sendEmail("honguyencongsang.dev@gmail.com", b.getUser().getEmail(), "ĐẤU GIÁ THÀNH CÔNG",
+                            String.format("<p>Chúc mừng bạn %s đã đấu giá thành công bài viết của %s (%s). "
+                                    + "Vui lòng thanh toán cho chủ sở hữu bài viết trong thời gian sớm nhất. "
+                                    + "Cám ơn bạn đã tham gia.</p>"
+                                    + "<img src='https://res.cloudinary.com/dynupxxry/image/upload/v1659719016/netflix/logo-sharing-hope_G_ql7czy.png' />",
+                                    b.getUser().getFirstname(), u.getFirstname(), u.getEmail()), true);
+                } else {
+                    sendEmail("honguyencongsang.dev@gmail.com", b.getUser().getEmail(), "ĐẤU GIÁ THẤT BẠI",
+                            String.format("<p>Bài đấu giá của %s (%s) đã quyết định được người chiến thắng. "
+                                    + "Cám ơn bạn đã dành thời gian tham gia. Chúc bạn một ngày tốt lành.</p>"
+                                    + "<img src='https://res.cloudinary.com/dynupxxry/image/upload/v1659719016/netflix/logo-sharing-hope_G_ql7czy.png' />",
+                                    u.getFirstname(), u.getEmail()), true);
+                }
+            }
+
+            a.setMailTo((short) 1);
+            this.auctionService.sendEmailAuction(a);
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Async
+    @PutMapping("/confirm-auction/{auctionId}")
+    public ResponseEntity<Auction> confirmCompleteCharity(@PathVariable(value = "auctionId") int id,
+            HttpSession session) throws IOException, ParseException {
+        User u = (User) session.getAttribute("currentUser");
+        Auction a = auctionService.getAuctionById(id);
+
+        if (!a.getUserId().getId().equals(u.getId())) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        if (a != null) {
+            a.setActive((short) 0);
+
+            if (this.auctionService.updateAuction(a) >= 1) {
+                return new ResponseEntity<>(a, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @Async
     @PostMapping("/create-bid")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
@@ -135,6 +231,7 @@ public class ApiAuctionController {
         bid.setBidDate(new Date());
         bid.setMessage("");
         bid.setMoney(b.getMoney());
+        bid.setIsWinner((short) 0);
 
         User u = (User) session.getAttribute("currentUser");
         Auction a = auctionService.getAuctionById(b.getAuctionId());
@@ -163,5 +260,22 @@ public class ApiAuctionController {
     public void deleteImg(String public_id) throws IOException {
         CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
                 ObjectUtils.asMap("resource_type", "image"));
+    }
+
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/update-bid/{userId}")
+    public void updateBid(@RequestBody BidRequest br, @PathVariable(value = "userId") String userId) {
+        Bid b = this.bidService.findBid(userId, br.getAuctionId());
+
+        if (b != null) {
+            if (b.getIsWinner() == 0) {
+                b.setIsWinner((short) 1);
+            } else {
+                b.setIsWinner((short) 0);
+            }
+
+            this.bidService.updateWinner(b);
+        }
     }
 }

@@ -46,3 +46,27 @@
     color: #999;
     cursor: pointer;
 }
+
+.winner-user {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+}
+
+.winner-user.is-winner {
+    color: #f7af31;
+    animation: popup 0.4s ease;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(.8);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

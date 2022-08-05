@@ -20,4 +20,6 @@ public interface AuctionService {
     int createAuction(Auction a);
     void deleteAuction(int id);
     int updateAuction(Auction a);
+    int confirmCompleteCharity(Auction a);
+    void sendEmailAuction(Auction a);
 }

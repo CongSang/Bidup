@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.findForUser", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId AND b.bidPK.auctionId = :auctionId")})
 public class Bid implements Serializable {
 
+    @Column(name = "is_winner")
+    private Short isWinner;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "bid_date")
@@ -149,6 +152,14 @@ public class Bid implements Serializable {
 
     public void setBidDate(Date bidDate) {
         this.bidDate = bidDate;
+    }
+
+    public Short getIsWinner() {
+        return isWinner;
+    }
+
+    public void setIsWinner(Short isWinner) {
+        this.isWinner = isWinner;
     }
     
 }

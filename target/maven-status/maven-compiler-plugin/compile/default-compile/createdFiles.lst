@@ -1,6 +1,7 @@
 com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\services\BidService.class
 com\charitysm\services\impl\BidServiceImpl.class
+com\charitysm\configs\EmailConfig.class
 com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class

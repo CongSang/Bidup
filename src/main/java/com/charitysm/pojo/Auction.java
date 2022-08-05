@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active")})
 public class Auction implements Serializable {
 
+    @Column(name = "mail_to")
+    private Short mailTo;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "auction_date")
@@ -201,6 +204,14 @@ public class Auction implements Serializable {
 
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
+    }
+
+    public Short getMailTo() {
+        return mailTo;
+    }
+
+    public void setMailTo(Short mailTo) {
+        this.mailTo = mailTo;
     }
     
 }
