@@ -140,14 +140,6 @@ public class ApiAuctionController {
     }
 
     public void sendEmail(String from, String to, String subject, String content, boolean isHtmlMail) {
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//        mailMessage.setFrom(from);
-//        mailMessage.setTo(to);
-//        mailMessage.setSubject(subject);
-//        mailMessage.setText(content);
-//        
-//        mailSender.send(mailMessage);
-
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);

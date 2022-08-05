@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "post")
@@ -42,12 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByContent", query = "SELECT p FROM Post p WHERE p.content = :content"),
     @NamedQuery(name = "Post.findByImage", query = "SELECT p FROM Post p WHERE p.image = :image"),
     @NamedQuery(name = "Post.findByPostedDate", query = "SELECT p FROM Post p WHERE p.postedDate = :postedDate"),
-    @NamedQuery(name = "Post.findByActive", query = "SELECT p FROM Post p WHERE p.active = :active")})
+    @NamedQuery(name = "Post.findByActive", query = "SELECT p FROM Post p WHERE p.active = :active"),
+    @NamedQuery(name = "Post.findByHashtag", query = "SELECT p FROM Post p WHERE p.hashtag = :hashtag")})
 public class Post implements Serializable {
-
-    @Size(max = 100)
-    @Column(name = "hashtag")
-    private String hashtag;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,12 +65,21 @@ public class Post implements Serializable {
     private Date postedDate;
     @Column(name = "active")
     private Short active;
+    @Size(max = 100)
+    @Column(name = "hashtag")
+    private String hashtag;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
-    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @JsonIgnore
+    private Set<ReactNotif> reactNotifSet;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "postId")
     private Set<Comment> commentSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @JsonIgnore
+    private Set<CommentNotif> commentNotifSet;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
     private Set<React> reactSet;
 
     public Post() {
@@ -128,6 +134,14 @@ public class Post implements Serializable {
         this.active = active;
     }
 
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
+    }
+
     public User getUserId() {
         return userId;
     }
@@ -137,12 +151,30 @@ public class Post implements Serializable {
     }
 
     @XmlTransient
+    public Set<ReactNotif> getReactNotifSet() {
+        return reactNotifSet;
+    }
+
+    public void setReactNotifSet(Set<ReactNotif> reactNotifSet) {
+        this.reactNotifSet = reactNotifSet;
+    }
+
+    @XmlTransient
     public Set<Comment> getCommentSet() {
         return commentSet;
     }
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
+    }
+
+    @XmlTransient
+    public Set<CommentNotif> getCommentNotifSet() {
+        return commentNotifSet;
+    }
+
+    public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
+        this.commentNotifSet = commentNotifSet;
     }
 
     @XmlTransient
@@ -177,14 +209,6 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Post[ id=" + id + " ]";
-    }
-
-    public String getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(String hashtag) {
-        this.hashtag = hashtag;
     }
     
 }

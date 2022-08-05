@@ -13,6 +13,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "user")
@@ -50,12 +53,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")})
 public class User implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "user_role")
-    private String userRole;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -66,11 +63,12 @@ public class User implements Serializable {
      @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 6, max = 16)
+    @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
@@ -109,17 +107,34 @@ public class User implements Serializable {
     @Size(max = 100)
     @Column(name = "avatar")
     private String avatar;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "user_role")
+    private String userRole;
     @Column(name = "active")
     private Short active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
-    private Set<Notification> notificationSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JoinTable(name = "follow", joinColumns = {
+        @JoinColumn(name = "follower_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "followed_id", referencedColumnName = "id")})
+    @ManyToMany
+    private Set<User> userSet;
     @JsonIgnore
+    @ManyToMany(mappedBy = "userSet")
+    private Set<User> userSet1;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Post> postSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private Set<ReactNotif> reactNotifSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
     private Set<Comment> commentSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<CommentNotif> commentNotifSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private Set<React> reactSet;
@@ -261,12 +276,21 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<Notification> getNotificationSet() {
-        return notificationSet;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setNotificationSet(Set<Notification> notificationSet) {
-        this.notificationSet = notificationSet;
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
+
+    @XmlTransient
+    public Set<User> getUserSet1() {
+        return userSet1;
+    }
+
+    public void setUserSet1(Set<User> userSet1) {
+        this.userSet1 = userSet1;
     }
 
     @XmlTransient
@@ -279,12 +303,30 @@ public class User implements Serializable {
     }
 
     @XmlTransient
+    public Set<ReactNotif> getReactNotifSet() {
+        return reactNotifSet;
+    }
+
+    public void setReactNotifSet(Set<ReactNotif> reactNotifSet) {
+        this.reactNotifSet = reactNotifSet;
+    }
+
+    @XmlTransient
     public Set<Comment> getCommentSet() {
         return commentSet;
     }
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
+    }
+
+    @XmlTransient
+    public Set<CommentNotif> getCommentNotifSet() {
+        return commentNotifSet;
+    }
+
+    public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
+        this.commentNotifSet = commentNotifSet;
     }
 
     @XmlTransient
@@ -338,4 +380,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.charitysm.pojo.User[ id=" + id + " ]";
     }
+    
 }

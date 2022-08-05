@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="<c:url value="resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="resources/js/hashtag/jquery.autosize.js" />"></script>
+        <script src="<c:url value="resources/js/notification.js" />"></script>
         
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -59,6 +60,9 @@
 
          <script src="<c:url value="/resources/js/main.js" />"></script>
         <script>
+            window.onload = function() {
+                getNotifs();
+            };
             $(window).scroll(function () {
                 if ($(this).scrollTop() >= 300) {
                     $('#go-to-top').css("display", "flex");

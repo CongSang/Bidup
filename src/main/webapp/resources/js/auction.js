@@ -423,23 +423,29 @@ function confirmWinnerAndSendEmail(auctionId, element) {
       })
       .then((isDeleted) => {
           if (isDeleted) {
-            $(`.auction-del-loading-${auctionId}`).css("display", "block");
+            $('.send-email-loading').css("display", "flex");
+            $(element).parents('li').css("display", "none");
 
             $.ajax({
                 type: 'put',
                 url: `${ctxPath}/api/send-email/${auctionId}`,
                 dataType: 'json'
-            }).done(function () {
-                $(`.auction-del-loading-${auctionId}`).css("display", "none");
+            }).done(function (data) {
+                $('.send-email-loading').css("display", "none");
                 swal("Gửi email thành công", {
                 icon: "success"
                 });
-                $(element).parents('li').css("display", "none");
+                $(element).parents('li').html(`
+                    <div class="dropdown-item cursor-pointer" onclick="confirmCompleteCharity(${data.id})">
+                        Hoàn thành từ thiện
+                    </div>
+                `);
             }).fail(function () {
-                $(`.auction-del-loading-${auctionId}`).css("display", "none");
+                $('.send-email-loading').css("display", "none");
                 swal("Gửi email thất bại", {
                 icon: "warning"
                 });
+                $(element).parents('li').css("display", "block");
             });
         }
     });

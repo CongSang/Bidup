@@ -31,32 +31,25 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "auction")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Auction.findAll", query = "SELECT a FROM Auction a"),
-    @NamedQuery(name = "Auction.findById", query = "SELECT a FROM Auction a WHERE a.id = :id"),
-    @NamedQuery(name = "Auction.findByContent", query = "SELECT a FROM Auction a WHERE a.content = :content"),
-    @NamedQuery(name = "Auction.findByImage", query = "SELECT a FROM Auction a WHERE a.image = :image"),
-    @NamedQuery(name = "Auction.findByStartingPrice", query = "SELECT a FROM Auction a WHERE a.startingPrice = :startingPrice"),
-    @NamedQuery(name = "Auction.findByEndDate", query = "SELECT a FROM Auction a WHERE a.endDate = :endDate"),
-    @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active")})
+        @NamedQuery(name = "Auction.findAll", query = "SELECT a FROM Auction a"),
+        @NamedQuery(name = "Auction.findById", query = "SELECT a FROM Auction a WHERE a.id = :id"),
+        @NamedQuery(name = "Auction.findByContent", query = "SELECT a FROM Auction a WHERE a.content = :content"),
+        @NamedQuery(name = "Auction.findByImage", query = "SELECT a FROM Auction a WHERE a.image = :image"),
+        @NamedQuery(name = "Auction.findByStartingPrice", query = "SELECT a FROM Auction a WHERE a.startingPrice = :startingPrice"),
+        @NamedQuery(name = "Auction.findByAuctionDate", query = "SELECT a FROM Auction a WHERE a.auctionDate = :auctionDate"),
+        @NamedQuery(name = "Auction.findByEndDate", query = "SELECT a FROM Auction a WHERE a.endDate = :endDate"),
+        @NamedQuery(name = "Auction.findByHashtag", query = "SELECT a FROM Auction a WHERE a.hashtag = :hashtag"),
+        @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active") })
 public class Auction implements Serializable {
 
     @Column(name = "mail_to")
     private Short mailTo;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "auction_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date auctionDate;
-    @Size(max = 100)
-    @Column(name = "hashtag")
-    private String hashtag;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,12 +69,20 @@ public class Auction implements Serializable {
     private long startingPrice;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "auction_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date auctionDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    @Size(max = 100)
+    @Column(name = "hashtag")
+    private String hashtag;
     @Column(name = "active")
     private Short active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auction", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "auction")
     private Set<Bid> bidSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -94,9 +95,10 @@ public class Auction implements Serializable {
         this.id = id;
     }
 
-    public Auction(Integer id, long startingPrice, Date endDate) {
+    public Auction(Integer id, long startingPrice, Date auctionDate, Date endDate) {
         this.id = id;
         this.startingPrice = startingPrice;
+        this.auctionDate = auctionDate;
         this.endDate = endDate;
     }
 
@@ -132,12 +134,28 @@ public class Auction implements Serializable {
         this.startingPrice = startingPrice;
     }
 
+    public Date getAuctionDate() {
+        return auctionDate;
+    }
+
+    public void setAuctionDate(Date auctionDate) {
+        this.auctionDate = auctionDate;
+    }
+
     public Date getEndDate() {
         return endDate;
     }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
 
     public Short getActive() {
@@ -190,22 +208,6 @@ public class Auction implements Serializable {
         return "com.charitysm.pojo.Auction[ id=" + id + " ]";
     }
 
-    public Date getAuctionDate() {
-        return auctionDate;
-    }
-
-    public void setAuctionDate(Date auctionDate) {
-        this.auctionDate = auctionDate;
-    }
-
-    public String getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(String hashtag) {
-        this.hashtag = hashtag;
-    }
-
     public Short getMailTo() {
         return mailTo;
     }
@@ -213,5 +215,5 @@ public class Auction implements Serializable {
     public void setMailTo(Short mailTo) {
         this.mailTo = mailTo;
     }
-    
+
 }

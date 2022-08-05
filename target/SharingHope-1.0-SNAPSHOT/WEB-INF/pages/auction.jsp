@@ -97,6 +97,11 @@
             <img id="img02" style="max-width:100%; max-height:100vh;">
         </div>
     </div>
+                    
+   <div class="send-email-loading">
+        <div class="spinner-border text-light"></div>
+        <p class="ms-3 mb-0">Đang gửi email...</p>
+    </div>
 </div>
 
 <script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
