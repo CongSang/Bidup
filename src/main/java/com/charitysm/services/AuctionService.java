@@ -19,4 +19,5 @@ public interface AuctionService {
     Auction getAuctionById(int id);
     int createAuction(Auction a);
     void deleteAuction(int id);
+    int updateAuction(Auction a);
 }

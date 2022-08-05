@@ -35,7 +35,7 @@
 
 
     <!--modal create post-->
-    <div class="modal modal-auction">
+    <div class="modal modal-auction modal-post">
         <div class="modal-container modal-container-auction">
             <div class="modal-header">
                 <h5 class="my-2">Thêm bài viết đấu giá</h5>
@@ -67,16 +67,19 @@
                     </div>
                     <span class="text-danger err-validate endDate-validate" style="display: none">Ngày giờ phải lớn hơn ngày giờ hiện tại</span>
                 </div>
-                <div class="dropzone card shadow-none position-relative mt-4">
+                <div class="dropzone card shadow-none mt-4">
+                    <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)">
+                        <i class="fa-solid fa-xmark p-2"></i>
+                    </div>
                     <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
-                        <img id="uploadPreview1" />
+                        <img id="uploadPreview1" class="imagePreview" />
                         <div class="d-flex justify-content-center align-items-center h-100">
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <i class="fa-solid fa-images images-icon"></i>
                                 <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
                             </div>
                         </div>
-                        <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1()" />
+                        <input id="uploadImage1" type='file' name='upload-image' class='upload-image' onchange="previewImage1(this)" />
                     </label>
                 </div>
 

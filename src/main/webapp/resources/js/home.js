@@ -45,12 +45,6 @@ function previewImage(el) {
     }
 };
 
-function removeImg(el) {
-    $(el).parents('.modal-post').find('.imagePreview').attr('src', '');
-    $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0');
-    $(el).parents('.modal-post').find('.upload-image').val(undefined);
-}
-
 function showFull(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "flex";

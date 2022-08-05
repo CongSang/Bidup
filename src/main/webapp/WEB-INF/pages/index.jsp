@@ -47,8 +47,8 @@
                     <div>
                         <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
                     </div>
-                    <form class="w-100 ms-1">
-                        <textarea id="statusContent" class="form-control pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                    <form class="w-100">
+                        <textarea id="statusContent" class="form-control ms-2 pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
                     </form>
                 </div>
 

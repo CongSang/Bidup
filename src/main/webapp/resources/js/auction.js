@@ -1,60 +1,3 @@
-const modal1 =  document.querySelector(".modal-auction");
-const modalContainer1 = $(".modal-container-auction");
-const btn_close1 = document.querySelectorAll(".modal--close-auction");
-const btn_show1 = document.querySelectorAll(".btn-show--auction");
-var userAvatar = $("#userAvatar").attr("src");
-var errorHtml =  `<div class="text-center mt-3 post-loading">
-                                <p class="post--content mb-3" style="font-size:30xp;">
-                                    Có lỗi xảy ra, không thể đăng bài ngay lúc này!
-                                </p>
-                               <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
-                            </div>`;
-
-function showModal() {
-    modal1.classList.add('open');
-}
-
-function closeModal() {
-    modal1.classList.remove('open');
-}
-
-btn_show1.forEach(btn => {
-    btn.addEventListener("click", showModal);
-});
-
-btn_close1.forEach(btn => {
-    btn.addEventListener("click", closeModal);
-});
-
-modalContainer1.on("click", function (event) {
-    event.stopPropagation();
-});
-
-function previewImage1() {
-    var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.querySelector("#uploadImage1").files[0]);
-
-    oFReader.onload = function (oFREvent) {
-        document.querySelector("#uploadPreview1").src = oFREvent.target.result;
-    };
-};
-
-function showFull2(element) {
-  document.getElementById("img02").src = element.src;
-  document.getElementById("modal02").style.display = "flex";
-}
-
-var is_show_follow = false;
-function showFollowAuction(element) {
-    var follow = $(element).parents("div.post").find("div.auction-follow-list");
-    if(is_show_follow) {
-        follow.css("display", "none");
-        is_show_follow = false;
-    } else {
-        follow.css("display", "block");
-        is_show_follow = true;
-    }
-};
 
 //Load theo trang cho trang dau gia
 var auctionPage = 1;
@@ -266,7 +209,7 @@ function prependAuctionFeeds(auction) {
                                         }
                                         ${(auction.endDate > Date.now()) ?
                                         `<li>
-                                            <div class="dropdown-item cursor-pointer">
+                                            <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                                 Chỉnh sửa bài viết
                                             </div>
                                         </li>
@@ -294,7 +237,7 @@ function prependAuctionFeeds(auction) {
                             </p>
                             <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
 
-                            <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
+                            <img class="card-img post--img auction--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
 
                             <div class="line"></div>
 
@@ -323,4 +266,150 @@ function prependAuctionFeeds(auction) {
             
         $('.auction-container').prepend(html);
         customHashtag(`.auction-${auction.id}`);         
+}
+
+function editAuction(auctionId, element) {
+    event.preventDefault();
+    var clickedAuction = $(element).parents(`.auction-post-${auctionId}`);
+    
+    var content = $(clickedAuction).find(`p.auction-${auctionId}`).text();
+    var imgSrc = $(clickedAuction).find('.auction--img').prop('src');
+    if (imgSrc.toLowerCase().indexOf('https://') === -1 )
+        imgSrc = '';
+    modalEditPost(auctionId, $(element), content.trim(), imgSrc);
+    $("textarea").hashtags();
+}
+
+function comfirmEditPost(id) {
+    var loadingHtml =   `   <div class="text-center mt-3 post-loading">
+                                            <div class="spinner-border text-muted"></div>
+                                        </div>
+                                                `; 
+    var clickedAuction = $(`.auction-post-${id}`);
+    var clickedPostHtml = $(clickedAuction).html();
+    
+    var content = $('#editingStatusContent').val();
+    var imgSrc = $('#editPreview').prop('src');
+    
+    if (imgSrc.toLowerCase().indexOf('https://') === -1 ) {
+    
+        var formData = new FormData();
+        var fs = document.getElementById('editImage');
+        var content = $('#editingStatusContent').val();
+
+        if (!isBlank(content) || content !== "" || imgSrc !== undefined)  {
+            if(fs.files[0] === undefined) {
+                editStatus(id, clickedAuction, clickedPostHtml, content);
+            }
+            else {
+                var fileType = fs.files[0]['type'];
+                var validImageTypes = ['image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType)) {
+                    alert("Không thể nhận loại file này!");
+                }
+                else {
+                    $(clickedAuction).html(loadingHtml);
+                    removeEditModal();
+                    for (const file of fs.files) {
+                        formData.append("file", file);
+                    }
+                    $.ajax({
+                        type: 'post',
+                        url: `${ctxPath}/api/post-img`,
+                        data: formData,
+                        dataType : "json",
+                        processData : false,
+                        cache : false,
+                        contentType : false
+                    })
+                    .done(function(data){
+                        $.ajax({
+                            type: 'put',
+                            url: `${ctxPath}/api/edit-auction/${id}`,
+                            data: JSON.stringify({
+                                'content':content,
+                                'hashtag': findHashtags(content),
+                                'imgUrl':data.url
+                            }),
+                            dataType : 'json',
+                            contentType : 'application/json',
+                            success: function (data2) {
+                                $(clickedAuction).html(clickedPostHtml);
+                                $(clickedAuction).find("#auction-timeFromNow").text(moment(data2.auctionDate).fromNow());
+                                $(clickedAuction).find(`.auction-${id}`).text(data2.content);
+                                $(clickedAuction).find('.auction--img').attr('src', data2.image);
+                                $(clickedAuction).find('.auction--img').css('display', 'block');
+                                customHashtag(`.auction-${id}`);
+                            }
+                        })
+                        .fail(function(){
+                            $(clickedAuction).html(clickedPostHtml);
+                        });
+                    })
+                    .fail(function(){
+                        $(clickedAuction).html(clickedPostHtml);
+                    });
+                }
+            }
+        }
+        else
+            alert("Vui lòng nhập nội dung bài viết!");
+    }
+    else {
+        $(clickedAuction).html(loadingHtml);
+        removeEditModal();
+        $.ajax({
+            type: 'put',
+            url: `${ctxPath}/api/edit-auction/${id}`,
+            data: JSON.stringify({
+                'content':content,
+                'hashtag': findHashtags(content),
+                'imgUrl':imgSrc.toLowerCase()
+            }),
+            dataType : 'json',
+            contentType : 'application/json',
+            success: function (data2) {
+                $(clickedAuction).html(clickedPostHtml);
+                $(clickedAuction).find("#auction-timeFromNow").text(moment(data2.auctionDate).fromNow());
+                $(clickedAuction).find('.post--content').text(data2.content);
+                $(clickedAuction).find('.post--img').attr('src', data2.image);
+                customHashtag(`.auction-${id}`);
+            }
+        })
+        .fail(function(){
+            $(clickedAuction).html(clickedPostHtml);
+        });
+    }
+}
+
+function editStatus(id, clickedPost, clickedPostHtml, content) {
+    var loadingHtml =   `   <div class="text-center mt-3 post-loading">
+                                            <div class="spinner-border text-muted"></div>
+                                        </div>
+                                                `; 
+    
+    $(clickedPost).html(loadingHtml);
+    removeEditModal();
+    $.ajax({
+            type: 'put',
+            url: `${ctxPath}/api/edit-auction/${id}`,
+            data: JSON.stringify({
+                'content':content,
+                'hashtag': findHashtags(content),
+                'imgUrl': ''
+            }),
+            dataType : 'json',
+            contentType : 'application/json',
+            success: function (data) {
+                $(clickedPost).html(clickedPostHtml);
+                $(clickedPost).find("#auction-timeFromNow").text(moment(data.auctionDate).fromNow());
+                $(clickedPost).find(`.auction-${id}`).text(data.content);
+                $(clickedPost).find('.auction--img').css('display', 'none');
+                $(clickedPost).find('.auction--img').attr('src', '');
+                 customHashtag(`.auction-${id}`);
+            }
+        })
+        .fail(function(){
+            $(clickedPost).html(clickedPostHtml);
+        });
 }

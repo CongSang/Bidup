@@ -199,63 +199,14 @@ function editPost(id, el) {
     if (imgSrc.toLowerCase().indexOf('https://') === -1 )
         imgSrc = '';
     modalEditPost(id, $(el), content.trim(), imgSrc);
-}
-
-function modalEditPost(id, el, content, src) {
-    var html = `<div id="modalEditPost" class="modal modal-post open">
-                    <div class="modal-container modal-container-post">
-                        <div class="modal-header">
-                            <h5 class="my-2">Thêm bài viết</h5>
-                            <div class="modal--close modal--close-post" onclick="removeEditModal()">
-                                <i class="fa-solid fa-xmark p-2"></i>
-                            </div>
-                        </div>
-
-                        <div class="modal-body ">
-                            <div class="d-flex mb-3">
-                                <div>
-                                    <a href="#"> <img class="avatar-img rounded-circle" src="${$("#userAvatar").attr("src")}" alt=""> </a>
-                                </div>
-                                <form class="w-100 ms-1">
-                                    <textarea id="editingStatusContent" class="form-control pe-4 border-0 theSelector" placeholder="Bạn đang nghĩ gì thế?" rows="2" style="height: 115px;">${content}</textarea>
-                                </form>
-                            </div>
-
-                            <div class="dropzone card shadow-none w-100">
-                                <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)" ${(src !== '') ? `style="opacity:0.6"`:``}>
-                                    <i class="fa-solid fa-xmark p-2"></i>
-                                </div>
-                                <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
-                                    <img class="imagePreview" id="editPreview" src="${src}"/>
-                                    <div class="d-flex justify-content-center align-items-center h-100">
-                                        <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <i class="fa-solid fa-images images-icon"></i>
-                                            <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
-                                        </div>
-                                    </div>
-                                    <input id="editImage" type='file' name='edit-image' class='upload-image' onchange="previewImage(this)" />
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-danger me-2 modal--close-post" onclick="removeEditModal()">Huỷ</button>
-                            <button type="button" class="btn btn-success" onclick="comfirmEditPost(${id})">Chỉnh sửa</button>
-                        </div>
-                    </div>
-                </div>`;
-    $('.home-content').append(html);
-}
-
-function removeEditModal() {
-    $('#modalEditPost').remove();
+    $("textarea").hashtags();
 }
 
 function comfirmEditPost(id) {
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
                                             <div class="spinner-border text-muted"></div>
-                            </div>
-                                    `; 
+                                        </div>
+                                                `; 
     var clickedPost = $(`#post${id}`);
     var clickedPostHtml = $(clickedPost).html();
     
@@ -306,9 +257,11 @@ function comfirmEditPost(id) {
                             contentType : 'application/json',
                             success: function (data2) {
                                 $(clickedPost).html(clickedPostHtml);
+                                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
                                 $(clickedPost).find('.post--content').text(data2.content);
                                 $(clickedPost).find('.post--img').attr('src', data2.image);
                                 $(clickedPost).find('.post--img').css('display', 'block');
+                                customHashtag(`#post${id}`);
                             }
                         })
                         .fail(function(){
@@ -342,6 +295,7 @@ function comfirmEditPost(id) {
                 $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
+                customHashtag(`#post${id}`);
             }
         })
         .fail(function(){
@@ -354,8 +308,8 @@ function comfirmEditPost(id) {
 function editStatus(id) {
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
                                             <div class="spinner-border text-muted"></div>
-                            </div>
-                                    `; 
+                                        </div>
+                                                `; 
     var clickedPost = $(`#post${id}`);
     var clickedPostHtml = $(clickedPost).html();
     var content = $('#editingStatusContent').val();
@@ -378,6 +332,7 @@ function editStatus(id) {
             $(clickedPost).find('.post--content').text(data.content);
             $(clickedPost).find('.post--img').css('display', 'none');
             $(clickedPost).find('.post--img').attr('src', '');
+            customHashtag(`#post${id}`);
         }
     })
     .fail(function(){

@@ -1,5 +1,74 @@
 
-const ctxPath = "/SharingHope/";
+const ctxPath = "/SharingHope";
+const modal1 =  document.querySelector(".modal-auction");
+const modalContainer1 = $(".modal-container-auction");
+const btn_close1 = document.querySelectorAll(".modal--close-auction");
+const btn_show1 = document.querySelectorAll(".btn-show--auction");
+var userAvatar = $("#userAvatar").attr("src");
+var errorHtml =  `<div class="text-center mt-3 post-loading">
+                                <p class="post--content mb-3" style="font-size:30xp;">
+                                    Có lỗi xảy ra, không thể đăng bài ngay lúc này!
+                                </p>
+                               <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
+                            </div>`;
+
+function showModal() {
+    modal1.classList.add('open');
+}
+
+function closeModal() {
+    modal1.classList.remove('open');
+}
+
+btn_show1.forEach(btn => {
+    btn.addEventListener("click", showModal);
+});
+
+btn_close1.forEach(btn => {
+    btn.addEventListener("click", closeModal);
+});
+
+modalContainer1.on("click", function (event) {
+    event.stopPropagation();
+});
+
+function previewImage1(el) {
+    var oFReader = new FileReader();
+    if (el.id === 'uploadImage1') {
+        oFReader.readAsDataURL(document.querySelector("#uploadImage1").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#uploadPreview1").src = oFREvent.target.result;
+        };
+        
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+    else {
+        oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#editPreview").src = oFREvent.target.result;
+        };
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+};
+
+function showFull2(element) {
+  document.getElementById("img02").src = element.src;
+  document.getElementById("modal02").style.display = "flex";
+}
+
+var is_show_follow = false;
+function showFollowAuction(element) {
+    var follow = $(element).parents("div.post").find("div.auction-follow-list");
+    if(is_show_follow) {
+        follow.css("display", "none");
+        is_show_follow = false;
+    } else {
+        follow.css("display", "block");
+        is_show_follow = true;
+    }
+};
 
 function loadAuctions(endpoint, currentUserId, page) {
     if (!page) {
@@ -53,7 +122,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             <h6 class="nav-item card-title mb-0">
                                                 <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
                                             </h6>
-                                            <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
+                                            <span id="auction-timeFromNow" class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                             <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
                                                 <div class="spinner-border text-muted"></div>
                                             </div>
@@ -79,7 +148,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                         }
                                         ${(auction.endDate > Date.now()) ?
                                         `<li>
-                                            <div class="dropdown-item cursor-pointer">
+                                            <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                                 Chỉnh sửa bài viết
                                             </div>
                                         </li>
@@ -107,7 +176,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                             </p>
                             <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
 
-                            <img class="card-img post--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
+                            <img class="card-img post--img auction--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
 
                             <div class="line"></div>
 
