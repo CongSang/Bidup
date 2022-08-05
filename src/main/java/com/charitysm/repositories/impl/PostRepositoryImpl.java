@@ -87,7 +87,13 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public int createPost(Post p) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        return (int) session.save(p);
+        try {
+            return (int) session.save(p);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     @Override

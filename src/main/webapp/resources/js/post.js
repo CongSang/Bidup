@@ -72,7 +72,7 @@ function createPost() {
     var fs = document.getElementById('uploadImage');
     var content = $('#statusContent').val();
     var imgSrc = $('#uploadPreview').prop('src');
-    console.log(imgSrc);
+    
     if (!isBlank(content) || imgSrc !== undefined)  {
         if(fs.files[0] === undefined) {
             createStatus();

@@ -104,8 +104,9 @@
                         <i class="fa-solid fa-bell me-4 notify-icon"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                        <li  class="dropdown-item d-flex justify-content-center align-items-center">
-                            Công Sang vừa thích bài viết của bạn
+                        <li  class="dropdown-item d-flex justify-content-center 
+                                align-items-center notif-loading text-center">
+                            <div class="spinner-border text-muted" id="loadingNotif"></div>
                         </li>
                     </ul>
                 </div>

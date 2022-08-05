@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Embeddable
 public class ReactPK implements Serializable {

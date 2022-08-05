@@ -4,7 +4,9 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,23 +18,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
-@Table(name = "notification")
+@Table(name = "comment_notif")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
-    @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id"),
-    @NamedQuery(name = "Notification.findByContent", query = "SELECT n FROM Notification n WHERE n.content = :content"),
-    @NamedQuery(name = "Notification.findByIsRead", query = "SELECT n FROM Notification n WHERE n.isRead = :isRead")})
-public class Notification implements Serializable {
+    @NamedQuery(name = "CommentNotif.findAll", query = "SELECT c FROM CommentNotif c"),
+    @NamedQuery(name = "CommentNotif.findById", query = "SELECT c FROM CommentNotif c WHERE c.id = :id"),
+    @NamedQuery(name = "CommentNotif.findByCreatedDate", query = "SELECT c FROM CommentNotif c WHERE c.createdDate = :createdDate"),
+    @NamedQuery(name = "CommentNotif.findByIsRead", query = "SELECT c FROM CommentNotif c WHERE c.isRead = :isRead")})
+public class CommentNotif implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,25 +45,30 @@ public class Notification implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "content")
-    private String content;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
     @Column(name = "is_read")
     private Short isRead;
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    @JsonIgnore
+    private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private User userId;
 
-    public Notification() {
+    public CommentNotif() {
     }
 
-    public Notification(Integer id) {
+    public CommentNotif(Integer id) {
         this.id = id;
     }
 
-    public Notification(Integer id, String content) {
+    public CommentNotif(Integer id, Date createdDate) {
         this.id = id;
-        this.content = content;
+        this.createdDate = createdDate;
     }
 
     public Integer getId() {
@@ -71,12 +79,12 @@ public class Notification implements Serializable {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Short getIsRead() {
@@ -85,6 +93,14 @@ public class Notification implements Serializable {
 
     public void setIsRead(Short isRead) {
         this.isRead = isRead;
+    }
+
+    public Post getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Post postId) {
+        this.postId = postId;
     }
 
     public User getUserId() {
@@ -105,10 +121,10 @@ public class Notification implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Notification)) {
+        if (!(object instanceof CommentNotif)) {
             return false;
         }
-        Notification other = (Notification) object;
+        CommentNotif other = (CommentNotif) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -117,7 +133,7 @@ public class Notification implements Serializable {
 
     @Override
     public String toString() {
-        return "com.charitysm.pojo.Notification[ id=" + id + " ]";
+        return "com.charitysm.pojo.CommentNotif[ id=" + id + " ]";
     }
     
 }

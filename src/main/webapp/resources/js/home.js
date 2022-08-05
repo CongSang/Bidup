@@ -66,7 +66,6 @@ function showComment(element) {
 const loadFeeds = function loadFeeds(posts, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
-
         let userComment = post.commentSet.filter(c => c.userId.id === currentUserId);
         userComment.sort(function (a, b) {
             // Turn your strings into dates, and then subtract them

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "bid")
@@ -35,14 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.findByAuctionId", query = "SELECT b FROM Bid b WHERE b.bidPK.auctionId = :auctionId"),
     @NamedQuery(name = "Bid.findByMoney", query = "SELECT b FROM Bid b WHERE b.money = :money"),
     @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message"),
-    @NamedQuery(name = "Bid.findForUser", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId AND b.bidPK.auctionId = :auctionId")})
+    @NamedQuery(name = "Bid.findByBidDate", query = "SELECT b FROM Bid b WHERE b.bidDate = :bidDate")})
 public class Bid implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "bid_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date bidDate;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -54,9 +48,14 @@ public class Bid implements Serializable {
     @Size(max = 200)
     @Column(name = "message")
     private String message;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bid_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bidDate;
+    @JsonIgnore
     @JoinColumn(name = "auction_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Auction auction;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -69,9 +68,10 @@ public class Bid implements Serializable {
         this.bidPK = bidPK;
     }
 
-    public Bid(BidPK bidPK, long money) {
+    public Bid(BidPK bidPK, long money, Date bidDate) {
         this.bidPK = bidPK;
         this.money = money;
+        this.bidDate = bidDate;
     }
 
     public Bid(String userId, int auctionId) {
@@ -100,6 +100,14 @@ public class Bid implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Date getBidDate() {
+        return bidDate;
+    }
+
+    public void setBidDate(Date bidDate) {
+        this.bidDate = bidDate;
     }
 
     public Auction getAuction() {
@@ -141,14 +149,6 @@ public class Bid implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Bid[ bidPK=" + bidPK + " ]";
-    }
-
-    public Date getBidDate() {
-        return bidDate;
-    }
-
-    public void setBidDate(Date bidDate) {
-        this.bidDate = bidDate;
     }
     
 }
