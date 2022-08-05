@@ -30,13 +30,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "bid")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
-    @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId"),
-    @NamedQuery(name = "Bid.findByAuctionId", query = "SELECT b FROM Bid b WHERE b.bidPK.auctionId = :auctionId"),
-    @NamedQuery(name = "Bid.findByMoney", query = "SELECT b FROM Bid b WHERE b.money = :money"),
-    @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message"),
-    @NamedQuery(name = "Bid.findByBidDate", query = "SELECT b FROM Bid b WHERE b.bidDate = :bidDate")})
+        @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
+        @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId"),
+        @NamedQuery(name = "Bid.findByAuctionId", query = "SELECT b FROM Bid b WHERE b.bidPK.auctionId = :auctionId"),
+        @NamedQuery(name = "Bid.findByMoney", query = "SELECT b FROM Bid b WHERE b.money = :money"),
+        @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message"),
+        @NamedQuery(name = "Bid.findForUser", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId AND b.bidPK.auctionId = :auctionId")})
 public class Bid implements Serializable {
+
+    @Column(name = "is_winner")
+    private Short isWinner;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -150,5 +153,13 @@ public class Bid implements Serializable {
     public String toString() {
         return "com.charitysm.pojo.Bid[ bidPK=" + bidPK + " ]";
     }
-    
+
+    public Short getIsWinner() {
+        return isWinner;
+    }
+
+    public void setIsWinner(Short isWinner) {
+        this.isWinner = isWinner;
+    }
+
 }

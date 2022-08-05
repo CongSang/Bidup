@@ -137,10 +137,16 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                        
-                                        ${(auction.endDate <= Date.now()) ?
+                                        ${(auction.endDate <= Date.now() && !auction.mailTo) ?
                                             `<li>
-                                                <div class="dropdown-item cursor-pointer">
+                                                <div class="dropdown-item cursor-pointer" onclick="confirmWinnerAndSendEmail(${auction.id}, this)">
+                                                    Chốt kết quả và gửi email
+                                                </div>
+                                            </li>` : ``}
+                                        ${(auction.endDate <= Date.now() && auction.mailTo) ?
+                                            `
+                                            <li>
+                                                <div class="dropdown-item cursor-pointer" onclick="confirmCompleteCharity(${auction.id})">
                                                     Hoàn thành từ thiện
                                                 </div>
                                             </li>
@@ -169,7 +175,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
         
                             <p class="auction--price mb-1">
                                 ${auction.endDate <= Date.now() ? 
-                                `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, kiểm tra thanh toán, thực hiện từ thiện và xác nhận hoàn thành việc từ thiện trong bài viết này, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
+                                `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, bấm gửi email xác nhận, kiểm tra thanh toán, thực hiện từ thiện và xác nhận hoàn thành việc từ thiện trong bài viết này, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
                                 <i class="fa-solid fa-triangle-exclamation text-danger"></i>
                                 </span>` :
                                 `Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>`}
@@ -184,6 +190,9 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                     ${(auction.active) ? 
                                     `<div class="auction--action-hover" onclick="showFollowAuction(this)">
+                                        <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
+                                            <div class="spinner-border text-muted"></div>
+                                        </div>
                                         <i class="fa-solid fa-eye"></i>
                                         <span class="auction--action-text auction-follow ms-2">Theo dõi (${auction.bidSet.length} người đã tham gia)</span>
                                     </div>` : 
@@ -215,8 +224,17 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                                           ${formatMoney(bid.money)}
                                                       </p>
                                                   </div>
-                                                    <div class="d-flex justify-content-end me-2 report-user">
-                                                        Báo cáo
+                                                    <div class="d-flex justify-content-end me-2">
+                                                        ${bid.isWinner ? `
+                                                            <div class="winner-user${bid.user.id} winner-user me-3 is-winner" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
+                                                                <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                                            </div>
+                                                        ` : `
+                                                            <div class="winner-user${bid.user.id} winner-user me-3" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
+                                                                <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                                            </div>
+                                                        `}
+                                                        <div class="report-user">Báo cáo</div>
                                                     </div>
                                                 </div>
                                                 
@@ -362,5 +380,3 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
         customHashtag(`.auction-${auction.id}`);
     });
 }
-
-

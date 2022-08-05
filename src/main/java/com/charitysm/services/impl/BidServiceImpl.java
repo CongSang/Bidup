@@ -34,5 +34,10 @@ public class BidServiceImpl implements BidService{
     public Bid findBid(String userId, int auctionId) {
         return bidRepository.findBid(userId, auctionId);
     }
+
+    @Override
+    public void updateWinner(Bid b) {
+        this.bidRepository.updateWinner(b);
+    }
     
 }

@@ -109,7 +109,29 @@ public class AuctionRepositoryImpl implements AuctionRepository{
             return a.getId();
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return -1;
+        }
+    }
+
+    @Override
+    public int confirmCompleteCharity(Auction a) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(a);
+            return a.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public void sendEmailAuction(Auction a) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+         try {
+            session.update(a);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

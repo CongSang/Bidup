@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
 -- Host: localhost    Database: csmdb
 -- ------------------------------------------------------
--- Server version	8.0.28
+-- Server version	8.0.27
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,6 +32,7 @@ CREATE TABLE `auction` (
   `hashtag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint DEFAULT '1',
+  `mail_to` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `auction_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -44,7 +45,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES (1,'Lên cho anh em chiếc giày siêu cấp #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-5.jpg',1600000,'2022-07-29 08:00:00','2022-08-01 00:00:00','#sharinghope','abcd',0),(2,'Quả núi siêu to khổng lồ #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-2.jpg',2000000,'2022-07-29 00:09:00','2022-08-04 00:00:00','#sharinghope','abcde',1),(3,' hehe #love test','https://res.cloudinary.com/dynupxxry/image/upload/v1657817661/cld-sample.jpg',7000000,'2022-07-30 00:09:00','2022-08-04 00:00:00','#love','abcd',1);
+INSERT INTO `auction` VALUES (1,'Lên cho anh em chiếc giày siêu cấp #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-5.jpg',1600000,'2022-07-29 08:00:00','2022-08-01 00:00:00','#sharinghope','abcd',0,0),(2,'Quả núi siêu to khổng lồ #sharinghope','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-2.jpg',2000000,'2022-07-29 00:09:00','2022-08-04 00:00:00','#sharinghope','abcde',1,0),(3,' hehe #love test','https://res.cloudinary.com/dynupxxry/image/upload/v1657817661/cld-sample.jpg',7000000,'2022-07-30 00:09:00','2022-08-04 00:00:00','#love','abcd',1,1);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,6 +62,7 @@ CREATE TABLE `bid` (
   `money` decimal(10,0) NOT NULL,
   `message` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bid_date` datetime NOT NULL,
+  `is_winner` tinyint DEFAULT '0',
   PRIMARY KEY (`user_id`,`auction_id`),
   KEY `fk_bid_auction_idx` (`auction_id`),
   CONSTRAINT `bid_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
@@ -74,7 +76,7 @@ CREATE TABLE `bid` (
 
 LOCK TABLES `bid` WRITE;
 /*!40000 ALTER TABLE `bid` DISABLE KEYS */;
-INSERT INTO `bid` VALUES ('abcde',1,10000000,'','2022-07-31 22:36:35'),('abcde',3,8000000,'','2022-08-03 23:36:18'),('abcdef',2,2500000,'','2022-08-01 20:32:38');
+INSERT INTO `bid` VALUES ('abcde',1,10000000,'','2022-07-31 22:36:35',0),('abcde',3,8000000,'','2022-08-03 23:36:18',1),('abcdef',2,2500000,'','2022-08-01 20:32:38',0);
 /*!40000 ALTER TABLE `bid` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +121,7 @@ DROP TABLE IF EXISTS `comment_notif`;
 CREATE TABLE `comment_notif` (
   `id` int NOT NULL AUTO_INCREMENT,
   `post_id` int NOT NULL,
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_date` datetime NOT NULL,
   `is_read` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -163,6 +165,33 @@ CREATE TABLE `follow` (
 LOCK TABLES `follow` WRITE;
 /*!40000 ALTER TABLE `follow` DISABLE KEYS */;
 /*!40000 ALTER TABLE `follow` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_read` tinyint DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -233,7 +262,7 @@ DROP TABLE IF EXISTS `react_notif`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `react_notif` (
   `post_id` int NOT NULL,
-  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_date` datetime NOT NULL,
   `is_read` tinyint DEFAULT '0',
   PRIMARY KEY (`post_id`,`user_id`),
@@ -298,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-05 18:53:34
+-- Dump completed on 2022-08-06  0:52:31

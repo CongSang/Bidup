@@ -1,6 +1,7 @@
 com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\services\BidService.class
 com\charitysm\services\impl\BidServiceImpl.class
+com\charitysm\configs\EmailConfig.class
 com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
@@ -29,6 +30,7 @@ com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
 com\charitysm\utils\CloudinaryUtils.class
 com\charitysm\pojo\ReactPK_.class
+com\charitysm\pojo\reobj\NotificationResponse.class
 com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\services\impl\AuctionServiceImpl.class
 com\charitysm\configs\HibernateConfig.class
@@ -38,6 +40,7 @@ com\charitysm\repositories\impl\ReactRepositoryImpl.class
 com\charitysm\pojo\ReactNotifPK.class
 com\charitysm\handlers\LoginSuccessHandler.class
 com\charitysm\pojo\CommentNotif.class
+com\charitysm\controllers\APINotificationController.class
 com\charitysm\services\UserService.class
 com\charitysm\configs\SecurityWebApplicationInit.class
 com\charitysm\pojo\Bid.class

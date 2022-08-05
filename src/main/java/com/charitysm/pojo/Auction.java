@@ -37,16 +37,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "auction")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Auction.findAll", query = "SELECT a FROM Auction a"),
-    @NamedQuery(name = "Auction.findById", query = "SELECT a FROM Auction a WHERE a.id = :id"),
-    @NamedQuery(name = "Auction.findByContent", query = "SELECT a FROM Auction a WHERE a.content = :content"),
-    @NamedQuery(name = "Auction.findByImage", query = "SELECT a FROM Auction a WHERE a.image = :image"),
-    @NamedQuery(name = "Auction.findByStartingPrice", query = "SELECT a FROM Auction a WHERE a.startingPrice = :startingPrice"),
-    @NamedQuery(name = "Auction.findByAuctionDate", query = "SELECT a FROM Auction a WHERE a.auctionDate = :auctionDate"),
-    @NamedQuery(name = "Auction.findByEndDate", query = "SELECT a FROM Auction a WHERE a.endDate = :endDate"),
-    @NamedQuery(name = "Auction.findByHashtag", query = "SELECT a FROM Auction a WHERE a.hashtag = :hashtag"),
-    @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active")})
+        @NamedQuery(name = "Auction.findAll", query = "SELECT a FROM Auction a"),
+        @NamedQuery(name = "Auction.findById", query = "SELECT a FROM Auction a WHERE a.id = :id"),
+        @NamedQuery(name = "Auction.findByContent", query = "SELECT a FROM Auction a WHERE a.content = :content"),
+        @NamedQuery(name = "Auction.findByImage", query = "SELECT a FROM Auction a WHERE a.image = :image"),
+        @NamedQuery(name = "Auction.findByStartingPrice", query = "SELECT a FROM Auction a WHERE a.startingPrice = :startingPrice"),
+        @NamedQuery(name = "Auction.findByAuctionDate", query = "SELECT a FROM Auction a WHERE a.auctionDate = :auctionDate"),
+        @NamedQuery(name = "Auction.findByEndDate", query = "SELECT a FROM Auction a WHERE a.endDate = :endDate"),
+        @NamedQuery(name = "Auction.findByHashtag", query = "SELECT a FROM Auction a WHERE a.hashtag = :hashtag"),
+        @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active") })
 public class Auction implements Serializable {
+
+    @Column(name = "mail_to")
+    private Short mailTo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -204,5 +207,13 @@ public class Auction implements Serializable {
     public String toString() {
         return "com.charitysm.pojo.Auction[ id=" + id + " ]";
     }
-    
+
+    public Short getMailTo() {
+        return mailTo;
+    }
+
+    public void setMailTo(Short mailTo) {
+        this.mailTo = mailTo;
+    }
+
 }

@@ -79,7 +79,7 @@ function deleteBid(currentAuctionId, element, startPrice) {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function () {
-                    swal("Poof! Your imaginary file has been deleted!", {
+                    swal("Hủy tham gia thành công", {
                     icon: "success"
                     });
                     $(`.bid-loading-${currentAuctionId}`).css("display", "none");
@@ -110,3 +110,29 @@ function deleteBid(currentAuctionId, element, startPrice) {
          }
      });
 }
+
+function updateBid(auctionId, userId) {
+    $.ajax({
+            type: 'put',
+            url: `${ctxPath}/api/update-bid/${userId}`,
+            data: JSON.stringify({
+                'auctionId': auctionId,
+                'money': ''
+            }),
+            dataType : 'json',
+            contentType : 'application/json'
+        });
+}
+
+function selectIsWinnerAuction(auctionId, userId, element) {
+    const selectWinner = $(element).parents('.auction-follow-list').find(`.winner-user${userId}`);
+    
+    if ($(selectWinner).hasClass('is-winner')) {
+        $(selectWinner).removeClass('is-winner');
+        updateBid(auctionId, userId);
+    } else {
+        $(selectWinner).addClass('is-winner');
+        updateBid(auctionId, userId);
+    }
+}
+

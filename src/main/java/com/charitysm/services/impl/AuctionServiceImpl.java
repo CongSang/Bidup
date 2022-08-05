@@ -51,5 +51,15 @@ public class AuctionServiceImpl implements AuctionService{
     public int updateAuction(Auction a) {
         return this.auctionRepository.updateAuction(a);
     }
+
+    @Override
+    public int confirmCompleteCharity(Auction a) {
+        return this.auctionRepository.confirmCompleteCharity(a);
+    }
+
+    @Override
+    public void sendEmailAuction(Auction a) {
+        this.auctionRepository.sendEmailAuction(a);
+    }
     
 }
