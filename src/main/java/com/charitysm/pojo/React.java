@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "react")
@@ -27,8 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "React.findAll", query = "SELECT r FROM React r"),
     @NamedQuery(name = "React.findByUserId", query = "SELECT r FROM React r WHERE r.reactPK.userId = :userId"),
     @NamedQuery(name = "React.findByPostId", query = "SELECT r FROM React r WHERE r.reactPK.postId = :postId"),
-    @NamedQuery(name = "React.findByType", query = "SELECT r FROM React r WHERE r.type = :type"),
-    @NamedQuery(name = "React.findForUser", query = "SELECT r FROM React r WHERE r.reactPK.userId = :userId AND r.reactPK.postId = :postId")})
+    @NamedQuery(name = "React.findByType", query = "SELECT r FROM React r WHERE r.type = :type")})
 public class React implements Serializable {
 
     private static final long serialVersionUID = 1L;

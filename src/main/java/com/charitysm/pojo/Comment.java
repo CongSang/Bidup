@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author CÔNG SANG
+ * @author ADMIN
  */
 @Entity
 @Table(name = "comment")
@@ -34,14 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
-    @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content")})
+    @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
+    @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate")})
 public class Comment implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "comment_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date commentDate;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,6 +47,11 @@ public class Comment implements Serializable {
     @Size(max = 200)
     @Column(name = "content")
     private String content;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "comment_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date commentDate;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
@@ -65,6 +65,11 @@ public class Comment implements Serializable {
 
     public Comment(Integer id) {
         this.id = id;
+    }
+
+    public Comment(Integer id, Date commentDate) {
+        this.id = id;
+        this.commentDate = commentDate;
     }
 
     public Integer getId() {
@@ -81,6 +86,14 @@ public class Comment implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 
     public Post getPostId() {
@@ -122,14 +135,6 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Comment[ id=" + id + " ]";
-    }
-
-    public Date getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
     }
     
 }

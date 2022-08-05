@@ -192,7 +192,7 @@ public class ApiPostController {
             p.setContent(pr.getContent());
             p.setHashtag(pr.getHashtag());
             p.setPostedDate(new Date());
-            if (!p.getImage().isEmpty()) {
+            if (!p.getImage().isEmpty() && !p.getImage().equals(pr.getImgUrl())) {
                 String public_id = p.getImage().substring(p.getImage().lastIndexOf("public_id=") + 10);
                 deleteImg(public_id);
             }

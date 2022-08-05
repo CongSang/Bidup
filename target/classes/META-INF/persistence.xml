@@ -10,6 +10,8 @@
     <class>com.charitysm.pojo.Comment</class>
     <class>com.charitysm.pojo.React</class>
     <class>com.charitysm.pojo.Hashtag</class>
+    <class>com.charitysm.pojo.ReactNotif</class>
+    <class>com.charitysm.pojo.CommentNotif</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/csmdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

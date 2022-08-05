@@ -20,8 +20,11 @@ com\charitysm\configs\SecurityConfig.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\User_.class
+com\charitysm\pojo\ReactNotif.class
+com\charitysm\pojo\ReactNotif_.class
 com\charitysm\pojo\Bid_.class
 com\charitysm\pojo\Post_.class
+com\charitysm\pojo\ReactNotifPK_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
 com\charitysm\utils\CloudinaryUtils.class
@@ -32,7 +35,9 @@ com\charitysm\configs\HibernateConfig.class
 com\charitysm\pojo\React_.class
 com\charitysm\utils\RestFB.class
 com\charitysm\repositories\impl\ReactRepositoryImpl.class
+com\charitysm\pojo\ReactNotifPK.class
 com\charitysm\handlers\LoginSuccessHandler.class
+com\charitysm\pojo\CommentNotif.class
 com\charitysm\services\UserService.class
 com\charitysm\configs\SecurityWebApplicationInit.class
 com\charitysm\pojo\Bid.class
@@ -47,7 +52,7 @@ com\charitysm\repositories\PostRepository.class
 com\charitysm\repositories\NotificationRepository.class
 com\charitysm\repositories\BidRepository.class
 com\charitysm\pojo\Comment_.class
-com\charitysm\pojo\Notification_.class
+com\charitysm\pojo\CommentNotif_.class
 com\charitysm\controllers\ApiAuctionController.class
 com\charitysm\repositories\impl\BidRepositoryImpl.class
 com\charitysm\controllers\ApiPostController.class
@@ -62,7 +67,6 @@ com\charitysm\pojo\Auction.class
 com\charitysm\controllers\APILoginFbController.class
 com\charitysm\services\ReactService.class
 com\charitysm\controllers\AuctionController.class
-com\charitysm\pojo\Notification.class
 com\charitysm\pojo\User.class
 com\charitysm\configs\WebAppContextConfig.class
 com\charitysm\pojo\Auction_.class
