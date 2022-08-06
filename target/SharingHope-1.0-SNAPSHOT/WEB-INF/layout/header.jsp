@@ -69,7 +69,6 @@
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link" href="#" id="notifyMenu">
                             <i class="fa-solid fa-bell menu-icon"></i>
-                            Thông báo
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
@@ -101,9 +100,10 @@
             <div class="d-lg-flex d-none flex-nowrap align-items-center ms-4">
                 <div class="dropdown">
                     <a href="#" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell me-4 notify-icon"></i>
+                        <i class="fa-solid fa-bell notify-icon"></i>
+                        <span class="me-4 notif-count"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                    <ul class="dropdown-menu dropdown-menu-end" id="notifContainer" aria-labelledby="cardFeedAction">
                         <li  class="dropdown-item d-flex justify-content-center 
                                 align-items-center notif-loading text-center">
                             <div class="spinner-border text-muted" id="loadingNotif"></div>

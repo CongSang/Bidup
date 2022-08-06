@@ -23,6 +23,7 @@
         <link href="${globalCss}" rel="stylesheet" />
         <link href="${mainCss}" rel="stylesheet" />
         <link href="${homeCss}" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
         <link href="<c:url value="/resources/css/auction.css" />" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
@@ -62,6 +63,10 @@
         <script>
             window.onload = function() {
                 getNotifs();
+
+                $('#userNotification').on("click", function (){
+                    $('.notif-count').css('opacity','0');
+                });
             };
             $(window).scroll(function () {
                 if ($(this).scrollTop() >= 300) {

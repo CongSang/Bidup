@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -45,7 +46,8 @@ public class PostNotif implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "type")
     private String type;
-    @Column(name = "is_read")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "is_read", columnDefinition = "TINYINT")
     private Short isRead;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
