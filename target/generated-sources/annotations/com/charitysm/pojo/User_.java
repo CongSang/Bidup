@@ -3,10 +3,9 @@ package com.charitysm.pojo;
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.Comment;
-import com.charitysm.pojo.CommentNotif;
 import com.charitysm.pojo.Post;
+import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.React;
-import com.charitysm.pojo.ReactNotif;
 import com.charitysm.pojo.User;
 import java.util.Date;
 import javax.annotation.Generated;
@@ -14,7 +13,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-06T13:33:08")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-06T16:21:14")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -23,10 +22,9 @@ public class User_ {
     public static volatile SingularAttribute<User, String> hometown;
     public static volatile SingularAttribute<User, Date> birthdate;
     public static volatile SingularAttribute<User, String> address;
-    public static volatile SetAttribute<User, CommentNotif> commentNotifSet;
     public static volatile SetAttribute<User, User> userSet1;
+    public static volatile SetAttribute<User, PostNotif> postNotifSet;
     public static volatile SingularAttribute<User, Short> active;
-    public static volatile SetAttribute<User, ReactNotif> reactNotifSet;
     public static volatile SetAttribute<User, React> reactSet;
     public static volatile SingularAttribute<User, String> avatar;
     public static volatile SetAttribute<User, Post> postSet;

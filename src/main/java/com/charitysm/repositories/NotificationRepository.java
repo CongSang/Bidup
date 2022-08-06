@@ -4,10 +4,13 @@
  */
 package com.charitysm.repositories;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author ADMIN
  */
 public interface NotificationRepository {
-    
+    List<Object[]> getNotifs(String userId);
 }

@@ -3,3 +3,51 @@
     padding: 0px;
     background-color: #fff;
 }
+
+.notif-item {
+    display: flex;
+    flex-wrap: wrap;
+    width: 20rem;
+    margin-bottom: 0.5rem;
+}
+
+.notif-item :hover {
+    cursor: pointer;
+}
+
+.notif-item--message {
+    white-space: pre-wrap;
+    width: 75%;
+}
+
+.notif-dot{
+    width: 5%;
+    padding-top: 1.1rem;
+}
+
+.notif-dot > i {
+    color: #0084ff;
+}
+
+.notif-item > img {
+    width: 20%;
+    padding-right: 1rem;
+}
+
+.dropdown-menu {
+    padding: 0.5rem; 
+}
+
+.notif-time {
+    color: blue;
+    font-size: 10px;
+    margin-left: 4rem;
+}
+
+.notif-count {
+    padding: 2px;
+    font-size: 10px;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+}

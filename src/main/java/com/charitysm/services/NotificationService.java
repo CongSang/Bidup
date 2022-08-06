@@ -4,10 +4,14 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.reobj.NotificationResponse;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author ADMIN
  */
 public interface NotificationService {
-    
+    List<NotificationResponse> getNotifs(String userId);
 }

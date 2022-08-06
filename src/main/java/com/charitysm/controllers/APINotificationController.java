@@ -7,6 +7,7 @@ package com.charitysm.controllers;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.NotificationResponse;
+import com.charitysm.services.NotificationService;
 import com.charitysm.services.UserService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,27 +32,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class APINotificationController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
     
     @Async
-    @GetMapping("/notifs")
-    public ResponseEntity<NotificationResponse> getNotifs() {
+    @GetMapping("/get-notifs")
+    public ResponseEntity<List<NotificationResponse>> getNotifs(HttpSession session) {
         
-        User u = userService.getUserById("abcd");
-        NotificationResponse res = new NotificationResponse();
-        List<Map<String, Object>> notifs = new ArrayList<>();
-        Map<String, Object> notif = new HashMap<>();
-        Map<String, String> userInfo = new HashMap<>();
-        
-        userInfo.put("firstName", u.getFirstname());
-        userInfo.put("avatar", u.getAvatar());
-        
-        notif.put("postId", "1");
-        notif.put("count", "20");
-        notif.put("mostRecent", "2022-07-26 07:00:00");
-        notif.put("mostRecentUser", userInfo);
-        notif.put("type", "react");
-        notifs.add(notif);
-        res.setData(notifs);
+        User u = (User) session.getAttribute("currentUser");
+        List<NotificationResponse> res = notificationService.getNotifs(u.getId());
+//        List<Map<String, Object>> notifs = new ArrayList<>();
+//        Map<String, Object> notif = new HashMap<>();
+//        Map<String, String> userInfo = new HashMap<>();
+//        
+//        userInfo.put("firstName", u.getFirstname());
+//        userInfo.put("avatar", u.getAvatar());
+//        
+//        notif.put("postId", "1");
+//        notif.put("count", "20");
+//        notif.put("mostRecent", "2022-07-26 07:00:00");
+//        notif.put("mostRecentUser", userInfo);
+//        notif.put("type", "react");
+//        notifs.add(notif);
+//        res.setData(notifs);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
