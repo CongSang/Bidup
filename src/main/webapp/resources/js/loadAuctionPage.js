@@ -1,9 +1,12 @@
 
-const ctxPath = "/SharingHope";
 const modal1 =  document.querySelector(".modal-auction");
 const modalContainer1 = $(".modal-container-auction");
 const btn_close1 = document.querySelectorAll(".modal--close-auction");
 const btn_show1 = document.querySelectorAll(".btn-show--auction");
+
+var auctionPage = 1;
+var auctionFetching = false;
+var disableLoadMoreAuction = false;
 var userAvatar = $("#userAvatar").attr("src");
 var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <p class="post--content mb-3" style="font-size:30xp;">
@@ -32,43 +35,11 @@ modalContainer1.on("click", function (event) {
     event.stopPropagation();
 });
 
-function previewImage1(el) {
-    var oFReader = new FileReader();
-    if (el.id === 'uploadImage1') {
-        oFReader.readAsDataURL(document.querySelector("#uploadImage1").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.querySelector("#uploadPreview1").src = oFREvent.target.result;
-        };
-        
-        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
-    }
-    else {
-        oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.querySelector("#editPreview").src = oFREvent.target.result;
-        };
-        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
-    }
-};
-
-function showFull2(element) {
-  document.getElementById("img02").src = element.src;
-  document.getElementById("modal02").style.display = "flex";
+function auctionNextPage() {
+    if (auctionFetching) return;
+    
+    auctionPage++;
 }
-
-var is_show_follow = false;
-function showFollowAuction(element) {
-    var follow = $(element).parents("div.post").find("div.auction-follow-list");
-    if(is_show_follow) {
-        follow.css("display", "none");
-        is_show_follow = false;
-    } else {
-        follow.css("display", "block");
-        is_show_follow = true;
-    }
-};
 
 function loadAuctions(endpoint, currentUserId, page) {
     if (!page) {

@@ -8,11 +8,14 @@
         <title><tiles:insertAttribute name="title" /></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"
-                integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-        crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/locale/vi.min.js" integrity="sha512-KFhB7C5HhK+ySzLQNJveDmB1h8qlsd51JX0p5o/PwL4EPdbj+TlhdVENbR9SFn+sz2sX30M4nqchhtPmz/wtiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
+        <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
+
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
         <c:url value="/resources/css/home.css" var="homeCss" />
@@ -27,7 +30,7 @@
         <div class="main">
             <tiles:insertAttribute name="header" />
 
-            <div class="user-profile">
+            <div class="user-profile home-content">
                 <div class="wrap">
                     <div class="container">
                         <div class="user-profile-header d-flex flex-column justify-content-start align-items-start">
@@ -65,12 +68,12 @@
                         </div>
 
                         <div class="user-menu">
-                            <div class="user-menu--item active">
+                            <div class="user-menu--item active userPost" id="userPost" onclick="menu(this)">
                                 <div class="user-menu--hover">
                                     Bài viết 
                                 </div>
                             </div>
-                            <div class="user-menu--item">
+                            <div class="user-menu--item userAuction" id="userAuction" onclick="menu(this)">
                                 <div class="user-menu--hover">
                                     Đấu giá
                                 </div>
@@ -123,90 +126,76 @@
                         </div>
 
                         <div class="col-12 col-lg-7 mt-0">
-                            
-                            <!--Phan nay render-->
-                            <div class="post">
-                                <div class="card post--item">
-                                    <div class="card-header border-0 pb-0 pt-3">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-start">
-                                                <div class="me-2">
-                                                    <a href="#">
-                                                        <c:url value="/resources/img/non-avatar.png" var="a" />
-                                                        <img class="avatar-img rounded-circle" src="${a}" alt="">
-                                                    </a>
-                                                </div>
-                                                <!-- Info -->
-                                                <div>
-                                                    <div class="nav nav-divider">
-                                                        <h6 class="nav-item card-title mb-0">
-                                                            <a href="#">Cong Sang</a>
-                                                        </h6>
-                                                        <span class="ms-2 nav-item small text-secondary">5 tieng truoc</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Menu-->
-                                            <div class="dropdown">
-                                                <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa-solid fa-ellipsis"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            Báo cáo
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body pb-2">
-                                        <p class="post--content mb-3">
-                                            hahahahahahahahah
-                                        </p>
-
-                                        <p class="auction--price mb-3">
-                                            Giá khởi điểm:<span class="ms-2">1.000.000 VNĐ</span>
-                                        </p>
-
-                                        <c:url value="/resources/img/bg-login.jpg" var="test" />
-                                        <img class="card-img post--img" src="${test}" alt="Post image" onclick="showFull2(this)">
-
-                                        <div class="line"></div>
-
-                                        <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
-                                            <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                                <div class="auction--action-hover">
-                                                    <i class="fa-solid fa-gavel"></i>
-                                                    <span class="auction--action-text ms-2">Đấu giá (12 người đã tham gia)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="auction-user-join">
-                                            <div class="d-flex align-items-center my-2">
-                                                <div class="me-2">
-                                                    <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                                                    <a href="#">
-                                                        <img class="comment--avatar rounded-circle" src="${avatar}" alt="">
-                                                    </a>
-                                                </div>
-                                                <form class="w-100">
-                                                    <input type="text" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="text-center mt-3 post-loading" id="userLoadingTop" style="display:none;">
+                                <div class="spinner-border text-muted"></div>
                             </div>
-                                                    
+
+                            <div class="user-content-container"></div>
+
+                            <div class="text-center mt-3 user-loading" style="display:none;">
+                                <div class="spinner-border text-muted"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div style="display: none" class="sidebar-right"><tiles:insertAttribute name="sidebarRight" /></div>
+        <tiles:insertAttribute name="footer" />
+
+        <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
+            <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
+                <img id="img01" style="max-width:100%; max-height:100vh;">
+            </div>
+        </div>
+
+        <div id="modal02" class="modal align-items-center justify-content-center" onclick="this.style.display = 'none'">
+            <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 24px"></i>
+                <img id="img02" style="max-width:100%; max-height:100vh;">
+            </div>
+        </div>
+
+        <div class="send-email-loading">
+            <div class="spinner-border text-light"></div>
+            <p class="ms-3 mb-0">Đang gửi email...</p>
+        </div>
+
+        <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/userPage.js" />"></script>
+        <script src="<c:url value="/resources/js/auction.js" />"></script>
+        <script src="<c:url value="/resources/js/bid.js" />"></script>
+        <script src="<c:url value="/resources/js/post.js" />"></script>
+        <script src="<c:url value="/resources/js/comment.js" />"></script>
+        <script>
+            <c:url value="/api/user/${userInfo.id}/auctions" var="endpoint1" />
+            <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />
+            $(function () {
+                if ($('#userAuction').hasClass('active')) {
+                    loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                } else {
+                    loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                }
+            });
+
+            function menu(element) {
+                if ($(element).hasClass('active')) {
+                    return;
+                } else {
+                    $(element).parents('.user-menu').find('.user-menu--item.active').removeClass('active');
+                    $(element).addClass('active');
+                    if ($(element).hasClass('userAuction')) {
+                        $('.user-content-container').html('');
+                        loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                    }
+                    if ($(element).hasClass('userPost')) {
+                        $('.user-content-container').html('');
+                        loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

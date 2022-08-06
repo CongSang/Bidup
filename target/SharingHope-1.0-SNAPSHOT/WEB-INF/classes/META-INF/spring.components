@@ -8,6 +8,7 @@ com.charitysm.controllers.APINotificationController=org.springframework.stereoty
 com.charitysm.controllers.AdminController=org.springframework.stereotype.Component
 com.charitysm.controllers.ApiAuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.ApiPostController=org.springframework.stereotype.Component
+com.charitysm.controllers.ApiUserController=org.springframework.stereotype.Component
 com.charitysm.controllers.AuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
 com.charitysm.controllers.LoginController=org.springframework.stereotype.Component

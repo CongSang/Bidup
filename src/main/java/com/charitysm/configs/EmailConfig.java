@@ -4,6 +4,8 @@
  */
 package com.charitysm.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,5 +46,16 @@ public class EmailConfig {
         
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
+    }
+    
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary getCloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", env.getProperty("cloudinary.name"),
+                        "api_key", env.getProperty("cloudinary.appKey"),
+                        "api_secret", env.getProperty("cloudinary.appSecret"),
+                        "secure", true));
+        return getCloudinary;
     }
 }

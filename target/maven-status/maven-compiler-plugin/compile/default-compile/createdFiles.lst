@@ -4,6 +4,7 @@ com\charitysm\services\impl\BidServiceImpl.class
 com\charitysm\configs\EmailConfig.class
 com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
+com\charitysm\controllers\ApiUserController.class
 com\charitysm\services\NotificationService.class
 META-INF\spring.components
 com\charitysm\repositories\CommentRepository.class
@@ -28,7 +29,6 @@ com\charitysm\pojo\Post_.class
 com\charitysm\pojo\ReactNotifPK_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
-com\charitysm\utils\CloudinaryUtils.class
 com\charitysm\pojo\ReactPK_.class
 com\charitysm\pojo\reobj\NotificationResponse.class
 com\charitysm\repositories\impl\AuctionRepositoryImpl.class

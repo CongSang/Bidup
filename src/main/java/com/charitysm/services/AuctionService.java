@@ -22,4 +22,5 @@ public interface AuctionService {
     int updateAuction(Auction a);
     int confirmCompleteCharity(Auction a);
     void sendEmailAuction(Auction a);
+    List<Auction> getUserAuction(String userId, int page);
 }

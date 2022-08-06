@@ -61,5 +61,10 @@ public class AuctionServiceImpl implements AuctionService{
     public void sendEmailAuction(Auction a) {
         this.auctionRepository.sendEmailAuction(a);
     }
+
+    @Override
+    public List<Auction> getUserAuction(String userId, int page) {
+        return this.auctionRepository.getUserAuction(userId, page);
+    }
     
 }

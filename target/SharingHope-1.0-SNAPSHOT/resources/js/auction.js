@@ -1,14 +1,44 @@
 
 //Load theo trang cho trang dau gia
-var auctionPage = 1;
-var auctionFetching = false;
-var disableLoadMoreAuction = false;
+var ctxPath = "/SharingHope";
 
-function auctionNextPage() {
-    if (auctionFetching) return;
-    
-    auctionPage++;
+function previewImage1(el) {
+    var oFReader = new FileReader();
+    if (el.id === 'uploadImage1') {
+        oFReader.readAsDataURL(document.querySelector("#uploadImage1").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#uploadPreview1").src = oFREvent.target.result;
+        };
+        
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+    else {
+        oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#editPreview").src = oFREvent.target.result;
+        };
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+};
+
+function showFull2(element) {
+  document.getElementById("img02").src = element.src;
+  document.getElementById("modal02").style.display = "flex";
 }
+
+var is_show_follow = false;
+function showFollowAuction(element) {
+    var follow = $(element).parents("div.post").find("div.auction-follow-list");
+    if(is_show_follow) {
+        follow.css("display", "none");
+        is_show_follow = false;
+    } else {
+        follow.css("display", "block");
+        is_show_follow = true;
+    }
+};
 
 function formatMoney (value) {
     const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
@@ -276,11 +306,11 @@ function editAuction(auctionId, element) {
     var imgSrc = $(clickedAuction).find('.auction--img').prop('src');
     if (imgSrc.toLowerCase().indexOf('https://') === -1 )
         imgSrc = '';
-    modalEditPost(auctionId, $(element), content.trim(), imgSrc);
+    modalEditPost(auctionId, content.trim(), imgSrc, "auction");
     $("textarea").hashtags();
 }
 
-function comfirmEditPost(id) {
+function comfirmEditAuction(id) {
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
@@ -299,7 +329,7 @@ function comfirmEditPost(id) {
 
         if (!isBlank(content) || content !== "" || imgSrc !== undefined)  {
             if(fs.files[0] === undefined) {
-                editStatus(id, clickedAuction, clickedPostHtml, content);
+                editStatusAuction(id, clickedAuction, clickedPostHtml, content);
             }
             else {
                 var fileType = fs.files[0]['type'];
@@ -382,7 +412,7 @@ function comfirmEditPost(id) {
     }
 }
 
-function editStatus(id, clickedPost, clickedPostHtml, content) {
+function editStatusAuction(id, clickedPost, clickedPostHtml, content) {
     var loadingHtml =   `   <div class="text-center mt-3 post-loading">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
@@ -452,14 +482,15 @@ function confirmWinnerAndSendEmail(auctionId, element) {
 }
 
 function confirmCompleteCharity(auctionId) {
-    $(`.bid-loading-${auctionId}`).css("display", "block");
+    $(`.auction-del-loading-${auctionId}`).css("display", "block");
     
     $.ajax({
             type: 'put',
             url: `${ctxPath}/api/confirm-auction/${auctionId}`,
             dataType : 'json',
             success: function () {
-                $(`.bid-loading-${auctionId}`).css("display", "none");
+                $(`.auction-del-loading-${auctionId}`).css("display", "none");
+                $(`.auction-post-${auctionId}`).find('ul.dropdown-menu').remove();
                 $(`.auction-post-${auctionId}`).find('.post--action-like').html(`
                     <div class="btn-disable">
                         <i class="fa-solid fa-check"></i>

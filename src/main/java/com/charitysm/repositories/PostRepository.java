@@ -19,4 +19,5 @@ public interface PostRepository {
     int createPost(Post p);
     void deletePost(int id);
     int updatePost(Post p);
+    List<Post> getUserPosts(String userId, int page);
 }
