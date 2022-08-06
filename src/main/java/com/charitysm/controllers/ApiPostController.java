@@ -98,6 +98,7 @@ public class ApiPostController {
         react.setReactPK(rPK);
         react.setPost(p);
         react.setUser(u);
+        react.setCreatedDate(new Date());
 
         this.reactService.createReact(react);
     }

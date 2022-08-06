@@ -4,9 +4,7 @@
  */
 package com.charitysm.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,14 +25,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ADMIN
  */
 @Entity
-@Table(name = "comment_notif")
+@Table(name = "post_notif")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CommentNotif.findAll", query = "SELECT c FROM CommentNotif c"),
-    @NamedQuery(name = "CommentNotif.findById", query = "SELECT c FROM CommentNotif c WHERE c.id = :id"),
-    @NamedQuery(name = "CommentNotif.findByCreatedDate", query = "SELECT c FROM CommentNotif c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "CommentNotif.findByIsRead", query = "SELECT c FROM CommentNotif c WHERE c.isRead = :isRead")})
-public class CommentNotif implements Serializable {
+    @NamedQuery(name = "PostNotif.findAll", query = "SELECT p FROM PostNotif p"),
+    @NamedQuery(name = "PostNotif.findById", query = "SELECT p FROM PostNotif p WHERE p.id = :id"),
+    @NamedQuery(name = "PostNotif.findByType", query = "SELECT p FROM PostNotif p WHERE p.type = :type"),
+    @NamedQuery(name = "PostNotif.findByIsRead", query = "SELECT p FROM PostNotif p WHERE p.isRead = :isRead")})
+public class PostNotif implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,30 +42,28 @@ public class CommentNotif implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @Size(min = 1, max = 12)
+    @Column(name = "type")
+    private String type;
     @Column(name = "is_read")
     private Short isRead;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private User userId;
 
-    public CommentNotif() {
+    public PostNotif() {
     }
 
-    public CommentNotif(Integer id) {
+    public PostNotif(Integer id) {
         this.id = id;
     }
 
-    public CommentNotif(Integer id, Date createdDate) {
+    public PostNotif(Integer id, String type) {
         this.id = id;
-        this.createdDate = createdDate;
+        this.type = type;
     }
 
     public Integer getId() {
@@ -79,12 +74,12 @@ public class CommentNotif implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public String getType() {
+        return type;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Short getIsRead() {
@@ -121,10 +116,10 @@ public class CommentNotif implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CommentNotif)) {
+        if (!(object instanceof PostNotif)) {
             return false;
         }
-        CommentNotif other = (CommentNotif) object;
+        PostNotif other = (PostNotif) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -133,7 +128,7 @@ public class CommentNotif implements Serializable {
 
     @Override
     public String toString() {
-        return "com.charitysm.pojo.CommentNotif[ id=" + id + " ]";
+        return "com.charitysm.pojo.PostNotif[ id=" + id + " ]";
     }
     
 }

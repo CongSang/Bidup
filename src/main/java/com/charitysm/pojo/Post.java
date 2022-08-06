@@ -71,15 +71,12 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    @JsonIgnore
-    private Set<ReactNotif> reactNotifSet;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "postId")
-    private Set<Comment> commentSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     @JsonIgnore
-    private Set<CommentNotif> commentNotifSet;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
+    private Set<PostNotif> postNotifSet;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "postId")
+    private Set<Comment> commentSet;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post")
     private Set<React> reactSet;
 
     public Post() {
@@ -151,12 +148,12 @@ public class Post implements Serializable {
     }
 
     @XmlTransient
-    public Set<ReactNotif> getReactNotifSet() {
-        return reactNotifSet;
+    public Set<PostNotif> getPostNotifSet() {
+        return postNotifSet;
     }
 
-    public void setReactNotifSet(Set<ReactNotif> reactNotifSet) {
-        this.reactNotifSet = reactNotifSet;
+    public void setPostNotifSet(Set<PostNotif> postNotifSet) {
+        this.postNotifSet = postNotifSet;
     }
 
     @XmlTransient
@@ -166,15 +163,6 @@ public class Post implements Serializable {
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
-    }
-
-    @XmlTransient
-    public Set<CommentNotif> getCommentNotifSet() {
-        return commentNotifSet;
-    }
-
-    public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
-        this.commentNotifSet = commentNotifSet;
     }
 
     @XmlTransient

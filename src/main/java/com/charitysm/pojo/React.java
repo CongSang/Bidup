@@ -6,6 +6,8 @@ package com.charitysm.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "React.findAll", query = "SELECT r FROM React r"),
     @NamedQuery(name = "React.findByUserId", query = "SELECT r FROM React r WHERE r.reactPK.userId = :userId"),
     @NamedQuery(name = "React.findByPostId", query = "SELECT r FROM React r WHERE r.reactPK.postId = :postId"),
-    @NamedQuery(name = "React.findByType", query = "SELECT r FROM React r WHERE r.type = :type")})
+    @NamedQuery(name = "React.findByType", query = "SELECT r FROM React r WHERE r.type = :type"),
+    @NamedQuery(name = "React.findByCreatedDate", query = "SELECT r FROM React r WHERE r.createdDate = :createdDate"),
+    @NamedQuery(name = "React.findForUser", query = "SELECT r FROM React r WHERE r.reactPK.userId = :userId AND r.reactPK.postId = :postId")})
 public class React implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +42,11 @@ public class React implements Serializable {
     protected ReactPK reactPK;
     @Column(name = "type")
     private Short type;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -48,6 +60,11 @@ public class React implements Serializable {
 
     public React(ReactPK reactPK) {
         this.reactPK = reactPK;
+    }
+
+    public React(ReactPK reactPK, Date createdDate) {
+        this.reactPK = reactPK;
+        this.createdDate = createdDate;
     }
 
     public React(String userId, int postId) {
@@ -68,6 +85,14 @@ public class React implements Serializable {
 
     public void setType(Short type) {
         this.type = type;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Post getPost() {
