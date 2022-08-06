@@ -12,9 +12,8 @@ import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
-import com.charitysm.utils.CloudinaryUtils;
+import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,12 +22,8 @@ import java.util.List;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -57,6 +52,8 @@ public class ApiAuctionController {
     private BidService bidService;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Async
     @GetMapping("/auction-side")
@@ -88,7 +85,7 @@ public class ApiAuctionController {
         a.setEndDate(endDate);
         a.setImage(ar.getImgUrl());
         a.setUserId(u);
-        a.setMailTo((short) 1);
+        a.setMailTo((short) 0);
 
         if (this.auctionService.createAuction(a) < 1) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -250,7 +247,7 @@ public class ApiAuctionController {
     }
 
     public void deleteImg(String public_id) throws IOException {
-        CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
+        cloudinary.uploader().destroy(public_id,
                 ObjectUtils.asMap("resource_type", "image"));
     }
 

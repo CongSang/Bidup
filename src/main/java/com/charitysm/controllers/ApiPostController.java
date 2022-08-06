@@ -15,7 +15,6 @@ import com.charitysm.pojo.reobj.PostRequest;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
-import com.charitysm.utils.CloudinaryUtils;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
@@ -54,6 +53,8 @@ public class ApiPostController {
     private CommentService commentService;
     @Autowired
     private ReactService reactService;
+    @Autowired
+    private Cloudinary cloudinary;
     
     @Async
     @GetMapping("/posts")
@@ -119,7 +120,7 @@ public class ApiPostController {
             @RequestParam("file") MultipartFile image) {
         FileUploadResponse res = new FileUploadResponse();
         try {
-            Map rs = CloudinaryUtils.getCloudinary().uploader().upload(image.getBytes(),
+            Map rs = cloudinary.uploader().upload(image.getBytes(),
                     ObjectUtils.asMap("resource_type", "auto"));
             
             res.setFileName("fileName");
@@ -176,7 +177,7 @@ public class ApiPostController {
     }
     
     public void deleteImg(String public_id) throws IOException {
-        CloudinaryUtils.getCloudinary().uploader().destroy(public_id,
+        cloudinary.uploader().destroy(public_id,
                 ObjectUtils.asMap("resource_type", "image"));
     }
     

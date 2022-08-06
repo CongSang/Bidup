@@ -5,6 +5,7 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Auction;
+import com.charitysm.pojo.User;
 import com.charitysm.repositories.AuctionRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class AuctionRepositoryImpl implements AuctionRepository{
     @Override
     public List<Auction> getAuctionSideBar() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM Auction a ORDER BY a.auctionDate DESC").setMaxResults(5);
+        Query q = session.createQuery("FROM Auction a ORDER BY a.auctionDate DESC").setMaxResults(10);
         
         return q.getResultList();
     }
@@ -133,5 +134,28 @@ public class AuctionRepositoryImpl implements AuctionRepository{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Auction> getUserAuction(String userId, int page) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        User u = session.get(User.class, userId);
+        
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Auction> q = b.createQuery(Auction.class);
+        Root root = q.from(Auction.class);
+        q.select(root);
+        
+        q.where(b.equal(root.get("userId"), u));
+        q.orderBy(b.desc(root.get("auctionDate")));
+
+        Query query = session.createQuery(q);
+        if (page > 0) {
+            int size = Integer.parseInt(env.getProperty("page.size").toString());
+            int start = (page - 1) * size;
+            query.setFirstResult(start);
+            query.setMaxResults(size);
+        }
+        return query.getResultList();
     }
 }

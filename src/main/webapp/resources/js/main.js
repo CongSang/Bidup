@@ -64,7 +64,7 @@ function loadSideBarLeft() {
     });
 }
 
-function modalEditPost(id, el, content, src) {
+function modalEditPost(id, content, src, pojo) {
     var html = `<div id="modalEditPost" class="modal modal-post open">
                     <div class="modal-container modal-container-post">
                         <div class="modal-header">
@@ -103,7 +103,7 @@ function modalEditPost(id, el, content, src) {
 
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-danger me-2 modal--close-post" onclick="removeEditModal()">Huỷ</button>
-                            <button type="button" class="btn btn-success" onclick="comfirmEditPost(${id})">Chỉnh sửa</button>
+                            <button type="button" class="btn btn-success" onclick="${(pojo === "post") ? `comfirmEditPost(${id})` : `comfirmEditAuction(${id})`}">Chỉnh sửa</button>
                         </div>
                     </div>
                 </div>`;
