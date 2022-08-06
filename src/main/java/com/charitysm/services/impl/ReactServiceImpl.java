@@ -21,17 +21,17 @@ public class ReactServiceImpl implements ReactService {
     
     @Override
     public void createReact(React r) {
-        reactRepository.createReact(r);
+        this.reactRepository.createReact(r);
     }
 
     @Override
     public void deleteReact(React r) {
-        reactRepository.deleteReact(r);
+        this.reactRepository.deleteReact(r);
     }
 
     @Override
     public React findReact(String userId, int postId) {
-        return reactRepository.findReact(userId, postId);
+        return this.reactRepository.findReact(userId, postId);
     }
     
 }

@@ -1,39 +1,11 @@
 
-const modal1 =  document.querySelector(".modal-auction");
-const modalContainer1 = $(".modal-container-auction");
-const btn_close1 = document.querySelectorAll(".modal--close-auction");
-const btn_show1 = document.querySelectorAll(".btn-show--auction");
-
 var auctionPage = 1;
 var auctionFetching = false;
 var disableLoadMoreAuction = false;
-var userAvatar = $("#userAvatar").attr("src");
-var errorHtml =  `<div class="text-center mt-3 post-loading">
-                                <p class="post--content mb-3" style="font-size:30xp;">
-                                    Có lỗi xảy ra, không thể đăng bài ngay lúc này!
-                                </p>
-                               <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
-                            </div>`;
 
-function showModal() {
-    modal1.classList.add('open');
-}
-
-function closeModal() {
-    modal1.classList.remove('open');
-}
-
-btn_show1.forEach(btn => {
-    btn.addEventListener("click", showModal);
-});
-
-btn_close1.forEach(btn => {
-    btn.addEventListener("click", closeModal);
-});
-
-modalContainer1.on("click", function (event) {
-    event.stopPropagation();
-});
+var postPage = 1;
+var postFetching = false;
+var disableLoadMorePost = false;
 
 function auctionNextPage() {
     if (auctionFetching) return;
@@ -41,12 +13,36 @@ function auctionNextPage() {
     auctionPage++;
 }
 
-function loadAuctions(endpoint, currentUserId, page) {
+function loadUserPosts(endpoint, currentUserId, page) {
     if (!page) {
-        page = 1;
+        page = 0;
     }
     
-    $('.auction-loading').css("display", "block");
+    $('.user-loading').css("display", "block");
+    auctionFetching = true;
+
+    $.ajax({
+        type: 'get',
+        url: endpoint + '?page=' + page,
+        dataType: 'json',
+        success: function (data) {
+            if (data.length === 0) {
+                disableLoadMorePost = true;
+            }
+            
+            loadPostFeeds(data, currentUserId);
+            $('.user-loading').css("display", "none");
+            postFetching = false;
+        }
+    });
+}
+
+function loadUserAuctions(endpoint, currentUserId, page) {
+    if (!page) {
+        page = 0;
+    }
+    
+    $('.user-loading').css("display", "block");
     auctionFetching = true;
     
     $.ajax({
@@ -59,7 +55,7 @@ function loadAuctions(endpoint, currentUserId, page) {
             }
             
             loadAuctionFeeds(data, currentUserId, endpoint);
-            $('.auction-loading').css("display", "none");
+            $('.user-loading').css("display", "none");
             auctionFetching = false;
         }
     });
@@ -67,7 +63,7 @@ function loadAuctions(endpoint, currentUserId, page) {
 
 function loadAuctionFeeds(auctions, currentUserId, endpoint) {
     var userAvatar = $("#userAvatar").attr("src");
-    $.each(auctions, function (index, auction) {
+    (auctions.length > 0) ? $.each(auctions, function (index, auction) {
         
         let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
         let bidSort = auction.bidSet.filter(c => c.user.id !== currentUserId);
@@ -130,7 +126,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${endpoint}', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}/api/auctions', ${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}
@@ -347,7 +343,190 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
             `}
         `;
         
-        $('.auction-container').append(html);
+        $('.user-content-container').append(html);
         customHashtag(`.auction-${auction.id}`);
-    });
+    }) : $('.user-content-container').append(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                                                    <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                                                    <p class="text-center">Chưa có bài viết nào</p>
+                                                                </div>`);
+    
 }
+
+function loadPostFeeds(posts, currentUserId) {
+    var userAvatar = $("#userAvatar").attr("src");
+    (posts.length > 0) ? $.each(posts, function (index, post) {
+        let userComment = post.commentSet.filter(c => c.userId.id === currentUserId);
+        userComment.sort(function (a, b) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.commentDate) - new Date(a.commentDate);
+        });
+        let othersComment = post.commentSet.filter(c => c.userId.id !== currentUserId);
+        othersComment.sort(function (a, b) {
+            return new Date(b.commentDate) - new Date(a.commentDate);
+        });
+
+        var html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
+                <div class="card post--item">
+                    <div class="card-header border-0 pb-0 pt-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <div class="me-2">
+                                    <a href="${ctxPath}/user/${post.userId.id}">
+                                        <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
+                                    </a>
+                                </div>
+                                <!-- Info -->
+                                <div>
+                                    <div class="nav nav-divider">
+                                        <h6 class="nav-item card-title mb-0">
+                                            <a href="${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
+                                        </h6>
+                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Menu-->
+                            <div class="dropdown">
+                                <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                                    ${(currentUserId === post.userId.id) ?
+                                            `<li>
+                                                <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">
+                                                    Chỉnh sửa bài viết
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#" onclick="deletePost(${post.id}, this)">
+                                                    Xóa bài viết
+                                                </a>
+                                            </li>`  :    `<li>
+                                                            <a class="dropdown-item" href="#">
+                                                                Báo cáo
+                                                            </a>
+                                                        </li>`
+                                        }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body pb-2">
+                        <p class="post--content mb-3 content--hashtag post-${post.id}">
+                            ${post.content}
+                        </p>
+        
+                        ${(post.image === '') ?`
+                        <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
+                        `:(`
+                        <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
+                        `)}
+
+                        <div class="line"></div>
+
+                        <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
+                            <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
+                                <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
+                                    ${((post.reactSet).length === 0) ? (
+                                            `<div class="heart-like-button"></div>`
+                                            ) : (
+                                            ((post.reactSet).some((react) => react.user.id === currentUserId)) ?
+                                                `<div class="heart-like-button liked"></div>`
+                                                : `<div class="heart-like-button"></div>`
+                                            )
+                                    }
+                                    <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>
+                                </div>
+                            </div>
+                            <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
+                                <div class="post--action-hover" onclick="showComment(this)">
+                                    <i class="fa-regular fa-message post--action-icon"></i>
+                                    <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">${post.commentSet.length}</span>)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <div class="d-flex align-items-center my-2">
+                                <div class="me-2">
+                                    <c:url value="/resources/img/non-avatar.png" var="avatar" />
+                                    <a href="#">
+                                        <img class="comment--avatar rounded-circle" src="${userAvatar}" alt="">
+                                    </a>
+                                </div>
+                                <form class="w-100" onsubmit="addComment('${post.id}', this)" id="commentForm">
+                                    <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
+                                </form>
+                            </div>
+                            <div class="text-center mt-3 comment-loading" style="display:none;">
+                                <div class="spinner-border text-muted"></div>
+                            </div>
+                            <div id="commentedComment" class="flex">
+                                ${(userComment).map((comment, index) => {
+                                        return `
+                                          <div class="d-flex comment--item py-2">
+                                                <div class="me-2">
+                                                    <a href="${ctxPath}/user/${comment.userId.id}">
+                                                        <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                                                    </a>
+                                                </div>
+                                                <div class="comment--item-content">
+                                                  <div class="bg-light comment-content">
+                                                      <div class="d-flex justify-content-start">
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <small>${moment(comment.commentDate).fromNow()}</small>
+                                                      </div>
+                                                      <p class="small mb-0">
+                                                          ${comment.content}
+                                                      </p>
+                                                  </div>
+                                                    <div class="d-flex justify-content-end me-2">
+                                                        <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
+                                                    </div>
+                                                </div>
+                                                
+                                          </div>`;
+                                }).join('')}
+                                
+                                ${(othersComment).map((comment, index) => {
+                                     return `
+                                          <div class="d-flex comment--item py-2">
+                                              <div class="me-2">
+                                                  <a href="${ctxPath}/user/${comment.userId.id}">
+                                                      <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                                                  </a>
+                                              </div>
+                                              <div class="comment--item-content">
+                                                  <div class="bg-light comment-content">
+                                                      <div class="d-flex justify-content-start">
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                                                          <small>${moment(comment.commentDate).fromNow()}</small>
+                                                      </div>
+                                                      <p class="small mb-0">
+                                                          ${comment.content}
+                                                      </p>
+                                                  </div>
+                                                    <div class="d-flex justify-content-end me-2">
+                                                        <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
+                                                    </div>
+                                                </div>
+                                                
+                                          </div>`;
+                                }).join('')}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+        $('.user-content-container').append(html);
+        customHashtag(`.post-${post.id}`);
+    }) :  $('.user-content-container').html(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                                                    <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                                                    <p class="text-center">Chưa có bài viết nào</p>
+                                                                </div>`);
+};

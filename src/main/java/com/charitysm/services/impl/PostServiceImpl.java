@@ -50,5 +50,10 @@ public class PostServiceImpl implements PostService{
     public int updatePost(Post p) {
         return this.postRepository.updatePost(p);
     }
+
+    @Override
+    public List<Post> getUserPosts(String userId, int page) {
+        return this.postRepository.getUserPosts(userId, page);
+    }
     
 }

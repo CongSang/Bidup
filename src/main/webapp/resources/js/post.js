@@ -1,12 +1,6 @@
    
 //Load theo trang cho trang chu
-const ctxPath = '/SharingHope';
-const loadingTop = $('#loadingTop');
-const loadingBottom = $('#loadingBottom');
-const feedContainer = $('#feeds-container');
-var postPage = 1;
-var postFetching = false;
-var disableLoadMorePost = false;
+var ctxPath = '/SharingHope';
 var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <p class="post--content mb-3" style="font-size:30xp;">
                                     Có lỗi xảy ra, không thể đăng bài ngay lúc này!
@@ -14,11 +8,45 @@ var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
                             </div>`;
 
-function postNextPage() {
-    if (postFetching) return;
-    
-    postPage++;
+//Show image after pick picture
+function previewImage(el) {
+    var oFReader = new FileReader();
+    if (el.id === 'uploadImage') {
+        oFReader.readAsDataURL(document.querySelector("#uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#uploadPreview").src = oFREvent.target.result;
+        };
+        
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+    else {
+        oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.querySelector("#editPreview").src = oFREvent.target.result;
+        };
+        $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
+    }
+};
+
+function showFull(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "flex";
 }
+
+
+var is_show = false;
+function showComment(element) {
+    var comment = $(element).parents("div.post").find("div.comment");
+    if(is_show) {
+        comment.css("display", "none");
+        is_show = false;
+    } else {
+        comment.css("display", "block");
+        is_show = true;
+    }
+};
 
 function customHashtag(element) {
     var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
@@ -28,31 +56,6 @@ function customHashtag(element) {
         var hashtag = v.trim();
         var repl = `<span class="tag">${v}</span>`;
         $(element).html($(element).html().replace(hashtag, repl));
-    });
-}
-
-function loadPosts(endpoint, currentUserId, page) {
-    if (!page) {
-        page = 1;
-    }
-    
-    $(loadingBottom).css("display", "block");
-    auctionFetching = true;
-
-    $.ajax({
-        type: 'get',
-        url: endpoint + '?page=' + page,
-        dataType: 'json',
-        success: function (data) {
-            
-            if (data.length === 0) {
-                disableLoadMorePost = true;
-            }
-            
-            loadFeeds(data, currentUserId);
-            $(loadingBottom).css("display", "none");
-            postFetching = false;
-        }
     });
 }
 
@@ -198,7 +201,7 @@ function editPost(id, el) {
     var imgSrc = $(clickedPost).find('.post--img').prop('src');
     if (imgSrc.toLowerCase().indexOf('https://') === -1 )
         imgSrc = '';
-    modalEditPost(id, $(el), content.trim(), imgSrc);
+    modalEditPost(id, content.trim(), imgSrc, "post");
     $("textarea").hashtags();
 }
 

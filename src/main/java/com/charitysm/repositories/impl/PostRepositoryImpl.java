@@ -5,6 +5,7 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Post;
+import com.charitysm.pojo.User;
 import com.charitysm.repositories.PostRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,29 @@ public class PostRepositoryImpl implements PostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         session.update(p);
         return p.getId();
+    }
+
+    @Override
+    public List<Post> getUserPosts(String userId, int page) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        User u = session.get(User.class, userId);
+        
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Post> q = b.createQuery(Post.class);
+        Root root = q.from(Post.class);
+        q.select(root);
+        
+        q.where(b.equal(root.get("userId"), u));
+        q.orderBy(b.desc(root.get("postedDate")));
+
+        Query query = session.createQuery(q);
+        if (page > 0) {
+            int size = Integer.parseInt(env.getProperty("page.size").toString());
+            int start = (page - 1) * size;
+            query.setFirstResult(start);
+            query.setMaxResults(size);
+        }
+        return query.getResultList();
     }
 
 }
