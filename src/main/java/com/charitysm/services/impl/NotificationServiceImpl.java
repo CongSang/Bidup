@@ -45,5 +45,10 @@ public class NotificationServiceImpl implements NotificationService{
         });
         return rs;
     }
+
+    @Override
+    public void updateNotif(int postId, NotifType type) {
+        this.notificationRepository.updateNotif(postId, type);
+    }
     
 }

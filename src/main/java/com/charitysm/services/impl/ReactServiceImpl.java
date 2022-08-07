@@ -20,8 +20,8 @@ public class ReactServiceImpl implements ReactService {
     private ReactRepository reactRepository;
     
     @Override
-    public void createReact(React r) {
-        this.reactRepository.createReact(r);
+    public boolean createReact(React r) {
+        return this.reactRepository.createReact(r);
     }
 
     @Override

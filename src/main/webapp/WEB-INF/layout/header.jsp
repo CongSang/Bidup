@@ -1,6 +1,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
 
 <header class="navbar-light fixed-top header-static">
     <nav class="navbar navbar-expand-lg">
@@ -55,8 +57,7 @@
                     </li>
 
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
-
-                    <c:if test="${currentUser.getUserRole() == 'ROLE_ADMIN'}">
+                    <c:if test="${sessionScope.currentUser.getUserRole() == 'ROLE_ADMIN'}">
                         <li class="nav-item px-2">
                             <c:url value="/admin" var="adminUrl" />
                             <a class="nav-link" href="${adminUrl}" id="chartMenu">
@@ -73,14 +74,15 @@
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
+                            
                             <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                            <img src="${currentUser.getAvatar()}" alt="avatar" class="user-img me-2" />
-                            ${currentUser.getFirstname()}
+                            <img src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img me-2" />
+                            ${sessionScope.currentUser.getFirstname()}
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end drop" aria-labelledby="userMenu">
                             <li>
-                                <c:url value="/user/${currentUser.getId()}" var="userInfoUrl" />
+                                <c:url value="/user/${sessionScope.currentUser.getId()}" var="userInfoUrl" />
                                 <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
                                     <i class="fa-solid fa-user me-2"></i>
                                     Trang cá nhân
@@ -112,14 +114,14 @@
                 </div>
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="userAvatar" src="${currentUser.getAvatar()}" alt="avatar" class="user-img" />
+                        <img id="userAvatar" src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="dropdown-item">
-                            <span>Xin chào ${currentUser.getFirstname()}</span>
+                            <span>Xin chào ${sessionScope.currentUser.getFirstname()} </span>
                         </li>
                         <li>
-                            <c:url value="/user/${currentUser.getId()}" var="userInfoUrl" />
+                            <c:url value="/user/${sessionScope.currentUser.getId()}" var="userInfoUrl" />
                             <a class="dropdown-item d-flex align-items-center" href="${userInfoUrl}">
                                 <i class="fa-solid fa-user me-2"></i>
                                 Trang cá nhân

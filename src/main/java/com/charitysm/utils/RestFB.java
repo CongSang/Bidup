@@ -6,16 +6,9 @@ package com.charitysm.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Version;
-import com.restfb.types.User;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 /**
  *
@@ -23,18 +16,76 @@ import org.springframework.core.env.Environment;
  */
 public class RestFB {
 
-    public static String FACEBOOK_APP_ID = "800114437619089";
-    public static String FACEBOOK_APP_SECRET = "0a140442c3bb088fa551da048a297bbc";
-    public static String FACEBOOK_REDIRECT_URL = "http://localhost:8080/SharingHope/login-facebook";
-    public static String FACEBOOK_LINK_GET_TOKEN = "https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&redirect_uri=%s&code=%s";
+    private String appId;
+    private String appSecret;
+    private String redirectURL;
+    private String linkGetToken;
 
-    public static String getToken(final String code) throws IOException, ClientProtocolException {
-        String link = String.format(FACEBOOK_LINK_GET_TOKEN, FACEBOOK_APP_ID,
-                 FACEBOOK_APP_SECRET, FACEBOOK_REDIRECT_URL, code);
+    public String getToken(final String code) throws IOException, ClientProtocolException {
+        String link = String.format(getLinkGetToken(), getAppId(), getAppSecret(), getRedirectURL(), code);
         
         String response = Request.Get(link).execute().returnContent().asString();
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
+    }
+
+    public RestFB() {
+    }   
+
+    /**
+     * @return the appId
+     */
+    public String getAppId() {
+        return appId;
+    }
+
+    /**
+     * @param appId the appId to set
+     */
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    /**
+     * @return the appSecret
+     */
+    public String getAppSecret() {
+        return appSecret;
+    }
+
+    /**
+     * @param appSecret the appSecret to set
+     */
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
+
+    /**
+     * @return the redirectURL
+     */
+    public String getRedirectURL() {
+        return redirectURL;
+    }
+
+    /**
+     * @param redirectURL the redirectURL to set
+     */
+    public void setRedirectURL(String redirectURL) {
+        this.redirectURL = redirectURL;
+    }
+
+    /**
+     * @return the linkGetToken
+     */
+    public String getLinkGetToken() {
+        return linkGetToken;
+    }
+
+    /**
+     * @param linkGetToken the linkGetToken to set
+     */
+    public void setLinkGetToken(String linkGetToken) {
+        this.linkGetToken = linkGetToken;
     }
 }

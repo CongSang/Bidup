@@ -6,6 +6,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\ApiUserCont
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\ReactServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\UserServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\SecurityWebApplicationInit.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\NotificationCenter.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\Bid.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\ReactService.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\UserRepository.java
@@ -22,6 +23,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\Notif
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\APILoginFbController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\LoginController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\CommentRepositoryImpl.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\UtilsConfig.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\BidServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\AuctionServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\ReactRepositoryImpl.java

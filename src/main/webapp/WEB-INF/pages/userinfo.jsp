@@ -15,6 +15,7 @@
 
         <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
+        <script src="<c:url value="/resources/js/notification.js" />"></script>
 
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -24,6 +25,7 @@
         <link href="${homeCss}" rel="stylesheet" />
         <link href="<c:url value="/resources/css/auction.css" />" rel="stylesheet" />
         <link href="<c:url value="/resources/css/userinfo.css" />" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -172,6 +174,11 @@
         <script>
             <c:url value="/api/user/${userInfo.id}/auctions" var="endpoint1" />
             <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />
+            
+            window.onload = function (){
+                getNotifs();
+            };
+                
             $(function () {
                 if ($('#userAuction').hasClass('active')) {
                     loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
