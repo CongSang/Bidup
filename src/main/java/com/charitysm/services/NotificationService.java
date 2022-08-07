@@ -4,6 +4,7 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.pojo.reobj.NotificationResponse;
 import java.util.List;
 import java.util.Map;
@@ -14,4 +15,5 @@ import java.util.Map;
  */
 public interface NotificationService {
     List<NotificationResponse> getNotifs(String userId);
+    void updateNotif(int postId, NotifType type);
 }

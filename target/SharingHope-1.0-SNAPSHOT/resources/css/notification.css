@@ -30,8 +30,10 @@
 }
 
 .notif-item > img {
-    width: 20%;
-    padding-right: 1rem;
+    width: 40PX;
+    height: 40PX;
+    margin-right: 0.5rem;
+    object-fit: cover;
 }
 
 .dropdown-menu {
@@ -45,6 +47,9 @@
 }
 
 .notif-count {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
     padding: 2px;
     font-size: 10px;
     color: white;

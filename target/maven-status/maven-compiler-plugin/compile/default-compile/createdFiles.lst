@@ -22,6 +22,7 @@ com\charitysm\configs\SecurityConfig.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\User_.class
+com\charitysm\pojo\enumtype\NotifType.class
 com\charitysm\pojo\Bid_.class
 com\charitysm\pojo\Post_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class

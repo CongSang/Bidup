@@ -4,6 +4,7 @@
  */
 package com.charitysm.repositories;
 
+import com.charitysm.pojo.enumtype.NotifType;
 import java.util.List;
 import java.util.Map;
 
@@ -13,4 +14,5 @@ import java.util.Map;
  */
 public interface NotificationRepository {
     List<Object[]> getNotifs(String userId);
+    void updateNotif(int postId, NotifType type);
 }

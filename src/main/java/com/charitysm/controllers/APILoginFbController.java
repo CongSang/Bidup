@@ -5,7 +5,6 @@
 package com.charitysm.controllers;
 
 import com.charitysm.utils.RestFB;
-import static com.charitysm.utils.RestFB.FACEBOOK_APP_SECRET;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class APILoginFbController {
     @Autowired
-    private ApplicationContext context;
+    private RestFB restFB;
     
     @RequestMapping("/login-facebook")
     public void loginFacebook(HttpServletRequest request
@@ -37,10 +36,13 @@ public class APILoginFbController {
             response.sendRedirect("login");
         }
         else {
-            String accessToken = RestFB.getToken(code);
-            FacebookClient client = new DefaultFacebookClient(accessToken, FACEBOOK_APP_SECRET, Version.LATEST);
+            String accessToken = restFB.getToken(code);
+            FacebookClient client = new DefaultFacebookClient(accessToken, restFB.getAppSecret(), Version.LATEST);
             User user = client.fetchObject("me", User.class, Parameter.with("fields", "id,name,email,picture"));
+            //create new user based on fb user here
             
+            
+            //done then set current user with created user and redirect
             session.setAttribute("current_user", user);
             response.sendRedirect("/SharingHope");
         }
