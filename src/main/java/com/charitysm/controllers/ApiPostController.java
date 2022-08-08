@@ -4,6 +4,7 @@
  */
 package com.charitysm.controllers;
 
+import com.charitysm.utils.NotificationCenter;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.reobj.CommentRequest;
 import com.charitysm.pojo.reobj.FileUploadResponse;
@@ -11,6 +12,7 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactPK;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.pojo.reobj.PostRequest;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
@@ -55,6 +57,8 @@ public class ApiPostController {
     private ReactService reactService;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private NotificationCenter notificationCenter;
     
     @Async
     @GetMapping("/posts")
@@ -80,6 +84,7 @@ public class ApiPostController {
         if(this.commentService.createComment(comm) < 1)
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         
+        this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
         return new ResponseEntity<>(comm, HttpStatus.CREATED);
     }
     
@@ -100,8 +105,8 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
-
-        this.reactService.createReact(react);
+        if(this.reactService.createReact(react) == true)
+            this.notificationCenter.updateNotif(postId, NotifType.REACT_POST);
     }
     
     @Async

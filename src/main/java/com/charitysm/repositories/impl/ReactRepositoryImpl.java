@@ -24,9 +24,11 @@ public class ReactRepositoryImpl implements ReactRepository{
     private LocalSessionFactoryBean sessionFactory;
     
     @Override
-    public void createReact(React r) {
+    public boolean createReact(React r) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        session.save(r);
+        if (session.save(r) != null)
+            return true ;
+        return false;
     }
 
     @Override

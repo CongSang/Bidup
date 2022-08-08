@@ -22,7 +22,9 @@ C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\chari
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\BidRequest.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\BidRepository.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\NotificationServiceImpl.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\NotificationCenter.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\HibernateConfig.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\UtilsConfig.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\CommentRequest.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\AuctionService.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\ReactService.java

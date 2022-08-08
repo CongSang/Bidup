@@ -33,7 +33,7 @@ header {
 }
 
 .notify-icon {
-    font-size: 1rem;
+    font-size: 18px;
     color: var(--primary-color-300);
     cursor: pointer;
 }
@@ -55,6 +55,10 @@ header {
     color: var(--primary-color-200);
 }
 
+.dropdown-item {
+    padding: 8px 16px;
+    border-radius: 6px;
+}
 
 /*navbar mobile*/
 .navbar-toggler {

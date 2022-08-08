@@ -2,6 +2,7 @@ com.charitysm.configs.EmailConfig=org.springframework.stereotype.Component
 com.charitysm.configs.HibernateConfig=org.springframework.stereotype.Component
 com.charitysm.configs.SecurityConfig=org.springframework.stereotype.Component
 com.charitysm.configs.TilesConfig=org.springframework.stereotype.Component
+com.charitysm.configs.UtilsConfig=org.springframework.stereotype.Component
 com.charitysm.configs.WebAppContextConfig=org.springframework.stereotype.Component
 com.charitysm.controllers.APILoginFbController=org.springframework.stereotype.Component
 com.charitysm.controllers.APINotificationController=org.springframework.stereotype.Component

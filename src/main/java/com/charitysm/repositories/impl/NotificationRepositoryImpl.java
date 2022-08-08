@@ -4,6 +4,7 @@
  */
 package com.charitysm.repositories.impl;
 
+import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.repositories.NotificationRepository;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,15 @@ public class NotificationRepositoryImpl implements NotificationRepository{
         Query q = session.createSQLQuery("CALL sp_userGetNotifs(:userId)");
         q.setParameter("userId", userId);
         return q.getResultList();
+    }
+
+    @Override
+    public void updateNotif(int postId, NotifType type) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_updateNotif(:postId, :type)");
+        q.setParameter("postId", postId);
+        q.setParameter("type", type.toString());
+        q.executeUpdate();
     }
     
 }

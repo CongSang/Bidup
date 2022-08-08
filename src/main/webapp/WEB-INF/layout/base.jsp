@@ -63,7 +63,6 @@
         <script>
             window.onload = function() {
                 getNotifs();
-
                 $('#userNotification').on("click", function (){
                     $('.notif-count').css('opacity','0');
                 });
