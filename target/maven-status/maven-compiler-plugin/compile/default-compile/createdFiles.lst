@@ -13,6 +13,7 @@ com\charitysm\services\impl\ReactServiceImpl.class
 com\charitysm\services\impl\CommentServiceImpl.class
 com\charitysm\services\CommentService.class
 com\charitysm\configs\DispatcherServletInit.class
+com\charitysm\configs\UtilsConfig.class
 com\charitysm\controllers\IndexController.class
 com\charitysm\pojo\Post.class
 com\charitysm\services\PostService.class
@@ -24,6 +25,7 @@ com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\User_.class
 com\charitysm\pojo\enumtype\NotifType.class
 com\charitysm\pojo\Bid_.class
+com\charitysm\utils\NotificationCenter.class
 com\charitysm\pojo\Post_.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
 com\charitysm\repositories\UserRepository.class
