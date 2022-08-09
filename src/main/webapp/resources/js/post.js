@@ -1,12 +1,12 @@
-   
+
 //Load theo trang cho trang chu
-var ctxPath = '/SharingHope';
 var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <p class="post--content mb-3" style="font-size:30xp;">
                                     Có lỗi xảy ra, không thể đăng bài ngay lúc này!
                                 </p>
                                 <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
                             </div>`;
+
 
 //Show image after pick picture
 function previewImage(el) {
@@ -34,19 +34,6 @@ function showFull(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "flex";
 }
-
-
-var is_show = false;
-function showComment(element) {
-    var comment = $(element).parents("div.post").find("div.comment");
-    if(is_show) {
-        comment.css("display", "none");
-        is_show = false;
-    } else {
-        comment.css("display", "block");
-        is_show = true;
-    }
-};
 
 function customHashtag(element) {
     var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
@@ -170,27 +157,28 @@ function createStatus() {
 
 function deletePost(id, el) {
     event.preventDefault();
-    
-    var loadingHtml =   `   <div class="text-center mt-3 post-loading">
-                                            <div class="spinner-border text-muted"></div>
-                                        </div>
-                                    `; 
-    var clickedPost = $(el).parents('.post');
-    var clickedPostHtml = $(clickedPost).html();
-    
-    $(clickedPost).html(loadingHtml);
-    
-    $.ajax({
-            type: 'delete',
-            url: `${ctxPath}/api/delete-post/${id}`,
-            dataType: 'json',
-            success: function () {
-                $(clickedPost).remove();
-            }
-    })
-    .fail(function (){
-        $(clickedPost).html(clickedPostHtml);
-    });
+    if(confirm("Bạn có chắc chắn xóa bài viết này?") == true) {
+        var loadingHtml =   `   <div class="text-center mt-3 post-loading">
+                                                <div class="spinner-border text-muted"></div>
+                                            </div>
+                                        `; 
+        var clickedPost = $(el).parents('.post');
+        var clickedPostHtml = $(clickedPost).html();
+
+        $(clickedPost).html(loadingHtml);
+
+        $.ajax({
+                type: 'delete',
+                url: `${ctxPath}/api/delete-post/${id}`,
+                dataType: 'json',
+                success: function () {
+                    $(clickedPost).remove();
+                }
+        })
+        .fail(function (){
+            $(clickedPost).html(clickedPostHtml);
+        });
+    }
 }
 
 function editPost(id, el) {
