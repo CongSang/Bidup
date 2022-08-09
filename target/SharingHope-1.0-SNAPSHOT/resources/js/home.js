@@ -112,7 +112,7 @@ const loadFeeds = function loadFeeds(posts, currentUserId) {
                                                     Xóa bài viết
                                                 </a>
                                             </li>`  :    `<li>
-                                                            <a class="dropdown-item" href="#">
+                                                            <a class="dropdown-item" href="#" onclick="modalArticleReport(${post.id}, 'POST')">
                                                                 Báo cáo
                                                             </a>
                                                         </li>`

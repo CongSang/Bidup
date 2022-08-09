@@ -161,16 +161,22 @@ header {
     background-color: var(--light-gray-color);
 }
 
-.go-search {
-    font-size: 13px;
+.go-chat {
+    font-size: 18px;
     margin-bottom: 0;
+    color: #6c757d;
+}
+
+.chat--item:hover .go-chat,
+.chat--item:hover .chat-side {
+    color: var(--primary-color-100);
 }
 
 @media (max-width: 992px) {
     .chat-card {
         position: fixed;
         z-index: 1050;
-        width: 60vw;
+        width: 70vw;
         top: 0;
         right: 0;
         bottom: 0;
@@ -181,6 +187,10 @@ header {
 
     .sidebar-right {
         display: none;
+    }
+    
+    .display-none-mobile {
+        display: none !important;
     }
 }
 
@@ -306,4 +316,198 @@ header {
 .err-validate {
     font-size: 12px;
     margin-left: 4px;
+}
+
+/*chat box css*/
+#chat-box {
+    min-width: 328px;
+    min-height: 60vh; 
+    position: fixed;
+    bottom: 0;
+    right: 80px;
+    z-index: 1;
+    box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2),0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+    display: none;
+}
+
+.chat-box-header {
+    padding: 8px;
+    background-image: linear-gradient(180deg, #744ea6, #667eea);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white-color);
+}
+
+.chat-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-box--close {
+    font-size: 20px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.chat-box-message {
+    height: 360px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--light-gray-color);
+}
+
+.chat-box--send {
+    padding: 12px 8px;
+    align-items: flex-end;
+    background-color: var(--light-gray-color);
+    border-top: 1px solid #cccccc; 
+}
+
+.form-control.chat-input {
+    width: 100%;
+    font-size: 15px;
+    border-radius: 50px !important;
+}
+
+.btn-send {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #744ea6;
+    font-size: 18px;
+}
+
+.message-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 101%;
+    width: 100%;    
+}
+
+.messages {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    padding: 0 10px;
+}
+
+.message-chat {
+    clear: both;
+    padding: 6px 10px 7px;
+    margin: 8px 0 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.message-chat .avatar {
+    position: absolute;
+    object-fit: cover;
+    z-index: 1;
+    bottom: -15px;
+    left: -36px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.message-chat.message--left {
+    float: left;
+    padding: 6px 10px 7px;
+    border-radius: 20px 20px 20px 0;
+    background: #eee;
+    margin-left: 35px;
+}
+
+.message-chat.new {
+    transform: scale(0);
+    transform-origin: 0 0;
+    -webkit-animation: bounce 500ms linear both;
+    animation: bounce 500ms linear both;
+}
+
+.message-chat.message--right {
+    float: right;
+    text-align: right;
+    color: #fff;
+    background-color: #667eea;
+    border: 1px solid #667eea;
+    border-radius: 20px 20px 0 20px;
+}
+
+.send-time-left {
+    position: absolute;
+    bottom: -15px;
+    font-size: 10px;
+    color: #555;
+    left: 2px;
+}
+
+.send-time-right {
+    position: absolute;
+    bottom: -15px;
+    font-size: 10px;
+    color: #555;
+    right: 2px;
+}
+
+@keyframes bounce {
+  0% {
+    transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  4.7% {
+    transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  9.41% {
+    transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  14.11% {
+    transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  18.72% {
+    transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  24.32% {
+    transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  29.93% {
+    transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  35.54% {
+    transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  41.04% {
+    transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  52.15% {
+    transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  63.26% {
+    transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  85.49% {
+    transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  100% {
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
 }

@@ -45,9 +45,6 @@ function addBid(currentAuctionId, formEl, startPrice) {
                                                           ${formatMoney(data.money)}
                                                       </p>
                                                   </div>
-                                                    <div class="d-flex justify-content-end me-2 report-user">
-                                                        Báo cáo
-                                                    </div>
                                                 </div>
                                                 
                                           </div>`);

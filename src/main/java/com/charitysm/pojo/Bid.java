@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.findByMoney", query = "SELECT b FROM Bid b WHERE b.money = :money"),
     @NamedQuery(name = "Bid.findByMessage", query = "SELECT b FROM Bid b WHERE b.message = :message"),
     @NamedQuery(name = "Bid.findByBidDate", query = "SELECT b FROM Bid b WHERE b.bidDate = :bidDate"),
-    @NamedQuery(name = "Bid.findByIsWinner", query = "SELECT b FROM Bid b WHERE b.isWinner = :isWinner")})
+    @NamedQuery(name = "Bid.findByIsWinner", query = "SELECT b FROM Bid b WHERE b.isWinner = :isWinner"),
+    @NamedQuery(name = "Bid.findForUser", query = "SELECT b FROM Bid b WHERE b.bidPK.userId = :userId and b.bidPK.auctionId = :auctionId")})
 public class Bid implements Serializable {
 
     private static final long serialVersionUID = 1L;

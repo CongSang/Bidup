@@ -52,6 +52,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")})
 public class User implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<ReportAuction> reportAuctionSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<ReportPost> reportPostSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<ReportUser> reportUserSet;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -367,6 +377,33 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.User[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<ReportAuction> getReportAuctionSet() {
+        return reportAuctionSet;
+    }
+
+    public void setReportAuctionSet(Set<ReportAuction> reportAuctionSet) {
+        this.reportAuctionSet = reportAuctionSet;
+    }
+
+    @XmlTransient
+    public Set<ReportPost> getReportPostSet() {
+        return reportPostSet;
+    }
+
+    public void setReportPostSet(Set<ReportPost> reportPostSet) {
+        this.reportPostSet = reportPostSet;
+    }
+
+    @XmlTransient
+    public Set<ReportUser> getReportUserSet() {
+        return reportUserSet;
+    }
+
+    public void setReportUserSet(Set<ReportUser> reportUserSet) {
+        this.reportUserSet = reportUserSet;
     }
     
 }
