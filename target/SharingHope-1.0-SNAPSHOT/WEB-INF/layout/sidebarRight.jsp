@@ -12,21 +12,21 @@
             </div>
 
             <div class="card-body pb-3 px-0">
-                <div class="d-flex justify-content-between align-items-center mb-1 chat--item">
+                <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
                     <div class="d-flex align-items-center">
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img class="avatar-img rounded-circle me-2" src="${avatar}" alt="">
                         <p class="chat-side">Username</p>
                     </div>
-                    <i class="fa-solid fa-chevron-right go-search text-secondary"></i>
+                    <i class="fa-brands fa-facebook-messenger go-chat"></i>
                 </div>
-                <div class="d-flex justify-content-between align-items-center chat--item">
+                        <div class="d-flex justify-content-between align-items-center chat--item" onclick="openChatBox()">
                     <div class="d-flex align-items-center">
                         <c:url value="/resources/img/non-avatar.png" var="avatar" />
                         <img class="avatar-img rounded-circle me-2" src="${avatar}" alt="">
                         <p class="chat-side">Username</p>
                     </div>
-                    <i class="fa-solid fa-chevron-right go-search text-secondary"></i>
+                    <i class="fa-brands fa-facebook-messenger go-chat"></i>
                 </div>
             </div>
         </div>

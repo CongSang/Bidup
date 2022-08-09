@@ -16,7 +16,7 @@
         <script src="<c:url value="resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="resources/js/hashtag/jquery.autosize.js" />"></script>
         <script src="<c:url value="resources/js/notification.js" />"></script>
-        
+
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
         <c:url value="/resources/css/home.css" var="homeCss" />
@@ -58,13 +58,15 @@
         </div>
 
         <div id="go-to-top"><i class="fa-solid fa-angle-up"></i></div>
+            <tiles:insertAttribute name="chatbox" />
 
-         <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script>
-            window.onload = function() {
+            window.onload = function () {
                 getNotifs();
-                $('#userNotification').on("click", function (){
-                    $('.notif-count').css('opacity','0');
+                $('#userNotification').on("click", function () {
+                    $('.notif-count').css('opacity', '0');
                 });
             };
             $(window).scroll(function () {

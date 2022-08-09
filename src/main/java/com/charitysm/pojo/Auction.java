@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -47,6 +48,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active"),
     @NamedQuery(name = "Auction.findByMailTo", query = "SELECT a FROM Auction a WHERE a.mailTo = :mailTo")})
 public class Auction implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionId")
+    @JsonIgnore
+    private Set<ReportAuction> reportAuctionSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -213,6 +218,15 @@ public class Auction implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Auction[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<ReportAuction> getReportAuctionSet() {
+        return reportAuctionSet;
+    }
+
+    public void setReportAuctionSet(Set<ReportAuction> reportAuctionSet) {
+        this.reportAuctionSet = reportAuctionSet;
     }
     
 }

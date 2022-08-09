@@ -5,6 +5,10 @@
     height: 100%;
 }
 
+.load-stats {
+    cursor: pointer;
+}
+
 .leftside-menu {
     width: 260px;
     z-index: 10;

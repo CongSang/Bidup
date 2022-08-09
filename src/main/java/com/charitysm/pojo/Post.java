@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ADMIN
+ * @author CÔNG SANG
  */
 @Entity
 @Table(name = "post")
@@ -45,6 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByActive", query = "SELECT p FROM Post p WHERE p.active = :active"),
     @NamedQuery(name = "Post.findByHashtag", query = "SELECT p FROM Post p WHERE p.hashtag = :hashtag")})
 public class Post implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @JsonIgnore
+    private Set<ReportPost> reportPostSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -172,6 +176,15 @@ public class Post implements Serializable {
 
     public void setReactSet(Set<React> reactSet) {
         this.reactSet = reactSet;
+    }
+    
+    @XmlTransient
+    public Set<ReportPost> getReportPostSet() {
+        return reportPostSet;
+    }
+
+    public void setReportPostSet(Set<ReportPost> reportPostSet) {
+        this.reportPostSet = reportPostSet;
     }
 
     @Override

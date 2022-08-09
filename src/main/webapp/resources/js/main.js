@@ -7,7 +7,7 @@ $(function () {
         if (element.indexOf("SharingHope"))
             return element;
     });
-    
+
     switch (pathName) {
         case undefined:
             $('#homeMenu').addClass('active');
@@ -28,6 +28,8 @@ const close_chat = document.querySelector(".chat--close");
 //chat menu
 chat_menu.addEventListener("click", () => {
     sidebar_right.style.display = "block";
+    $('#navbarCollapse').removeClass('show');
+    $('.navbar-toggler').attr('aria-expanded', 'false');
 });
 
 close_chat.addEventListener("click", () => {
@@ -85,7 +87,7 @@ function modalEditPost(id, content, src, pojo) {
                             </div>
 
                             <div class="dropzone card shadow-none w-100">
-                                <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)" ${(src !== '') ? `style="opacity:0.6"`:``}>
+                                <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)" ${(src !== '') ? `style="opacity:0.6"` : ``}>
                                     <i class="fa-solid fa-xmark p-2"></i>
                                 </div>
                                 <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
@@ -128,10 +130,9 @@ function previewImage(el) {
         oFReader.onload = function (oFREvent) {
             document.querySelector("#uploadPreview").src = oFREvent.target.result;
         };
-        
+
         $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
-    }
-    else {
+    } else {
         oFReader.readAsDataURL(document.querySelector("#editImage").files[0]);
 
         oFReader.onload = function (oFREvent) {
@@ -139,4 +140,85 @@ function previewImage(el) {
         };
         $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0.6');
     }
-};
+}
+;
+
+function modalArticleReport(articleId, typeArticle) {
+    event.preventDefault();
+    const html = `<div class="modal modal-report-article open">
+                            <div class="modal-container" style="min-height: auto !important;">
+                                <div class="modal-header">
+                                    <h5 class="my-2">Báo cáo bài viết</h5>
+                                    <div class="modal--close modal--close-report-article" onclick="removeReportArticle()">
+                                        <i class="fa-solid fa-xmark p-2"></i>
+                                    </div>
+                                </div>
+    
+                                 <div class="modal-body ">
+                                <form>
+                                    <select class="form-control">
+                                        <option value="IMAGE">Ảnh bài viết không phù hợp</option>
+                                        <option value="CONTENT">Nội dung bài viết không phù hợp</option>
+                                        <option value="SPAM">Spam</option>
+                                    </select>
+
+                                    <button type="button" class="btn btn-danger mt-3 ml-auto" onclick="reportArticle(${articleId}, '${typeArticle}')">Gửi báo cáo</button>
+                                </form>
+                            </div>
+                            </div>
+                        </div>`;
+    $('.home-content').append(html);
+}
+;
+
+function removeReportArticle() {
+    $('.modal-report-article').remove();
+}
+
+function reportArticle(articleId, typeArticle) {
+    var reason = $('.modal-report-article').find(':selected').val();
+    console.log(typeArticle);
+    if (typeArticle === 'POST') {
+        $.ajax({
+            type: 'post',
+            url: `${ctxPath}/api/report-post`,
+            data: JSON.stringify({
+                'articleId': articleId,
+                'userId': "",
+                'reason': reason
+            }),
+            contentType: 'application/json',
+            success: function () {
+                swal("Báo cáo bài viết này thành công", {
+                    icon: "success"
+                });
+            }   
+        }).fail(function () {
+            swal("Có lỗi xảy ra!", {
+                icon: "error"
+            });
+        });
+    } else {
+        $.ajax({
+            type: 'post',
+            url: `${ctxPath}/api/report-auction`,
+            data: JSON.stringify({
+                'articleId': articleId,
+                'userId': "",
+                'reason': reason
+            }),
+            contentType: 'application/json',
+            success: function () {
+                swal("Báo cáo bài viết này thành công", {
+                    icon: "success"
+                });
+            }    
+        }).fail(function () {
+            swal("Có lỗi xảy ra!", {
+                icon: "error"
+            });
+        });
+    }
+
+    removeReportArticle();
+}

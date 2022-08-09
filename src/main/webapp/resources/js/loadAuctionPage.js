@@ -205,7 +205,6 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                                                 <i class="fa-solid fa-star me-1"></i>Chiến thắng
                                                             </div>
                                                         `}
-                                                        <div class="report-user">Báo cáo</div>
                                                     </div>
                                                 </div>
                                                 
@@ -247,7 +246,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="#" onclick="modalArticleReport(${auction.id}, 'AUCTION')">
                                                 Báo cáo
                                             </a>
                                         </li>

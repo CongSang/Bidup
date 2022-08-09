@@ -201,7 +201,6 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                                                 <i class="fa-solid fa-star me-1"></i>Chiến thắng
                                                             </div>
                                                         `}
-                                                        <div class="report-user">Báo cáo</div>
                                                     </div>
                                                 </div>
                                                 
@@ -243,7 +242,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="#" onclick="modalArticleReport(${auction.id}, 'AUCTION')">
                                                 Báo cáo
                                             </a>
                                         </li>
@@ -403,7 +402,7 @@ function loadPostFeeds(posts, currentUserId) {
                                                     Xóa bài viết
                                                 </a>
                                             </li>`  :    `<li>
-                                                            <a class="dropdown-item" href="#">
+                                                            <a class="dropdown-item" href="#" onclick="modalArticleReport(${post.id}, 'POST')">
                                                                 Báo cáo
                                                             </a>
                                                         </li>`
@@ -530,3 +529,36 @@ function loadPostFeeds(posts, currentUserId) {
                                                                     <p class="text-center">Chưa có bài viết nào</p>
                                                                 </div>`);
 };
+
+function closeReportUser () {
+    $('.modal-report-user').removeClass('open');
+}
+
+function openReportUser () {
+    $('.modal-report-user').addClass('open');
+}
+
+function reportUser(reportedUserId) {
+    var reason = $('.modal-report-user').find(':selected').val();
+    $.ajax({
+            type: 'post',
+            url: `${ctxPath}/api/report-user`,
+            data: JSON.stringify({
+                'articleId': "",
+                'userId': reportedUserId,
+                'reason': reason
+            }),
+            contentType: 'application/json',
+            success: function () {
+                swal("Báo cáo người dùng này thành công", {
+                    icon: "success"
+                });
+            }    
+        }).fail(function () {
+            swal("Có lỗi xảy ra!", {
+                icon: "error"
+            });
+        });
+        
+        closeReportUser();
+}

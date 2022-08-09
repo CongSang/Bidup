@@ -11,10 +11,19 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <form class="d-flex">
-                        <div class="input-group">
-                            <input type="date" class="form-control" style="width: 200px" id="dash-daterange">
+                        <div class="d-flex flex-column flex-lg-row">
+                            <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="dash-daterange">
+                                <c:forEach begin="1" end="12" var="i">
+                                    <option value="${i}">${i}</option>
+                                </c:forEach>
+                            </select>
+                            <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="dash-daterange">
+                                <c:forEach begin="2022" end="2022" var="i">
+                                    <option value="${i}">${i}</option>
+                                </c:forEach>
+                            </select>
                         </div>
-                        <span class="input-group-text bg-primary border-primary text-white ms-2">
+                        <span class="input-group-text bg-primary border-primary text-white mb-2">
                             <i class="fa-solid fa-rotate-right"></i>
                         </span>
                     </form>

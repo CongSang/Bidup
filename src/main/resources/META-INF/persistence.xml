@@ -15,11 +15,12 @@
     <class>com.charitysm.pojo.PostNotif_1</class>
     <class>com.charitysm.pojo.Bid_1</class>
     <class>com.charitysm.pojo.Comment_1</class>
-    <class>com.charitysm.pojo.Post_1</class>
     <class>com.charitysm.pojo.React_1</class>
     <class>com.charitysm.pojo.Auction_1</class>
     <class>com.charitysm.pojo.User_1</class>
     <class>com.charitysm.pojo.Post</class>
+    <class>com.charitysm.pojo.ReportUser</class>
+    <class>com.charitysm.pojo.ReportPost</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/csmdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

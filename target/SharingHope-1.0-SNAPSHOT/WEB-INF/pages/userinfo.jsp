@@ -60,7 +60,7 @@
                                         </div>
                                     </c:if>
                                     <c:if test="${userInfo.id != currentUser.id}">
-                                        <div class="btn-report-user">
+                                        <div class="btn-report-user" onclick="openReportUser()">
                                             <i class="fa-solid fa-flag me-2"></i>
                                             Báo cáo người dùng
                                         </div>
@@ -160,6 +160,28 @@
             </div>
         </div>
 
+        <div class="modal modal-report-user">
+            <div class="modal-container" style="min-height: auto !important;">
+                <div class="modal-header">
+                    <h5 class="my-2">Báo cáo người dùng</h5>
+                    <div class="modal--close modal--close-report-user" onclick="closeReportUser()">
+                        <i class="fa-solid fa-xmark p-2"></i>
+                    </div>
+                </div>
+
+                <div class="modal-body ">
+                    <form>
+                        <select class="form-control">
+                            <option value="PAY">Đấu giá nhưng không thanh toán</option>
+                            <option value="WORDS">Dùng từ ngữ không đúng đắn</option>
+                        </select>
+
+                        <button type="button" class="btn btn-danger mt-3 ml-auto" onclick="reportUser('${userInfo.id}')">Gửi báo cáo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="send-email-loading">
             <div class="spinner-border text-light"></div>
             <p class="ms-3 mb-0">Đang gửi email...</p>
@@ -174,35 +196,35 @@
         <script>
             <c:url value="/api/user/${userInfo.id}/auctions" var="endpoint1" />
             <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />
-            
-            window.onload = function (){
-                getNotifs();
-            };
-                
-            $(function () {
-                if ($('#userAuction').hasClass('active')) {
-                    loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
-                } else {
-                    loadUserPosts('${endpoint2}', '${currentUser.getId()}');
-                }
-            });
 
-            function menu(element) {
-                if ($(element).hasClass('active')) {
-                    return;
-                } else {
-                    $(element).parents('.user-menu').find('.user-menu--item.active').removeClass('active');
-                    $(element).addClass('active');
-                    if ($(element).hasClass('userAuction')) {
-                        $('.user-content-container').html('');
-                        loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
-                    }
-                    if ($(element).hasClass('userPost')) {
-                        $('.user-content-container').html('');
-                        loadUserPosts('${endpoint2}', '${currentUser.getId()}');
-                    }
-                }
-            }
+                            window.onload = function () {
+                                getNotifs();
+                            };
+
+                            $(function () {
+                                if ($('#userAuction').hasClass('active')) {
+                                    loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                                } else {
+                                    loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                                }
+                            });
+
+                            function menu(element) {
+                                if ($(element).hasClass('active')) {
+                                    return;
+                                } else {
+                                    $(element).parents('.user-menu').find('.user-menu--item.active').removeClass('active');
+                                    $(element).addClass('active');
+                                    if ($(element).hasClass('userAuction')) {
+                                        $('.user-content-container').html('');
+                                        loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                                    }
+                                    if ($(element).hasClass('userPost')) {
+                                        $('.user-content-container').html('');
+                                        loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                                    }
+                                }
+                            }
         </script>
     </body>
 </html>

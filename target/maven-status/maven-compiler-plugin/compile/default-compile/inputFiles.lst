@@ -4,6 +4,7 @@ C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\chari
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\NotificationService.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\UserRepositoryImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\APINotificationController.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\ReportServiceImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\APILoginFbController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\CommentRepositoryImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\BidPK.java
@@ -20,6 +21,7 @@ C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\chari
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\CommentService.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\ReactRepository.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\BidRequest.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiReportController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\BidRepository.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\NotificationServiceImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\NotificationCenter.java
@@ -30,13 +32,17 @@ C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\chari
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\ReactService.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\PostService.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\BidRepositoryImpl.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\ReportService.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\enumtype\ReportType.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiAuctionController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\User.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\handlers\LoginSuccessHandler.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\NotificationRepositoryImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\UserInfoController.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportAuction.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\SecurityWebApplicationInit.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\SecurityConfig.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\ReportRepositoryImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiPostController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\WebAppContextConfig.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\DispatcherServletInit.java
@@ -58,7 +64,11 @@ C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\chari
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiUserController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\LoginController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\PostRepositoryImpl.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\ReportRequest.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\ReportRepository.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\PostRequest.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportUser.java
+C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportPost.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\AuctionController.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\BidServiceImpl.java
 C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\CommentServiceImpl.java
