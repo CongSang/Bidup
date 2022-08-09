@@ -32,7 +32,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
     
-     <definition name="auction" extends="baseLayout">
+    <definition name="auction" extends="baseLayout">
         <put-attribute name="title" value="Đấu giá" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/auction.jsp" />
@@ -48,8 +48,23 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
         
-    <definition name="admin" template="/WEB-INF/pages/admin.jsp">
-        <put-attribute name="title" value="Quản trị" />
+    <!--base admin-->
+    <definition name="admin" template="/WEB-INF/layout/admin.jsp">
+        <put-attribute name="header"
+                       value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="title" value="" />
+    </definition>
+    
+    <definition name="adminChart" extends="admin">
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/adminChart.jsp" />
+        <put-attribute name="title" value="Thống kê" />
+    </definition>
+    <definition name="adminReport" extends="admin">
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/adminReport.jsp" />
+        <put-attribute name="title" value="Báo cáo" />
     </definition>
 </tiles-definitions>
 

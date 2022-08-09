@@ -17,6 +17,11 @@ public class AdminController {
     
     @GetMapping("/admin")
     public String admin(Model model) {
-        return "admin";
+        return "adminChart";
+    }
+    
+    @GetMapping("/admin/report")
+    public String adminReport(Model model) {
+        return "adminReport";
     }
 }

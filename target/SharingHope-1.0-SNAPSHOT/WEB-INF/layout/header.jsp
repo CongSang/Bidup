@@ -68,13 +68,21 @@
                     </c:if>
 
                     <li class="d-lg-none d-block nav-item px-2">
-                        <a class="nav-link" href="#" id="notifyMenu">
+                        <a class="nav-link position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="notifyMenu">
                             <i class="fa-solid fa-bell menu-icon"></i>
+                            Thông báo
+                            <span class="notif-count" style="top: 2px; left: 6px;"></span>
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-end me-3 notifContainer" aria-labelledby="notifyMenu">
+                            <li  class="dropdown-item d-flex justify-content-center
+                                 align-items-center notif-loading text-center">
+                                <div class="spinner-border text-muted loadingNotif"></div>
+                            </li>
+                        </ul>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
-                            
+
                             <c:url value="/resources/img/non-avatar.png" var="avatar" />
                             <img src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img me-2" />
                             ${sessionScope.currentUser.getFirstname()}
@@ -101,14 +109,14 @@
 
             <div class="d-lg-flex d-none flex-nowrap align-items-center ms-4">
                 <div class="dropdown">
-                    <a href="#" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell notify-icon"></i>
-                        <span class="me-4 notif-count"></span>
+                    <a href="#" class="position-relative" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bell notify-icon me-4"></i>
+                        <span class="notif-count"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" id="notifContainer" aria-labelledby="cardFeedAction">
-                        <li  class="dropdown-item d-flex justify-content-center 
-                                align-items-center notif-loading text-center">
-                            <div class="spinner-border text-muted" id="loadingNotif"></div>
+                    <ul class="dropdown-menu dropdown-menu-end me-3 notifContainer" id="notifContainer" aria-labelledby="cardFeedAction">
+                        <li  class="dropdown-item d-flex justify-content-center
+                             align-items-center notif-loading text-center">
+                            <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                         </li>
                     </ul>
                 </div>

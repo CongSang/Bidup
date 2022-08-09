@@ -1,6 +1,6 @@
 
 function getNotifs() {
-    var container = $('#notifContainer');
+    var container = $('.notifContainer');
     var counter = $('.notif-count');
     $.ajax({
         type: 'get',
@@ -16,24 +16,30 @@ function getNotifs() {
                     count++;
             });
             if (count > 0) {
-                $('.notif-count').css('opacity','0.5');
+                $('.notif-count').css('opacity','1');
                 counter.text(count);
             }
                 
             $.each(data, function(index, post){
-                var li = `  <li  class="dropdown-item d-flex justify-content-center 
-                                align-items-center notif-loading text-center">
-                            <div class="notif-item" onclick="toPost(${post.postId})">
-                                <img class="user-img" src="${post.last_modified_avatar}" alt="image">
-                                <div class="notif-item--message"><span class="card-title mb-0">${post.count > 1 ? `${post.last_modified_name} và ${post.count - 1} người khác`: `${post.last_modified_name}`}</span> đã ${post.type === 'REACT_POST' ? `thích`:`bình luận về`} vài viết của bạn</div>
-                                <div class="notif-dot" ${post.is_read === true ? `style="display:none;"`:``}><i class="fa fa-circle" aria-hidden="true"></i></div>
-                                <span class="notif-time">${moment(post.last_modified).fromNow()}</span>
-                            </div>
-                        </li>`;
+                var li = `  <li  class="dropdown-item d-flex align-items-center notif-loading w-100 ${post.is_read && `is-read-notify`}">
+                                    <div class="notif-item" onclick="toPost(${post.postId})">
+                                        <img class="user-img" src="${post.last_modified_avatar}" alt="image">
+                                        <div class="notif-item--message">
+                                            <span class="mb-1 message">  
+                                                ${post.count > 1 ? `<strong>${post.last_modified_name}</strong> và ${post.count - 1} người khác`: 
+                                                `<strong>${post.last_modified_name}</strong>`} đã ${post.type === 'REACT_POST' ? `thích`:`bình luận về`} vài viết của bạn
+                                            </span>
+                                            <span class="notif-time ${post.is_read && `is-read-notify`}">${moment(post.last_modified).fromNow()}</span>
+                                        </div>
+                                        <div class="notif-dot" ${post.is_read && `style="display:none;"`}>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </li>`;
                 container.append(li);
             });
             
-            $('#loadingNotif').css('display', 'none');
+            $('.loadingNotif').css('display', 'none');
             
         }
     });
