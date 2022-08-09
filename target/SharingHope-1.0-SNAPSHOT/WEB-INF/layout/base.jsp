@@ -13,9 +13,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/locale/vi.min.js" integrity="sha512-KFhB7C5HhK+ySzLQNJveDmB1h8qlsd51JX0p5o/PwL4EPdbj+TlhdVENbR9SFn+sz2sX30M4nqchhtPmz/wtiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="<c:url value="resources/js/hashtag/jquery.hashtags.js" />"></script>
-        <script src="<c:url value="resources/js/hashtag/jquery.autosize.js" />"></script>
-        <script src="<c:url value="resources/js/notification.js" />"></script>
+        <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
+        <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
+        <script src="<c:url value="/resources/js/notification.js" />"></script>
         
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -62,6 +62,7 @@
          <script src="<c:url value="/resources/js/main.js" />"></script>
         <script>
             window.onload = function() {
+                currentUserId = '${sessionScope.currentUser.id}';
                 getNotifs();
                 $('#userNotification').on("click", function (){
                     $('.notif-count').css('opacity','0');

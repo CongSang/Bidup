@@ -1,3 +1,7 @@
+
+var ctxPath = '/SharingHope';
+var currentUserId;
+
 const isBlank = function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 };
@@ -21,18 +25,19 @@ $(function () {
     }
 });
 
-const chat_menu = document.querySelector("#chatMenu");
 const sidebar_right = document.querySelector(".sidebar-right");
-const close_chat = document.querySelector(".chat--close");
-
-//chat menu
-chat_menu.addEventListener("click", () => {
-    sidebar_right.style.display = "block";
-});
-
-close_chat.addEventListener("click", () => {
-    sidebar_right.style.display = "none";
-});
+//const chat_menu = document.querySelector("#chatMenu");
+//
+//const close_chat = document.querySelector(".chat--close");
+//
+////chat menu
+//chat_menu.addEventListener("click", () => {
+//    sidebar_right.style.display = "block";
+//});
+//
+//close_chat.addEventListener("click", () => {
+//    sidebar_right.style.display = "none";
+//});
 
 function loadSideBarLeft() {
     const path = '/SharingHope/';

@@ -1,3 +1,5 @@
+var is_show = false;
+var commentPage = 1;
 
 function addComment(currentPostId, formEl) {
     event.preventDefault();
@@ -103,4 +105,99 @@ function deleteComment(id, el) {
     .fail(function (){
         $(clickedComment).html(clickedCommentHtml);
     });
+}
+
+function showComment(element, postId) {
+    commentPage = 1;
+    var comment = $(element).parents("div.post").find("div.comment");
+    
+    $(comment).find('#commentedComment').empty();
+    
+    $(comment).find('.comment-loading').css("display", "block");
+    if(is_show) {
+        comment.css("display", "none");
+        is_show = false;
+    } else {
+        comment.css("display", "block");
+        
+        $.ajax({
+            type: 'get',
+            url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
+            dataType: 'json',
+            success: function (data) {
+                $(comment).find('.comment-loading').css("display", "none");
+                loadComment(data, $(comment));
+                is_show = true;
+            }
+        })
+        .fail(function (){
+            comment.css("display", "none");
+            is_show = false;
+        });
+    }
+}
+
+function loadComment(comments, el) {
+    var commentedComment = $(el).find('#commentedComment');
+    let userComment = comments.filter(c => c.userId.id === currentUserId);
+    userComment.sort(function (a, b) {
+        return new Date(b.commentDate) - new Date(a.commentDate);
+    });
+    let othersComment = comments.filter(c => c.userId.id !== currentUserId);
+    othersComment.sort(function (a, b) {
+        return new Date(b.commentDate) - new Date(a.commentDate);
+    });
+    
+    $(commentedComment).append(`${(userComment).map((comment, index) => {
+            return `
+              <div class="d-flex comment--item py-2">
+                    <div class="me-2">
+                        <a href="${ctxPath}/user/${comment.userId.id}">
+                            <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                        </a>
+                    </div>
+                    <div class="comment--item-content">
+                      <div class="bg-light comment-content">
+                          <div class="d-flex justify-content-start">
+                              <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                              <small>${moment(comment.commentDate).fromNow()}</small>
+                          </div>
+                          <p class="small mb-0">
+                              ${comment.content}
+                          </p>
+                      </div>
+                        <div class="d-flex justify-content-end me-2">
+                            <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
+                        </div>
+                    </div>
+
+              </div>`;
+    }).join('')}`);
+    
+    $(commentedComment).append(`${(othersComment).map((comment, index) => {
+        return `
+            <div class="d-flex comment--item py-2">
+                <div class="me-2">
+                    <a href="${ctxPath}/user/${comment.userId.id}">
+                        <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                    </a>
+                </div>
+                <div class="comment--item-content">
+                    <div class="bg-light comment-content">
+                        <div class="d-flex justify-content-start">
+                            <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
+                            <small>${moment(comment.commentDate).fromNow()}</small>
+                        </div>
+                        <p class="small mb-0">
+                            ${comment.content}
+                        </p>
+                    </div>
+                      <div class="d-flex justify-content-end me-2">
+                          <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
+                      </div>
+                  </div>
+
+            </div>`;
+        }).join('')}`);
+
 }

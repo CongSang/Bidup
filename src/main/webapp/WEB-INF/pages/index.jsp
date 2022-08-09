@@ -85,9 +85,9 @@
 </div>
 
 
-<script src="<c:url value="/resources/js/home.js" />"></script>
 <script src="<c:url value="/resources/js/post.js" />"></script>
 <script src="<c:url value="/resources/js/comment.js" />"></script>
+<script src="<c:url value="/resources/js/home.js" />"></script>
 <script>
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
