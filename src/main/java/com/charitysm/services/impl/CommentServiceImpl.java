@@ -7,6 +7,7 @@ package com.charitysm.services.impl;
 import com.charitysm.pojo.Comment;
 import com.charitysm.repositories.CommentRepository;
 import com.charitysm.services.CommentService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,11 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void deleteComment(int id) {
         this.commentRepository.deleteComment(id);
+    }
+
+    @Override
+    public List<Comment> getComments(int postId, int page) {
+        return this.commentRepository.getComments(postId, page);
     }
     
 }

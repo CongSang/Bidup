@@ -21,6 +21,7 @@ com\charitysm\services\impl\AuctionServiceImpl.class
 com\charitysm\configs\HibernateConfig.class
 com\charitysm\utils\RestFB.class
 com\charitysm\pojo\PostNotif_.class
+com\charitysm\controllers\PostController.class
 com\charitysm\pojo\ReportAuction_.class
 com\charitysm\repositories\impl\ReactRepositoryImpl.class
 com\charitysm\handlers\LoginSuccessHandler.class

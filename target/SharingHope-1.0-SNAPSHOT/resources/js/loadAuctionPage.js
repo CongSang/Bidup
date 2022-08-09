@@ -197,11 +197,11 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                                   </div>
                                                     <div class="d-flex justify-content-end me-2">
                                                         ${bid.isWinner ? `
-                                                            <div class="winner-user${bid.user.id} winner-user me-3 is-winner" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
+                                                            <div class="winner-user${bid.user.id} winner-user me-1 is-winner" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
                                                                 <i class="fa-solid fa-star me-1"></i>Chiến thắng
                                                             </div>
                                                         ` : `
-                                                            <div class="winner-user${bid.user.id} winner-user me-3" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
+                                                            <div class="winner-user${bid.user.id} winner-user me-1" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
                                                                 <i class="fa-solid fa-star me-1"></i>Chiến thắng
                                                             </div>
                                                         `}
@@ -317,9 +317,6 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                                           ${formatMoney(userAuction[0].money)}
                                                       </p>
                                                   </div>
-                                                    <div class="d-flex justify-content-end me-2 report-user">
-                                                        Báo cáo
-                                                    </div>
                                                 </div>
                                                 
                                           </div>

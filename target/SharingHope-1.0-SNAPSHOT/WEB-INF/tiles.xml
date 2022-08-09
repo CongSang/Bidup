@@ -29,7 +29,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     </definition>
     
     <definition name="home" extends="baseLayout">
-        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="title" value="Sharing Hope" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
@@ -67,6 +67,13 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" 
                        value="/WEB-INF/pages/adminReport.jsp" />
         <put-attribute name="title" value="Báo cáo" />
+    </definition>
+    <definition name="post" extends="baseLayout">
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/post.jsp" />
+        <put-attribute name="title" value="Sharing Hope" />
+        <put-attribute name="sidebarLeft" 
+                       value="" />
     </definition>
 </tiles-definitions>
 

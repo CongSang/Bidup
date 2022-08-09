@@ -70,6 +70,14 @@ public class ApiPostController {
     }
     
     @Async
+    @GetMapping("/get-comments")
+    public ResponseEntity<List<Comment>> getComments(@RequestParam("page") int page,
+            @RequestParam("postId") int postId) {
+        
+        return new ResponseEntity<>(this.commentService.getComments(postId, page), HttpStatus.OK);
+    }
+    
+    @Async
     @PostMapping("/create-comment")
     public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c, HttpSession session) {
         Comment comm = new Comment();
@@ -211,6 +219,5 @@ public class ApiPostController {
         }
         
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        
     }
 }
