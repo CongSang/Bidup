@@ -64,8 +64,10 @@
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/notification.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
+        <script src="<c:url value="/resources/js/search.js" />"></script>
         <script>
             window.onload = function() {
+                disableLoadMorePost = false;
                 currentUserId = '${sessionScope.currentUser.id}';
                 getNotifs();
                 $('#userNotification').on("click", function () {

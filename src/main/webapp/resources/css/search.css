@@ -9,19 +9,16 @@
     align-items: stretch;
     flex-direction: column;
     font-family: "Gill Sans Extrabold", sans-serif;
+    text-align: center;
+    white-space: pre-wrap;
+    max-width: 100%;
 }
 
 .hashtag-name-container{
-    text-align: center;
-    white-space: pre-wrap;
     font-size: 2rem;
     font-weight: bold;
-    max-width: 100%;
 }
 
 .hashtag-name-container-desciption{
-    text-align: center;
-    white-space: pre-wrap;
     font-size: 1rem;
-    max-width: 100%;
 }

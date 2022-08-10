@@ -147,4 +147,3 @@
         </div>
     </nav>
 </header>
-<script src="<c:url value="/resources/js/header.js" />"></script>
