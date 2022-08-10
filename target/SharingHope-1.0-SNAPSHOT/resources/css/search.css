@@ -1,0 +1,27 @@
+.hashtag-header {
+    margin-top: 4rem;
+    background-color: #fff;
+    height: 10rem;
+    justify-content: center;
+    padding-top: 3rem;
+    display: flex;
+    position: relative;
+    align-items: stretch;
+    flex-direction: column;
+    font-family: "Gill Sans Extrabold", sans-serif;
+}
+
+.hashtag-name-container{
+    text-align: center;
+    white-space: pre-wrap;
+    font-size: 2rem;
+    font-weight: bold;
+    max-width: 100%;
+}
+
+.hashtag-name-container-desciption{
+    text-align: center;
+    white-space: pre-wrap;
+    font-size: 1rem;
+    max-width: 100%;
+}

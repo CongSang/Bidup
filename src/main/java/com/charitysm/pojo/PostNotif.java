@@ -48,7 +48,7 @@ public class PostNotif implements Serializable {
     private String type;
     @Type(type = "org.hibernate.type.NumericBooleanType")
     @Column(name = "is_read", columnDefinition = "TINYINT")
-    private Short isRead;
+    private Boolean isRead;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Post postId;
@@ -84,13 +84,6 @@ public class PostNotif implements Serializable {
         this.type = type;
     }
 
-    public Short getIsRead() {
-        return isRead;
-    }
-
-    public void setIsRead(Short isRead) {
-        this.isRead = isRead;
-    }
 
     public Post getPostId() {
         return postId;
@@ -131,6 +124,20 @@ public class PostNotif implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.PostNotif[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the isRead
+     */
+    public Boolean getIsRead() {
+        return isRead;
+    }
+
+    /**
+     * @param isRead the isRead to set
+     */
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
     }
     
 }

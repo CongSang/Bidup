@@ -24,6 +24,7 @@
         <link href="${homeCss}" rel="stylesheet" />
         <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
         <link href="<c:url value="/resources/css/auction.css" />" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/search.css"/>" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -40,7 +41,8 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
         <div class="main">
             <tiles:insertAttribute name="header" />
-            <div class="container content">
+            <tiles:insertAttribute name="singleContent"/>
+                <div class="container content">
                 <div class="row g-3">
                     <div class="d-lg-block d-none col-lg-3">
                         <tiles:insertAttribute name="sidebarLeft" />

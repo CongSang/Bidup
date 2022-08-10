@@ -6,6 +6,7 @@ package com.charitysm.controllers;
 
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.enumtype.NotifType;
+import com.charitysm.services.NotificationService;
 import com.charitysm.services.PostService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PostController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private NotificationService notificationService;
     
     @GetMapping("/{postId}")
     public String getPost(@RequestParam Map<String, String> params,
@@ -32,14 +35,18 @@ public class PostController {
         //load post theo follow
 //        User currentUser = (User)session.getAttribute("currentUser");
 //        String userId = currentUser.getId();
-        String t = params.get("notif_type");
-        String nId = params.get("notif_id");
-        if (t != null && nId != null) {
-            NotifType type = NotifType.valueOf(t);
-            int notifId = Integer.parseInt(nId);
+        if (params.get("ref").equals("notif")) {
+            String t = params.get("notif_type");
+            String nId = params.get("notif_id");
+            if (t != null && nId != null) {
+                NotifType type = NotifType.valueOf(t);
+                System.out.println(type);
+                int notifId = Integer.parseInt(nId);
+                this.notificationService.readNotif(notifId, type);
+            }
         }
         Post p = this.postService.getPostById(postId);
         model.addAttribute("post", p);
-        return "post";
+        return "postPage";
     }
 }

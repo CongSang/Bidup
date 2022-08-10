@@ -7,6 +7,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="" />
         <put-attribute name="header"
                        value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="singleContent" value="" />
         <put-attribute name="content" value="" />
         <put-attribute name="sidebarLeft" 
                        value="/WEB-INF/layout/sidebarLeft.jsp" />
@@ -68,11 +69,22 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/adminReport.jsp" />
         <put-attribute name="title" value="Báo cáo" />
     </definition>
-    <definition name="post" extends="baseLayout">
+    <definition name="postPage" extends="baseLayout">
         <put-attribute name="content" 
                        value="/WEB-INF/pages/post.jsp" />
         <put-attribute name="title" value="Sharing Hope" />
         <put-attribute name="sidebarLeft" 
+                       value="" />
+    </definition>
+    <definition name="hashtagPage" extends="home">
+        <put-attribute name="singleContent" 
+                       value="/WEB-INF/pages/hashtag.jsp" />
+        <put-attribute name="content" 
+                       value="" />
+        <put-attribute name="title" value="Sharing Hope" />
+        <put-attribute name="sidebarLeft" 
+                       value="" />
+        <put-attribute name="sidebarRight" 
                        value="" />
     </definition>
 </tiles-definitions>

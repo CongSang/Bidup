@@ -6,11 +6,11 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-09T23:56:37")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-10T13:52:33")
 @StaticMetamodel(PostNotif.class)
 public class PostNotif_ { 
 
-    public static volatile SingularAttribute<PostNotif, Short> isRead;
+    public static volatile SingularAttribute<PostNotif, Boolean> isRead;
     public static volatile SingularAttribute<PostNotif, Integer> id;
     public static volatile SingularAttribute<PostNotif, Post> postId;
     public static volatile SingularAttribute<PostNotif, String> type;

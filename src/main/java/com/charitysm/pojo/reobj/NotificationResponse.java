@@ -22,6 +22,7 @@ public class NotificationResponse {
     private String last_modified_name;
     private String last_modified_avatar;
     private Date last_modified;
+    private int notifId;
     
     public NotificationResponse() {
     }
@@ -123,5 +124,19 @@ public class NotificationResponse {
     public void setLast_modified(Date last_modified) {
         this.last_modified = last_modified;
     }
-    
+
+    /**
+     * @return the notifId
+     */
+    public int getNotifId() {
+        return notifId;
+    }
+
+    /**
+     * @param notifId the notifId to set
+     */
+    public void setNotifId(int notifId) {
+        this.notifId = notifId;
+    }
+
 }

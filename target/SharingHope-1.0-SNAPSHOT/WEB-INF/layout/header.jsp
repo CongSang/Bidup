@@ -26,8 +26,8 @@
             <div class="navbar-collapse collapse" id="navbarCollapse">
                 <div class="nav my-3 my-lg-0 flex-nowrap align-items-center px-2 px-lg-0">
                     <div class="nav-item w-100">
-                        <form class="form-search position-relative">
-                            <input class="form-control ps-5 bg-light w-100" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <form class="form-search position-relative" action="javascript:;" onsubmit="searchSubmit()">
+                            <input class="form-control ps-5 bg-light w-100" name="kw" type="search" placeholder="Tìm kiếm" aria-label="Search">
                             <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit">
                                 <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                             </button>
@@ -147,3 +147,4 @@
         </div>
     </nav>
 </header>
+<script src="<c:url value="/resources/js/header.js" />"></script>
