@@ -22,8 +22,8 @@ public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
 
     @Override
-    public List<Post> getPosts(Map<String, String> params, int page) {
-        return this.postRepository.getPosts(params, page);
+    public List<Post> getPosts(Map<String, String> params) {
+        return this.postRepository.getPosts(params);
     }
 
     @Override

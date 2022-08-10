@@ -354,16 +354,6 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
 function loadPostFeeds(posts, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     (posts.length > 0) ? $.each(posts, function (index, post) {
-        let userComment = post.commentSet.filter(c => c.userId.id === currentUserId);
-        userComment.sort(function (a, b) {
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
-            return new Date(b.commentDate) - new Date(a.commentDate);
-        });
-        let othersComment = post.commentSet.filter(c => c.userId.id !== currentUserId);
-        othersComment.sort(function (a, b) {
-            return new Date(b.commentDate) - new Date(a.commentDate);
-        });
 
         var html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
@@ -440,9 +430,9 @@ function loadPostFeeds(posts, currentUserId) {
                                 </div>
                             </div>
                             <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover" onclick="showComment(this)">
+                                <div class="post--action-hover" onclick="showComment(this, ${post.id})">
                                     <i class="fa-regular fa-message post--action-icon"></i>
-                                    <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">${post.commentSet.length}</span>)</span>
+                                    <span class="post--action-text ms-2">Bình luận</span>
                                 </div>
                             </div>
                         </div>
@@ -463,57 +453,7 @@ function loadPostFeeds(posts, currentUserId) {
                                 <div class="spinner-border text-muted"></div>
                             </div>
                             <div id="commentedComment" class="flex">
-                                ${(userComment).map((comment, index) => {
-                                        return `
-                                          <div class="d-flex comment--item py-2">
-                                                <div class="me-2">
-                                                    <a href="${ctxPath}/user/${comment.userId.id}">
-                                                        <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="comment--item-content">
-                                                  <div class="bg-light comment-content">
-                                                      <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
-                                                          <small>${moment(comment.commentDate).fromNow()}</small>
-                                                      </div>
-                                                      <p class="small mb-0">
-                                                          ${comment.content}
-                                                      </p>
-                                                  </div>
-                                                    <div class="d-flex justify-content-end me-2">
-                                                        <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
-                                                    </div>
-                                                </div>
-                                                
-                                          </div>`;
-                                }).join('')}
                                 
-                                ${(othersComment).map((comment, index) => {
-                                     return `
-                                          <div class="d-flex comment--item py-2">
-                                              <div class="me-2">
-                                                  <a href="${ctxPath}/user/${comment.userId.id}">
-                                                      <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
-                                                  </a>
-                                              </div>
-                                              <div class="comment--item-content">
-                                                  <div class="bg-light comment-content">
-                                                      <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}</a></h6>
-                                                          <small>${moment(comment.commentDate).fromNow()}</small>
-                                                      </div>
-                                                      <p class="small mb-0">
-                                                          ${comment.content}
-                                                      </p>
-                                                  </div>
-                                                    <div class="d-flex justify-content-end me-2">
-                                                        <div class="comment-delete" onclick="deleteComment(${comment.id}, this)">Xóa</div>
-                                                    </div>
-                                                </div>
-                                                
-                                          </div>`;
-                                }).join('')}
                             </div>
                             
                         </div>

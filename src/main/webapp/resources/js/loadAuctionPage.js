@@ -347,3 +347,4 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
         customHashtag(`.auction-${auction.id}`);
     });
 }
+

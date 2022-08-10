@@ -76,7 +76,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="sidebarLeft" 
                        value="" />
     </definition>
-    <definition name="hashtagPage" extends="home">
+    <definition name="hashtagPage" extends="baseLayout">
         <put-attribute name="singleContent" 
                        value="/WEB-INF/pages/hashtag.jsp" />
         <put-attribute name="content" 
@@ -85,6 +85,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="sidebarLeft" 
                        value="" />
         <put-attribute name="sidebarRight" 
+                       value="" />
+    </definition>
+    
+    <definition name="searchPage" extends="baseLayout">
+        <put-attribute name="singleContent" 
+                       value="/WEB-INF/pages/search.jsp" />
+        <put-attribute name="content" 
+                       value="" />
+        <put-attribute name="title" value="Sharing Hope" />
+        <put-attribute name="sidebarLeft" 
+                       value="" />
+        <put-attribute name="sidebarRight" 
+                       value="" />
+        <put-attribute name="footer"
                        value="" />
     </definition>
 </tiles-definitions>

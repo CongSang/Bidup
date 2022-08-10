@@ -122,7 +122,15 @@
 </div>
 <script src="<c:url value="/resources/js/comment.js" />"></script>
 <script src="<c:url value="/resources/js/post.js" />"></script>
+<script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
+    window.onload = function() {
+        currentUserId = '${sessionScope.currentUser.id}';
+        getNotifs();
+        $('#userNotification').on("click", function () {
+            $('.notif-count').css('opacity', '0');
+        });
+    };
     $(function () {
         $('.sidebar-right').hide();
     });

@@ -38,7 +38,7 @@ public class PostRepositoryImpl implements PostRepository {
     private Environment env;
 
     @Override
-    public List<Post> getPosts(Map<String, String> params, int page) {
+    public List<Post> getPosts(Map<String, String> params) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Post> q = b.createQuery(Post.class);
@@ -47,9 +47,9 @@ public class PostRepositoryImpl implements PostRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            String hashtagKw = params.get("kw");
+            String hashtagKw = params.get("hashtag");
             if (hashtagKw != null && !hashtagKw.isEmpty()) {
-                Predicate p = b.like(root.get("hashtag").as(String.class), String.format("%%%s%%", hashtagKw));
+                Predicate p = b.equal(root.get("hashtag").as(String.class), "#" +hashtagKw);
                 predicates.add(p);
             }
 
@@ -59,6 +59,7 @@ public class PostRepositoryImpl implements PostRepository {
         q.orderBy(b.desc(root.get("postedDate")));
 
         Query query = session.createQuery(q);
+        int page = Integer.parseInt(params.get("page"));
         if (page > 0) {
             int size = Integer.parseInt(env.getProperty("page.size").toString());
             int start = (page - 1) * size;

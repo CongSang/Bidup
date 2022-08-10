@@ -13,7 +13,7 @@ import java.util.Map;
  * @author ADMIN
  */
 public interface PostService {
-    List<Post> getPosts(Map<String, String> params, int page);
+    List<Post> getPosts(Map<String, String> params);
     int countPosts();
     Post getPostById(int id);
     int createPost(Post p);
