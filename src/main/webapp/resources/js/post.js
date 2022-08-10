@@ -8,6 +8,9 @@ var errorHtml =  `<div class="text-center mt-3 post-loading">
                             </div>`;
 
 
+
+
+
 //Show image after pick picture
 function previewImage(el) {
     var oFReader = new FileReader();
@@ -33,17 +36,6 @@ function previewImage(el) {
 function showFull(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "flex";
-}
-
-function customHashtag(element) {
-    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
-    var str_content_origin = $(element).text();
-    var str_content = str_content_origin.match(rgxp);
-    $.each(str_content, function(index, v){
-        var hashtag = v.trim();
-        var repl = `<span class="tag">${v}</span>`;
-        $(element).html($(element).html().replace(hashtag, repl));
-    });
 }
 
 function findHashtags(searchText) {

@@ -8,13 +8,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="hashtag-header">
     <div class="hashtag-name-container">#${hashtag}</div>
-    <div class="hashtag-name-container-desciption">3.5N bai viet voi hash tag nay</div>
+    <div class="hashtag-name-container-desciption"></div>
 </div>
-<div class="home-content">
+<div class="home-content row justify-content-center">
     <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
         <div class="spinner-border text-muted"></div>
     </div>
-    <div id="feeds-container">
+    <div id="feeds-container" class="col-md-6">
 
     </div>
 
@@ -22,7 +22,21 @@
         <div class="spinner-border text-muted"></div>
     </div>
 </div>
+<script src="<c:url value="/resources/js/feeds.js" />"></script>
+<script src="<c:url value="/resources/js/comment.js" />"></script>
+<script src="<c:url value="/resources/js/main.js" />"></script>
+<script src="<c:url value="/resources/js/post.js" />"></script>
 <script>
-    hashTagSearch('${hashtag}');
+    window.onload = function() {
+        currentUserId = '${sessionScope.currentUser.id}';
+        postPage = 1;
+        disableLoadMorePost = false;
+        getNotifs();
+        $('#userNotification').on("click", function () {
+                $('.notif-count').css('opacity', '0');
+        });
+            
+        hashTagSearch();
+    };
     $("textarea").hashtags();
 </script>

@@ -65,26 +65,6 @@
         <script src="<c:url value="/resources/js/notification.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
-        <script>
-            window.onload = function() {
-                disableLoadMorePost = false;
-                currentUserId = '${sessionScope.currentUser.id}';
-                getNotifs();
-                $('#userNotification').on("click", function () {
-                    $('.notif-count').css('opacity', '0');
-                });
-            };
-            $(window).scroll(function () {
-                if ($(this).scrollTop() >= 300) {
-                    $('#go-to-top').css("display", "flex");
-                } else {
-                    $('#go-to-top').fadeOut();
-                }
-            });
-
-            $('#go-to-top').click(function () {
-                $('html, body').stop().animate({scrollTop: 0}, 500);
-            });
-        </script>
+        
     </body>
 </html>

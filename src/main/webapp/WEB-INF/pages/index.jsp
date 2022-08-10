@@ -88,22 +88,30 @@
 <script src="<c:url value="/resources/js/post.js" />"></script>
 <script src="<c:url value="/resources/js/comment.js" />"></script>
 <script src="<c:url value="/resources/js/home.js" />"></script>
+<script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
             loadPosts('${endpoint}', '${currentUser.getId()}');
             $("textarea").hashtags();
         });
-        
+        window.onload = function() {
+            disableLoadMorePost = false;
+            currentUserId = '${sessionScope.currentUser.id}';
+            getNotifs();
+            $('#userNotification').on("click", function () {
+                $('.notif-count').css('opacity', '0');
+            });
+        };
         $(window).scroll(function () {
-            var scrollTop = $(document).scrollTop();
-            var windowHeight = $(this).height();
-            var documentHeight = $(document).height();
-
-            if ((windowHeight + scrollTop) >= documentHeight - 10) {
-                postNextPage();
-                !disableLoadMorePost && loadPosts('${endpoint}', '${currentUser.getId()}', postPage);
+            if ($(this).scrollTop() >= 300) {
+                $('#go-to-top').css("display", "flex");
+            } else {
+                $('#go-to-top').fadeOut();
             }
         });
 
+        $('#go-to-top').click(function () {
+            $('html, body').stop().animate({scrollTop: 0}, 500);
+        });
 </script>

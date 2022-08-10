@@ -79,6 +79,7 @@ public class Post implements Serializable {
     @JsonIgnore
     private Set<PostNotif> postNotifSet;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "postId")
+    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post")
     private Set<React> reactSet;

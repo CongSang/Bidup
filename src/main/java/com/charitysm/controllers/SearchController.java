@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -27,5 +28,12 @@ public class SearchController {
             Model model) {
         model.addAttribute("hashtag", hashtag);
         return "hashtagPage";
+    }
+    
+    @GetMapping("/search")
+    public String searchPage(@RequestParam Map<String,String> params, 
+            Model model) {
+        
+        return "searchPage";
     }
 }

@@ -54,7 +54,6 @@ public class Comment implements Serializable {
     private Date commentDate;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
     private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

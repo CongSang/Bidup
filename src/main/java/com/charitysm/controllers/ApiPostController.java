@@ -62,11 +62,11 @@ public class ApiPostController {
     
     @Async
     @GetMapping("/posts")
-    public ResponseEntity<List<Post>> getPosts(@RequestParam("page") int page) {
+    public ResponseEntity<List<Post>> getPosts(@RequestParam Map<String, String> params) {
         //load post theo follow
 //        User currentUser = (User)session.getAttribute("currentUser");
 //        String userId = currentUser.getId();
-        return new ResponseEntity<>(this.postService.getPosts(null, page), HttpStatus.OK);
+        return new ResponseEntity<>(this.postService.getPosts(params), HttpStatus.OK);
     }
     
     @Async
