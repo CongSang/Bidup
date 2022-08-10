@@ -4,6 +4,7 @@
  */
 package com.charitysm.repositories.impl;
 
+import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.repositories.NotificationRepository;
 import java.util.List;
@@ -40,6 +41,16 @@ public class NotificationRepositoryImpl implements NotificationRepository{
         q.setParameter("postId", postId);
         q.setParameter("type", type.toString());
         q.executeUpdate();
+    }
+
+    @Override
+    public void readNotif(int notifId, NotifType type) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST)) {
+            PostNotif pn = session.get(PostNotif.class, notifId);
+            pn.setIsRead(true);
+            session.update(pn);
+        }
     }
     
 }

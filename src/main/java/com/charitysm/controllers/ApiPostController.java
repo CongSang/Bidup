@@ -92,7 +92,9 @@ public class ApiPostController {
         if(this.commentService.createComment(comm) < 1)
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         
-        this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
+        if (!comm.getUserId().getId().equals(u.getId()))
+            this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
+        
         return new ResponseEntity<>(comm, HttpStatus.CREATED);
     }
     
@@ -113,7 +115,7 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
-        if(this.reactService.createReact(react) == true)
+        if(this.reactService.createReact(react) == true && !react.getUser().getId().equals(u.getId()))
             this.notificationCenter.updateNotif(postId, NotifType.REACT_POST);
     }
     

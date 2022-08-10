@@ -41,6 +41,7 @@ public class NotificationServiceImpl implements NotificationService{
             n.setLast_modified_name((String) d[4]);
             n.setLast_modified_avatar((String) d[5]);
             n.setLast_modified((Date) d[6]);
+            n.setNotifId(Integer.parseInt(d[7].toString()));
             rs.add(n);
         });
         return rs;
@@ -49,6 +50,11 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public void updateNotif(int postId, NotifType type) {
         this.notificationRepository.updateNotif(postId, type);
+    }
+
+    @Override
+    public void readNotif(int notifId, NotifType type) {
+        this.notificationRepository.readNotif(notifId, type);
     }
     
 }

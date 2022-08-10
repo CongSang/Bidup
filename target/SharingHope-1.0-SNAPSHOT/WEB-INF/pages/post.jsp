@@ -1,3 +1,8 @@
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="com.charitysm.pojo.User"%>
+<%@page import="com.charitysm.pojo.React"%>
+<%@page import="com.charitysm.pojo.Post"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -65,15 +70,15 @@
                     <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                         <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                             <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
-                                <c:if test="${post.userId.id != sessionScope.currentUser.id}">
-                                    <div class="heart-like-button"></div>
-                                </c:if>
-                                <!--                                  ((post.reactSet).some((react) => react.user.id === currentUserId)) ?-->
-                                <c:if test="${post.userId.id == sessionScope.currentUser.id}">
-                                    <div class="heart-like-button liked"></div>
-                                </c:if>
-                                <!--<div class="heart-like-button"></div>-->
-
+                                <%
+                                    Post p = (Post) request.getAttribute("post");
+                                    List<String> rUserListId = p.getReactSet().stream().map(React::getUser).map(User::getId).collect(Collectors.toList());
+                                    User currentUser =(User)session.getAttribute("currentUser"); 
+                                    if(rUserListId.contains(currentUser.getId()))
+                                        out.write("<div class='heart-like-button liked'></div>");
+                                    else
+                                        out.write("<div class='heart-like-button'></div>");
+                                %>
                                 <span class="post--action-text ms-2">Thích (<span id="likeCounter">${fn:length(post.reactSet)}</span>)</span>
                             </div>
                         </div>
@@ -123,4 +128,7 @@
     });
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);
+        
+//    ((${post.reactSet}).some((react) => react.userId.id === currentUserId)) ?
+//        ($('.heart-like-button').addClass('liked')) : ``;
 </script>
