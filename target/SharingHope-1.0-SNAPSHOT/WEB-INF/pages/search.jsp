@@ -163,7 +163,6 @@
     window.onload = function() {
         disableLoadMorePost = false;
         currentUserId = '${sessionScope.currentUser.id}';
-        getNotifs();
         $('#userNotification').on("click", function () {
             $('.notif-count').css('opacity', '0');
         });
