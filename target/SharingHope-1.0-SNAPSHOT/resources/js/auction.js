@@ -76,17 +76,6 @@ function deleteAuction(endpoint, auctionId) {
     });
 }
 
-function findHashtags(searchText) {
-    var regexp = /(\s|^)\#\w\w+\b/gm
-    result = searchText.match(regexp);
-    if (result) {
-        result = result.map(function(s){ return s.trim(); }).join(' ');
-        return result;
-    } else {
-        return "";
-    }
-}
-
 function createAuction() {
     const formData = new FormData();
     const fs = document.getElementById('uploadImage1');

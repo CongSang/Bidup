@@ -7,10 +7,6 @@ var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
                             </div>`;
 
-
-
-
-
 //Show image after pick picture
 function previewImage(el) {
     var oFReader = new FileReader();
@@ -36,17 +32,6 @@ function previewImage(el) {
 function showFull(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "flex";
-}
-
-function findHashtags(searchText) {
-    var regexp = /(\s|^)\#\w\w+\b/gm
-    result = searchText.match(regexp);
-    if (result) {
-        result = result.map(function(s){ return s.trim(); }).join(' ');
-        return result;
-    } else {
-        return "";
-    }
 }
 
 function createPost() {
