@@ -106,6 +106,11 @@ function loadFeeds(posts) {
                                 
                             </div>
                             
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <span class="showMore">Xem thêm bình luận</span>
+                                <span>10/20</span>
+                            </div>
                         </div>
                     </div>
                 </div>

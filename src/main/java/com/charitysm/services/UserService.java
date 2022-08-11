@@ -15,4 +15,6 @@ public interface UserService extends UserDetailsService {
     User getUser(String email);
 
     User getUserById(String id);
+    
+    boolean registerNewUser(User user);
 }

@@ -14,4 +14,6 @@ public interface UserRepository {
     User getUser(String email);
 
     User getUserById(String id);
+    
+    boolean registerNewUser(User user);
 }

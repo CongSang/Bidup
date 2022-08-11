@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
     public User getUserById(String id) {
         return this.userRepository.getUserById(id);
     }
+
+    @Override
+    public boolean registerNewUser(User user) {
+        return this.userRepository.registerNewUser(user);
+    }
 }

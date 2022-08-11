@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
+        <script src="<c:url value="/resources/js/main.js" />"></script>
         
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -50,7 +51,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 g-3">
                         <tiles:insertAttribute name="content" />
                     </div>
-                    <div class="col-lg-3 sidebar-right">
+                    <div class="d-lg-block d-none col-lg-3 sidebar-right">
                         <tiles:insertAttribute name="sidebarRight" />
                     </div>
                 </div>
@@ -59,9 +60,7 @@
         </div>
             <tiles:insertAttribute name="chatbox" />
 
-        <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
-        
     </body>
 </html>

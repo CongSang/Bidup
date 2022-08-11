@@ -11,6 +11,6 @@ BEGIN
 	ELSE 
 		UPDATE post_notif
         SET is_read=false
-        WHERE post_notif.post_id=post_id;
+        WHERE post_notif.post_id=post_id AND post_notif.type=type;
     END IF;
 END $

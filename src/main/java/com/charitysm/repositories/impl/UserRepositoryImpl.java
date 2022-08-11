@@ -39,4 +39,16 @@ public class UserRepositoryImpl implements UserRepository {
 
         return (User) user;
     }
+
+    @Override
+    public boolean registerNewUser(User user) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
