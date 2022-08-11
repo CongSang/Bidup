@@ -92,12 +92,12 @@
 <script>
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
-            loadPosts('${endpoint}', '${currentUser.getId()}');
+            currentUserId = '${sessionScope.currentUser.id}';
+            loadPosts();
             $("textarea").hashtags();
         });
         window.onload = function() {
             disableLoadMorePost = false;
-            currentUserId = '${sessionScope.currentUser.id}';
             $('#userNotification').on("click", function () {
                 $('.notif-count').css('opacity', '0');
             });
@@ -108,9 +108,5 @@
             } else {
                 $('#go-to-top').fadeOut();
             }
-        });
-
-        $('#go-to-top').click(function () {
-            $('html, body').stop().animate({scrollTop: 0}, 500);
         });
 </script>

@@ -73,8 +73,8 @@
                                 <%
                                     Post p = (Post) request.getAttribute("post");
                                     List<String> rUserListId = p.getReactSet().stream().map(React::getUser).map(User::getId).collect(Collectors.toList());
-                                    User currentUser =(User)session.getAttribute("currentUser"); 
-                                    if(rUserListId.contains(currentUser.getId()))
+                                    User currentUser = (User) session.getAttribute("currentUser");
+                                    if (rUserListId.contains(currentUser.getId()))
                                         out.write("<div class='heart-like-button liked'></div>");
                                     else
                                         out.write("<div class='heart-like-button'></div>");
@@ -108,34 +108,40 @@
                         <div id="commentedComment" class="flex">
                             <c:if test="${post.userId.id == sessionScope.currentUser.id}"></c:if>
                             </div>
+                            
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <span class="showMore">Xem thêm bình luận</span>
+                                <span>10/20</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>                                   
-<div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
-    <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
-        <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
-        <img id="img01" style="max-width:100%; max-height:100vh;">
+    <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
+        <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
+            <img id="img01" style="max-width:100%; max-height:100vh;">
+        </div>
     </div>
-</div>
-<script src="<c:url value="/resources/js/comment.js" />"></script>
+    <script src="<c:url value="/resources/js/comment.js" />"></script>
 <script src="<c:url value="/resources/js/post.js" />"></script>
 <script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
-    window.onload = function() {
-        currentUserId = '${sessionScope.currentUser.id}';
-        $('#userNotification').on("click", function () {
-            $('.notif-count').css('opacity', '0');
+        window.onload = function () {
+            currentUserId = '${sessionScope.currentUser.id}';
+            $('#userNotification').on("click", function () {
+                $('.notif-count').css('opacity', '0');
+            });
+        };
+        $(function () {
+            $('.sidebar-right').hide();
         });
-    };
-    $(function () {
-        $('.sidebar-right').hide();
-    });
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);
-        
+
 //    ((${post.reactSet}).some((react) => react.userId.id === currentUserId)) ?
 //        ($('.heart-like-button').addClass('liked')) : ``;
 </script>

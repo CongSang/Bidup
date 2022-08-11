@@ -133,6 +133,11 @@ function loadFeeds(posts) {
                                 
                             </div>
                             
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <span class="showMore">Xem thêm bình luận</span>
+                                <span>10/20</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,7 +265,7 @@ function prependFeeds(post) {
 
 
 
-function loadAuctionFeeds(auctions, currentUserId, endpoint) {
+function loadAuctionFeeds(auctions) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(auctions, function (index, auction) {
         
@@ -325,7 +330,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${endpoint}', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction(${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}

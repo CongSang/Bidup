@@ -126,7 +126,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}/api/auctions', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction(${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}
@@ -456,6 +456,11 @@ function loadPostFeeds(posts, currentUserId) {
                                 
                             </div>
                             
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <span class="showMore">Xem thêm bình luận</span>
+                                <span>10/20</span>
+                            </div>
                         </div>
                     </div>
                 </div>

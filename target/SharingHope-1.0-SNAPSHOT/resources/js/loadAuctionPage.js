@@ -41,7 +41,7 @@ function auctionNextPage() {
     auctionPage++;
 }
 
-function loadAuctions(endpoint, currentUserId, page) {
+function loadAuctions(page) {
     if (!page) {
         page = 1;
     }
@@ -51,14 +51,14 @@ function loadAuctions(endpoint, currentUserId, page) {
     
     $.ajax({
         type: 'get',
-        url: endpoint + '?page=' + page,
+        url: `${ctxPath}/api/auctions` + '?page=' + page,
         dataType: 'json',
         success: function (data) {
             if (data.length === 0) {
                 disableLoadMoreAuction = true;
             }
             
-            loadAuctionFeeds(data, currentUserId, endpoint);
+            loadAuctionFeeds(data);
             $('.auction-loading').css("display", "none");
             auctionFetching = false;
         }

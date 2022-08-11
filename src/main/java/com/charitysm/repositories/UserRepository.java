@@ -17,5 +17,6 @@ public interface UserRepository {
 
     User getUserById(String id);
     
+    boolean registerNewUser(User user);
     List<User> getUsers(Map<String, String> params);
 }

@@ -137,7 +137,7 @@ function auctionSearch(limit) {
                 return;
             }
             auctionPage++;
-            loadAuctionFeeds(data, currentUserId, url);
+            loadAuctionFeeds(data);
         }
     });
 }

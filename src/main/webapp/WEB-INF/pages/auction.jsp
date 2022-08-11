@@ -109,9 +109,9 @@
 <script src="<c:url value="/resources/js/bid.js" />"></script>
 <script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
-    <c:url value="/api/auctions" var="endpoint" />
         $(function () {
-            loadAuctions('${endpoint}', '${currentUser.getId()}');
+            currentUserId = '${sessionScope.currentUser.id}';
+            loadAuctions();
             $("textarea").hashtags();
         });
 
@@ -120,9 +120,9 @@
             var windowHeight = $(this).height();
             var documentHeight = $(document).height();
 
-            if ((windowHeight + scrollTop) >= documentHeight - 10) {
+            if ((windowHeight + scrollTop) >= documentHeight - 150) {
                 auctionNextPage();
-                !disableLoadMoreAuction && loadAuctions('${endpoint}', '${currentUser.getId()}', auctionPage);
+                !disableLoadMoreAuction && loadAuctions(auctionPage);
             }
         });
 </script>
