@@ -60,6 +60,10 @@ header {
     border-radius: 6px;
 }
 
+.dropdown-item:active {
+    background-color: #cfd9df !important;
+}
+
 /*navbar mobile*/
 .navbar-toggler {
     border-color: #ffffff !important;
@@ -144,6 +148,12 @@ header {
     border-radius: calc(6px  - 1px) calc(6px - 1px) 0 0 !important;
 }
 
+#chatContainer {
+    min-width: 360px;
+    right: -108px;
+    top: 32px;
+}
+
 .chat-side {
     font-weight: bold;
     font-size: 16px;
@@ -151,14 +161,46 @@ header {
     color: #333;
 }
 
-.chat--item {
-    cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 4px;
+.chat-menu-header {
+    padding: 12px 16px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 }
 
-.chat--item:hover {
-    background-color: var(--light-gray-color);
+.chat-menu-header h5 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.chat-menu-header a {
+    font-size: 14px;
+    color: var(--primary-color-100);
+}
+
+.chat-menu-header a:hover {
+    text-decoration: underline;
+}
+
+.list-user-chat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.chat-menu-avatar {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.chat--item {
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .go-chat {
@@ -167,32 +209,19 @@ header {
     color: #6c757d;
 }
 
-.chat--item:hover .go-chat,
-.chat--item:hover .chat-side {
+li .chat--item:hover .go-chat,
+li .chat--item:hover .chat-side {
     color: var(--primary-color-100);
 }
 
-@media (max-width: 992px) {
-    .chat-card {
+/*@media (max-width: 992px) {
+    #chatContainer {
         position: fixed;
-        z-index: 1050;
-        width: 70vw;
         top: 0;
         right: 0;
-        bottom: 0;
-        height: 100vh;
-        border-radius: 0;
-        transition: all 0.3s;
-    }
-
-    .sidebar-right {
         display: none;
     }
-    
-    .display-none-mobile {
-        display: none !important;
-    }
-}
+}*/
 
 /*sidebar left css*/
 .auction-card {
@@ -254,23 +283,6 @@ header {
     border-radius: 5px;
 }
 
-/*scrolltop*/
-#go-to-top {
-    width: 46px;
-    height: 46px;
-    position: fixed;
-    right: 40px;
-    bottom: 40px;
-    background-color: var(--primary-color-100);
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    opacity: 0.7;
-    cursor: pointer;
-    display: none;
-}
-
 /*hashtag*/
 .jqueryHashtags .highlighter{
     white-space: pre-wrap;
@@ -321,7 +333,6 @@ header {
 /*chat box css*/
 #chat-box {
     min-width: 328px;
-    min-height: 60vh; 
     position: fixed;
     bottom: 0;
     right: 80px;
@@ -408,7 +419,7 @@ header {
 .message-chat {
     clear: both;
     padding: 6px 10px 7px;
-    margin: 8px 0 10px;
+    margin: 8px 0 12px;
     font-size: 14px;
     line-height: 1.4;
     position: relative;

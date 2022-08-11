@@ -126,7 +126,6 @@
 <script>
     window.onload = function() {
         currentUserId = '${sessionScope.currentUser.id}';
-        getNotifs();
         $('#userNotification').on("click", function () {
             $('.notif-count').css('opacity', '0');
         });

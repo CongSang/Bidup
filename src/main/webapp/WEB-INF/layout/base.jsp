@@ -57,12 +57,9 @@
             </div>
             <tiles:insertAttribute name="footer" />
         </div>
-
-        <div id="go-to-top"><i class="fa-solid fa-angle-up"></i></div>
             <tiles:insertAttribute name="chatbox" />
 
         <script src="<c:url value="/resources/js/main.js" />"></script>
-        <script src="<c:url value="/resources/js/notification.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
         

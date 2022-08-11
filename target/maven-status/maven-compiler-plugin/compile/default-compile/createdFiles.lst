@@ -3,6 +3,7 @@ com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
 com\charitysm\repositories\CommentRepository.class
+com\charitysm\controllers\SearchController.class
 com\charitysm\repositories\ReportRepository.class
 com\charitysm\services\impl\ReactServiceImpl.class
 com\charitysm\services\CommentService.class

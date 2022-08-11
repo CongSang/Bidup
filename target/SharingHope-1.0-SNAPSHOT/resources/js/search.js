@@ -8,11 +8,11 @@ function searchSubmit() {
         window.location = `${ctxPath}/search?kw=${inputVal}`;
 }
 
-function hashTagSearch() { 
+function hashTagSearch() {
     postFetching = true;
     var hashtag = $('.hashtag-name-container').text().slice(1);
     $(loadingBottom).css("display", "block");
-    
+
     $.ajax({
         type: 'get',
         url: `${ctxPath}/api/posts?hashtag=${hashtag}&page=${postPage}`,
@@ -20,6 +20,11 @@ function hashTagSearch() {
         success: function (data) {
             $(loadingBottom).css("display", "none");
             postFetching = false;
+            if (data.length === 0 && postPage === 1) {
+                disableLoadMorePost = true;
+                $('.hashtag-name-container-desciption').text(`Chưa có bài viết nào với hashtag này`);
+                return;
+            }
             if (data.length === 0) {
                 disableLoadMorePost = true;
                 return;

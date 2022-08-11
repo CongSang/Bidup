@@ -1,6 +1,6 @@
 
 function getNotifs() {
-    var container = $('.notifContainer');
+    var container = $('.list-notification');
     var counter = $('.notif-count');
     $.ajax({
         type: 'get',
@@ -21,7 +21,7 @@ function getNotifs() {
                 counter.text(count);
             }
                 
-            $.each(data, function(index, notif){
+            data.length > 0 ? $.each(data, function(index, notif){
                 var li = `  <li  class="dropdown-item d-flex align-items-center notif-loading w-100 ${notif.is_read && `is-read-notify`}">
                                     <div class="notif-item" onclick="toPost(${notif.postId}, '${notif.notifId}', '${notif.type}')">
                                         <img class="user-img" src="${notif.last_modified_avatar}" alt="image">
@@ -38,7 +38,10 @@ function getNotifs() {
                                     </div>
                                 </li>`;
                 container.append(li);
-            });
+            }) : container.append(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                                    <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                                    <p class="text-center">Chưa có thông báo nào</p>
+                                                </div>`);
             
             $('.loadingNotif').css('display', 'none');
             
