@@ -46,7 +46,7 @@ public class AuctionRepositoryImpl implements AuctionRepository{
     }
 
     @Override
-    public List<Auction> getAuctions(Map<String, String> params, int page) {
+    public List<Auction> getAuctions(Map<String, String> params) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Auction> q = b.createQuery(Auction.class);
@@ -55,9 +55,15 @@ public class AuctionRepositoryImpl implements AuctionRepository{
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            String hashtagKw = params.get("kw");
+            String hashtagKw = params.get("hashtag");
             if (hashtagKw != null && !hashtagKw.isEmpty()) {
                 Predicate p = b.like(root.get("hashtag").as(String.class), String.format("%%%s%%", hashtagKw));
+                predicates.add(p);
+            }
+            
+            String contentKw = params.get("kw");
+            if (contentKw != null && !contentKw.isBlank()) {
+                Predicate p = b.like(root.get("content").as(String.class),String.format("%%%s%%", contentKw));
                 predicates.add(p);
             }
 
@@ -67,8 +73,9 @@ public class AuctionRepositoryImpl implements AuctionRepository{
         q.orderBy(b.desc(root.get("auctionDate")));
 
         Query query = session.createQuery(q);
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("size", env.getProperty("page.size")));
         if (page > 0) {
-            int size = Integer.parseInt(env.getProperty("page.size").toString());
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);

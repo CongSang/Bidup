@@ -5,6 +5,8 @@
 package com.charitysm.services;
 
 import com.charitysm.pojo.User;
+import java.util.List;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -17,4 +19,5 @@ public interface UserService extends UserDetailsService {
     User getUserById(String id);
     
     boolean registerNewUser(User user);
+    List<User> getUsers(Map<String, String> params);
 }

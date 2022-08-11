@@ -126,7 +126,7 @@ function loadAuctionFeeds(auctions, currentUserId, endpoint) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction('${ctxPath}/api/auctions', ${auction.id})">
+                                            <div class="dropdown-item cursor-pointer" onclick="deleteAuction(${auction.id})">
                                                 Xóa bài viết
                                             </div>
                                         </li>` : ``}

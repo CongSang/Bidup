@@ -27,21 +27,19 @@ btn_close.forEach(btn => {
 
 function loadPosts() {
     $(loadingBottom).css("display", "block");
-    postFetching = true;
 
     $.ajax({
         type: 'get',
         url: `${ctxPath}/api/posts?page=${postPage}`,
         dataType: 'json',
         success: function (data) {
-            
+            $(loadingBottom).css("display", "none");
             if (data.length === 0) {
                 disableLoadMorePost = true;
+                return;
             }
-            
+            postPage++;
             loadFeeds(data);
-            $(loadingBottom).css("display", "none");
-            postFetching = false;
         }
     });
 }

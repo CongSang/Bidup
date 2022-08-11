@@ -46,7 +46,7 @@ public class CommentRepositoryImpl implements CommentRepository{
     public List<Comment> getComments(int postId, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         
-        Query query = session.createNativeQuery("SELECT * FROM comment WHERE post_id= :postId", Comment.class);
+        Query query = session.createNativeQuery("SELECT * FROM comment WHERE post_id= :postId ORDER BY comment_date DESC", Comment.class);
         query.setParameter("postId", postId);
         
         if (page > 0) {

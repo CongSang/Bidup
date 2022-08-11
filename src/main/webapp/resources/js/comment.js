@@ -130,7 +130,6 @@ function showComment(element, postId) {
             url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
             dataType: 'json',
             success: function (data) {
-                console.log(data);
                 $(comment).find('.comment-loading').css("display", "none");
                 loadComment(data, $(comment));
                 is_show = true;

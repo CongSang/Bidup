@@ -8,6 +8,8 @@ import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
 import com.charitysm.services.UserService;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,5 +60,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerNewUser(User user) {
         return this.userRepository.registerNewUser(user);
+    }
+        
+    public List<User> getUsers(Map<String, String> params) {
+        return this.userRepository.getUsers(params);
     }
 }

@@ -1,7 +1,5 @@
 
 //Load theo trang cho trang dau gia
-var ctxPath = "/SharingHope";
-
 function previewImage1(el) {
     var oFReader = new FileReader();
     if (el.id === 'uploadImage1') {
@@ -40,33 +38,6 @@ function showFollowAuction(element) {
     }
 };
 
-function formatMoney (value) {
-    const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-    
-    return money;
-}
-
-function padTo2Digits(num) {
-  return num.toString().padStart(2, '0');
-}
-
-function formatDate(value) {
-   const date = new Date(value);
-  return (
-    [
-      padTo2Digits(date.getDate()),
-      padTo2Digits(date.getMonth() + 1),
-      date.getFullYear()
-    ].join('/') +
-    ' lúc ' +
-    [
-      padTo2Digits(date.getHours()),
-      padTo2Digits(date.getMinutes()),
-      padTo2Digits(date.getSeconds())
-    ].join(':')
-  );
-}
-
 function customHashtag(element) {
     var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
     var str_content_origin = $(element).text();
@@ -78,7 +49,7 @@ function customHashtag(element) {
     });
 }
 
-function deleteAuction(endpoint, auctionId) {
+function deleteAuction(auctionId) {
     swal({
         title: "Bạn có chắc là hủy đấu giá bài viết này?",
         icon: "warning",
@@ -91,7 +62,7 @@ function deleteAuction(endpoint, auctionId) {
 
             $.ajax({
                 type: 'delete',
-                url: endpoint + "/" + auctionId,
+                url: `${ctxPath}/api/auctions/${auctionId}`,
                 dataType: 'json',
                 success: function() {
                     swal("Xóa bài đấu giá thành công", {
@@ -103,17 +74,6 @@ function deleteAuction(endpoint, auctionId) {
             });
         }
     });
-}
-
-function findHashtags(searchText) {
-    var regexp = /(\s|^)\#\w\w+\b/gm
-    result = searchText.match(regexp);
-    if (result) {
-        result = result.map(function(s){ return s.trim(); }).join(' ');
-        return result;
-    } else {
-        return "";
-    }
 }
 
 function createAuction() {

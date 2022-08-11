@@ -28,8 +28,8 @@ public class AuctionServiceImpl implements AuctionService{
     }
 
     @Override
-    public List<Auction> getAuctions(Map<String, String> params, int page) {
-        return this.auctionRepository.getAuctions(params, page);
+    public List<Auction> getAuctions(Map<String, String> params) {
+        return this.auctionRepository.getAuctions(params);
     }
 
     @Override

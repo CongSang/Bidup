@@ -93,7 +93,7 @@
     <c:url value="/api/posts" var="endpoint" />
         $(function () {
             currentUserId = '${sessionScope.currentUser.id}';
-            loadPosts('${endpoint}', '${currentUser.getId()}');
+            loadPosts();
             $("textarea").hashtags();
         });
         window.onload = function() {

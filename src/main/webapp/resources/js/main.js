@@ -24,6 +24,17 @@ $(function () {
     }
 });
 
+function findHashtags(searchText) {
+    var regexp = /(\s|^)\#\w\w+\b/gm
+    result = searchText.match(regexp);
+    if (result) {
+        result = result.map(function(s){ return s.trim(); }).join(' ') + ' ';
+        return result;
+    } else {
+        return "";
+    }
+}
+
 function loadSideBarLeft() {
     const path = '/SharingHope/';
     $.ajax({

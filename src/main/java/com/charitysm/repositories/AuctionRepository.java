@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface AuctionRepository {
     List<Auction> getAuctionSideBar();
-    List<Auction> getAuctions(Map<String, String> params, int page);
+    List<Auction> getAuctions(Map<String, String> params);
     Auction getAuctionById(int id);
     int createAuction(Auction a);
     void deleteAuction(int id);

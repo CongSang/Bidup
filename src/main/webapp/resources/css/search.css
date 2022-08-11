@@ -27,9 +27,13 @@
     right: -10rem;
 }
 
+.right-part > div {
+    margin-top: 2rem;
+}
+
 .right-part {
     max-width: 100%;
-    margin-top: 6rem;
+    margin-top: 4rem;
     align-items: stretch;
     justify-content: end;
 }
@@ -101,4 +105,12 @@
 .btn-follow:hover {
     cursor: pointer;
     
+}
+
+#personsContainer .person-search-item-name .card-title {
+    margin-top: 10px;
+}
+
+.right-part .title {
+    font-weight: bold;
 }
