@@ -72,6 +72,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auction")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/user")
+                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/search/**")
+                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/posts/**")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         http.csrf().disable();

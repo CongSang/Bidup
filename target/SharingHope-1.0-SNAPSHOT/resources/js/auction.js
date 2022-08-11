@@ -1,7 +1,5 @@
 
 //Load theo trang cho trang dau gia
-var ctxPath = "/SharingHope";
-
 function previewImage1(el) {
     var oFReader = new FileReader();
     if (el.id === 'uploadImage1') {
@@ -39,33 +37,6 @@ function showFollowAuction(element) {
         is_show_follow = true;
     }
 };
-
-function formatMoney (value) {
-    const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-    
-    return money;
-}
-
-function padTo2Digits(num) {
-  return num.toString().padStart(2, '0');
-}
-
-function formatDate(value) {
-   const date = new Date(value);
-  return (
-    [
-      padTo2Digits(date.getDate()),
-      padTo2Digits(date.getMonth() + 1),
-      date.getFullYear()
-    ].join('/') +
-    ' lúc ' +
-    [
-      padTo2Digits(date.getHours()),
-      padTo2Digits(date.getMinutes()),
-      padTo2Digits(date.getSeconds())
-    ].join(':')
-  );
-}
 
 function customHashtag(element) {
     var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);

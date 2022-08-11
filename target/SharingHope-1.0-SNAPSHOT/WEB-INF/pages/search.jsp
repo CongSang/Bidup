@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="home-content row justify-content-end">
@@ -6,117 +7,25 @@
     </div>
     <div class="col-md-8 right-part">
         <div class="person-search">
-            <h3 class="title">Moi Nguoi</h3>
-            <div class="person-search-item justify-content-between">
-                <div>
-                    <div class="person-search-item-image">
-                        <a href="#">
-                            <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660124885/bnykdw4dy0tw3cfoll8r.png" alt="">
-                        </a>
-                    </div>
-                    <div class="person-search-item-name">
-                        <h6 class="nav-item card-title mb-0">
-                            <a href="#">Ho va ten</a>
-                        </h6>
-                    </div>
-                </div>
-                <div class="btn-follow">Follow</div>
+            <h3 class="title">Mọi người</h3>
+            <div id="personsContainer">
+                
             </div>
-            <div class="person-search-item">
-                    <div class="person-search-item-image">
-                        <a href="#">
-                            <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660124885/bnykdw4dy0tw3cfoll8r.png" alt="">
-                        </a>
-                    </div>
-                    <div class="person-search-item-name">
-                        <h6 class="nav-item card-title mb-0">
-                            <a href="#">Ho va ten</a>
-                        </h6>
-                    </div>
-            </div>
+            
+            
             
         </div>
         <div class="post-search">
-            <h3 class="title">Bai viet</h3>
+            <h3 class="title">Bài viết</h3>
             <div id="feeds-container" class="justify-content-end">
-                <div class="post" id="post1">      
-                    <div class="card post--item">
-                        <div class="card-header border-0 pb-0 pt-3">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-start">
-                                    <div class="me-2">
-                                        <a href="#">
-                                            <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660124885/bnykdw4dy0tw3cfoll8r.png" alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Info -->
-                                    <div>
-                                        <div class="nav nav-divider">
-                                            <h6 class="nav-item card-title mb-0">
-                                                <a href="#">Ho va ten</a>
-                                            </h6>
-                                            <span class="ms-2 nav-item small text-secondary" id="timeFromNow"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="dropdown">
-                                    <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body pb-2">
-                            <p class="post--content mb-3 content--hashtag post-1">
-                                content
-                            </p>
-                            <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1660124885/bnykdw4dy0tw3cfoll8r.png" alt="Post image" onclick="showFull(this)">
-
-                            <div class="line"></div>
-
-
-                            <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
-                                <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                    <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
-
-                                        <span class="post--action-text ms-2">Thích (<span id="likeCounter">0</span>)</span>
-                                    </div>
-                                </div>
-                                <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
-                                    <div class="post--action-hover" onclick="showComment(this, 1)">
-                                        <i class="fa-regular fa-message post--action-icon"></i>
-                                        <span class="post--action-text ms-2">Bình luận</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="comment">
-                                <div class="d-flex align-items-center my-2">
-                                    <div class="me-2">
-
-                                        <a href="#">
-                                            <img class="comment--avatar rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660124885/bnykdw4dy0tw3cfoll8r.png" alt="">
-                                        </a>
-                                    </div>
-                                    <form class="w-100" onsubmit="addComment(1, this)" id="commentForm">
-                                        <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
-                                    </form>
-                                </div>
-                                <div class="text-center mt-3 comment-loading" style="display:none;">
-                                    <div class="spinner-border text-muted"></div>
-                                </div>
-                                <div id="commentedComment" class="flex">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
+            </div>
+        </div>
+        
+        <div class="auction-search">
+            <h3 class="title">Bài đấu giá</h3>
+            <div class="justify-content-end auction-container">
+               
             </div>
         </div>
         
@@ -132,39 +41,62 @@
     <div class="search-title">Bộ lọc tìm kiếm</div>
     <div class="line" style="width: 95%"></div>
     <div class="search-filter">
-        <div class="search-filter-item">
+        <div class="search-filter-item" onclick="searchFilter('all')">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             <span>
-                Tat ca
+                Tất cả
             </span>
         </div>
-        <div class="search-filter-item">
+        <div class="search-filter-item" onclick="searchFilter('people')">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             <span>
-                Moi nguoi
+                Mọi người
             </span>
         </div>
-        <div class="search-filter-item">
+        <div class="search-filter-item" onclick="searchFilter('posts')">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             <span>
-                Bai viet
+                Bài viết
             </span>
         </div>
-        <div class="search-filter-item">
+        <div class="search-filter-item" onclick="searchFilter('auctions')">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             <span>
-                Bai dau gia
+                Bài đấu giá
             </span>
         </div>
     </div>
 </div>
-                                    
+
+<script src="<c:url value="/resources/js/feeds.js" />"></script>                                    
+<script src="<c:url value="/resources/js/comment.js" />"></script>
+<script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
 <script>
     window.onload = function() {
+        postPage = 1;
         disableLoadMorePost = false;
         currentUserId = '${sessionScope.currentUser.id}';
         $('#userNotification').on("click", function () {
             $('.notif-count').css('opacity', '0');
         });
+        let url = new URL(window.location.toString());
+        let kw = url.searchParams.get('kw');
+        $('input[name=kw]').val(kw);
+        let locate = window.location.pathname;
+        
+        if (locate === (ctxPath + '/search/top'))
+            topSearch();
+        else if (locate === (ctxPath + '/search/people')) {
+            personSearch();
+            $('.post-search').css('display', 'none');
+        }
+        else if (locate === (ctxPath + '/search/posts')) {
+            contentSearch();
+            $('.person-search').css('display', 'none');
+        }
+        else {
+            auctionSearch();
+            $('.post-search').css('display', 'none');
+        }
     };
 </script>

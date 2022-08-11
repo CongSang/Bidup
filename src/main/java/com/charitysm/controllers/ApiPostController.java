@@ -91,8 +91,9 @@ public class ApiPostController {
         comm.setUserId(u);
         if(this.commentService.createComment(comm) < 1)
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        
-        if (!comm.getUserId().getId().equals(u.getId()))
+        System.out.println("Userid1: " + u.getId());
+        System.out.println("Userid2: " + comm.getUserId().getId());
+        if (!p.getUserId().getId().equals(u.getId()))
             this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
         
         return new ResponseEntity<>(comm, HttpStatus.CREATED);
@@ -115,7 +116,7 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
-        if(this.reactService.createReact(react) == true && !react.getUser().getId().equals(u.getId()))
+        if(this.reactService.createReact(react) == true && !p.getUserId().getId().equals(u.getId()))
             this.notificationCenter.updateNotif(postId, NotifType.REACT_POST);
     }
     

@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,9 @@ public class ApiAuctionController {
 
     @Async
     @GetMapping("/auctions")
-    public ResponseEntity<List<Auction>> getPosts(@RequestParam("page") int page) {
+    public ResponseEntity<List<Auction>> getPosts(@RequestParam Map<String, String> params) {
 
-        return new ResponseEntity<>(this.auctionService.getAuctions(null, page), HttpStatus.OK);
+        return new ResponseEntity<>(this.auctionService.getAuctions(params), HttpStatus.OK);
     }
 
     @Async
