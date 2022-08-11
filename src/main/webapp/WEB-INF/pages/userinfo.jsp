@@ -15,7 +15,6 @@
 
         <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
-        <script src="<c:url value="/resources/js/notification.js" />"></script>
 
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -193,13 +192,10 @@
         <script src="<c:url value="/resources/js/bid.js" />"></script>
         <script src="<c:url value="/resources/js/post.js" />"></script>
         <script src="<c:url value="/resources/js/comment.js" />"></script>
+        <script src="<c:url value="/resources/js/search.js" />"></script>
         <script>
             <c:url value="/api/user/${userInfo.id}/auctions" var="endpoint1" />
             <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />
-
-                            window.onload = function () {
-                                getNotifs();
-                            };
 
                             $(function () {
                                 if ($('#userAuction').hasClass('active')) {

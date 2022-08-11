@@ -79,8 +79,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="hashtagPage" extends="baseLayout">
         <put-attribute name="singleContent" 
                        value="/WEB-INF/pages/hashtag.jsp" />
-        <put-attribute name="content" 
-                       value="" />
         <put-attribute name="title" value="Sharing Hope" />
         <put-attribute name="sidebarLeft" 
                        value="" />

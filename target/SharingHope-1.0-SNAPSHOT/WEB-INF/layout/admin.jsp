@@ -19,6 +19,7 @@
         <link href="${globalCss}" rel="stylesheet" />
         <link href="${mainCss}" rel="stylesheet" />
         <link href="<c:url value="/resources/css/admin.css" />" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/notification.css" />" rel="stylesheet" />
     </head>
     <body>
         <tiles:insertAttribute name="header" />
@@ -94,5 +95,6 @@
 
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/admin.js" />"></script>
+        <script src="<c:url value="/resources/js/search.js" />"></script>
     </body>
 </html>

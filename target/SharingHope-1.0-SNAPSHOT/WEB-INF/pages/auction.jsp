@@ -107,8 +107,6 @@
 <script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
 <script src="<c:url value="/resources/js/auction.js" />"></script>
 <script src="<c:url value="/resources/js/bid.js" />"></script>
-<script src="<c:url value="/resources/js/home.js" />"></script>
-<script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
     <c:url value="/api/auctions" var="endpoint" />
         $(function () {

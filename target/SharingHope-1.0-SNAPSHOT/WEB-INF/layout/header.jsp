@@ -73,11 +73,21 @@
                             Thông báo
                             <span class="notif-count" style="top: 2px; left: 6px;"></span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end me-3 notifContainer" aria-labelledby="notifyMenu">
+                        <ul class="dropdown-menu dropdown-menu-end me-3 p-0 notifContainer" aria-labelledby="notifyMenu">
+                            <li>
+                                <div class="notif-header">
+                                    <h5>Thông báo</h5>
+                                </div>
+                            </li>
                             <li  class="dropdown-item d-flex justify-content-center
                                  align-items-center notif-loading text-center">
-                                <div class="spinner-border text-muted loadingNotif"></div>
+                                <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                             </li>
+                            <div class="position-relative" style="min-height: 35vh">
+                                <div class="p-2 list-notification">
+
+                                </div>
+                            </div>
                         </ul>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
@@ -107,19 +117,82 @@
                 </ul>
             </div>
 
-            <div class="d-lg-flex d-none flex-nowrap align-items-center ms-4">
+            <div class="d-lg-flex d-none flex-nowrap align-items-center ms-3">
+                <div class="dropdown">
+                    <a href="#" class="position-relative" id="userChatList" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-brands fa-facebook-messenger notify-icon me-4"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end me-3 p-0" id="chatContainer" aria-labelledby="cardFeedAction">
+                        <li>
+                            <div class="chat-menu-header">
+                                <h5>Chat</h5>
+                                <a href="#">Chuyển đến Messenger</a>
+                            </div>
+                        </li>
+                        <li class="px-3 my-2">
+                            <form class="form-search position-relative" action="javascript:;">
+                                <input class="form-control ps-5 bg-light w-100" type="search" placeholder="Tìm kiếm trên Messenger" aria-label="Search">
+                                <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                                </button>
+                            </form>
+                        </li>
+
+                        <div class="position-relative" style="min-height: 80vh">
+                            <div class="p-2 list-user-chat">
+                                <li class="dropdown-item">
+                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
+                                        <div class="d-flex align-items-center">
+                                            <c:url value="/resources/img/non-avatar.png" var="avatar" />
+                                            <img class="chat-menu-avatar rounded-circle me-2" src="${avatar}" alt="">
+                                            <div>
+                                                <p class="chat-side">Username</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item">
+                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
+                                        <div class="d-flex align-items-center">
+                                            <c:url value="/resources/img/non-avatar.png" var="avatar" />
+                                            <img class="chat-menu-avatar rounded-circle me-2" src="${avatar}" alt="">
+                                            <div>
+                                                <p class="chat-side">Username</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
+                                    </div>
+                                </li>
+
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+
                 <div class="dropdown">
                     <a href="#" class="position-relative" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-bell notify-icon me-4"></i>
                         <span class="notif-count"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end me-3 notifContainer" id="notifContainer" aria-labelledby="cardFeedAction">
+                    <ul class="dropdown-menu dropdown-menu-end me-3 p-0 notifContainer" id="notifContainer" aria-labelledby="cardFeedAction">
+                        <li>
+                            <div class="notif-header">
+                                <h5>Thông báo</h5>
+                            </div>
+                        </li>
                         <li  class="dropdown-item d-flex justify-content-center
                              align-items-center notif-loading text-center">
                             <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                         </li>
+                        <div class="position-relative" style="min-height: 35vh">
+                            <div class="p-2 list-notification">
+
+                            </div>
+                        </div>
                     </ul>
                 </div>
+
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
                         <img id="userAvatar" src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img" />
@@ -147,3 +220,10 @@
         </div>
     </nav>
 </header>
+
+<script src="<c:url value="/resources/js/notification.js" />"></script>
+<script>
+                            $(function () {
+                                getNotifs();
+                            });
+</script>
