@@ -5,6 +5,8 @@
 package com.charitysm.repositories;
 
 import com.charitysm.pojo.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,4 +16,6 @@ public interface UserRepository {
     User getUser(String email);
 
     User getUserById(String id);
+    
+    List<User> getUsers(Map<String, String> params);
 }

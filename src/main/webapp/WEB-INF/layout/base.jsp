@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
+        <script src="<c:url value="/resources/js/main.js" />"></script>
         
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -59,7 +60,6 @@
         </div>
             <tiles:insertAttribute name="chatbox" />
 
-        <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
         

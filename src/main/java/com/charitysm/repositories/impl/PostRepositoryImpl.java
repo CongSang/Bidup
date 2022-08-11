@@ -48,13 +48,13 @@ public class PostRepositoryImpl implements PostRepository {
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             String hashtagKw = params.get("hashtag");
-            if (hashtagKw != null && !hashtagKw.isEmpty()) {
+            if (hashtagKw != null && !hashtagKw.isBlank()) {
                 Predicate p = b.like(root.get("hashtag").as(String.class),String.format("%%%s%%", "#" + hashtagKw + " "));
                 predicates.add(p);
             }
             
             String contentKw = params.get("kw");
-            if (contentKw != null && !contentKw.isEmpty()) {
+            if (contentKw != null && !contentKw.isBlank()) {
                 Predicate p = b.like(root.get("content").as(String.class),String.format("%%%s%%", contentKw));
                 predicates.add(p);
             }
@@ -65,9 +65,9 @@ public class PostRepositoryImpl implements PostRepository {
         q.orderBy(b.desc(root.get("postedDate")));
 
         Query query = session.createQuery(q);
-        int page = Integer.parseInt(params.getOrDefault("page", "1"));
-        if (page > 0) {
-            int size = Integer.parseInt(env.getProperty("page.size"));
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
+        if (page > 0){
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);

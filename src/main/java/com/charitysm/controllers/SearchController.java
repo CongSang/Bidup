@@ -30,10 +30,23 @@ public class SearchController {
         return "hashtagPage";
     }
     
-    @GetMapping("/search")
-    public String searchPage(@RequestParam Map<String,String> params, 
-            Model model) {
-        
+    @GetMapping("/search/top")
+    public String searchPage() {
+        return "searchPage";
+    }
+    
+    @GetMapping("/search/posts")
+    public String searchPostPage() {
+        return "searchPage";
+    }
+    
+    @GetMapping("/search/people")
+    public String searchPeoplePage() {
+        return "searchPage";
+    }
+    
+    @GetMapping("/search/auctions")
+    public String searchAuctionPage() {
         return "searchPage";
     }
 }

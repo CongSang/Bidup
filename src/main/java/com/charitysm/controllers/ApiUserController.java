@@ -9,6 +9,7 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.PostService;
+import com.charitysm.services.UserService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class ApiUserController {
     private AuctionService auctionService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
+    
     
     @Async
     @GetMapping("/user/{userId}/auctions")
@@ -52,6 +56,6 @@ public class ApiUserController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(@RequestParam Map<String, String> params) {
         
-        return null;
+        return new ResponseEntity<>(this.userService.getUsers(params), HttpStatus.OK);
     }
 }
