@@ -57,5 +57,11 @@ public class CommentRepositoryImpl implements CommentRepository{
         }
         return query.getResultList();
     }
+
+    @Override
+    public Comment getCommentById(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        return session.get(Comment.class, id);
+    }
     
 }

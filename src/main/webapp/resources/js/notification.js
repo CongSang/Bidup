@@ -20,15 +20,18 @@ function getNotifs() {
                 $('.notif-count').css('opacity','1');
                 counter.text(count);
             }
-                
             data.length > 0 ? $.each(data, function(index, notif){
+                let typeMsg = notif.type === 'REACT_POST' ? `thích bài viết của bạn`:
+                        notif.type === 'COMMENT_POST' ? `bình luận về bài viết của bạn`:
+                        notif.type === 'REACT_COMMENT' ? `thích bình luận của bạn`:`trả lời bình luận của bạn`;
+                
                 var li = `  <li  class="dropdown-item d-flex align-items-center notif-loading w-100 ${notif.is_read && `is-read-notify`}">
-                                    <div class="notif-item" onclick="toPost(${notif.postId}, '${notif.notifId}', '${notif.type}')">
+                                    <div class="notif-item" onclick="notifRedirect(${notif.targetId}, '${notif.notifId}', '${notif.type}')">
                                         <img class="user-img" src="${notif.last_modified_avatar}" alt="image">
                                         <div class="notif-item--message">
                                             <span class="mb-1 message">  
                                                 ${notif.count > 1 ? `<strong>${notif.last_modified_name}</strong> và ${notif.count - 1} người khác`: 
-                                                `<strong>${notif.last_modified_name}</strong>`} đã ${notif.type === 'REACT_POST' ? `thích`:`bình luận về`} vài viết của bạn
+                                                `<strong>${notif.last_modified_name}</strong>`} đã ${typeMsg}
                                             </span>
                                             <span class="notif-time ${notif.is_read && `is-read-notify`}">${moment(notif.last_modified).fromNow()}</span>
                                         </div>
@@ -49,6 +52,17 @@ function getNotifs() {
     });
 }
 
-function toPost(postId, notifId, type) {
-    window.location = `${ctxPath}/posts/${postId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
+function notifRedirect(targetId, notifId, type) {
+    if (type === 'REACT_POST' || type === 'COMMENT_POST')
+        window.location = `${ctxPath}/posts/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
+    else if (type === 'REACT_COMMENT' || type === 'REPLY_COMMENT') {
+        $.ajax({
+            type: 'get',
+            url:`${ctxPath}/api/find-post/${targetId}`,
+            dataType: 'json',
+            success: function (data) {
+                window.location = `${ctxPath}/posts/${data.id}?comment_id=${targetId}&notif_id=${notifId}&notif_type=${type}&ref=notif`;
+            }
+        });
+    }
 }

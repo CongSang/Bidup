@@ -35,6 +35,9 @@ import org.hibernate.annotations.Type;
     @NamedQuery(name = "PostNotif.findByIsRead", query = "SELECT p FROM PostNotif p WHERE p.isRead = :isRead")})
 public class PostNotif implements Serializable {
 
+    @Column(name = "is_read")
+    private Boolean isRead;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +49,6 @@ public class PostNotif implements Serializable {
     @Size(min = 1, max = 12)
     @Column(name = "type")
     private String type;
-    @Type(type = "org.hibernate.type.NumericBooleanType")
-    @Column(name = "is_read", columnDefinition = "TINYINT")
-    private Boolean isRead;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Post postId;

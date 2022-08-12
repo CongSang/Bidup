@@ -34,5 +34,10 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> getComments(int postId, int page) {
         return this.commentRepository.getComments(postId, page);
     }
+
+    @Override
+    public Comment getCommentById(int id) {
+        return this.commentRepository.getCommentById(id);
+    }
     
 }

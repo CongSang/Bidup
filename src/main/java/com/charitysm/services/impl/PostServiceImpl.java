@@ -55,5 +55,10 @@ public class PostServiceImpl implements PostService{
     public List<Post> getUserPosts(String userId, int page) {
         return this.postRepository.getUserPosts(userId, page);
     }
+
+    @Override
+    public Post findPostByCommentId(int commentId) {
+        return this.postRepository.findPostByCommentId(commentId);
+    }
     
 }

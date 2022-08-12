@@ -19,5 +19,6 @@ public interface PostService {
     int createPost(Post p);
     void deletePost(int id);
     int updatePost(Post p);
+    Post findPostByCommentId(int commentId);
     List<Post> getUserPosts(String userId, int page);
 }

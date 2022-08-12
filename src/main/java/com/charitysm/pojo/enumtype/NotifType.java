@@ -10,6 +10,8 @@ package com.charitysm.pojo.enumtype;
  */
 public enum NotifType {
     REACT_POST,
-    COMMENT_POST
+    COMMENT_POST,
+    REACT_COMMENT,
+    REPLY_COMMENT
     
 }

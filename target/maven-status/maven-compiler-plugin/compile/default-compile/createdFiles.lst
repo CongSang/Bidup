@@ -2,6 +2,7 @@ com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
+com\charitysm\pojo\ReactCommentPK_.class
 com\charitysm\repositories\CommentRepository.class
 com\charitysm\controllers\SearchController.class
 com\charitysm\repositories\ReportRepository.class
@@ -29,6 +30,7 @@ com\charitysm\handlers\LoginSuccessHandler.class
 com\charitysm\configs\SecurityWebApplicationInit.class
 com\charitysm\pojo\BidPK.class
 com\charitysm\repositories\PostRepository.class
+com\charitysm\pojo\ReactCommentPK.class
 com\charitysm\repositories\NotificationRepository.class
 com\charitysm\repositories\BidRepository.class
 com\charitysm\pojo\Comment_.class
@@ -39,7 +41,9 @@ com\charitysm\services\impl\PostServiceImpl.class
 com\charitysm\services\impl\NotificationServiceImpl.class
 com\charitysm\pojo\enumtype\ReportType$1.class
 com\charitysm\pojo\Auction.class
+com\charitysm\pojo\ReactComment_.class
 com\charitysm\controllers\APILoginFbController.class
+com\charitysm\pojo\ReactComment.class
 com\charitysm\services\ReactService.class
 com\charitysm\pojo\User.class
 com\charitysm\pojo\ReportPost.class
@@ -91,5 +95,6 @@ com\charitysm\controllers\UserInfoController.class
 com\charitysm\controllers\AdminController.class
 com\charitysm\pojo\reobj\FileUploadResponse.class
 com\charitysm\controllers\AuctionController.class
+com\charitysm\controllers\APICommentController.class
 com\charitysm\pojo\Auction_.class
 com\charitysm\pojo\reobj\PostRequest.class
