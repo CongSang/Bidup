@@ -32,7 +32,7 @@
 .notif-item {
     display: flex;
     flex-direction: row;
-    min-width: 360px;
+    min-width: 350px;
     padding: 8px 10px;
 }
 
@@ -43,7 +43,7 @@
 .notif-item--message {
     padding: 4px 0;
     text-align: left;
-    width: 224px;
+    width: 228px;
     display: flex;
     flex-direction: column;
     justify-content: start;

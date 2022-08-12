@@ -138,9 +138,6 @@
             
             showComment($('#showCommentBtn'), ${post.id});
         };
-        $(function () {
-            $('.sidebar-right').hide();
-        });
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);
 

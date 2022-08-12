@@ -37,6 +37,9 @@ public class PostNotif implements Serializable {
 
     @Column(name = "is_read")
     private Boolean isRead;
+    @JoinColumn(name = "auction_id", referencedColumnName = "id")
+    @ManyToOne
+    private Auction auctionId;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -138,6 +141,14 @@ public class PostNotif implements Serializable {
      */
     public void setIsRead(Boolean isRead) {
         this.isRead = isRead;
+    }
+
+    public Auction getAuctionId() {
+        return auctionId;
+    }
+
+    public void setAuctionId(Auction auctionId) {
+        this.auctionId = auctionId;
     }
     
 }

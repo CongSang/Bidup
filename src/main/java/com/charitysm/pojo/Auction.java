@@ -49,6 +49,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByMailTo", query = "SELECT a FROM Auction a WHERE a.mailTo = :mailTo")})
 public class Auction implements Serializable {
 
+    @OneToMany(mappedBy = "auctionId")
+    @JsonIgnore
+    private Set<PostNotif> postNotifSet;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auctionId")
     @JsonIgnore
     private Set<ReportAuction> reportAuctionSet;
@@ -227,6 +231,15 @@ public class Auction implements Serializable {
 
     public void setReportAuctionSet(Set<ReportAuction> reportAuctionSet) {
         this.reportAuctionSet = reportAuctionSet;
+    }
+
+    @XmlTransient
+    public Set<PostNotif> getPostNotifSet() {
+        return postNotifSet;
+    }
+
+    public void setPostNotifSet(Set<PostNotif> postNotifSet) {
+        this.postNotifSet = postNotifSet;
     }
     
 }

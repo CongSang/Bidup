@@ -8,7 +8,6 @@ import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.repositories.NotificationRepository;
 import java.util.List;
-import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class NotificationRepositoryImpl implements NotificationRepository{
+public class NotificationRepositoryImpl implements NotificationRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
-    
+
     @Override
     public List<Object[]> getNotifs(String userId) {
         Session session = sessionFactory.getObject().getCurrentSession();
@@ -54,13 +54,26 @@ public class NotificationRepositoryImpl implements NotificationRepository{
     }
 
     @Override
+    public void updateAuctionNotif(int postId, NotifType type) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_updateAuctionNotif(:auctionId, :type)");
+        q.setParameter("auctionId", postId);
+        q.setParameter("type", type.toString());
+        q.executeUpdate();
+    }
+
+    @Override
     public void readNotif(int notifId, NotifType type) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST)) {
-            PostNotif pn = session.get(PostNotif.class, notifId);
+        if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST) || type.equals(NotifType.JOIN_AUCTION)) {
+            Query q = session.createNamedQuery("PostNotif.findById");
+            q.setParameter("id", notifId);
+            
+            PostNotif pn = (PostNotif) q.getSingleResult();
+            
             pn.setIsRead(true);
             session.update(pn);
         }
     }
-    
+
 }

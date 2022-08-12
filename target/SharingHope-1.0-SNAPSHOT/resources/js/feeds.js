@@ -266,9 +266,10 @@ function prependFeeds(post) {
 
 
 function loadAuctionFeeds(auctions) {
+    console.log(auctions);
     var userAvatar = $("#userAvatar").attr("src");
     $.each(auctions, function (index, auction) {
-        
+        console.log(auction);
         let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
         let bidSort = auction.bidSet.filter(c => c.user.id !== currentUserId);
         bidSort.sort(function (a, b) {
