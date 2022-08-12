@@ -1,7 +1,4 @@
-DROP PROCEDURE IF EXISTS sp_userGetNotifs;
-
-DELIMITER $
-CREATE PROCEDURE sp_userGetNotifs(IN user_id varchar(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userGetNotifs`(IN user_id varchar(50))
 BEGIN
 	(SELECT post_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id
 		FROM
@@ -27,5 +24,18 @@ BEGIN
 					ON c.post_id=sub.post_id
 				WHERE n.user_id = user_id AND n.type = 'COMMENT_POST' AND c.user_id != user_id
 				GROUP BY c.post_id) AS A
+		JOIN user u on A.last_modified_user=u.id)
+    UNION
+    (SELECT post_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id
+		FROM
+			(SELECT n.auction_id as post_id, n.user_id,  n.type, n.is_read, COUNT(distinct b.user_id) as count, last_modified_user, last_modified, n.id as notif_id
+				FROM csmdb.post_notif n JOIN bid b on n.auction_id=b.auction_id 
+					JOIN (SELECT distinct n.auction_id, n.user_id as onwer_id, b.user_id as last_modified_user, b.bid_date as last_modified
+							FROM csmdb.post_notif n join bid b on n.auction_id=b.auction_id
+							WHERE b.user_id != user_id
+							ORDER BY b.bid_date DESC) as sub
+					ON b.auction_id=sub.auction_id
+				WHERE n.user_id = user_id AND n.type = 'JOIN_AUCTION' AND b.user_id != user_id
+				GROUP BY b.auction_id) AS A
 		JOIN user u on A.last_modified_user=u.id);
-END $
+END

@@ -136,9 +136,6 @@
                 $('.notif-count').css('opacity', '0');
             });
         };
-        $(function () {
-            $('.sidebar-right').hide();
-        });
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);
 

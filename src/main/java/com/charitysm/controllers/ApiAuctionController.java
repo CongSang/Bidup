@@ -9,9 +9,11 @@ import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.BidPK;
 import com.charitysm.pojo.reobj.BidRequest;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.pojo.reobj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
+import com.charitysm.services.NotificationService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
@@ -55,12 +57,21 @@ public class ApiAuctionController {
     private JavaMailSender mailSender;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private NotificationService notificationService;
 
     @Async
     @GetMapping("/auction-side")
     public ResponseEntity<List<Auction>> getActionSideBar() {
 
         return new ResponseEntity<>(this.auctionService.getAuctionSideBar(), HttpStatus.OK);
+    }
+    
+     @Async
+    @GetMapping("/auction-single/{auctionId}")
+    public ResponseEntity<Auction> getActionSingle(@PathVariable(value="auctionId") int auctionId) {
+
+        return new ResponseEntity<>(this.auctionService.getAuctionById(auctionId), HttpStatus.OK);
     }
 
     @Async
@@ -233,6 +244,9 @@ public class ApiAuctionController {
         bid.setBidPK(bidPK);
         bid.setUser(u);
         bid.setAuction(a);
+        
+        if (!a.getUserId().getId().equals(u.getId()))
+            this.notificationService.updateAuctionNotif(b.getAuctionId(), NotifType.JOIN_AUCTION);
         return new ResponseEntity<>(this.bidService.createBid(bid), HttpStatus.CREATED);
     }
 

@@ -56,5 +56,10 @@ public class NotificationServiceImpl implements NotificationService{
     public void readNotif(int notifId, NotifType type) {
         this.notificationRepository.readNotif(notifId, type);
     }
+
+    @Override
+    public void updateAuctionNotif(int postId, NotifType type) {
+        this.notificationRepository.updateAuctionNotif(postId, type);
+    }
     
 }
