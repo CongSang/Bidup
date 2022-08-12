@@ -90,13 +90,16 @@
         else if (locate === (ctxPath + '/search/people')) {
             personSearch();
             $('.post-search').css('display', 'none');
+            $('.auction-search').css('display', 'none');
         }
         else if (locate === (ctxPath + '/search/posts')) {
             contentSearch();
             $('.person-search').css('display', 'none');
+            $('.auction-search').css('display', 'none');
         }
         else {
             auctionSearch();
+            $('.person-search').css('display', 'none');
             $('.post-search').css('display', 'none');
         }
     };

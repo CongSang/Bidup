@@ -5,10 +5,10 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-12T15:39:33")
-@StaticMetamodel(BidPK.class)
-public class BidPK_ { 
+@StaticMetamodel(ReactCommentPK.class)
+public class ReactCommentPK_ { 
 
-    public static volatile SingularAttribute<BidPK, Integer> auctionId;
-    public static volatile SingularAttribute<BidPK, String> userId;
+    public static volatile SingularAttribute<ReactCommentPK, Integer> commentId;
+    public static volatile SingularAttribute<ReactCommentPK, String> userId;
 
 }

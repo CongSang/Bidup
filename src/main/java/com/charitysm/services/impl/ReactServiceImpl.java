@@ -5,6 +5,7 @@
 package com.charitysm.services.impl;
 
 import com.charitysm.pojo.React;
+import com.charitysm.pojo.ReactComment;
 import com.charitysm.repositories.ReactRepository;
 import com.charitysm.services.ReactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,16 @@ public class ReactServiceImpl implements ReactService {
     @Override
     public React findReact(String userId, int postId) {
         return this.reactRepository.findReact(userId, postId);
+    }
+
+    @Override
+    public boolean createReactComment(ReactComment r) {
+        return this.reactRepository.createReactComment(r);
+    }
+
+    @Override
+    public void deleteReactComment(String userId, int commentId) {
+        this.reactRepository.deleteReactComment(userId, commentId);
     }
     
 }

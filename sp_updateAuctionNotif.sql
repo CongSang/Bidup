@@ -1,4 +1,7 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_updateAuctionNotif`(IN auction_id int, IN type enum('JOIN_AUCTION'))
+DROP PROCEDURE IF EXISTS sp_updateAuctionNotif;
+
+DELIMITER $
+CREATE PROCEDURE sp_updateAuctionNotif(IN auction_id int, IN type enum('JOIN_AUCTION'))
 BEGIN
 	DECLARE owner_id varchar(50);
     SET owner_id = (SELECT user_id FROM auction WHERE id=auction_id LIMIT 1);
@@ -10,4 +13,4 @@ BEGIN
         SET is_read=false
         WHERE post_notif.auction_id=auction_id AND post_notif.type=type;
     END IF;
-END
+END $

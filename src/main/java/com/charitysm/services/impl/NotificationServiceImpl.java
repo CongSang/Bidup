@@ -31,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService{
         List<NotificationResponse> rs = new ArrayList<>();
         data.forEach(d -> {
             NotificationResponse n = new NotificationResponse();
-            n.setPostId((int)d[0]);
+            n.setTargetId((int)d[0]);
             n.setType(NotifType.valueOf((String) d[1]));
             if (d[2].toString().equals("0"))
                 n.setIs_read(false);
@@ -48,8 +48,8 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public void updateNotif(int postId, NotifType type) {
-        this.notificationRepository.updateNotif(postId, type);
+    public void updateNotif(int targetId, NotifType type) {
+        this.notificationRepository.updateNotif(targetId, type);
     }
 
     @Override

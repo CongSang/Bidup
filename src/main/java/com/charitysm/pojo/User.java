@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -147,6 +148,10 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private Set<React> reactSet;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonIgnore
+    @Transient
+    private Set<ReactComment> reactCommentSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private Set<Bid> bidSet;
@@ -154,6 +159,8 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Auction> auctionSet;
     @Transient
+    @JsonIgnore
+    @XmlTransient
     private MultipartFile file;
 
     public User() {
@@ -413,6 +420,7 @@ public class User implements Serializable {
     /**
      * @return the file
      */
+    @XmlTransient
     public MultipartFile getFile() {
         return file;
     }
@@ -422,6 +430,20 @@ public class User implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the reactCommentSet
+     */
+    public Set<ReactComment> getReactCommentSet() {
+        return reactCommentSet;
+    }
+
+    /**
+     * @param reactCommentSet the reactCommentSet to set
+     */
+    public void setReactCommentSet(Set<ReactComment> reactCommentSet) {
+        this.reactCommentSet = reactCommentSet;
     }
     
 }
