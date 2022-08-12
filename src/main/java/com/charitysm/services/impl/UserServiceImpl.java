@@ -58,6 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean registerNewUser(User user) {
+        return this.userRepository.registerNewUser(user);
+    }
+        
     public List<User> getUsers(Map<String, String> params) {
         return this.userRepository.getUsers(params);
     }

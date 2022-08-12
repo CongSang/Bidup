@@ -49,7 +49,7 @@ function customHashtag(element) {
     });
 }
 
-function deleteAuction(endpoint, auctionId) {
+function deleteAuction(auctionId) {
     swal({
         title: "Bạn có chắc là hủy đấu giá bài viết này?",
         icon: "warning",
@@ -62,7 +62,7 @@ function deleteAuction(endpoint, auctionId) {
 
             $.ajax({
                 type: 'delete',
-                url: endpoint + "/" + auctionId,
+                url: `${ctxPath}/api/auctions/${auctionId}`,
                 dataType: 'json',
                 success: function() {
                     swal("Xóa bài đấu giá thành công", {

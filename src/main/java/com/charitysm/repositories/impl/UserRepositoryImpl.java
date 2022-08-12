@@ -48,6 +48,18 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean registerNewUser(User user) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+    }
+    
     public List<User> getUsers(Map<String, String> params) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("FROM User WHERE LOWER(CONCAT(firstname,' ',lastname)) like :name");

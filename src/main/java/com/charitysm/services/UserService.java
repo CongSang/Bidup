@@ -18,5 +18,6 @@ public interface UserService extends UserDetailsService {
 
     User getUserById(String id);
     
+    boolean registerNewUser(User user);
     List<User> getUsers(Map<String, String> params);
 }

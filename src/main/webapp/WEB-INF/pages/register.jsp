@@ -30,25 +30,27 @@
 
                 <div class="modal-body ">
                     <div class="authentication register">
-                        <form:form action="" class="form-register" modelAttribute="user">
+                        <c:url value="/register" var="action" />
+                        <form:form action="${action}" class="form-register" modelAttribute="user"
+                                   enctype="multipart/form-data">
 
                             <div class="form-group d-flex">
                                 <div class="text-start w-100 me-1">
                                     <form:input path="lastname" placeholder="Họ*" cssClass="form-control-sm" />
-                                    <form:errors path="lastname" cssClass="text-danger err-validate" />
+                                    <form:errors path="lastname" element="div" cssClass="text-danger err-validate" />
                                 </div>
                                 <div class="text-start w-100" >
                                     <form:input path="firstname" placeholder="Tên*" class="form-control-sm" />
-                                    <form:errors path="firstname" cssClass="text-danger err-validate" />
+                                    <form:errors path="firstname" element="div"  cssClass="text-danger err-validate" />
                                 </div>
                             </div>
                             <div class="form-group text-start">
                                 <form:input path="email" placeholder="Email*" cssClass="form-control-sm" />
-                                <form:errors path="email" cssClass="text-danger err-validate" />
+                                <form:errors path="email" element="div" cssClass="text-danger err-validate" />
                             </div>
                             <div class="form-group text-start">
                                 <form:input path="phone" placeholder="Số điện thoại*" cssClass="form-control-sm" />
-                                <form:errors path="phone" cssClass="text-danger err-validate" />
+                                <form:errors path="phone" element="div" cssClass="text-danger err-validate" />
                             </div>
                             <div class="form-group text-start">
                                 <form:label path="birthdate" for="dateofbirth" cssClass="me-1 small">Ngày sinh<span class="text-danger">*</span></form:label>
@@ -63,15 +65,11 @@
                             </div>
                             <div class="form-group text-start">
                                 <form:password path="password" placeholder="Mật khẩu*"  cssClass="form-control-sm" />
-                                <form:errors path="password" cssClass="text-danger err-validate" />
-                            </div> 
-                            <div class="form-group text-start">
-                                <form:password path="password" placeholder="Nhập lại mật khẩu*" cssClass="form-control-sm" />
-                                <form:errors path="password" cssClass="text-danger err-validate" />
+                                <form:errors path="password" element="div" cssClass="text-danger err-validate" />
                             </div>
                             <div class="form-group text-start">
-                                <form:label path="avatar" for="avatar" cssClass="me-1 small">Chọn ảnh đại diện<span class="text-danger">*</span></form:label>
-                                <form:input path="avatar" id="avatar" type="file" placeholder="" cssClass="form-control-sm" />
+                                <form:label path="file" for="avatar" cssClass="me-1 small">Chọn ảnh đại diện<span class="text-danger">*</span></form:label>
+                                <form:input path="file" id="avatar" type="file" placeholder="" cssClass="form-control-sm" />
                             </div>
                             <div class="form-group">
                                 <form:button type="submit" class="b btn-register w-50">
