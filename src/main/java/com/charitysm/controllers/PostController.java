@@ -32,9 +32,6 @@ public class PostController {
     @GetMapping("/{postId}")
     public String getPost(@RequestParam Map<String, String> params,
             @PathVariable(value="postId") int postId, Model model) {
-        //load post theo follow
-//        User currentUser = (User)session.getAttribute("currentUser");
-//        String userId = currentUser.getId();
         if (params.get("ref").equals("notif")) {
             String t = params.get("notif_type");
             String nId = params.get("notif_id");

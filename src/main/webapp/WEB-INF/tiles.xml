@@ -78,6 +78,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="sidebarRight" 
                        value="" />
     </definition>
+    <definition name="auctionSingle" extends="baseLayout">
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/auctionSingle.jsp" />
+        <put-attribute name="title" value="Sharing Hope" />
+        <put-attribute name="sidebarLeft" 
+                       value="" />
+        <put-attribute name="sidebarRight" 
+                       value="" />
+    </definition>
     <definition name="hashtagPage" extends="baseLayout">
         <put-attribute name="singleContent" 
                        value="/WEB-INF/pages/hashtag.jsp" />

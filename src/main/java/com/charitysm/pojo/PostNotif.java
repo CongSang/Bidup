@@ -35,6 +35,10 @@ import org.hibernate.annotations.Type;
     @NamedQuery(name = "PostNotif.findByIsRead", query = "SELECT p FROM PostNotif p WHERE p.isRead = :isRead")})
 public class PostNotif implements Serializable {
 
+    @JoinColumn(name = "auction_id", referencedColumnName = "id")
+    @ManyToOne
+    private Auction auctionId;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -138,6 +142,14 @@ public class PostNotif implements Serializable {
      */
     public void setIsRead(Boolean isRead) {
         this.isRead = isRead;
+    }
+
+    public Auction getAuctionId() {
+        return auctionId;
+    }
+
+    public void setAuctionId(Auction auctionId) {
+        this.auctionId = auctionId;
     }
     
 }
