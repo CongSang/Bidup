@@ -43,6 +43,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate")})
 public class Comment implements Serializable {
 
+    @OneToMany(mappedBy = "parentId", fetch = FetchType.EAGER)
+    private Set<Comment> commentSet;
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Comment parentId;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentId", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<CommentNotif> commentNotifSet;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
     private Set<ReactComment> reactCommentSet;
 
@@ -151,6 +162,32 @@ public class Comment implements Serializable {
 
     public void setReactCommentSet(Set<ReactComment> reactCommentSet) {
         this.reactCommentSet = reactCommentSet;
+    }
+
+    @XmlTransient
+    public Set<CommentNotif> getCommentNotifSet() {
+        return commentNotifSet;
+    }
+
+    public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
+        this.commentNotifSet = commentNotifSet;
+    }
+
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    public Comment getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Comment parentId) {
+        this.parentId = parentId;
     }
     
 }

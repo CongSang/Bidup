@@ -7,6 +7,7 @@ package com.charitysm.services.impl;
 import com.charitysm.pojo.Comment;
 import com.charitysm.repositories.CommentRepository;
 import com.charitysm.services.CommentService;
+import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,16 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public BigInteger getCommentCount(int postId) {
+        return this.commentRepository.getCommentCount(postId);
+    }
+    
     public long countCommentStats(int month, int year) {
         return this.commentRepository.countCommentStats(month, year);
     }
     
+    @Override
+    public List<Comment> getReplies(int commentId, int page) {
+        return this.commentRepository.getReplies(commentId, page);
+    }
 }

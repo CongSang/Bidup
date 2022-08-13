@@ -4,6 +4,7 @@
  */
 package com.charitysm.repositories.impl;
 
+import com.charitysm.pojo.CommentNotif;
 import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.repositories.NotificationRepository;
@@ -66,13 +67,16 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     public void readNotif(int notifId, NotifType type) {
         Session session = sessionFactory.getObject().getCurrentSession();
         if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST) || type.equals(NotifType.JOIN_AUCTION)) {
-            Query q = session.createNamedQuery("PostNotif.findById");
-            q.setParameter("id", notifId);
             
-            PostNotif pn = (PostNotif) q.getSingleResult();
+            PostNotif pn = session.get(PostNotif.class, notifId);
             
             pn.setIsRead(true);
             session.update(pn);
+        }
+        else {
+            CommentNotif cn = session.get(CommentNotif.class, notifId);
+            cn.setIsRead(true);
+            session.update(cn);
         }
     }
 
