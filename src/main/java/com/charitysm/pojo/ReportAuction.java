@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReportAuction.findByIsSolve", query = "SELECT r FROM ReportAuction r WHERE r.isSolve = :isSolve")})
 public class ReportAuction implements Serializable {
 
+    @Size(max = 7)
+    @Column(name = "type")
+    private String type;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "reported_date")
@@ -146,6 +150,14 @@ public class ReportAuction implements Serializable {
 
     public void setReportedDate(Date reportedDate) {
         this.reportedDate = reportedDate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 }
