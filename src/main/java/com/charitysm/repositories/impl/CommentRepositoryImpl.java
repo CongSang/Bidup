@@ -5,8 +5,12 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Comment;
+import com.charitysm.pojo.React;
 import com.charitysm.repositories.CommentRepository;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +66,31 @@ public class CommentRepositoryImpl implements CommentRepository{
     public Comment getCommentById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         return session.get(Comment.class, id);
+    }
+
+    @Override
+    public long countCommentStats(int month, int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rU = q.from(Comment.class);
+        
+        if (month == 0) {
+            q.where(b.equal(b.function("YEAR", Integer.class, rU.get("commentDate")), year));
+            q.multiselect(b.count(rU));
+        } else if (year == 0) {
+            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("commentDate")), month));
+            q.multiselect(b.count(rU));
+        } else {
+            q.where(
+                    b.equal(b.function("MONTH", Integer.class, rU.get("commentDate")), month),
+                    b.equal(b.function("YEAR", Integer.class, rU.get("commentDate")), year));
+            q.multiselect(b.count(rU));
+        }
+        
+        Query query = session.createQuery(q);
+        return (long) query.getSingleResult(); 
     }
     
 }

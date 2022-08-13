@@ -16,4 +16,5 @@ public interface CommentRepository {
     void deleteComment(int id);
     List<Comment> getComments(int postId, int page);
     Comment getCommentById(int id);
+    long countCommentStats(int month, int year);
 }

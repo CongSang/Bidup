@@ -8,8 +8,9 @@ import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactComment;
 import com.charitysm.pojo.ReactCommentPK;
 import com.charitysm.repositories.ReactRepository;
-import java.time.Instant;
-import javax.persistence.TemporalType;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,31 @@ public class ReactRepositoryImpl implements ReactRepository{
         Query q = session.createQuery("DELETE FROM ReactComment WHERE reactCommentPK=:rPK");
         q.setParameter("rPK", rPK);
         q.executeUpdate();
+    }
+
+    @Override
+    public long countReactStats(int month, int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rU = q.from(React.class);
+        
+        if (month == 0) {
+            q.where(b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year));
+            q.multiselect(b.count(rU));
+        } else if (year == 0) {
+            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month));
+            q.multiselect(b.count(rU));
+        } else {
+            q.where(
+                    b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month),
+                    b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year));
+            q.multiselect(b.count(rU));
+        }
+        
+        Query query = session.createQuery(q);
+        return (long) query.getSingleResult(); 
     }
     
 }

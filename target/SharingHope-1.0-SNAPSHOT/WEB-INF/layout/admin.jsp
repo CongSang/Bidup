@@ -47,21 +47,23 @@
                             </a>
                             <div class="collapse" id="sidebarReport">
                                 <ul class="side-nav-second-level">
-                                    <c:url value="/admin/report" var="reportUrl" />
                                     <li>
-                                        <a href="${reportUrl}" class="side-nav-link">
+                                        <c:url value="/admin/report-post" var="reportPostUrl" />
+                                        <a href="${reportPostUrl}" class="side-nav-link">
                                             <i class="fa-solid fa-file-lines me-2"></i>
                                             Báo cáo bài viết
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${reportUrl}" class="side-nav-link">
+                                        <c:url value="/admin/report-auction" var="reportAuctionUrl" />
+                                        <a href="${reportAuctionUrl}" class="side-nav-link">
                                             <i class="fa-solid fa-gavel me-2"></i>
                                             Báo cáo bài đấu giá
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${reportUrl}" class="side-nav-link">
+                                        <c:url value="/admin/report-user" var="reportUserUrl" />
+                                        <a href="${reportUserUrl}" class="side-nav-link">
                                             <i class="fa-solid fa-user me-2"></i>
                                             Báo cáo người dùng
                                         </a>

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface PostRepository {
     List<Post> getPosts(Map<String, String> params);
-    int countPosts();
+    long countPostStats(int month, int year);
     Post getPostById(int id);
     int createPost(Post p);
     void deletePost(int id);

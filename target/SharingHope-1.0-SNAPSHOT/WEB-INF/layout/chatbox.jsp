@@ -9,7 +9,7 @@
             <h6 class="chat-box-userchat ms-2">Cong Sang</h6>
         </div>
 
-            <div onclick="closeChatBox()">
+        <div onclick="closeChatBox()">
             <i class="fa-solid fa-xmark chat-box--close"></i>
         </div>
     </div>
@@ -28,15 +28,14 @@
                         hehehe
                         <div class="send-time-right">16:20</div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
 
         <div class="chat-box--send">
-            <form class="d-flex justify-content-between align-items-center">
+            <form class="d-flex justify-content-between align-items-center position-relative">
                 <input type="text" placeholder="Aa" class="form-control chat-input" />
-
                 <button type="submit" class="btn-send">
                     <i class="fa-solid fa-paper-plane p-2"></i>
                 </button>
@@ -44,3 +43,11 @@
         </div>
     </div>
 </div>
+
+
+<script src="<c:url value="/resources/js/emoji/inputEmoji.js" />"></script>
+<script>
+    $(function () {
+        $('input.chat-input').emoji();
+    });
+</script>

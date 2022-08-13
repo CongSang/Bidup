@@ -17,4 +17,5 @@ public interface ReactService {
     void deleteReact(React r);
     void deleteReactComment(String userId, int commentId);
     React findReact(String userId, int postId);
+    long countReactStats(int month, int year);
 }
