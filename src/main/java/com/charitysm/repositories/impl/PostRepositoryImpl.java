@@ -8,7 +8,6 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.PostRepository;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -77,11 +76,28 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public int countPosts() {
+    public long countPostStats(int month, int year) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("SELECT COUNT(*) FROM Post");
-
-        return Integer.parseInt(q.getSingleResult().toString());
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rU = q.from(Post.class);
+        
+        if (month == 0) {
+            q.where(b.equal(b.function("YEAR", Integer.class, rU.get("postedDate")), year));
+            q.multiselect(b.count(rU));
+        } else if (year == 0) {
+            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("postedDate")), month));
+            q.multiselect(b.count(rU));
+        } else {
+            q.where(
+                    b.equal(b.function("MONTH", Integer.class, rU.get("postedDate")), month),
+                    b.equal(b.function("YEAR", Integer.class, rU.get("postedDate")), year));
+            q.multiselect(b.count(rU));
+        }
+        
+        Query query = session.createQuery(q);
+        return (long) query.getSingleResult();
     }
     
     @Override

@@ -66,5 +66,10 @@ public class AuctionServiceImpl implements AuctionService{
     public List<Auction> getUserAuction(String userId, int page) {
         return this.auctionRepository.getUserAuction(userId, page);
     }
+
+    @Override
+    public long countAuctionStats(int month, int year) {
+        return this.auctionRepository.countAuctionStats(month, year);
+    }
     
 }

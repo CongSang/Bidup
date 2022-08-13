@@ -39,5 +39,10 @@ public class CommentServiceImpl implements CommentService{
     public Comment getCommentById(int id) {
         return this.commentRepository.getCommentById(id);
     }
+
+    @Override
+    public long countCommentStats(int month, int year) {
+        return this.commentRepository.countCommentStats(month, year);
+    }
     
 }

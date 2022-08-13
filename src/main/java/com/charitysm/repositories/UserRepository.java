@@ -19,4 +19,5 @@ public interface UserRepository {
     
     boolean registerNewUser(User user);
     List<User> getUsers(Map<String, String> params);
+    long countUserStats(int month, int year);
 }

@@ -55,7 +55,7 @@ public class ReportPost implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 7)
+    @Size(min = 1, max = 100)
     @Column(name = "reason")
     private String reason;
     @Column(name = "is_solve")

@@ -10,6 +10,7 @@ import com.charitysm.pojo.ReportAuction;
 import com.charitysm.pojo.ReportPost;
 import com.charitysm.pojo.ReportUser;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.enumtype.ReportType;
 import com.charitysm.pojo.reobj.ReportRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.PostService;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiReportController {
-    
+
     @Autowired
     private ReportService reportService;
     @Autowired
@@ -42,60 +43,102 @@ public class ApiReportController {
     private AuctionService auctionService;
     @Autowired
     private UserService userService;
-    
+
     @Async
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/report-post")
     public void createReportPost(@RequestBody ReportRequest rr, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
         Post post = this.postService.getPostById(rr.getArticleId());
-        
+        String reason = "";
+
         if (post != null) {
             ReportPost p = new ReportPost();
-            p.setIsSolve((short)0);
+            p.setIsSolve((short) 0);
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setPostId(post);
-            p.setReason(rr.getReason());
-            
+            switch (rr.getReason()) {
+                case "IMAGE":
+                    reason = ReportType.IMAGE.toString();
+                    break;
+                case "CONTENT":
+                    reason = ReportType.CONTENT.toString();
+                    break;
+                case "SPAM":
+                    reason = ReportType.SPAM.toString();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            p.setReason(reason);
+
             this.reportService.createPostReport(p);
         }
     }
-    
+
     @Async
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/report-auction")
     public void createReportAuction(@RequestBody ReportRequest rr, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
         Auction auction = this.auctionService.getAuctionById(rr.getArticleId());
-        
+        String reason = "";
+
         if (auction != null) {
             ReportAuction p = new ReportAuction();
-            p.setIsSolve((short)0);
+            p.setIsSolve((short) 0);
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setAuctionId(auction);
-            p.setReason(rr.getReason());
-            
+            switch (rr.getReason()) {
+                case "IMAGE":
+                    reason = ReportType.IMAGE.toString();
+                    break;
+                case "CONTENT":
+                    reason = ReportType.CONTENT.toString();
+                    break;
+                case "SPAM":
+                    reason = ReportType.SPAM.toString();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            p.setReason(reason);
+
             this.reportService.createAuctionReport(p);
         }
     }
-    
+
     @Async
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/report-user")
     public void createReportUser(@RequestBody ReportRequest rr, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
         User reportedUser = this.userService.getUserById(rr.getUserId());
-        
+        String reason = "";
+
         if (reportedUser != null) {
             ReportUser p = new ReportUser();
-            p.setIsSolve((short)0);
+            p.setIsSolve((short) 0);
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setReportedUser(reportedUser);
-            p.setReason(rr.getReason());
-            
+            switch (rr.getReason()) {
+                case "PAY":
+                    reason = ReportType.PAY.toString();
+                    break;
+                case "WORDS":
+                    reason = ReportType.WORDS.toString();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            p.setReason(reason);
+
             this.reportService.createUserReport(p);
         }
     }
