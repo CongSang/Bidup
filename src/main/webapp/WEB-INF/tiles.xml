@@ -49,6 +49,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/sidebarRight.jsp" />
         <put-attribute name="footer"
                        value="/WEB-INF/layout/footer.jsp" />
+        <put-attribute name="chatbox"
+                       value="/WEB-INF/layout/chatbox.jsp" />
     </definition>
         
     <!--base admin-->
@@ -57,6 +59,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/layout/header.jsp" />
         <put-attribute name="content" value="" />
         <put-attribute name="title" value="" />
+        <put-attribute name="chatbox"
+                       value="/WEB-INF/layout/chatbox.jsp" />
     </definition>
     
     <definition name="adminChart" extends="admin">

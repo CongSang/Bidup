@@ -1,4 +1,7 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userGetNotifs`(IN user_id varchar(50))
+DROP PROCEDURE IF EXISTS sp_userGetNotifs;
+
+DELIMITER $
+CREATE PROCEDURE sp_userGetNotifs(IN user_id varchar(50))
 BEGIN
 	SELECT * FROM (
 		(SELECT target_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id

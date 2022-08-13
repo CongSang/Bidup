@@ -186,6 +186,8 @@
             <p class="ms-3 mb-0">Đang gửi email...</p>
         </div>
 
+        <tiles:insertAttribute name="chatbox" />
+
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/userPage.js" />"></script>
         <script src="<c:url value="/resources/js/auction.js" />"></script>
@@ -194,6 +196,7 @@
         <script src="<c:url value="/resources/js/post.js" />"></script>
         <script src="<c:url value="/resources/js/comment.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
+        <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script>
             <c:url value="/api/user/${userInfo.id}/auctions" var="endpoint1" />
             <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />

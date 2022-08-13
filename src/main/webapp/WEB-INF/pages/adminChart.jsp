@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div class="chart-content container-fluid">
+<div class="chart-content container-fluid pb-4">
     <button class="button-menu-mobile open-left" onclick="openSideBar()">
         <i class="fa-solid fa-bars"></i>
     </button>
@@ -32,8 +32,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
 
         <div class="row">
             <div class="col-sm-12 col-md-6">
@@ -135,5 +133,47 @@
                 </div> <!-- end card-->
             </div> <!-- end col-->
         </div> <!-- end row -->
-    </div>
+        
+        <div class="row w-100 mb-4" style="min-height: 400px">
+            <div class="col-md-4 mb-2">
+                <img class="w-100 p-4" src="https://res.cloudinary.com/dynupxxry/image/upload/v1660355570/netflix/6915.png_300_nfqppx.png" alt="show chart"/>
+            </div>
+            <div class="col-md-8">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
 </div>
+
+<script>
+    $(function () {
+        const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+                );
+    });
+
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June'
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+</script>

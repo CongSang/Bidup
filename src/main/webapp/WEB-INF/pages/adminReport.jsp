@@ -23,7 +23,7 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <span class="input-group-text bg-primary border-primary text-white mb-2">
+                        <span class="input-group-text bg-primary border-primary text-white mb-2 load-report" style="cursor: pointer;">
                             <i class="fa-solid fa-rotate-right"></i>
                         </span>
                     </form>

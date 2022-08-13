@@ -9,7 +9,7 @@
 }
 
 #notifContainer {
-    width: 360px;
+    width: 370px;
     right: -68px;
     top:32px;
 }
@@ -40,10 +40,16 @@
     cursor: pointer;
 }
 
+.img-type-notif {
+    position: absolute;
+    bottom: 2px;
+    right: 6px;
+}
+
 .notif-item--message {
     padding: 4px 0;
     text-align: left;
-    width: 228px;
+    width: 224px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -74,8 +80,8 @@
     color: #0084ff;
 }
 
-.notif-item > img {
-    margin: 4px 8px 4px 0;
+.notif-item .user-img {
+    margin: 4px 12px 4px 0;
     width: 56px;
     height: 56px;
     object-fit: cover;
@@ -109,5 +115,5 @@
 }
 
 .is-read-notify {
-    color: #98a6ad !important;
+    color: #9fa8af !important;
 }

@@ -150,7 +150,6 @@ public class User implements Serializable {
     private Set<React> reactSet;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore
-    @Transient
     private Set<ReactComment> reactCommentSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
