@@ -15,8 +15,11 @@ import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
 import com.charitysm.utils.NotificationCenter;
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,15 +54,14 @@ public class APICommentController {
     @Async
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/delete-comment/{id}")
-    public void deleteComment(@PathVariable(value = "id") int id
-            , ApiPostController apiPostController) {
-        commentService.deleteComment(id);
+    public void deleteComment(@PathVariable(value = "id") int id) {
+        this.commentService.deleteComment(id);
     }
 
     @Async
     @PostMapping(value = "/create-comment")
     public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c
-            , HttpSession session, ApiPostController apiPostController) {
+            , HttpSession session) {
         Comment comm = new Comment();
         comm.setContent(c.getContent());
         comm.setCommentDate(new Date());
@@ -67,7 +69,7 @@ public class APICommentController {
         User u = (User) session.getAttribute("currentUser");
         comm.setPostId(p);
         comm.setUserId(u);
-        if (commentService.createComment(comm) < 1) {
+        if (this.commentService.createComment(comm) < 1) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         System.out.println("Userid1: " + u.getId());
@@ -81,8 +83,8 @@ public class APICommentController {
     @Async
     @GetMapping(value = "/get-comments")
     public ResponseEntity<List<Comment>> getComments(@RequestParam(value = "page") int page
-            , @RequestParam(value = "postId") int postId, ApiPostController apiPostController) {
-        return new ResponseEntity<>(commentService.getComments(postId, page), HttpStatus.OK);
+            , @RequestParam(value = "postId") int postId) {
+        return new ResponseEntity<>(this.commentService.getComments(postId, page), HttpStatus.OK);
     }
     
     @Async
@@ -112,6 +114,22 @@ public class APICommentController {
     public void deleteReact(@PathVariable(value="commentId") int commentId, HttpSession session) {
         User u = (User)session.getAttribute("currentUser");
         this.reactService.deleteReactComment(u.getId(), commentId);
+    }
+    
+    @Async
+    @GetMapping(value = "/get-comment-count/{postId}")
+    public ResponseEntity<BigInteger> getComments(@PathVariable(value="postId") int postId) {
+        Map<String,String> data = new HashMap<>();
+//        System.out.println("count: "+ count);
+//        data.put("count", "" + count);
+        return new ResponseEntity<>(this.commentService.getCommentCount(postId), HttpStatus.OK);
+    }
+    
+    @Async
+    @GetMapping(value = "/get-replies")
+    public ResponseEntity<List<Comment>> getReplies(@RequestParam(value = "page") int page
+            , @RequestParam(value = "commentId") int commentId) {
+        return new ResponseEntity<>(this.commentService.getReplies(commentId, page), HttpStatus.OK);
     }
     
 }

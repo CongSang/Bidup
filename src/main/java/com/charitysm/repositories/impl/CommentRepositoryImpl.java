@@ -6,6 +6,7 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Comment;
 import com.charitysm.repositories.CommentRepository;
+import java.math.BigInteger;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -62,6 +63,21 @@ public class CommentRepositoryImpl implements CommentRepository{
     public Comment getCommentById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         return session.get(Comment.class, id);
+    }
+
+    @Override
+    public BigInteger getCommentCount(int postId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNativeQuery("SELECT COUNT(id) FROM comment WHERE post_id=:postId");
+        q.setParameter("postId", postId);
+        
+        return (BigInteger)q.getSingleResult();
+    }
+
+    @Override
+    public List<Comment> getReplies(int commentId, int page) {
+        
+        return null;
     }
     
 }

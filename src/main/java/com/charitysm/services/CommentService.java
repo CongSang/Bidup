@@ -5,6 +5,7 @@
 package com.charitysm.services;
 
 import com.charitysm.pojo.Comment;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface CommentService {
     void deleteComment(int id);
     List<Comment> getComments(int postId, int page);
     Comment getCommentById(int id);
+    BigInteger getCommentCount(int postId);
+    List<Comment> getReplies(int commentId, int page);
 }

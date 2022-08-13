@@ -61,6 +61,10 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
+    private Set<CommentNotif> commentNotifSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
     private Set<ReportAuction> reportAuctionSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
@@ -443,6 +447,15 @@ public class User implements Serializable {
      */
     public void setReactCommentSet(Set<ReactComment> reactCommentSet) {
         this.reactCommentSet = reactCommentSet;
+    }
+
+    @XmlTransient
+    public Set<CommentNotif> getCommentNotifSet() {
+        return commentNotifSet;
+    }
+
+    public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
+        this.commentNotifSet = commentNotifSet;
     }
     
 }
