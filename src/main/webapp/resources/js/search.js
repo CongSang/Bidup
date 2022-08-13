@@ -208,19 +208,22 @@ function removeSearchResult() {
 function loadUserSearch(users) {
     $.each(users, function(index, u) {
         let html = `<div class="person-search-item justify-content-between">
-                        <div>
+                        <div class="d-flex justify-content-center align-items-center">
                             <div class="person-search-item-image">
                                 <a href="#">
-                                    <img class="avatar-img rounded-circle" src="${u.avatar}" alt="">
+                                    <img class="avatar-search rounded-circle" src="${u.avatar}" alt="avatar">
                                 </a>
                             </div>
                             <div class="person-search-item-name">
-                                <h6 class="nav-item card-title mb-0">
+                                <h6 class="mb-0">
                                     <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow" onclick="follow('${u.id}')">Follow</div>
+                        <div class="btn-follow btn-follow${u.id}" onclick="follow('${u.id}')">
+                            <div class="line1"></div>
+                            <div class="line2"></div>
+                        </div>
                     </div>`;
     
         $('#personsContainer').append(html);
@@ -228,5 +231,6 @@ function loadUserSearch(users) {
 }
 
 function follow(userId) {
+    $(`.btn-follow${userId}`).addClass('active');
     console.log("You followed User: " + userId);
 }

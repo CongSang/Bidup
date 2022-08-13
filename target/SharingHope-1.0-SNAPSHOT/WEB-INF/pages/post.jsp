@@ -61,9 +61,12 @@
                         ${post.content}
                     </p>
                     <!--<img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">-->
-
+                    <c:if test="${post.image != null && post.image != ''}">
                     <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
-
+                    </c:if>
+                    <c:if test="${post.image == null && post.image == ''}">
+                    <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)">
+                    </c:if>
 
                     <div class="line"></div>
 

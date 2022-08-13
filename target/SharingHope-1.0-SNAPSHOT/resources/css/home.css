@@ -244,6 +244,10 @@ a {
     object-fit: cover;
     z-index: 99;
 }
+.comment-date {
+    font-size: 12px;
+    color: #676a79
+}
 
 .add-comment {
     width: 100%;
@@ -273,7 +277,7 @@ a {
 .comment--item-have-reply::before {
     content: '';
     width: 1.5px;
-    height: 46%;
+    height: 80%;
     background: #c7cacb;
     position: absolute;
     left: 18px;
@@ -283,21 +287,18 @@ a {
 .reply-comments .comment--item::before {
     content: '';
     width: 22px;
-    height: 1.5px;
+    height: 2px;
     background: #c7cacb;
     position: absolute;
-    top: 12px;
-    left: 18px;
+    top: 24px;
+    left: -26px;
 }
 
 .author-post {
     font-size: 12px;
-    background-color: var(--primary-color-100);
-    opacity: 0.8;
-    color: #fff;
-    padding: 2px 6px;
-    border-radius: 6px;
-    margin-left: 2px;
+    opacity: 0.9;
+    color: var(--primary-color-200);
+    border-radius: 10px;
 }
 
 .comment-like {
@@ -310,17 +311,21 @@ a {
 
 .count-like-comment {
     border-radius: 50px;
-    box-shadow: 0 2px 4px #888888;
+    box-shadow: 0px 2px 4px #999;
     padding: 2px;
     color: #333;
-    font-size: 13px;
+    font-size: 13.5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     position: absolute;
     bottom: 20px;
     right: -12px;
     cursor: default;
+}
+
+.count-like-comment img {
+    animation: liked 0.5s ease-in-out;
 }
 
 .comment-like.liked {
@@ -352,6 +357,18 @@ a {
     border-radius: 6px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
 }
+
+.comment-content.tada {
+    animation: tada 1s ease;
+}
+
+@keyframes tada {
+   0% {transform: scale(1);} 
+   10%, 20% {transform: scale(0.98) rotate(-3deg);} 
+   30%, 50%, 70%, 90% {transform: scale(1.02) rotate(3deg);} 
+   40%, 60%, 80% {transform: scale(1.02) rotate(-3deg);} 
+   100% {transform: scale(1) rotate(0);} 
+} 
 
 /*reply comment css*/
 .reply-comments {
