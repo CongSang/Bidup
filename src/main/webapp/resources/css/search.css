@@ -99,7 +99,7 @@
     border-radius: 50%;
     background-color: #ccc;
     transition: all linear .5s;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .btn-follow.active {
@@ -119,12 +119,12 @@
     height: 2px;
     border-radius: 5px;
     background-color: var(--primary-color-200);
-    transition: all linear .5s;
+    transition: all linear .4s;
 }
 
 .btn-follow.active .line1 {
     background-color: #fff;
-    animation: line1 .5s ease-in-out forwards;
+    animation: line1 .4s ease-in-out forwards;
 }
 
 .btn-follow .line2 {
@@ -137,12 +137,12 @@
     border-radius: 8px;
     background-color: var(--primary-color-200);
     transform: rotate(90deg);
-    transition: all linear .5s;
+    transition: all linear .4s;
 }
 
 .btn-follow.active .line2 {
     background-color: #fff;
-    animation: line2 .5s ease-in-out forwards;
+    animation: line2 .4s ease-in-out forwards;
 }
 
 #personsContainer .person-search-item-name .card-title {

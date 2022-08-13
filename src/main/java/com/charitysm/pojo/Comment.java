@@ -7,9 +7,12 @@ package com.charitysm.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
     @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate")})
 public class Comment implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
+    private Set<ReactComment> reactCommentSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -134,6 +142,15 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Comment[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<ReactComment> getReactCommentSet() {
+        return reactCommentSet;
+    }
+
+    public void setReactCommentSet(Set<ReactComment> reactCommentSet) {
+        this.reactCommentSet = reactCommentSet;
     }
     
 }

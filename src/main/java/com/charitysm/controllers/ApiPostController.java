@@ -52,8 +52,6 @@ public class ApiPostController {
     @Autowired
     private PostService postService;
     @Autowired
-    private CommentService commentService;
-    @Autowired
     private ReactService reactService;
     @Autowired
     private Cloudinary cloudinary;
@@ -70,33 +68,10 @@ public class ApiPostController {
     }
     
     @Async
-    @GetMapping("/get-comments")
-    public ResponseEntity<List<Comment>> getComments(@RequestParam("page") int page,
-            @RequestParam("postId") int postId) {
+    @GetMapping("/find-post/{commentId}")
+    public ResponseEntity<Post> findPost(@PathVariable(value="commentId") int commentId) {
         
-        return new ResponseEntity<>(this.commentService.getComments(postId, page), HttpStatus.OK);
-    }
-    
-    @Async
-    @PostMapping("/create-comment")
-    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c, HttpSession session) {
-        Comment comm = new Comment();
-        comm.setContent(c.getContent());
-        comm.setCommentDate(new Date());
-        
-        Post p = this.postService.getPostById(c.getPostId());
-        User u = (User)session.getAttribute("currentUser");
-        
-        comm.setPostId(p);
-        comm.setUserId(u);
-        if(this.commentService.createComment(comm) < 1)
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        System.out.println("Userid1: " + u.getId());
-        System.out.println("Userid2: " + comm.getUserId().getId());
-        if (!p.getUserId().getId().equals(u.getId()))
-            this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
-        
-        return new ResponseEntity<>(comm, HttpStatus.CREATED);
+        return new ResponseEntity<>(this.postService.findPostByCommentId(commentId), HttpStatus.OK);
     }
     
     @Async
@@ -170,12 +145,6 @@ public class ApiPostController {
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
     
-    @Async
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete-comment/{id}")
-    public void deleteComment(@PathVariable(value="id") int id) {
-        this.commentService.deleteComment(id);
-    }
     
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)

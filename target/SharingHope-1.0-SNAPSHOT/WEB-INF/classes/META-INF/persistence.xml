@@ -21,6 +21,7 @@
     <class>com.charitysm.pojo.Post</class>
     <class>com.charitysm.pojo.ReportUser</class>
     <class>com.charitysm.pojo.ReportPost</class>
+    <class>com.charitysm.pojo.ReactComment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/csmdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

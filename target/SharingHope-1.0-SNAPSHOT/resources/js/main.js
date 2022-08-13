@@ -221,3 +221,9 @@ function reportArticle(articleId, typeArticle) {
 
     removeReportArticle();
 }
+
+function goToByScroll(id) {
+    $('html,body').animate({
+        scrollTop: $("#" + id).offset().top
+    }, 'slow');
+}

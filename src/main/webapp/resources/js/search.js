@@ -59,7 +59,6 @@ function contentSearch(limit) {
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
-            console.log(data);
             
             if (data.length === 0 && postPage === 1) {
                 $('.post-search').css('display', 'none');

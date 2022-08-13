@@ -77,29 +77,34 @@
 <script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
 <script src="<c:url value="/resources/js/bid.js" />"></script>
 <script>
-        window.onload = function () {
-            postPage = 1;
-            disableLoadMorePost = false;
-            currentUserId = '${sessionScope.currentUser.id}';
-            $('#userNotification').on("click", function () {
-                $('.notif-count').css('opacity', '0');
-            });
-            let url = new URL(window.location.toString());
-            let kw = url.searchParams.get('kw');
-            $('input[name=kw]').val(kw);
-            let locate = window.location.pathname;
-
-            if (locate === (ctxPath + '/search/top'))
-                topSearch();
-            else if (locate === (ctxPath + '/search/people')) {
-                personSearch();
-                $('.post-search').css('display', 'none');
-            } else if (locate === (ctxPath + '/search/posts')) {
-                contentSearch();
-                $('.person-search').css('display', 'none');
-            } else {
-                auctionSearch();
-                $('.post-search').css('display', 'none');
-            }
-        };
+    window.onload = function() {
+        postPage = 1;
+        disableLoadMorePost = false;
+        currentUserId = '${sessionScope.currentUser.id}';
+        $('#userNotification').on("click", function () {
+            $('.notif-count').css('opacity', '0');
+        });
+        let url = new URL(window.location.toString());
+        let kw = url.searchParams.get('kw');
+        $('input[name=kw]').val(kw);
+        let locate = window.location.pathname;
+        
+        if (locate === (ctxPath + '/search/top'))
+            topSearch();
+        else if (locate === (ctxPath + '/search/people')) {
+            personSearch();
+            $('.post-search').css('display', 'none');
+            $('.auction-search').css('display', 'none');
+        }
+        else if (locate === (ctxPath + '/search/posts')) {
+            contentSearch();
+            $('.person-search').css('display', 'none');
+            $('.auction-search').css('display', 'none');
+        }
+        else {
+            auctionSearch();
+            $('.person-search').css('display', 'none');
+            $('.post-search').css('display', 'none');
+        }
+    };
 </script>

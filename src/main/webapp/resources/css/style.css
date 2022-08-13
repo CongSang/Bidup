@@ -239,11 +239,16 @@ li .chat--item:hover .chat-side {
 
 /*footer css*/
 .footer {
-    background-color: var(--primary-color-300);
-    color: var(--white-color);
-    padding: 14px 20px;
+    margin-top: 16px;
+    border-top: 1px solid #bdc3c7;
+    background-color: transparent;
+    color: #98A6AD;
+    padding: 10px 20px;
     width: 100%;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .author {

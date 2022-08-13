@@ -15,7 +15,7 @@ import java.util.Map;
  * @author ADMIN
  */
 public class NotificationResponse {
-    private int postId ; 
+    private int targetId ; 
     private NotifType type;
     private boolean is_read;
     private int count;
@@ -27,19 +27,6 @@ public class NotificationResponse {
     public NotificationResponse() {
     }
 
-    /**
-     * @return the postId
-     */
-    public int getPostId() {
-        return postId;
-    }
-
-    /**
-     * @param postId the postId to set
-     */
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
 
     /**
      * @return the type
@@ -137,6 +124,20 @@ public class NotificationResponse {
      */
     public void setNotifId(int notifId) {
         this.notifId = notifId;
+    }
+
+    /**
+     * @return the targetId
+     */
+    public int getTargetId() {
+        return targetId;
+    }
+
+    /**
+     * @param targetId the targetId to set
+     */
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
     }
 
 }

@@ -14,6 +14,7 @@
         <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
         <link href="${globalCss}" rel="stylesheet" />
@@ -82,8 +83,8 @@
                                 <script>document.write(new Date().getFullYear());</script> © SharingHope
                             </div>
                             <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-md-block">
-                                    <a href="#">Contact Us</a>
+                                <div class="text-md-end footer-links">
+                                    <a target="_blank" href="https://github.com/CongSang/SharingHope">Contact us</a>
                                 </div>
                             </div>
                         </div>
@@ -93,8 +94,11 @@
 
         </div>
 
+        <tiles:insertAttribute name="chatbox" />
+
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/admin.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
+        <script src="<c:url value="/resources/js/chat.js" />"></script>
     </body>
 </html>

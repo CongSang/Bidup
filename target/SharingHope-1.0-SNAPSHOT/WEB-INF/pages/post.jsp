@@ -61,9 +61,12 @@
                         ${post.content}
                     </p>
                     <!--<img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">-->
-
+                    <c:if test="${post.image != null && post.image != ''}">
                     <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
-
+                    </c:if>
+                    <c:if test="${post.image == null && post.image == ''}">
+                    <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)">
+                    </c:if>
 
                     <div class="line"></div>
 
@@ -83,7 +86,7 @@
                             </div>
                         </div>
                         <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
-                            <div class="post--action-hover" onclick="showComment(this, ${post.id})">
+                            <div class="post--action-hover" id="showCommentBtn" onclick="showComment(this, ${post.id})">
                                 <i class="fa-regular fa-message post--action-icon"></i>
                                 <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">${fn:length(post.commentSet)}</span>)</span>
                             </div>
@@ -135,6 +138,8 @@
             $('#userNotification').on("click", function () {
                 $('.notif-count').css('opacity', '0');
             });
+            
+            showComment($('#showCommentBtn'), ${post.id});
         };
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);

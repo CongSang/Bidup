@@ -8,6 +8,7 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.PostRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -139,6 +140,25 @@ public class PostRepositoryImpl implements PostRepository {
             query.setMaxResults(size);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public Post findPostByCommentId(int commentId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNativeQuery("CALL sp_findPostByCommentId(:commentId)", Post.class);
+        q.setParameter("commentId", commentId);
+//        Object[] o =(Object[]) ;
+        
+        Post p = (Post) q.getSingleResult();
+//        p.setId(Integer.parseInt(o[0].toString()));
+//        p.setContent(o[1].toString());
+//        p.setImage(o[2].toString());
+//        p.setPostedDate(new Date(o[3].toString()));
+//        p.setUserId(new User(o[4].toString()));
+//        p.setActive(Short.parseShort(o[5].toString()));
+//        p.setHashtag(o[6].toString());
+        
+        return p;
     }
 
 }

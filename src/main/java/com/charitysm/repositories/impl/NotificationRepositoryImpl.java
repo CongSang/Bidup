@@ -35,12 +35,22 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     }
 
     @Override
-    public void updateNotif(int postId, NotifType type) {
+    public void updateNotif(int targetId, NotifType type) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Query q = session.createSQLQuery("CALL sp_updateNotif(:postId, :type)");
-        q.setParameter("postId", postId);
-        q.setParameter("type", type.toString());
-        q.executeUpdate();
+        if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST)) {
+            Query q = session.createSQLQuery("CALL sp_updateNotif(:postId, :type)");
+            q.setParameter("postId", targetId);
+            q.setParameter("type", type.toString());
+            q.executeUpdate();
+        }
+        else if (type.equals(NotifType.REACT_COMMENT) || type.equals(NotifType.REPLY_COMMENT)) {
+            Query q = session.createSQLQuery("CALL sp_updateCommentNotif(:commentId, :type)");
+            q.setParameter("commentId", targetId);
+            q.setParameter("type", type.toString());
+            q.executeUpdate();
+        } else {
+            
+        }
     }
 
     @Override

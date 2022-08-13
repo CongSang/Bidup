@@ -83,7 +83,7 @@
                                  align-items-center notif-loading text-center">
                                 <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                             </li>
-                            <div class="position-relative" style="min-height: 35vh">
+                            <div class="position-relative" style="min-height: 40vh">
                                 <div class="p-2 list-notification">
 
                                 </div>
@@ -185,7 +185,7 @@
                              align-items-center notif-loading text-center">
                             <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                         </li>
-                        <div class="position-relative" style="min-height: 35vh">
+                        <div class="position-relative" style="min-height: 45vh">
                             <div class="p-2 list-notification">
 
                             </div>

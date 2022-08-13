@@ -6,6 +6,7 @@ import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.React;
+import com.charitysm.pojo.ReactComment;
 import com.charitysm.pojo.ReportAuction;
 import com.charitysm.pojo.ReportPost;
 import com.charitysm.pojo.ReportUser;
@@ -16,7 +17,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-12T18:19:02")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-12T21:49:01")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -43,6 +44,7 @@ public class User_ {
     public static volatile SetAttribute<User, ReportPost> reportPostSet;
     public static volatile SingularAttribute<User, Date> createdDate;
     public static volatile SingularAttribute<User, String> phone;
+    public static volatile SetAttribute<User, ReactComment> reactCommentSet;
     public static volatile SingularAttribute<User, String> job;
     public static volatile SingularAttribute<User, String> userRole;
 
