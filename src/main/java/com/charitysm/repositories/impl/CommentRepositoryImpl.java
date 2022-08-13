@@ -7,6 +7,7 @@ package com.charitysm.repositories.impl;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.React;
 import com.charitysm.repositories.CommentRepository;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -69,6 +70,20 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
+    public BigInteger getCommentCount(int postId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNativeQuery("SELECT COUNT(id) FROM comment WHERE post_id=:postId");
+        q.setParameter("postId", postId);
+        
+        return (BigInteger)q.getSingleResult();
+    }
+
+    @Override
+    public List<Comment> getReplies(int commentId, int page) {
+        
+        return null;
+    }
+    
     public long countCommentStats(int month, int year) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();

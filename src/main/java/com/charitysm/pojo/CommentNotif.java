@@ -19,27 +19,20 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Type;
 
 /**
  *
  * @author ADMIN
  */
 @Entity
-@Table(name = "post_notif")
+@Table(name = "comment_notif")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PostNotif.findAll", query = "SELECT p FROM PostNotif p"),
-    @NamedQuery(name = "PostNotif.findById", query = "SELECT p FROM PostNotif p WHERE p.id = :id"),
-    @NamedQuery(name = "PostNotif.findByType", query = "SELECT p FROM PostNotif p WHERE p.type = :type"),
-    @NamedQuery(name = "PostNotif.findByIsRead", query = "SELECT p FROM PostNotif p WHERE p.isRead = :isRead")})
-public class PostNotif implements Serializable {
-
-    @Column(name = "is_read")
-    private boolean isRead;
-    @JoinColumn(name = "auction_id", referencedColumnName = "id")
-    @ManyToOne
-    private Auction auctionId;
+    @NamedQuery(name = "CommentNotif.findAll", query = "SELECT c FROM CommentNotif c"),
+    @NamedQuery(name = "CommentNotif.findById", query = "SELECT c FROM CommentNotif c WHERE c.id = :id"),
+    @NamedQuery(name = "CommentNotif.findByType", query = "SELECT c FROM CommentNotif c WHERE c.type = :type"),
+    @NamedQuery(name = "CommentNotif.findByIsRead", query = "SELECT c FROM CommentNotif c WHERE c.isRead = :isRead")})
+public class CommentNotif implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,24 +42,26 @@ public class PostNotif implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 12)
+    @Size(min = 1, max = 13)
     @Column(name = "type")
     private String type;
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @Column(name = "is_read")
+    private Boolean isRead;
+    @JoinColumn(name = "comment_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Post postId;
+    private Comment commentId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
 
-    public PostNotif() {
+    public CommentNotif() {
     }
 
-    public PostNotif(Integer id) {
+    public CommentNotif(Integer id) {
         this.id = id;
     }
 
-    public PostNotif(Integer id, String type) {
+    public CommentNotif(Integer id, String type) {
         this.id = id;
         this.type = type;
     }
@@ -87,13 +82,12 @@ public class PostNotif implements Serializable {
         this.type = type;
     }
 
-
-    public Post getPostId() {
-        return postId;
+    public Comment getCommentId() {
+        return commentId;
     }
 
-    public void setPostId(Post postId) {
-        this.postId = postId;
+    public void setCommentId(Comment commentId) {
+        this.commentId = commentId;
     }
 
     public User getUserId() {
@@ -114,10 +108,10 @@ public class PostNotif implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PostNotif)) {
+        if (!(object instanceof CommentNotif)) {
             return false;
         }
-        PostNotif other = (PostNotif) object;
+        CommentNotif other = (CommentNotif) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -126,7 +120,7 @@ public class PostNotif implements Serializable {
 
     @Override
     public String toString() {
-        return "com.charitysm.pojo.PostNotif[ id=" + id + " ]";
+        return "com.charitysm.pojo.CommentNotif[ id=" + id + " ]";
     }
 
     /**
@@ -141,14 +135,6 @@ public class PostNotif implements Serializable {
      */
     public void setIsRead(Boolean isRead) {
         this.isRead = isRead;
-    }
-
-    public Auction getAuctionId() {
-        return auctionId;
-    }
-
-    public void setAuctionId(Auction auctionId) {
-        this.auctionId = auctionId;
     }
     
 }
