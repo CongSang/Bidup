@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -64,5 +62,10 @@ public class UserServiceImpl implements UserService {
         
     public List<User> getUsers(Map<String, String> params) {
         return this.userRepository.getUsers(params);
+    }
+
+    @Override
+    public long countUserStats(int month, int year) {
+        return this.userRepository.countUserStats(month, year);
     }
 }

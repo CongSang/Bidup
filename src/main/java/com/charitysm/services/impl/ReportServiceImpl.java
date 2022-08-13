@@ -9,6 +9,7 @@ import com.charitysm.pojo.ReportPost;
 import com.charitysm.pojo.ReportUser;
 import com.charitysm.repositories.ReportRepository;
 import com.charitysm.services.ReportService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,24 @@ public class ReportServiceImpl implements ReportService {
     public void createUserReport(ReportUser report) {
         this.reportRepository.createUserReport(report);
     }
-    
+
+    @Override
+    public long countReportUserStats(int month, int year) {
+        return this.reportRepository.countReportUserStats(month, year);
+    }
+
+    @Override
+    public List<ReportPost> getReportPost(int month, int year) {
+        return this.reportRepository.getReportPost(month, year);
+    }
+
+    @Override
+    public List<ReportAuction> getReportAuction(int month, int year) {
+        return this.reportRepository.getReportAuction(month, year);
+    }
+
+    @Override
+    public List<ReportUser> getReportUser(int month, int year) {
+        return this.reportRepository.getReportUser(month, year);
+    }
 }

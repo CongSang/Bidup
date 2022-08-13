@@ -8,7 +8,11 @@ import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
 import java.util.List;
 import java.util.Map;
+import java.lang.Object;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -78,5 +82,35 @@ public class UserRepositoryImpl implements UserRepository {
         }
         
         return q.getResultList();
+    }
+
+    @Override
+    public long countUserStats(int month, int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rU = q.from(User.class);
+        
+        if (month == 0) {
+            q.where(b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year),
+                    b.equal(rU.get("userRole"), "ROLE_USER"));
+            q.multiselect(b.count(rU));
+        } else if (year == 0) {
+            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month),
+                    b.equal(rU.get("userRole"), "ROLE_USER"));
+            q.multiselect(b.count(rU));
+        } else {
+            q.where(
+                    b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month),
+                    b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year),
+                    b.equal(rU.get("userRole"), "ROLE_USER"));
+            q.multiselect(b.count(rU));
+        }
+        
+        
+        
+        Query query = session.createQuery(q);
+        return (long) query.getSingleResult(); 
     }
 }

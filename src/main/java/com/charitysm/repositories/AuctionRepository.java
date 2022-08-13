@@ -22,4 +22,5 @@ public interface AuctionRepository {
     int confirmCompleteCharity(Auction a);
     void sendEmailAuction(Auction a);
     List<Auction> getUserAuction(String userId, int page);
+    long countAuctionStats(int month, int year);
 }

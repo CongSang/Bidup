@@ -165,4 +165,29 @@ public class AuctionRepositoryImpl implements AuctionRepository{
         }
         return query.getResultList();
     }
+
+    @Override
+    public long countAuctionStats(int month, int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rU = q.from(Auction.class);
+        
+        if (month == 0) {
+            q.where(b.equal(b.function("YEAR", Integer.class, rU.get("auctionDate")), year));
+            q.multiselect(b.count(rU));
+        } else if (year == 0) {
+            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("auctionDate")), month));
+            q.multiselect(b.count(rU));
+        } else {
+            q.where(
+                    b.equal(b.function("MONTH", Integer.class, rU.get("auctionDate")), month),
+                    b.equal(b.function("YEAR", Integer.class, rU.get("auctionDate")), year));
+            q.multiselect(b.count(rU));
+        }
+        
+        Query query = session.createQuery(q);
+        return (long) query.getSingleResult(); 
+    }
 }

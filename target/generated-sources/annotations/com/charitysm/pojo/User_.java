@@ -3,7 +3,6 @@ package com.charitysm.pojo;
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.Comment;
-import com.charitysm.pojo.CommentNotif;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.React;
@@ -18,13 +17,12 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-13T18:04:57")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-13T20:16:30")
 @StaticMetamodel(User.class)
 public class User_ { 
 
     public static volatile SingularAttribute<User, String> firstname;
     public static volatile SingularAttribute<User, Date> birthdate;
-    public static volatile SetAttribute<User, CommentNotif> commentNotifSet;
     public static volatile SetAttribute<User, ReportUser> reportUserSet;
     public static volatile SetAttribute<User, Post> postSet;
     public static volatile SingularAttribute<User, String> password;
