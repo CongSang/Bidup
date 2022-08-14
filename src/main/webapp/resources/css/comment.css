@@ -1,4 +1,4 @@
-.comment-is-show {
+.is-show {
     display: block!important; 
 }
 
@@ -29,6 +29,7 @@
 }
 
 .show-more-comment {
+    padding-left: 2rem;
     font-size: 14px;
     color: #999;
     font-weight: bold;
@@ -169,6 +170,10 @@
 
 .commentFormReply {
     display: none;
+}
+
+.form-reply-is-show {
+    display: flex;
 }
 
 .comment-loading {

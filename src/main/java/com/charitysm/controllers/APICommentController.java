@@ -65,18 +65,19 @@ public class APICommentController {
         Comment comm = new Comment();
         comm.setContent(c.getContent());
         comm.setCommentDate(new Date());
-        Post p = this.postService.getPostById(c.getPostId());
+        Post p = new Post(c.getPostId());
+        Comment parent = new Comment(c.getCommentId());
         User u = (User) session.getAttribute("currentUser");
-        comm.setPostId(p);
         comm.setUserId(u);
+        if (c.getPostId() > 0)
+            comm.setPostId(p);
+        else
+            comm.setParentId(parent);
+        
         if (this.commentService.createComment(comm) < 1) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        System.out.println("Userid1: " + u.getId());
-        System.out.println("Userid2: " + comm.getUserId().getId());
-        if (!p.getUserId().getId().equals(u.getId())) {
-            this.notificationCenter.updateNotif(c.getPostId(), NotifType.COMMENT_POST);
-        }
+        
         return new ResponseEntity<>(comm, HttpStatus.CREATED);
     }
 
@@ -104,8 +105,7 @@ public class APICommentController {
         react.setComment(c);
         react.setUser(u);
         react.setCreatedDate(new Date());
-        if(this.reactService.createReactComment(react) == true && !c.getUserId().getId().equals(u.getId()))
-            this.notificationCenter.updateNotif(commentId, NotifType.REACT_COMMENT);
+        this.reactService.createReactComment(react);
     }
     
     @Async
@@ -131,5 +131,4 @@ public class APICommentController {
             , @RequestParam(value = "commentId") int commentId) {
         return new ResponseEntity<>(this.commentService.getReplies(commentId, page), HttpStatus.OK);
     }
-    
 }
