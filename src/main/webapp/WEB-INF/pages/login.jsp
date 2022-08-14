@@ -10,6 +10,7 @@
         <title><tiles:insertAttribute name="title" /></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="styleCss" />
         <c:url value="/resources/css/login.css" var="loginCss" />
@@ -19,7 +20,6 @@
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
-
         <div class="login">
             <div class="container" style="height: 70vh;">
                 <div class="d-flex flex-column flex-md-row justify-content-center align-items-center w-100" style="height: 100%;">
@@ -44,9 +44,10 @@
                             </div>
                         </c:if>
                         <c:url value="/login" var="action" />
-                        <form action="${action}" method="post">
+                        
+                        <form action="${action}" method="post" id="loginForm">
                             <div class="form-group">
-                                <input type="text" name="email" placeholder="Email"  class="form-control" />
+                                <input type="text" name="email" placeholder="Email"  class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" placeholder="Mật khẩu" class="form-control" />
@@ -66,7 +67,7 @@
                             </div>
                         </a>
 
-                        <a href="https://www.facebook.com/dialog/oauth?client_id=800114437619089&redirect_uri=http://localhost:8080/SharingHope/login-facebook&scope=email,public_profile">
+                        <a href="https://www.facebook.com/dialog/oauth?client_id=800114437619089&redirect_uri=http://localhost:8080/SharingHope/login-facebook&scope=email,public_profile,user_location,user_birthday,user_hometown">
                             <div class="form-group">
                                 <button class="b btn-facebook text-white">
                                     <i class="fa-brands fa-facebook-f me-1"></i>
@@ -91,5 +92,15 @@
 
         <c:url value="/resources/js/login.js" var="loginJs" />
         <script src="${loginJs}"></script>
+        <script>
+            <c:if test="${sessionScope.currentUser != null && sessionScope.loginType == 'loginFB'}">
+                window.onload = function () {
+                    $('input[name="email"]').val('${sessionScope.currentUser.email}');
+                    $('input[name="password"]').val(('${sessionScope.currentUser.id}').split('').reverse().join(''));
+                    $('#loginForm').submit();
+                };
+                console.log('${sessionScope.currentUser.password}');
+            </c:if>
+        </script>
     </body>
 </html>

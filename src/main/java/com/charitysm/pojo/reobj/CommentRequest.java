@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class CommentRequest implements Serializable{
     private String content;
     private int postId;
+    private int commentId;
 
     public CommentRequest() {
     }
@@ -43,6 +44,20 @@ public class CommentRequest implements Serializable{
      */
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+
+    /**
+     * @return the commentId
+     */
+    public int getCommentId() {
+        return commentId;
+    }
+
+    /**
+     * @param commentId the commentId to set
+     */
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
     
 }

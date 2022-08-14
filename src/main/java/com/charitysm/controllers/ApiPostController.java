@@ -91,8 +91,7 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
-        if(this.reactService.createReact(react) == true && !p.getUserId().getId().equals(u.getId()))
-            this.notificationCenter.updateNotif(postId, NotifType.REACT_POST);
+        this.reactService.createReact(react);
     }
     
     @Async

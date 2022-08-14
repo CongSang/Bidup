@@ -43,7 +43,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
@@ -68,7 +68,6 @@ public class LoginController {
         } else {
             FileUploadResponse res = new FileUploadResponse();
             String uniqueID = UUID.randomUUID().toString();
-            String passEncode = passwordEncoder.encode(user.getPassword());
             try {
                 Map rs = cloudinary.uploader().upload(user.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -79,8 +78,7 @@ public class LoginController {
             } catch (IOException ex) {
                 Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            user.setPassword(passEncode);
+            user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             user.setId(uniqueID);
             user.setActive((short)1);
             user.setCreatedDate(new Date());

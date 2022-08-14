@@ -8,7 +8,6 @@ import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
 import java.util.List;
 import java.util.Map;
-import java.lang.Object;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

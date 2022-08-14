@@ -245,8 +245,6 @@ public class ApiAuctionController {
         bid.setUser(u);
         bid.setAuction(a);
         
-        if (!a.getUserId().getId().equals(u.getId()))
-            this.notificationService.updateAuctionNotif(b.getAuctionId(), NotifType.JOIN_AUCTION);
         return new ResponseEntity<>(this.bidService.createBid(bid), HttpStatus.CREATED);
     }
 

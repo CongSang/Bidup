@@ -114,8 +114,11 @@
                             
                             <!--show more comment-->
                             <div class="show-more-comment">
-                                <span class="showMore">Xem thêm bình luận</span>
-                                <span>10/20</span>
+                                <param id="commentPage" value="1"/>
+                                <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
+                                <span>
+                                    <span id="showedCommentLength"></span>/<span id="commentSetLength"></span>
+                                </span>
                             </div>
                         </div>
                     </div>

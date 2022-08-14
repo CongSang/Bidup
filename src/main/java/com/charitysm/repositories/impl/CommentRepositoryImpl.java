@@ -80,8 +80,18 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     @Override
     public List<Comment> getReplies(int commentId, int page) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("FROM Comment WHERE parentId.id=:commentId", Comment.class);
+        q.setParameter("commentId", commentId);
         
-        return null;
+        if (page > 0) {
+            int size = Integer.parseInt(env.getProperty("comment.page.size").toString());
+            int start = (page - 1) * size;
+            q.setFirstResult(start);
+            q.setMaxResults(size);
+        }
+        
+        return q.getResultList();
     }
     
     public long countCommentStats(int month, int year) {
