@@ -6,6 +6,7 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Bid;
 import com.charitysm.repositories.BidRepository;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,15 @@ public class BidRepositoryImpl implements BidRepository{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Bid> getBids(int auctionId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNamedQuery("Bid.findByAuctionId");
+        q.setParameter("auctionId", auctionId);
+        
+        return q.getResultList();
     }
     
 }

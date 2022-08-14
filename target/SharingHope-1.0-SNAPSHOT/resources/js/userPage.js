@@ -54,14 +54,14 @@ function loadUserAuctions(endpoint, currentUserId, page) {
                 disableLoadMoreAuction = true;
             }
             
-            loadAuctionFeeds(data, currentUserId, endpoint);
+            loadAuctionFeeds(data, currentUserId);
             $('.user-loading').css("display", "none");
             auctionFetching = false;
         }
     });
 }
 
-function loadAuctionFeeds(auctions, currentUserId, endpoint) {
+function loadAuctionFeeds(auctions, currentUserId) {
     var userAvatar = $("#userAvatar").attr("src");
     (auctions.length > 0) ? $.each(auctions, function (index, auction) {
         

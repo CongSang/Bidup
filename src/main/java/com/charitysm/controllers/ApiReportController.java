@@ -58,6 +58,7 @@ public class ApiReportController {
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setPostId(post);
+            p.setType(rr.getReason());
             switch (rr.getReason()) {
                 case "IMAGE":
                     reason = ReportType.IMAGE.toString();
@@ -92,6 +93,7 @@ public class ApiReportController {
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setAuctionId(auction);
+            p.setType(rr.getReason());
             switch (rr.getReason()) {
                 case "IMAGE":
                     reason = ReportType.IMAGE.toString();
@@ -126,6 +128,7 @@ public class ApiReportController {
             p.setReportedDate(new Date());
             p.setUserId(u);
             p.setReportedUser(reportedUser);
+            p.setType(rr.getReason());
             switch (rr.getReason()) {
                 case "PAY":
                     reason = ReportType.PAY.toString();

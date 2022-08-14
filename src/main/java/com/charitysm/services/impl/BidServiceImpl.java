@@ -7,6 +7,7 @@ package com.charitysm.services.impl;
 import com.charitysm.pojo.Bid;
 import com.charitysm.repositories.BidRepository;
 import com.charitysm.services.BidService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,11 @@ public class BidServiceImpl implements BidService{
     @Override
     public void updateWinner(Bid b) {
         this.bidRepository.updateWinner(b);
+    }
+
+    @Override
+    public List<Bid> getBids(int auctionId) {
+        return this.bidRepository.getBids(auctionId);
     }
     
 }

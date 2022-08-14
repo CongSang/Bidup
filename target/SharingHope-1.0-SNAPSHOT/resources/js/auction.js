@@ -26,17 +26,17 @@ function showFull2(element) {
   document.getElementById("modal02").style.display = "flex";
 }
 
-var is_show_follow = false;
-function showFollowAuction(element) {
-    var follow = $(element).parents("div.post").find("div.auction-follow-list");
-    if(is_show_follow) {
-        follow.css("display", "none");
-        is_show_follow = false;
-    } else {
-        follow.css("display", "block");
-        is_show_follow = true;
-    }
-};
+//var is_show_follow = false;
+//function showFollowAuction(element) {
+//    var follow = $(element).parents("div.post").find("div.auction-follow-list");
+//    if(is_show_follow) {
+//        follow.css("display", "none");
+//        is_show_follow = false;
+//    } else {
+//        follow.css("display", "block");
+//        is_show_follow = true;
+//    }
+//};
 
 function customHashtag(element) {
     var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
