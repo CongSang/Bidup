@@ -9,7 +9,7 @@ function loadSingleAuction(auctionId) {
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            loadAuctionFeeds([data]);
+            loadAuctionFeeds([data], '.auction-container');
             $('.auction-loading').css("display", "none");
         }
     });

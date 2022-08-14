@@ -28,7 +28,7 @@
                     <div class="nav-item w-100">
                         <form class="form-search position-relative" action="javascript:;" onsubmit="searchSubmit()">
                             <input class="form-control ps-5 bg-light w-100" name="kw" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                            <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit">
+                            <button class="bg-transparent p-2 py-0 position-absolute top-50 start-0 translate-middle-y" style="outline: none; border: none; border-radius: 50%" type="submit">
                                 <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                             </button>
                         </form>
@@ -132,7 +132,8 @@
                         <li class="px-3 my-2">
                             <form class="form-search position-relative" action="javascript:;">
                                 <input class="form-control ps-5 bg-light w-100" type="search" placeholder="Tìm kiếm trên Messenger" aria-label="Search">
-                                <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit">
+                                <button class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
+                                        style="outline: none; border: none; border-radius: 50%" type="submit">
                                     <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                                 </button>
                             </form>

@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReportUser.findByIsSolve", query = "SELECT r FROM ReportUser r WHERE r.isSolve = :isSolve")})
 public class ReportUser implements Serializable {
 
+    @Size(max = 5)
+    @Column(name = "type")
+    private String type;
+
     @JoinColumn(name = "reported_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User reportedUser;
@@ -148,6 +152,14 @@ public class ReportUser implements Serializable {
 
     public void setReportedUser(User reportedUser) {
         this.reportedUser = reportedUser;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 }

@@ -280,4 +280,10 @@ public class ApiAuctionController {
             this.bidService.updateWinner(b);
         }
     }
+    
+    @Async
+    @GetMapping(value = "/get-bids/{auctionId}")
+    public ResponseEntity<List<Bid>> getBids(@PathVariable(value = "auctionId") int auctionId) {
+        return new ResponseEntity<>(this.bidService.getBids(auctionId), HttpStatus.OK);
+    }
 }

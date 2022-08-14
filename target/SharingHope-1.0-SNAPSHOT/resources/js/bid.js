@@ -122,14 +122,100 @@ function updateBid(auctionId, userId) {
 }
 
 function selectIsWinnerAuction(auctionId, userId, element) {
-    const selectWinner = $(element).parents('.auction-follow-list').find(`.winner-user${userId}`);
-    
-    if ($(selectWinner).hasClass('is-winner')) {
-        $(selectWinner).removeClass('is-winner');
+    if ($(element).hasClass('is-winner')) {
+        $(element).removeClass('is-winner');
         updateBid(auctionId, userId);
     } else {
-        $(selectWinner).addClass('is-winner');
+        $(element).addClass('is-winner');
         updateBid(auctionId, userId);
+    }
+}
+
+function showBid(element, auctionId) {
+    var bidContainer = $(element).parents('div.post').find('.auction-user-join');
+    var bidAppend = $(bidContainer).find('.bided').empty();
+    
+    $(bidContainer).find('.bid-loading').css("display", "block");
+    if (bidContainer.hasClass('show')) {
+        $(bidContainer).removeClass('show');
+    } else {
+        $(bidContainer).addClass('show');
+        $.ajax({
+            type: 'get',
+            url: `${ctxPath}/api/get-bids/` + auctionId,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $(bidContainer).find('.bid-loading').css("display", "none");
+                let userAuction = data.filter(b => b.user.id === currentUserId);
+                let otherBidSort = data.filter(c => c.user.id !== currentUserId);
+                otherBidSort.sort(function (a, b) {
+                    return b.money - a.money;
+                });
+                 $(bidAppend).append(`${(userAuction).map((bid, index) => {
+                   return `<div class="d-flex comment--item py-2">
+                    <div class="me-2">
+                        <a href="${ctxPath}/user/${bid.user.id}">
+                            <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
+                        </a>
+                    </div>
+                    <div class="comment--item-content">
+                          <div class="bg-light comment-content">
+                              <div class="d-flex justify-content-start">
+                                  <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
+                                  <small>${moment(bid.bidDate).fromNow()}</small>
+                              </div>
+                              <p class="small mb-0">
+                                  ${formatMoney(bid.money)}
+                              </p>
+                          </div>
+                            <div class="d-flex justify-content-end me-2">
+                                ${bid.isWinner ? `
+                                    <div class="winner-user${bid.user.id} winner-user me-1 is-winner" onclick="selectIsWinnerAuction(${bid.bidPK.auctionId}, '${bid.user.id}', this)">
+                                        <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                    </div>
+                                ` : `
+                                    <div class="winner-user${bid.user.id} winner-user me-1" onclick="selectIsWinnerAuction(${bid.bidPK.auctionId}, '${bid.user.id}', this)">
+                                        <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                  </div>`;
+                }).join('')}`);
+                 $(bidAppend).append(`${(otherBidSort).map((bid, index) => {
+                    return `<div class="d-flex comment--item py-2">
+                        <div class="me-2">
+                            <a href="${ctxPath}/user/${bid.user.id}">
+                                <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
+                            </a>
+                        </div>
+                        <div class="comment--item-content">
+                              <div class="bg-light comment-content">
+                                  <div class="d-flex justify-content-start">
+                                      <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
+                                      <small>${moment(bid.bidDate).fromNow()}</small>
+                                  </div>
+                                  <p class="small mb-0">
+                                      ${formatMoney(bid.money)}
+                                  </p>
+                              </div>
+                                <div class="d-flex justify-content-end me-2">
+                                    ${bid.isWinner ? `
+                                        <div class="winner-user${bid.user.id} winner-user me-1 is-winner" onclick="selectIsWinnerAuction(${bid.bidPK.auctionId}, '${bid.user.id}', this)">
+                                            <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                        </div>
+                                    ` : `
+                                        <div class="winner-user${bid.user.id} winner-user me-1" onclick="selectIsWinnerAuction(${bid.bidPK.auctionId}, '${bid.user.id}', this)">
+                                            <i class="fa-solid fa-star me-1"></i>Chiến thắng
+                                        </div>
+                                    `}
+                                </div>
+                            </div>
+                      </div>`;
+                }).join('')}`); 
+            }
+        });
     }
 }
 

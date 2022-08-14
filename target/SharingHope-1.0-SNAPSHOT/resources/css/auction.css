@@ -22,10 +22,11 @@
 
 .auction-user-join {
     border-top: solid 1px #e1e1e1;
+    display: none;
 }
 
-.auction-follow-list {
-    display: none;
+.auction-user-join.show {
+    display: block !important;
 } 
 
 .btn-disable {
