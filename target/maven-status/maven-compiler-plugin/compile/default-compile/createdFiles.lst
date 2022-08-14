@@ -34,6 +34,7 @@ com\charitysm\pojo\ReactCommentPK.class
 com\charitysm\repositories\NotificationRepository.class
 com\charitysm\repositories\BidRepository.class
 com\charitysm\pojo\Comment_.class
+com\charitysm\pojo\CommentNotif_.class
 com\charitysm\controllers\ApiAuctionController.class
 com\charitysm\repositories\impl\BidRepositoryImpl.class
 com\charitysm\repositories\impl\NotificationRepositoryImpl.class
@@ -75,6 +76,7 @@ com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\pojo\React_.class
 com\charitysm\pojo\ReportPost_.class
 com\charitysm\pojo\enumtype\ReportType$4.class
+com\charitysm\pojo\CommentNotif.class
 com\charitysm\controllers\APINotificationController.class
 com\charitysm\services\UserService.class
 com\charitysm\pojo\enumtype\ReportType.class

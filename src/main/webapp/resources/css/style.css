@@ -240,9 +240,8 @@ li .chat--item:hover .chat-side {
 /*footer css*/
 .footer {
     margin-top: 16px;
-    border-top: 1px solid #bdc3c7;
-    background-color: transparent;
-    color: #98A6AD;
+    background-color: #fff;
+    color: var(--primary-color-200);
     padding: 10px 20px;
     width: 100%;
     text-align: center;

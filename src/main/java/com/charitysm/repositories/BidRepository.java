@@ -5,6 +5,7 @@
 package com.charitysm.repositories;
 
 import com.charitysm.pojo.Bid;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,5 @@ public interface BidRepository {
     void deleteBid(Bid b);
     Bid findBid(String userId, int auctionId);
     void updateWinner(Bid b);
+    List<Bid> getBids(int auctionId);
 }

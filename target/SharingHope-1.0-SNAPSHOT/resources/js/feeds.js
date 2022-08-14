@@ -267,17 +267,10 @@ function prependFeeds(post) {
     customHashtag(`.post-${post.id}`);
 };
 
-function loadAuctionFeeds(auctions) {
-    console.log(auctions);
+function loadAuctionFeeds(auctions, container) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(auctions, function (index, auction) {
-        console.log(auction);
         let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
-        let bidSort = auction.bidSet.filter(c => c.user.id !== currentUserId);
-        bidSort.sort(function (a, b) {
-            return b.money - a.money;
-        });
-        
         let html = `
             ${(auction.userId.id === currentUserId) ? `
                 <div class="post auction-post-${auction.id}">
@@ -363,12 +356,12 @@ function loadAuctionFeeds(auctions) {
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                     ${(auction.active) ? 
-                                    `<div class="auction--action-hover" onclick="showFollowAuction(this)">
+                                    `<div class="auction--action-hover" onclick="showBid(this, ${auction.id})">
                                         <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                         <i class="fa-solid fa-eye"></i>
-                                        <span class="auction--action-text auction-follow ms-2">Theo dõi (${auction.bidSet.length} người đã tham gia)</span>
+                                        <span class="auction--action-text auction-follow ms-2">Theo dõi những người đã tham gia</span>
                                     </div>` : 
                                     `<div class="btn-disable">
                                         <i class="fa-solid fa-check"></i>
@@ -378,45 +371,13 @@ function loadAuctionFeeds(auctions) {
                                 </div>
                             </div>
 
-                            <div class="auction-user-join auction-follow-list">
-        
-                                ${(bidSort).map((bid, index) => {
-                                    return `
-                                          <div class="d-flex comment--item py-2">
-                                            <div class="me-2">
-                                                <a href="${ctxPath}/user/${bid.user.id}">
-                                                    <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
-                                                </a>
-                                            </div>
-                                            <div class="comment--item-content">
-                                                  <div class="bg-light comment-content">
-                                                      <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
-                                                          <small>${moment(bid.bidDate).fromNow()}</small>
-                                                      </div>
-                                                      <p class="small mb-0">
-                                                          ${formatMoney(bid.money)}
-                                                      </p>
-                                                  </div>
-                                                    <div class="d-flex justify-content-end me-2">
-                                                        ${bid.isWinner ? `
-                                                            <div class="winner-user${bid.user.id} winner-user me-1 is-winner" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
-                                                                <i class="fa-solid fa-star me-1"></i>Chiến thắng
-                                                            </div>
-                                                        ` : `
-                                                            <div class="winner-user${bid.user.id} winner-user me-1" onclick="selectIsWinnerAuction(${auction.id}, '${bid.user.id}', this)">
-                                                                <i class="fa-solid fa-star me-1"></i>Chiến thắng
-                                                            </div>
-                                                        `}
-                                                    </div>
-                                                </div>
-                                                
-                                          </div>`;
-                                }).join('')}
+                            <div class="auction-user-join">
+                                <div class="text-center mt-3 bid-loading" style="display:none;">
+                                    <div class="spinner-border text-muted"></div>
+                                </div>
 
-                                
+                                <div class="bided"></div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -500,7 +461,7 @@ function loadAuctionFeeds(auctions) {
                                 </div>
                             </div>
                             
-                            <div class="auction-user-join">
+                            <div class="auction-user-join d-block">
                             ${auction.endDate > Date.now() ?
                             `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
                                     `${userAuction && `
@@ -546,7 +507,7 @@ function loadAuctionFeeds(auctions) {
             `}
         `;
         
-        $('.auction-container').append(html);
+        $(container).append(html);
         customHashtag(`.auction-${auction.id}`);
     });
 }

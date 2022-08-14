@@ -58,7 +58,7 @@ function loadAuctions(page) {
                 disableLoadMoreAuction = true;
             }
             
-            loadAuctionFeeds(data);
+            loadAuctionFeeds(data, '.auction-container');
             $('.auction-loading').css("display", "none");
             auctionFetching = false;
         }
