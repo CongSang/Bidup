@@ -1,5 +1,5 @@
 .is-show {
-    display: block!important; 
+    display: block!important;
 }
 
 .comment {
@@ -29,7 +29,6 @@
 }
 
 .show-more-comment {
-    padding-left: 2rem;
     font-size: 14px;
     color: #999;
     font-weight: bold;
@@ -44,24 +43,85 @@
     text-decoration: underline;
 }
 
-.comment--item-have-reply::before {
+.child-have-reply .comment--item::after {
     content: '';
     width: 1.5px;
-    height: 80%;
+    height: 100%;
     background: #c7cacb;
     position: absolute;
-    left: 18px;
-    top: 50px;
+    left: -26px;
+    top: -4px;
 }
 
-.reply-comments .comment--item::before {
+.child-have-reply .comment--item:last-child::after {
+    width: 0;
+    height: 0;
+}
+
+.reply-comments .comment--item .point:before {
     content: '';
-    width: 22px;
-    height: 2px;
+    width: 1.5px;
+    height: 100%;
     background: #c7cacb;
     position: absolute;
-    top: 24px;
+    top: -92px;
     left: -26px;
+}
+
+#repliedComments .point-to-child {
+    width: 22px;
+    height: 60px;
+    background-color: transparent;
+    position: absolute;
+    top: -34px;
+    left: -26px;
+    border-bottom-left-radius: 10px;
+    border-bottom: 2px solid #c7cacb;
+    border-left: 2px solid #c7cacb;
+}
+
+.commentFormReply .point-to-formReply {
+    width: 22px;
+    height: 60px;
+    background-color: transparent;
+    position: absolute;
+    top: -42px;
+    left: -26px;
+    border-bottom-left-radius: 10px;
+    border-bottom: 2px solid #c7cacb;
+    border-left: 2px solid #c7cacb;
+}
+
+.commentFormReply .point-to-formReply::before {
+    content: '';
+    width: 1.5px;
+    height: 100%;
+    background: #c7cacb;
+    position: absolute;
+    top: -34px;
+    left: -2px;
+}
+
+.btn-load-reply-comments .point-to-showMore {
+    width: 22px;
+    height: 60px;
+    background-color: transparent;
+    position: absolute;
+    top: -48px;
+    left: 18px;
+    border-bottom-left-radius: 10px;
+    border-bottom: 2px solid #c7cacb;
+    border-left: 2px solid #c7cacb;
+} 
+
+.btn-load-reply-comments .point-to-showMore::before {
+    content: '';
+    width: 1.5px;
+    height: 100%;
+    background: #c7cacb;
+    position: absolute;
+    top: -34px;
+    left: -2px;
 }
 
 .comment-like {
@@ -126,12 +186,22 @@
 }
 
 @keyframes tada {
-   0% {transform: scale(1);} 
-   10%, 20% {transform: scale(0.98) rotate(-3deg);} 
-   30%, 50%, 70%, 90% {transform: scale(1.02) rotate(3deg);} 
-   40%, 60%, 80% {transform: scale(1.02) rotate(-3deg);} 
-   100% {transform: scale(1) rotate(0);} 
-} 
+    0% {
+        transform: scale(1);
+    }
+    10%, 20% {
+        transform: scale(0.98) rotate(-3deg);
+    }
+    30%, 50%, 70%, 90% {
+        transform: scale(1.02) rotate(3deg);
+    }
+    40%, 60%, 80% {
+        transform: scale(1.02) rotate(-3deg);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
 
 /*reply comment css*/
 .reply-comments {
@@ -152,16 +222,6 @@
     padding-left: 44px;
     position: relative;
     width: auto;
-}
-
-.btn-load-reply-comments::before {
-    content: '';
-    width: 22px;
-    height: 2px;
-    background: #c7cacb;
-    position: absolute;
-    top: 12px;
-    left: 18px;
 }
 
 .btn-load-reply-comments span:hover {

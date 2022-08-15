@@ -12,18 +12,15 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.User;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +39,7 @@ public class APILoginFbController {
     
     @RequestMapping("/login-facebook")
     public void loginFacebook(HttpServletRequest request
-            , HttpSession session, HttpServletResponse response) throws IOException {
+            , HttpSession session, HttpServletResponse response, Model model) throws IOException {
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) { 
             response.sendRedirect("login");
@@ -92,6 +89,7 @@ public class APILoginFbController {
                     response.sendRedirect("login");  
             }
              
+            model.addAttribute("pass", pass);
         }
     }
 }

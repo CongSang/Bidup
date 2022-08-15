@@ -61,7 +61,7 @@ function deleteBid(currentAuctionId, element, startPrice) {
         title: "Bạn có chắc là hủy đấu giá bài viết này?",
         icon: "warning",
         buttons: true,
-        dangerMode: true,
+        dangerMode: true
       })
     .then((isDeleted) => {
         if (isDeleted) {
@@ -145,7 +145,6 @@ function showBid(element, auctionId) {
             url: `${ctxPath}/api/get-bids/` + auctionId,
             dataType: 'json',
             success: function (data) {
-                console.log(data);
                 $(bidContainer).find('.bid-loading').css("display", "none");
                 let userAuction = data.filter(b => b.user.id === currentUserId);
                 let otherBidSort = data.filter(c => c.user.id !== currentUserId);
