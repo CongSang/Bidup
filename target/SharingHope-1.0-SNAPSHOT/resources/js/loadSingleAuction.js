@@ -8,9 +8,10 @@ function loadSingleAuction(auctionId) {
         url: `${ctxPath}/api/auction-single/${auctionId}`,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             loadAuctionFeeds([data], '.auction-container');
             $('.auction-loading').css("display", "none");
+            
+            showBid('#showBidBtn', data.id);
         }
     });
 }

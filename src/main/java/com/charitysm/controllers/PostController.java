@@ -30,16 +30,17 @@ public class PostController {
     private NotificationService notificationService;
     
     @GetMapping("/{postId}")
-    public String getPost(@RequestParam Map<String, String> params,
+    public String getPost(@RequestParam(required = false) Map<String, String> params,
             @PathVariable(value="postId") int postId, Model model) {
-        if (params.get("ref").equals("notif")) {
-            String t = params.get("notif_type");
-            String nId = params.get("notif_id");
-            if (t != null && nId != null) {
-                NotifType type = NotifType.valueOf(t);
-                System.out.println(type);
-                int notifId = Integer.parseInt(nId);
-                this.notificationService.readNotif(notifId, type);
+        if(params != null && !params.isEmpty()) {
+            if (params.get("ref").equals("notif")) {
+                String t = params.get("notif_type");
+                String nId = params.get("notif_id");
+                if (t != null && nId != null) {
+                    NotifType type = NotifType.valueOf(t);
+                    int notifId = Integer.parseInt(nId);
+                    this.notificationService.readNotif(notifId, type);
+                }
             }
         }
         Post p = this.postService.getPostById(postId);

@@ -32,6 +32,17 @@ $(window).scroll(function () {
 function loadFeeds(posts) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
+        let listUserReact;
+        if(post.reactSet.length <= 10 && post.reactSet.length > 0) {
+                 listUserReact = post.reactSet.map(react => {
+                return `<p class="user-liked">${react.user.lastname} ${react.user.firstname}</p>`;
+            }).join('');
+        } else if (post.reactSet.length > 10) {
+            for(let i = 0; i < 10; i++) {
+                listUserReact += `<p class="user-liked">${post.reactSet[i].lastname} ${react.user.firstname}</p>`;
+            }
+            listUserReact += `<p class="user-liked">và ${post.reactSet.length - 10} người khác...</p>`;
+        }
         var html = `<div class="post" id="post${post.id}">     
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
@@ -94,7 +105,8 @@ function loadFeeds(posts) {
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
+                                <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}', this)">
+                                    ${listUserReact ? `<div class="list-user-liked">${listUserReact}</div>` : ``}
                                     ${((post.reactSet).length === 0) ? (
                                             `<div class="heart-like-button"></div>`
                                             ) : (
@@ -233,7 +245,7 @@ function prependFeeds(post) {
                             <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
                                 <div class="post--action-hover" onclick="showComment(this, ${post.id})">
                                     <i class="fa-regular fa-message post--action-icon"></i>
-                                    <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">0</span>)</span>
+                                    <span class="post--action-text ms-2">Bình luận</span>
                                 </div>
                             </div>
                         </div>
@@ -257,7 +269,14 @@ function prependFeeds(post) {
                             <div id="commentedComment">
                                 
                             </div>
-                            
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <param id="commentPage" value="1"/>
+                                <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
+                                <span style="margin-left: auto">
+                                    <span id="showedCommentLength"></span>/<span id="commentSetLength"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -356,12 +375,12 @@ function loadAuctionFeeds(auctions, container) {
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                     ${(auction.active) ? 
-                                    `<div class="auction--action-hover" onclick="showBid(this, ${auction.id})">
+                                    `<div class="auction--action-hover" id="showBidBtn" onclick="showBid(this, ${auction.id})">
                                         <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                         <i class="fa-solid fa-eye"></i>
-                                        <span class="auction--action-text auction-follow ms-2">Theo dõi những người đã tham gia</span>
+                                        <span class="auction--action-text auction-follow ms-2">Theo dõi (${auction.bidSet.length} người đã tham gia)</span>
                                     </div>` : 
                                     `<div class="btn-disable">
                                         <i class="fa-solid fa-check"></i>

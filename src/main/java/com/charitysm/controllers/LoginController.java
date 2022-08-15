@@ -68,21 +68,26 @@ public class LoginController {
         } else {
             FileUploadResponse res = new FileUploadResponse();
             String uniqueID = UUID.randomUUID().toString();
-            try {
-                Map rs = cloudinary.uploader().upload(user.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
+            
+            if(user.getFile() != null && !user.getFile().isEmpty()) {
+                try {
+                    Map rs = cloudinary.uploader().upload(user.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
 
-                res.setFileName("fileName");
-                res.setUrl((String) rs.get("secure_url") + "?public_id=" + rs.get("public_id"));
-                res.setSize(12);
-            } catch (IOException ex) {
-                Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
+                    res.setFileName("fileName");
+                    res.setUrl((String) rs.get("secure_url") + "?public_id=" + rs.get("public_id"));
+                    res.setSize(12);
+                    user.setAvatar(res.getUrl());
+                } catch (IOException ex) {
+                    Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                user.setAvatar("https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png");
             }
             user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             user.setId(uniqueID);
             user.setActive((short)1);
             user.setCreatedDate(new Date());
-            user.setAvatar(res.getUrl());
             user.setUserRole("ROLE_USER");
             
             this.userService.registerNewUser(user);
