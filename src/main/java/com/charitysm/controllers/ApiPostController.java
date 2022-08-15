@@ -5,16 +5,12 @@
 package com.charitysm.controllers;
 
 import com.charitysm.utils.NotificationCenter;
-import com.charitysm.pojo.Comment;
-import com.charitysm.pojo.reobj.CommentRequest;
 import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactPK;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.pojo.reobj.PostRequest;
-import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
 import com.cloudinary.Cloudinary;

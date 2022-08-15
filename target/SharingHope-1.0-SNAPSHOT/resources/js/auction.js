@@ -51,7 +51,7 @@ function customHashtag(element) {
 
 function deleteAuction(auctionId) {
     swal({
-        title: "Bạn có chắc là hủy đấu giá bài viết này?",
+        title: "Bạn có chắc là xóa bài đấu giá này?",
         icon: "warning",
         buttons: true,
         dangerMode: true
@@ -234,7 +234,7 @@ function prependAuctionFeeds(auction) {
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                     ${(auction.active) ? 
-                                    `<div class="auction--action-hover" onclick="showFollowAuction(this)">
+                                    `<div class="auction--action-hover" onclick="showBid(this, ${auction.id})">
                                         <i class="fa-solid fa-eye"></i>
                                         <span class="auction--action-text auction-follow ms-2">Theo dõi (0 người đã tham gia)</span>
                                     </div>` : 

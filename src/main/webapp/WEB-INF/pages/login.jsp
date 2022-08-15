@@ -96,7 +96,7 @@
             <c:if test="${sessionScope.currentUser != null && sessionScope.loginType == 'loginFB'}">
                 window.onload = function () {
                     $('input[name="email"]').val('${sessionScope.currentUser.email}');
-                    $('input[name="password"]').val(('${sessionScope.currentUser.id}').split('').reverse().join(''));
+                    $('input[name="password"]').val(('${pass}');
                     $('#loginForm').submit();
                 };
                 console.log('${sessionScope.currentUser.password}');

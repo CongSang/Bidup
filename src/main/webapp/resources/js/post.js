@@ -134,7 +134,12 @@ function createStatus() {
 
 function deletePost(id, el) {
     event.preventDefault();
-    if(confirm("Bạn có chắc chắn xóa bài viết này?") == true) {
+    swal({
+        title: "Bạn có chắc xóa bài viết này?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((isDeleted) => {
         var loadingHtml =   `   <div class="text-center mt-3 post-loading">
                                                 <div class="spinner-border text-muted"></div>
                                             </div>
@@ -149,13 +154,16 @@ function deletePost(id, el) {
                 url: `${ctxPath}/api/delete-post/${id}`,
                 dataType: 'json',
                 success: function () {
+                    swal("Xóa bài viết thành công", {
+                        icon: "success"
+                    });
                     $(clickedPost).remove();
                 }
         })
         .fail(function (){
             $(clickedPost).html(clickedPostHtml);
         });
-    }
+    });
 }
 
 function editPost(id, el) {

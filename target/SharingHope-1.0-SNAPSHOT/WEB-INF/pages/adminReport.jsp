@@ -45,19 +45,49 @@
                 <th>Id người báo cáo</th>
                 <th>Ngày báo cáo</th>
                 <th>Lí do</th>
+                <th><i class="fa-solid fa-circle-exclamation" style="color: red; font-size: 18px; background-color: #fff; border-radius: 50%"></i></th>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${report}" var="r">
-                <tr>
-                    <td>${reportType == "Báo cáo bài viết" ? r.postId.id : reportType == "Báo cáo bài đấu giá" ? r.auctionId.id : r.reportedUser.id}</td>
+                <tr class="report-item">
+                    <c:choose>
+                        <c:when test="${reportType == 'Báo cáo bài viết'}">
+                            <c:url value="/posts/${r.postId.id}" var="url" />
+                        </c:when>
+                        <c:when test="${reportType == 'Báo cáo bài đấu giá'}">
+                            <c:url value="/auctions/${r.auctionId.id}" var="url" />
+                        </c:when>
+                        <c:when test="${reportType == 'Báo cáo người dùng'}">
+                            <c:url value="/user/${r.reportedUser.id}" var="url" />
+                        </c:when>
+                    </c:choose>
+                    <td>
+                        <a href="${url}">
+                            ${reportType == "Báo cáo bài viết" ? r.postId.id : reportType == "Báo cáo bài đấu giá" ? r.auctionId.id : r.reportedUser.id}
+                        </a>
+                    </td>
                     <td>${r.userId.id}</td>
                     <td><fmt:formatDate value="${r.reportedDate}" pattern="dd-MM-yyyy HH:mm" /></td>
                     <td>
                         ${r.reason}
+                    </td>
+                    <td>
+                        <c:if test="${reportType == 'Báo cáo bài viết'}">
+                            <button class="btn-solve" onclick="solveReportPost(${r.postId.id}, this)">Xử lí</button>
+                        </c:if>
+                        <c:if test="${reportType == 'Báo cáo bài đấu giá'}">
+                            <button class="btn-solve" onclick="solveReportAuction(${r.auctionId.id}, this)">Xử lí</button>
+                        </c:if>
+                        <c:if test="${reportType == 'Báo cáo người dùng'}">
+                            <button class="btn-solve" onclick="">Xử lí</button>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
 </div>
+
+<script src="<c:url value="/resources/js/post.js" />"></script>
+<script src="<c:url value="/resources/js/auction.js" />"></script>                

@@ -155,6 +155,26 @@ ul {
     color: var(--primary-color-200);
 }
 
+.btn-solve {
+    outline: none;
+    border: none;
+    background-color: #eb0806;
+    padding: 4px 12px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-solve:hover {
+    opacity: 0.8;
+}
+
+.btn-solve.disable {
+    background-color: #98a6ad;
+    opacity: 0.8;
+    cursor: default;
+}
+
 @media (max-width: 992px) {
     .content-container {
         margin-left: 0;

@@ -25,6 +25,7 @@
         <link href="<c:url value="/resources/css/auction.css" />" rel="stylesheet" />
         <link href="<c:url value="/resources/css/userinfo.css" />" rel="stylesheet" />
         <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/comment.css"/>" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -131,7 +132,7 @@
                                 <div class="spinner-border text-muted"></div>
                             </div>
 
-                            <div class="user-content-container"></div>
+                            <div class="user-content-container" id="feeds-container"></div>
 
                             <div class="text-center mt-3 user-loading" style="display:none;">
                                 <div class="spinner-border text-muted"></div>
@@ -147,14 +148,12 @@
 
         <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
             <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
-                <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 20px"></i>
                 <img id="img01" style="max-width:100%; max-height:100vh;">
             </div>
         </div>
 
         <div id="modal02" class="modal align-items-center justify-content-center" onclick="this.style.display = 'none'">
             <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
-                <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 24px"></i>
                 <img id="img02" style="max-width:100%; max-height:100vh;">
             </div>
         </div>
@@ -189,6 +188,7 @@
         <tiles:insertAttribute name="chatbox" />
 
         <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/feeds.js" />"></script>
         <script src="<c:url value="/resources/js/userPage.js" />"></script>
         <script src="<c:url value="/resources/js/auction.js" />"></script>
         <script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
@@ -202,10 +202,11 @@
             <c:url value="/api/user/${userInfo.id}/posts" var="endpoint2" />
 
                             $(function () {
+                                currentUserId = '${sessionScope.currentUser.id}';
                                 if ($('#userAuction').hasClass('active')) {
-                                    loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                                    loadUserAuctions('${endpoint1}');
                                 } else {
-                                    loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                                    loadUserPosts('${endpoint2}');
                                 }
                             });
 
@@ -217,11 +218,11 @@
                                     $(element).addClass('active');
                                     if ($(element).hasClass('userAuction')) {
                                         $('.user-content-container').html('');
-                                        loadUserAuctions('${endpoint1}', '${currentUser.getId()}');
+                                        loadUserAuctions('${endpoint1}');
                                     }
                                     if ($(element).hasClass('userPost')) {
                                         $('.user-content-container').html('');
-                                        loadUserPosts('${endpoint2}', '${currentUser.getId()}');
+                                        loadUserPosts('${endpoint2}');
                                     }
                                 }
                             }

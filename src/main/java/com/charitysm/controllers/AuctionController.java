@@ -36,7 +36,8 @@ public class AuctionController {
     @GetMapping("/auctions/{auctionId}")
     public String getPost(@RequestParam Map<String, String> params,
             @PathVariable(value="auctionId") int auctionId, Model model) {
-        if (params.get("ref").equals("notif")) {
+        if(params != null && !params.isEmpty()) {
+            if (params.get("ref").equals("notif")) {
             String t = params.get("notif_type");
             String nId = params.get("notif_id");
             if (t != null && nId != null) {
@@ -44,6 +45,7 @@ public class AuctionController {
                 int notifId = Integer.parseInt(nId);
                 this.notificationService.readNotif(notifId, type);
             }
+        }
         }
         Auction a = this.auctionService.getAuctionById(auctionId);
         model.addAttribute("auction", a);

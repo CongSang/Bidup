@@ -14,7 +14,6 @@
 
 <div id="modal02" class="modal align-items-center justify-content-center" onclick="this.style.display = 'none'">
     <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
-        <i class="fa-solid fa-xmark p-2 position-absolute" style="top: 0; right: 4px; font-size: 24px"></i>
         <img id="img02" style="max-width:100%; max-height:100vh;">
     </div>
 </div>

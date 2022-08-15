@@ -46,6 +46,7 @@
 
 
 <script src="<c:url value="/resources/js/emoji/inputEmoji.js" />"></script>
+<script type="module" src="<c:url value="/resources/js/chatFireBase/firebaseConfig.js" />"></script>
 <script>
     $(function () {
         $('input.chat-input').emoji();
