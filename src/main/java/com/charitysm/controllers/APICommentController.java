@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -86,6 +87,12 @@ public class APICommentController {
     public ResponseEntity<List<Comment>> getComments(@RequestParam(value = "page") int page
             , @RequestParam(value = "postId") int postId) {
         return new ResponseEntity<>(this.commentService.getComments(postId, page), HttpStatus.OK);
+    }
+    
+    @Async
+    @GetMapping(path = "/get-comment/{commentId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comment> getComment(@PathVariable(value="commentId") int commentId) {
+        return new ResponseEntity<>(this.commentService.getCommentById(commentId), HttpStatus.OK);
     }
     
     @Async

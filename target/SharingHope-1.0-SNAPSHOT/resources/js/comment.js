@@ -94,16 +94,9 @@ function showComment(element, postId) {
         $(element).parents('.post').find('#commentPage').val(1);
     } else {
         comment.addClass('is-show');
-        $.ajax({
-            type: 'get',
-            url: `${ctxPath}/api/get-comment-count/` + postId,
-            dataType: 'json',
-            success: function (count) {
-                comment.find('#commentSetLength').text(count);
-            }
-        });
         loadComment(postId);
     }
+    
 }
 
 function loadComment(postId) {
@@ -116,13 +109,19 @@ function loadComment(postId) {
             url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
             dataType: 'json',
             success: function (comments) {
+                let loadedCommentIds = $('.comment--item').map(function(){
+                    return $(this).attr('id');
+                }).get();
+                
                 currentPost.find('.comment-loading').css("display", "none");
                 
-                let userComment = comments.filter(c => c.userId.id === currentUserId);
+                let userComment = comments.filter(c => c.userId.id === currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 userComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });
-                let othersComment = comments.filter(c => c.userId.id !== currentUserId);
+                let othersComment = comments.filter(c => c.userId.id !== currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 othersComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });
@@ -145,8 +144,6 @@ function loadComment(postId) {
         .done(function() {
             let count = currentPost.find('#commentedComment').children('.comment--item').length;
             let max = currentPost.find('#commentSetLength').text();
-            
-            
             currentPost.find('#showedCommentLength').text(count);
             if(count == max)
                 currentPost.find('.showMore').css('opacity', '0');
@@ -155,8 +152,13 @@ function loadComment(postId) {
             let commentId = url.searchParams.get('comment_id');
             if(commentId === undefined || commentId === null) return;
             if(commentId !== undefined || commentId !== null) {
-                $(window).scrollTop($('#commentItem' + commentId).offset().top - 300);
-                $('#commentItem' + commentId).find('.comment-content' + commentId).addClass('tada');
+                if ($('#commentItem' + commentId) !== undefined) {
+                    $(window).scrollTop($('#commentItem' + commentId).offset().top - 300);
+                    $('#commentItem' + commentId).find('.comment-content' + commentId).addClass('tada');
+                }
+                else {
+                    let commentItem = getComment(commentId);
+                }
             }
         });
 }
@@ -165,7 +167,7 @@ function commentItem(comment, postId) {
     let currentUserAvatar = $("#userAvatar").attr("src");
     let reactSetLength = comment.reactCommentSet === null ? 0 : comment.reactCommentSet.length;
     let postOwnerId = $(`#post${postId}OwnerId`).val();
-    let commentSetLength = comment.commentSet === null ? 0 : comment.commentSet.length;
+    let subLength = comment.commentSetLength;
     
     return `<div id="commentItem${comment.id}" class="d-flex flex-column comment--item py-2 position-relative comment--item-have-reply">
                 <div class="d-flex">
@@ -229,10 +231,10 @@ function commentItem(comment, postId) {
                 
                         <param id="replyPage" value="1"/>
                     </div>
-                ${commentSetLength > 0 ? `
+                ${subLength > 0 ? `
                     <div class="btn-load-reply-comments" id="loadReply${comment.id}" onclick="loadReplies(${comment.id}, ${postId})">
                             <i class="fa-solid fa-reply me-2"></i>
-                            <span>Xem <span class="count-reply">${commentSetLength}</span> phản hồi</span>
+                            <span>Xem <span class="count-reply">${subLength}</span> phản hồi</span>
                 `:``}
                 </div>
             </div>`;
@@ -300,7 +302,8 @@ function loadReplies(commentId, postId) {
                 userComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });
-                let othersComment = comments.filter(c => c.userId.id !== currentUserId);
+                let othersComment = comments.filter(c => c.userId.id !== currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 othersComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });

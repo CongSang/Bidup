@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -81,6 +82,10 @@ public class Post implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "postId")
     @JsonIgnore
     private Set<Comment> commentSet;
+    
+    @Transient
+    private int commentSetLength;
+    
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post")
     private Set<React> reactSet;
 
@@ -211,6 +216,20 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "com.charitysm.pojo.Post[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the commentSetLength
+     */
+    public int getCommentSetLength() {
+        return commentSetLength;
+    }
+
+    /**
+     * @param commentSetLength the commentSetLength to set
+     */
+    public void setCommentSetLength(int commentSetLength) {
+        this.commentSetLength = commentSetLength;
     }
     
 }

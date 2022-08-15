@@ -43,6 +43,19 @@ BEGIN
 					GROUP BY r.comment_id) AS A
 			JOIN user u on A.last_modified_user=u.id)
 		UNION
+        (SELECT target_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id
+		FROM
+			(SELECT n.comment_id as target_id, n.user_id, n.type, n.is_read, COUNT(distinct c.user_id) as count, last_modified_user, last_modified, n.id as notif_id
+				FROM comment_notif n JOIN comment c on n.comment_id=c.parent_id 
+					JOIN (SELECT distinct n.comment_id, n.user_id, c.user_id as last_modified_user, c.comment_date as last_modified
+							FROM comment_notif n join comment c on n.comment_id=c.parent_id
+							WHERE c.user_id != user_id
+							ORDER BY c.comment_date DESC) as sub
+					ON c.parent_id=sub.comment_id
+				WHERE n.user_id = user_id AND n.type = 'REPLY_COMMENT' AND c.user_id != user_id
+				GROUP BY c.parent_id) AS A
+		JOIN user u on A.last_modified_user=u.id)
+		UNION
 		(SELECT post_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id
 			FROM
 				(SELECT n.auction_id as post_id, n.user_id,  n.type, n.is_read, COUNT(distinct b.user_id) as count, last_modified_user, last_modified, n.id as notif_id

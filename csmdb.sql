@@ -93,12 +93,15 @@ CREATE TABLE `comment` (
   `user_id` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_id` int DEFAULT NULL,
   `comment_date` datetime NOT NULL,
+  `parent_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_comment_post_idx` (`post_id`),
   KEY `comment_ibfk_1` (`user_id`),
+  KEY `fk_reply_comment_idx` (`parent_id`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_comment_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `fk_comment_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_reply_comment` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +110,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,'like','abcde',1,'2022-07-27 00:00:00'),(2,'test','abcd',1,'2022-07-29 16:51:45'),(3,'dep qua','abcdef',2,'2022-07-29 16:52:59'),(4,'dep qua','abcd',1,'2022-07-29 16:58:49'),(5,'ok','abcd',1,'2022-07-29 17:00:57'),(11,'haha','abcd',1,'2022-07-30 16:57:56'),(12,'ok','abcd',1,'2022-07-30 16:58:38'),(18,'ok','abcd',NULL,'2022-08-02 22:30:00'),(19,'hehe','abcd',NULL,'2022-08-02 22:30:16'),(20,'haha','abcd',NULL,'2022-08-02 22:30:36'),(21,'dep qua','abcd',NULL,'2022-08-02 22:30:44'),(22,'ok','abcd',NULL,'2022-08-02 22:50:27'),(25,'ok','abcd',NULL,'2022-08-02 23:16:43'),(26,'ok','abcd',1,'2022-08-03 18:55:46'),(33,'test','abcd',2,'2022-08-07 15:51:24'),(34,'nice','abcd',36,'2022-08-07 16:31:43'),(35,'hay the','abcde',2,'2022-08-07 16:32:05'),(36,'ok','abcd',3,'2022-08-07 23:47:02'),(37,'dc','abcde',37,'2022-08-08 20:51:19'),(38,'nice too','abcde',36,'2022-08-09 18:15:54'),(40,'test','abcde',2,'2022-08-11 12:57:19'),(41,'5','abcd',2,'2022-08-11 13:08:44'),(42,'6','abcd',2,'2022-08-11 13:08:45'),(43,'7','abcd',2,'2022-08-11 13:08:45'),(44,'8','abcd',2,'2022-08-11 13:08:46'),(45,'9','abcd',2,'2022-08-11 13:08:46'),(46,'10','abcd',2,'2022-08-11 13:08:47'),(47,'11','abcd',2,'2022-08-11 13:08:55'),(48,'thu binh','abcd',48,'2022-08-12 15:57:28'),(49,'thu','abcd',49,'2022-08-12 15:57:44');
+INSERT INTO `comment` VALUES (1,'like','abcde',1,'2022-07-27 00:00:00',NULL),(2,'test','abcd',1,'2022-07-29 16:51:45',NULL),(3,'dep qua','abcdef',2,'2022-07-29 16:52:59',NULL),(4,'dep qua','abcd',1,'2022-07-29 16:58:49',NULL),(5,'ok','abcd',1,'2022-07-29 17:00:57',NULL),(11,'haha','abcd',1,'2022-07-30 16:57:56',NULL),(12,'ok','abcd',1,'2022-07-30 16:58:38',NULL),(25,'ok','abcd',NULL,'2022-08-02 23:16:43',NULL),(26,'ok','abcd',1,'2022-08-03 18:55:46',NULL),(33,'test','abcd',2,'2022-08-07 15:51:24',NULL),(34,'nice','abcd',36,'2022-08-07 16:31:43',NULL),(35,'hay the','abcde',2,'2022-08-07 16:32:05',NULL),(36,'ok','abcd',3,'2022-08-07 23:47:02',NULL),(37,'dc','abcde',37,'2022-08-08 20:51:19',NULL),(38,'nice too','abcde',36,'2022-08-09 18:15:54',NULL),(40,'test','abcde',2,'2022-08-11 12:57:19',NULL),(41,'5','abcd',2,'2022-08-11 13:08:44',NULL),(42,'6','abcd',2,'2022-08-11 13:08:45',NULL),(43,'7','abcd',2,'2022-08-11 13:08:45',NULL),(44,'8','abcd',2,'2022-08-11 13:08:46',NULL),(45,'9','abcd',2,'2022-08-11 13:08:46',NULL),(46,'10','abcd',2,'2022-08-11 13:08:47',NULL),(47,'11','abcd',2,'2022-08-11 13:08:55',NULL),(48,'thu binh','abcd',48,'2022-08-12 15:57:28',NULL),(49,'thu','abcd',49,'2022-08-12 15:57:44',NULL),(50,'haha','abcd',48,'2022-08-13 18:48:35',NULL),(79,'we','abcd',49,'2022-08-14 17:52:00',NULL),(80,'test trigger','abcde',49,'2022-08-14 17:52:19',NULL),(81,'test','abcd',NULL,'2022-08-14 18:04:31',79),(84,'tet','abcd',NULL,'2022-08-14 18:09:38',50),(85,'test arr','abcd',NULL,'2022-08-14 18:21:31',48),(86,'wo ho','abcd',NULL,'2022-08-14 18:22:11',50),(89,'e','abcd',NULL,'2022-08-14 18:24:09',86),(91,'ha?','22017ff2-74f9-43b7-b255-8f08f946a467',NULL,'2022-08-14 18:29:16',89),(92,'new acc','22017ff2-74f9-43b7-b255-8f08f946a467',48,'2022-08-14 18:31:04',NULL);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +132,7 @@ CREATE TABLE `comment_notif` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `comment_notif_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_comment_notif_comment_id` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +141,7 @@ CREATE TABLE `comment_notif` (
 
 LOCK TABLES `comment_notif` WRITE;
 /*!40000 ALTER TABLE `comment_notif` DISABLE KEYS */;
-INSERT INTO `comment_notif` VALUES (1,47,'abcd','REACT_COMMENT',0);
+INSERT INTO `comment_notif` VALUES (1,47,'abcd','REACT_COMMENT',1),(2,45,'abcd','REACT_COMMENT',1),(3,79,'abcd','REACT_COMMENT',1),(4,89,'abcd','REPLY_COMMENT',0),(5,48,'abcd','REACT_COMMENT',1),(6,84,'abcd','REACT_COMMENT',0),(7,86,'abcd','REACT_COMMENT',0),(8,50,'abcd','REACT_COMMENT',0),(9,3,'abcdef','REACT_COMMENT',0);
 /*!40000 ALTER TABLE `comment_notif` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +223,7 @@ CREATE TABLE `post_notif` (
   CONSTRAINT `fk_postNotif_auctionId` FOREIGN KEY (`auction_id`) REFERENCES `auction` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_postNotif_postId` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE,
   CONSTRAINT `post_notif_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +232,7 @@ CREATE TABLE `post_notif` (
 
 LOCK TABLES `post_notif` WRITE;
 /*!40000 ALTER TABLE `post_notif` DISABLE KEYS */;
-INSERT INTO `post_notif` VALUES (2,1,'abcd','COMMENT_POST',1,NULL),(3,2,'abcd','COMMENT_POST',1,NULL),(4,1,'abcd','REACT_POST',1,NULL),(7,2,'abcd','REACT_POST',1,NULL),(8,36,'abcde','COMMENT_POST',0,NULL),(9,36,'abcde','REACT_POST',0,NULL),(10,3,'abcde','REACT_POST',0,NULL),(11,3,'abcde','COMMENT_POST',1,NULL),(12,37,'abcde','REACT_POST',1,NULL),(13,37,'abcde','COMMENT_POST',0,NULL),(14,NULL,'abcd','JOIN_AUCTION',1,16);
+INSERT INTO `post_notif` VALUES (2,1,'abcd','COMMENT_POST',1,NULL),(3,2,'abcd','COMMENT_POST',1,NULL),(4,1,'abcd','REACT_POST',1,NULL),(7,2,'abcd','REACT_POST',0,NULL),(8,36,'abcde','COMMENT_POST',0,NULL),(9,36,'abcde','REACT_POST',0,NULL),(10,3,'abcde','REACT_POST',0,NULL),(11,3,'abcde','COMMENT_POST',1,NULL),(12,37,'abcde','REACT_POST',0,NULL),(13,37,'abcde','COMMENT_POST',0,NULL),(14,NULL,'abcd','JOIN_AUCTION',1,16),(15,49,'abcd','COMMENT_POST',1,NULL),(16,49,'abcd','REACT_POST',1,NULL),(17,48,'abcd','COMMENT_POST',0,NULL),(18,48,'abcd','REACT_POST',1,NULL);
 /*!40000 ALTER TABLE `post_notif` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +261,7 @@ CREATE TABLE `react` (
 
 LOCK TABLES `react` WRITE;
 /*!40000 ALTER TABLE `react` DISABLE KEYS */;
-INSERT INTO `react` VALUES ('abcd',1,1,'2022-08-06 07:00:00'),('abcd',2,1,'2022-08-12 15:45:16'),('abcd',3,1,'2022-08-07 23:46:55'),('abcd',36,1,'2022-08-08 09:18:24'),('abcd',37,1,'2022-08-09 19:59:53'),('abcde',1,1,'2022-07-26 07:00:00'),('abcde',2,1,'2022-08-11 13:07:29'),('abcde',3,1,'2022-08-07 23:45:39'),('abcde',36,1,'2022-08-09 18:15:44'),('abcde',37,1,'2022-08-09 18:38:55'),('abcdef',1,1,'2022-08-05 07:00:00');
+INSERT INTO `react` VALUES ('22017ff2-74f9-43b7-b255-8f08f946a467',2,1,'2022-08-14 18:30:56'),('22017ff2-74f9-43b7-b255-8f08f946a467',37,1,'2022-08-14 18:30:54'),('22017ff2-74f9-43b7-b255-8f08f946a467',48,1,'2022-08-14 18:31:00'),('abcd',1,1,'2022-08-06 07:00:00'),('abcd',2,1,'2022-08-12 15:45:16'),('abcd',3,1,'2022-08-07 23:46:55'),('abcd',36,1,'2022-08-08 09:18:24'),('abcd',37,1,'2022-08-09 19:59:53'),('abcd',48,1,'2022-08-14 16:05:57'),('abcd',49,1,'2022-08-14 17:52:06'),('abcde',1,1,'2022-07-26 07:00:00'),('abcde',2,1,'2022-08-11 13:07:29'),('abcde',3,1,'2022-08-07 23:45:39'),('abcde',36,1,'2022-08-09 18:15:44'),('abcde',37,1,'2022-08-09 18:38:55'),('abcde',48,1,'2022-08-14 17:52:25'),('abcde',49,1,'2022-08-14 17:25:05'),('abcdef',1,1,'2022-08-05 07:00:00');
 /*!40000 ALTER TABLE `react` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +290,7 @@ CREATE TABLE `react_comment` (
 
 LOCK TABLES `react_comment` WRITE;
 /*!40000 ALTER TABLE `react_comment` DISABLE KEYS */;
-INSERT INTO `react_comment` VALUES ('abcd',45,1,'2022-08-12 17:58:29'),('abcd',46,1,'2022-08-12 17:59:32'),('abcd',47,1,'2022-08-12 18:03:55'),('abcde',44,1,'2022-08-12 17:37:29'),('abcde',46,1,'2022-08-12 17:37:28'),('abcde',47,1,'2022-08-12 17:37:27');
+INSERT INTO `react_comment` VALUES ('22017ff2-74f9-43b7-b255-8f08f946a467',48,1,'2022-08-14 18:30:58'),('22017ff2-74f9-43b7-b255-8f08f946a467',50,1,'2022-08-14 18:31:00'),('22017ff2-74f9-43b7-b255-8f08f946a467',84,1,'2022-08-14 18:30:58'),('22017ff2-74f9-43b7-b255-8f08f946a467',86,1,'2022-08-14 18:30:59'),('abcd',3,1,'2022-08-14 18:41:12'),('abcd',45,1,'2022-08-12 17:58:29'),('abcd',46,1,'2022-08-12 17:59:32'),('abcd',47,1,'2022-08-12 18:03:55'),('abcd',50,1,'2022-08-13 18:48:37'),('abcd',79,1,'2022-08-14 17:56:50'),('abcd',84,1,'2022-08-14 18:22:07'),('abcd',86,1,'2022-08-14 18:22:23'),('abcd',89,1,'2022-08-14 18:28:53'),('abcde',44,1,'2022-08-12 17:37:29'),('abcde',45,1,'2022-08-13 18:14:32'),('abcde',46,1,'2022-08-12 17:37:28'),('abcde',47,1,'2022-08-12 17:37:27'),('abcde',79,1,'2022-08-14 17:56:59');
 /*!40000 ALTER TABLE `react_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,7 +400,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `firstname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `birthdate` date NOT NULL,
@@ -420,7 +423,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('abcd','honguyencongsang723@gmail.com','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công Sang','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817661/cld-sample.jpg','ROLE_USER',1),('abcde','1951052169sang@ou.edu.vn','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công San','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-2.jpg','ROLE_ADMIN',1),('abcdef','abc@gmail.com','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Quốc','Dương Kim','2001-01-24','bla bla','bla bla','Sinh viên','0123456789','2022-07-31','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-5.jpg','ROLE_USER',1);
+INSERT INTO `user` VALUES ('22017ff2-74f9-43b7-b255-8f08f946a467','blah@gmail.com','$2a$10$F3zyTXm3q.pAoogJW8qGW.90lRJFXu8nnFlvyg7sZ32K/Y2u3FcnK','Quoc','DUong','2022-08-02','asdasdasd','3123123123','dsadasdad','0917472052','2022-08-14','https://res.cloudinary.com/quoc2401/image/upload/v1660476421/wtuybmnh2zymvg8wgrwi.png?public_id=wtuybmnh2zymvg8wgrwi','ROLE_USER',1),('abcd','honguyencongsang723@gmail.com','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công Sang','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817661/cld-sample.jpg','ROLE_USER',1),('abcde','1951052169sang@ou.edu.vn','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Công San','Hồ Nguyễn','2001-08-15','79/43 BBTT','Nghệ An','Sinh viên','0823262356','2022-07-25','https://res.cloudinary.com/dynupxxry/image/upload/v1657817662/cld-sample-2.jpg','ROLE_ADMIN',1),('abcdef','abc@gmail.com','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','Quốc','Dương Kim','2001-01-24','bla bla','bla bla','Sinh viên','0123456789','2022-07-31','https://res.cloudinary.com/dynupxxry/image/upload/v1657817663/cld-sample-5.jpg','ROLE_USER',1),('ca0deef9-da0c-4a0e-a1af-11f93e69503a','chuotvavu7@yahoo.com','$2a$10$EBCOzLo1j3TGeiBKYF3O4.m0wQuhOial5IHNdOh9nVu4rLTrKcbQK','Quốc','Dương','2001-01-24',NULL,'Phan Ri Cua, Thuin Hai, Vietnam',NULL,NULL,'2022-08-14','https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2248760065301840&height=50&width=50&ext=1663082661&hash=AeRvbHZW3Bri9ANxap4','ROLE_USER',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -433,4 +436,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-12 20:48:12
+-- Dump completed on 2022-08-14 23:02:14

@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-META-INF\spring.components
-=======
 com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
@@ -103,4 +100,3 @@ com\charitysm\controllers\AuctionController.class
 com\charitysm\controllers\APICommentController.class
 com\charitysm\pojo\Auction_.class
 com\charitysm\pojo\reobj\PostRequest.class
->>>>>>> main
