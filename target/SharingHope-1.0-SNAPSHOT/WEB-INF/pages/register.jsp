@@ -22,39 +22,40 @@
         <div class="modal">
             <div class="modal-container">
                 <div class="modal-header">
-                    <h3 class="my-2">Đăng kí tài khoản</h3>
-                    <!--                    <div class="modal--close">
-                                            <i class="fa-solid fa-xmark p-2"></i>
-                                        </div>-->
+                    <h3 class="my-2">Đăng kí tài khoản️</h3>
                 </div>
 
                 <div class="modal-body ">
                     <div class="authentication register">
                         <c:url value="/register" var="action" />
                         <form:form action="${action}" class="form-register" modelAttribute="user"
-                                   enctype="multipart/form-data">
-
+                                   enctype="multipart/form-data" id="form-register">
                             <div class="form-group d-flex">
                                 <div class="text-start w-100 me-1">
-                                    <form:input path="lastname" placeholder="Họ*" cssClass="form-control-sm" />
+                                    <form:input path="lastname" id="lastname" placeholder="Họ*" cssClass="form-control-sm" />
                                     <form:errors path="lastname" element="div" cssClass="text-danger err-validate" />
+                                    <div class="text-danger err-validate"></div>
                                 </div>
                                 <div class="text-start w-100" >
-                                    <form:input path="firstname" placeholder="Tên*" class="form-control-sm" />
-                                    <form:errors path="firstname" element="div"  cssClass="text-danger err-validate" />
+                                    <form:input path="firstname" id="firstname" placeholder="Tên*" class="form-control-sm" />
+                                    <form:errors path="firstname" element="div" cssClass="text-danger err-validate" />
+                                    <div class="text-danger err-validate"></div>
                                 </div>
                             </div>
                             <div class="form-group text-start">
-                                <form:input path="email" placeholder="Email*" cssClass="form-control-sm" />
+                                <form:input path="email" placeholder="Email*" id="email" cssClass="form-control-sm" />
                                 <form:errors path="email" element="div" cssClass="text-danger err-validate" />
+                                <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
-                                <form:input path="phone" placeholder="Số điện thoại*" cssClass="form-control-sm" />
+                                <form:input path="phone" placeholder="Số điện thoại*" id="phone" cssClass="form-control-sm" />
                                 <form:errors path="phone" element="div" cssClass="text-danger err-validate" />
+                                <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
-                                <form:label path="birthdate" for="dateofbirth" cssClass="me-1 small">Ngày sinh<span class="text-danger">*</span></form:label>
+                                <form:label path="birthdate" for="dateofbirth" id="dateofbirth" cssClass="me-1 small">Ngày sinh<span class="text-danger">*</span></form:label>
                                 <form:input path="birthdate" type="date" id="dateofbirth" placeholder="Ngày sinh*" cssClass="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
                                 <form:input path="address" placeholder="Địa chỉ" cssClass="form-control-sm" />
@@ -64,11 +65,15 @@
                                 <form:input path="job" placeholder="Nghề nghiệp" cssClass="form-control-sm" />
                             </div>
                             <div class="form-group text-start">
-                                <form:password path="password" placeholder="Mật khẩu*"  cssClass="form-control-sm" />
-                                <form:errors path="password" element="div" cssClass="text-danger err-validate" />
+                                <form:password path="password" placeholder="Mật khẩu*" id="password"  cssClass="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
+                            </div>
+                             <div class="form-group text-start">
+                                 <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
-                                <form:label path="file" for="avatar" cssClass="me-1 small">Chọn ảnh đại diện<span class="text-danger">*</span></form:label>
+                                <form:label path="file" for="avatar" cssClass="me-1 small">Chọn ảnh đại diện</form:label>
                                 <form:input path="file" id="avatar" type="file" placeholder="" cssClass="form-control-sm" />
                             </div>
                             <div class="form-group">
@@ -81,5 +86,38 @@
                 </div>
             </div>
         </div>
+
+        <script src="<c:url value="/resources/js/validate.js" />"></script>
+        <script>
+            Validator({
+                form: '#form-register',
+                formGroupSelector: '.form-group',
+                errSelector: '.err-validate',
+                rules: [
+                    Validator.isRequired('#lastname'),
+                    Validator.isRequired('#firstname'),
+
+                    Validator.isRequired('#email'),
+                    Validator.isEmail('#email'),
+                    
+                    Validator.isDate('#dateofbirth', 'Ngày sinh không được để trống'),
+                    
+                    Validator.isRequired('#phone'),
+                    Validator.isPhone('#phone'),
+
+                    Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự'),
+
+                    Validator.isRequired('#password-confirm'),
+                    Validator.isConfirmed('#password-confirm', function () {
+                        return document.querySelector('#form-register #password').value;
+                    }, 'Mật khẩu nhập lại không chính xác')
+                ],
+                onSubmit: () => {
+
+                    document.querySelector('#form-register').submit();
+                  
+                  }
+            });
+        </script>
     </body>
 </html>

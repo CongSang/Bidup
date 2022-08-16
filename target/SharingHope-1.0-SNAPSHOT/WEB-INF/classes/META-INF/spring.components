@@ -66,3 +66,4 @@ com.charitysm.services.impl.PostServiceImpl=org.springframework.stereotype.Compo
 com.charitysm.services.impl.ReactServiceImpl=org.springframework.stereotype.Component
 com.charitysm.services.impl.ReportServiceImpl=org.springframework.stereotype.Component
 com.charitysm.services.impl.UserServiceImpl=org.springframework.stereotype.Component
+com.charitysm.utils.UniqueEmailValidator=org.springframework.stereotype.Component
