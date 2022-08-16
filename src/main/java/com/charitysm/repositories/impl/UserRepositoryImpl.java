@@ -8,6 +8,7 @@ import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @PropertySource("classpath:messages.properties")
 public class UserRepositoryImpl implements UserRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
     @Autowired
@@ -60,26 +62,27 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
             return false;
         }
-        
+
     }
-    
+
     public List<User> getUsers(Map<String, String> params) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("FROM User WHERE LOWER(CONCAT(firstname,' ',lastname)) like :name");
         String kw = params.get("kw");
-        if (kw == null || kw.isBlank())
+        if (kw == null || kw.isBlank()) {
             kw = "";
+        }
         q.setParameter("name", String.format("%%%s%%", kw.toLowerCase()));
-        
+
         int limit = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
-        
+
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         if (page > 0) {
             int start = (page - 1) * limit;
             q.setFirstResult(start);
             q.setMaxResults(limit);
         }
-        
+
         return q.getResultList();
     }
 
@@ -88,9 +91,9 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rU = q.from(User.class);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year),
                     b.equal(rU.get("userRole"), "ROLE_USER"));
@@ -106,10 +109,24 @@ public class UserRepositoryImpl implements UserRepository {
                     b.equal(rU.get("userRole"), "ROLE_USER"));
             q.multiselect(b.count(rU));
         }
-        
-        
-        
+
         Query query = session.createQuery(q);
-        return (long) query.getSingleResult(); 
+        return (long) query.getSingleResult();
+    }
+
+    @Override
+    public User getActiveUser(String email) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        User user;
+
+        try {
+            user = (User) session.createQuery("FROM User WHERE email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            user = null;
+        }
+        System.out.println(user.getEmail());
+        return user;
     }
 }

@@ -32,6 +32,7 @@ com\charitysm\pojo\BidPK.class
 com\charitysm\repositories\PostRepository.class
 com\charitysm\pojo\ReactCommentPK.class
 com\charitysm\repositories\NotificationRepository.class
+com\charitysm\utils\UniqueEmail.class
 com\charitysm\repositories\BidRepository.class
 com\charitysm\pojo\Comment_.class
 com\charitysm\pojo\CommentNotif_.class
@@ -44,6 +45,7 @@ com\charitysm\pojo\enumtype\ReportType$1.class
 com\charitysm\pojo\Auction.class
 com\charitysm\pojo\ReactComment_.class
 com\charitysm\controllers\APILoginFbController.class
+com\charitysm\utils\UniqueEmailValidator.class
 com\charitysm\pojo\ReactComment.class
 com\charitysm\services\ReactService.class
 com\charitysm\pojo\User.class

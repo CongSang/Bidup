@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.utils.UniqueEmail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,8 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -79,6 +78,7 @@ public class User implements Serializable {
     @Column(name = "id")
     private String id;
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{user.register.emailErr}")//if the field contains email address consider using this annotation to enforce field validation
+    @UniqueEmail(message = "{user.register.uniqueEmail}")
     @Basic(optional = false)
     @NotNull(message = "{user.register.notnullErr}")
     @Size(min = 1, max = 45)

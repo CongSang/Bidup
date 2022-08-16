@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/auction")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-                .antMatchers("/user")
+                .antMatchers("/user/**")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/search/**")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
