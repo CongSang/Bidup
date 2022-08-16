@@ -7,11 +7,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-<<<<<<< HEAD
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-15T15:43:46")
-=======
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-15T17:01:07")
->>>>>>> main
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-08-16T21:21:14")
 @StaticMetamodel(PostNotif.class)
 public class PostNotif_ { 
 

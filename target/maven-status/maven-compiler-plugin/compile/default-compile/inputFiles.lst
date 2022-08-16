@@ -8,7 +8,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\SearchContr
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\UserServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\SecurityWebApplicationInit.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\APICommentController.java
-D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\NotificationCenter.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\NotificationCenter.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\Bid.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\ReactService.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\UserRepository.java

@@ -134,15 +134,10 @@ function loadComment(postId) {
                 othersComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });
-
-            let userComment = comments.filter(c => c.userId.id === currentUserId);
-            userComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
-            let othersComment = comments.filter(c => c.userId.id !== currentUserId);
-            othersComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
+                
+                $(commentedComment).append(`${(userComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
 
                 $(commentedComment).append(`${(othersComment).map((comment, index) => {
                     return commentItem(comment, postId);
@@ -183,8 +178,9 @@ function commentItem(comment, postId) {
     let postOwnerId = $(`#post${postId}OwnerId`).val();
     let subLength = comment.commentSetLength;
     
-    return `<div id="commentItem${comment.id}" class="d-flex flex-column comment--item py-2 position-relative comment--item-have-reply">
-                <div class="d-flex">
+    return `<div id="commentItem${comment.id}" class="d-flex flex-column comment--item py-2 position-relative ${subLength > 0 ? 'child-have-reply' : ''}">
+                <div class="point-to-child"></div>
+                <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
                     <a href="${ctxPath}/user/${comment.userId.id}">
                         <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
@@ -248,6 +244,7 @@ function commentItem(comment, postId) {
                     </div>
                 ${subLength > 0 ? `
                     <div class="btn-load-reply-comments" id="loadReply${comment.id}" onclick="loadReplies(${comment.id}, ${postId})">
+                            <div class="point-to-showMore"></div>
                             <i class="fa-solid fa-reply me-2"></i>
                             <span>Xem <span class="count-reply">${subLength}</span> phản hồi</span>
                 `:``}
@@ -312,7 +309,7 @@ function loadReplies(commentId, postId) {
                 return $(this).attr('id');
             }).get();
 
-            let userComment = comments.filter(c => c.userId.id === currentUserId
+                let userComment = comments.filter(c => c.userId.id === currentUserId
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 userComment.sort(function (a, b) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
@@ -323,13 +320,13 @@ function loadReplies(commentId, postId) {
                     return new Date(b.commentDate) - new Date(a.commentDate);
                 });
 
-            $(repliedComment).append(`${(userComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
+                $(repliedComment).append(`${(userComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
 
-            $(repliedComment).append(`${(othersComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
+                $(repliedComment).append(`${(othersComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
             $('#loadReply' + commentId).remove();
         }
     })

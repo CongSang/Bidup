@@ -4,11 +4,19 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.Comment;
+import com.charitysm.pojo.Post;
+import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.CommentRequest;
 import com.charitysm.repositories.CommentRepository;
 import com.charitysm.services.CommentService;
+import com.charitysm.services.PostService;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +28,46 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService{
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostService postService;
     
     @Override
-    public int createComment(Comment c) {
-        return this.commentRepository.createComment(c);
+    public Comment createComment(CommentRequest cq, User u) {
+        try {
+            Comment c = new Comment();
+            c.setContent(cq.getContent());
+            c.setCommentDate(new Date());
+            Post p;
+            Comment parent;
+            c.setUserId(u);
+            if (cq.getPostId() != 0) {
+                p = this.postService.getPostById(cq.getPostId());
+                c.setPostId(p);
+                if (this.commentRepository.createComment(c) > 0) {
+                    NotificationCenter.sendMessage(p.getUserId().getId());
+                    return c;
+                }
+            }
+            else {
+                parent = this.commentRepository.getCommentById(cq.getCommentId());
+                c.setParentId(parent);
+                if (this.commentRepository.createComment(c) > 0) {
+                    NotificationCenter.sendMessage(parent.getUserId().getId());
+                    return c;
+                }
+            }
+            
+        }
+        catch (IOException | EntityNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        } 
+        return null;
     }
 
     @Override
-    public void deleteComment(int id) {
-        this.commentRepository.deleteComment(id);
+    public void deleteComment(int id, String userId) {
+        this.commentRepository.deleteComment(id, userId);
     }
 
     @Override
@@ -38,7 +77,13 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Comment getCommentById(int id) {
-        return this.commentRepository.getCommentById(id);
+        try {
+            return this.commentRepository.getCommentById(id);
+        }
+        catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override

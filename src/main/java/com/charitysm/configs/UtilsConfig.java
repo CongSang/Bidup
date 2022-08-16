@@ -4,7 +4,7 @@
  */
 package com.charitysm.configs;
 
-import com.charitysm.utils.NotificationCenter;
+import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.utils.RestFB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +30,5 @@ public class UtilsConfig {
         r.setLinkGetToken(env.getProperty("fb.link_get_token"));
         r.setRedirectURL(env.getProperty("fb.rediect_url"));
         return r ;
-    }
-    
-    @Bean
-    public NotificationCenter notificationCenter() {
-        return new NotificationCenter();
     }
 }

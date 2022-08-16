@@ -3,6 +3,7 @@
 function getNotifs() {
     var container = $('.list-notification');
     var counter = $('.notif-count');
+    container.empty();
     $.ajax({
         type: 'get',
         url: `${ctxPath}/api/get-notifs`,

@@ -67,7 +67,6 @@ com\charitysm\repositories\AuctionRepository.class
 com\charitysm\pojo\enumtype\ReportType$2.class
 com\charitysm\services\ReportService.class
 com\charitysm\pojo\Bid_.class
-com\charitysm\utils\NotificationCenter.class
 com\charitysm\pojo\Post_.class
 com\charitysm\pojo\ReportUser.class
 com\charitysm\pojo\ReactPK_.class

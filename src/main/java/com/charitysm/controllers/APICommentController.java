@@ -14,7 +14,6 @@ import com.charitysm.pojo.reobj.CommentRequest;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
-import com.charitysm.utils.NotificationCenter;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,42 +43,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class APICommentController {
     @Autowired
-    private PostService postService;
-    @Autowired
     private ReactService reactService;
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private NotificationCenter notificationCenter;
 
     @Async
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/delete-comment/{id}")
-    public void deleteComment(@PathVariable(value = "id") int id) {
-        this.commentService.deleteComment(id);
+    public void deleteComment(@PathVariable(value = "id") int id, HttpSession session) {
+        User u = (User) session.getAttribute("currentUser");
+        this.commentService.deleteComment(id, u.getId());
     }
 
     @Async
     @PostMapping(value = "/create-comment")
-    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest c
+    public ResponseEntity<Comment> createComment(@RequestBody CommentRequest cq
             , HttpSession session) {
-        Comment comm = new Comment();
-        comm.setContent(c.getContent());
-        comm.setCommentDate(new Date());
-        Post p = new Post(c.getPostId());
-        Comment parent = new Comment(c.getCommentId());
-        User u = (User) session.getAttribute("currentUser");
-        comm.setUserId(u);
-        if (c.getPostId() > 0)
-            comm.setPostId(p);
-        else
-            comm.setParentId(parent);
         
-        if (this.commentService.createComment(comm) < 1) {
+        User u = (User) session.getAttribute("currentUser");
+        Comment c = this.commentService.createComment(cq, u);
+        if (c == null) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
-        return new ResponseEntity<>(comm, HttpStatus.CREATED);
+        return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
     @Async
@@ -99,20 +86,10 @@ public class APICommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-react-comment/{commentId}")
     public void createCommentReact(@PathVariable(value="commentId") int commentId, HttpSession session) {
-        ReactComment react = new ReactComment();
-        react.setType((short)1);
-//
-        Comment c = this.commentService.getCommentById(commentId);
+        
         User u = (User)session.getAttribute("currentUser");
-        ReactCommentPK rPK = new ReactCommentPK();
-        rPK.setCommentId(commentId);
-        rPK.setUserId(u.getId());
-//
-        react.setReactCommentPK(rPK);
-        react.setComment(c);
-        react.setUser(u);
-        react.setCreatedDate(new Date());
-        this.reactService.createReactComment(react);
+        
+        this.reactService.createReactComment(commentId, u);
     }
     
     @Async
