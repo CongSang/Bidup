@@ -21,11 +21,11 @@ public class ReactPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "user_id")
+    @Column(name = "user_id", updatable = false)
     private String userId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "post_id")
+    @Column(name = "post_id", updatable = false)
     private int postId;
 
     public ReactPK() {

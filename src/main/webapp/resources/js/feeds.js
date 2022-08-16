@@ -149,8 +149,8 @@ function loadFeeds(posts) {
                             <div class="show-more-comment">
                                 <param id="commentPage" value="1"/>
                                 <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
-                                <span style="margin-left: auto">
-                                    <span id="showedCommentLength"></span>/<span id="commentSetLength"></span>
+                                <span>
+                                    <span id="showedCommentLength"></span>/<span id="commentSetLength">${post.commentSetLength}</span>
                                 </span>
                             </div>
                         </div>

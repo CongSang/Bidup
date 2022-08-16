@@ -41,10 +41,11 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
-    public void deleteComment(int id) {
+    public void deleteComment(int id, String userId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Comment c = session.get(Comment.class, id);
-        session.delete(c);
+        if(c.getUserId().getId().equals(userId))
+            session.delete(c);
     }
 
     @Override
@@ -60,13 +61,19 @@ public class CommentRepositoryImpl implements CommentRepository{
             query.setFirstResult(start);
             query.setMaxResults(size);
         }
-        return query.getResultList();
+        List<Comment> cs = query.getResultList();
+        cs.forEach(c -> {
+            c.setCommentSetLength(c.getCommentSet().size());
+        });
+        return cs;
     }
 
     @Override
     public Comment getCommentById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        return session.get(Comment.class, id);
+        Comment c = session.get(Comment.class, id);
+        c.setCommentSetLength(c.getCommentSet().size());
+        return c;
     }
 
     @Override
@@ -91,7 +98,12 @@ public class CommentRepositoryImpl implements CommentRepository{
             q.setMaxResults(size);
         }
         
-        return q.getResultList();
+        List<Comment> cs = q.getResultList();
+        cs.forEach(c -> {
+            c.setCommentSetLength(c.getCommentSet().size());
+        });
+        
+        return cs;
     }
     
     public long countCommentStats(int month, int year) {

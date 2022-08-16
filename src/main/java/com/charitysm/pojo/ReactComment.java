@@ -40,12 +40,12 @@ public class ReactComment implements Serializable {
     @EmbeddedId
     protected ReactCommentPK reactCommentPK;
     @Column(name = "type")
-    private Short type;
+    private Short type = 1;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private Date createdDate = new Date();
     @JoinColumn(name = "comment_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore

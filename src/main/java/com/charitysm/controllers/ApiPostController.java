@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.charitysm.controllers;
 
-import com.charitysm.utils.NotificationCenter;
 import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
@@ -51,8 +47,6 @@ public class ApiPostController {
     private ReactService reactService;
     @Autowired
     private Cloudinary cloudinary;
-    @Autowired
-    private NotificationCenter notificationCenter;
     
     @Async
     @GetMapping("/posts")
@@ -73,7 +67,7 @@ public class ApiPostController {
     @Async
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-react/{postId}")
-    public void createReact(@PathVariable(value="postId") int postId, HttpSession session) {
+    public void createReact(@PathVariable(value="postId") int postId, HttpSession session) throws IOException {
         React react = new React();
         react.setType((short)1);
 
@@ -87,6 +81,8 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
+        System.out.println("UserId : " + p.getUserId().getId());
+        NotificationCenter.sendMessage(p.getUserId().getId());
         this.reactService.createReact(react);
     }
     
@@ -95,9 +91,7 @@ public class ApiPostController {
     @DeleteMapping("/delete-react/{postId}")
     public void deleteReact(@PathVariable(value="postId") int postId, HttpSession session) {
         User u = (User)session.getAttribute("currentUser");
-        React react = this.reactService.findReact(u.getId(), postId);
-        if (react != null)
-            this.reactService.deleteReact(react);
+        this.reactService.deleteReact(u.getId(), postId);
     }
     
     @Async
@@ -144,9 +138,10 @@ public class ApiPostController {
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete-post/{id}")
-    public void deletePost(@PathVariable(value="id") int id) throws IOException {
+    public void deletePost(@PathVariable(value="id") int id, HttpSession session) throws IOException {
         Post p = this.postService.getPostById(id);
-        if (p != null) {
+        User u = (User) session.getAttribute("currentUser");
+        if (p != null && p.getUserId().getId().equals(u.getId())) {
             this.postService.deletePost(id);
             if (!p.getImage().isEmpty()) {
                 String public_id = p.getImage().substring(p.getImage().lastIndexOf("public_id=") + 10);

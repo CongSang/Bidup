@@ -228,24 +228,9 @@ public class ApiAuctionController {
     @Async
     @PostMapping("/create-bid")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
-        Bid bid = new Bid();
-        bid.setBidDate(new Date());
-        bid.setMessage("");
-        bid.setMoney(b.getMoney());
-        bid.setIsWinner((short) 0);
-
         User u = (User) session.getAttribute("currentUser");
-        Auction a = auctionService.getAuctionById(b.getAuctionId());
-
-        BidPK bidPK = new BidPK();
-        bidPK.setUserId(u.getId());
-        bidPK.setAuctionId(b.getAuctionId());
-
-        bid.setBidPK(bidPK);
-        bid.setUser(u);
-        bid.setAuction(a);
         
-        return new ResponseEntity<>(this.bidService.createBid(bid), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.bidService.createBid(b, u), HttpStatus.CREATED);
     }
 
     @Async
