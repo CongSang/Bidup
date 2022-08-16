@@ -21,4 +21,5 @@ public interface UserService extends UserDetailsService {
     boolean registerNewUser(User user);
     List<User> getUsers(Map<String, String> params);
     long countUserStats(int month, int year);
+    boolean isEmailAlreadyInUse(String email);
 }

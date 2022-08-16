@@ -46,11 +46,13 @@
                         <c:url value="/login" var="action" />
                         
                         <form action="${action}" method="post" id="loginForm">
-                            <div class="form-group">
-                                <input type="text" name="email" placeholder="Email"  class="form-control"/>
+                            <div class="form-group text-start">
+                                <input type="text" id="email" name="email" placeholder="Email"  class="form-control"/>
+                                <div class="text-danger err-validate"></div>
                             </div>
-                            <div class="form-group">
-                                <input type="password" name="password" placeholder="Mật khẩu" class="form-control" />
+                            <div class="form-group text-start">
+                                <input type="password" id="password" name="password" placeholder="Mật khẩu" class="form-control" />
+                                <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="b btn-login" value="Đăng nhập" />
@@ -92,7 +94,24 @@
 
         <c:url value="/resources/js/login.js" var="loginJs" />
         <script src="${loginJs}"></script>
+        <script src="<c:url value="/resources/js/validate.js"/>"></script>
         <script>
+            Validator({
+                form: '#loginForm',
+                formGroupSelector: '.form-group',
+                errSelector: '.err-validate',
+                rules: [
+                    Validator.isRequired('#email'),
+                    Validator.isEmail('#email'),
+
+                    Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự')
+                ],
+                onSubmit: () => {
+
+                    document.querySelector('#loginForm').submit();
+                  
+                  }
+            });
             <c:if test="${sessionScope.currentUser != null && sessionScope.loginType == 'loginFB'}">
                 window.onload = function () {
                     $('input[name="email"]').val('${sessionScope.currentUser.email}');
