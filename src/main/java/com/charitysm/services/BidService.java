@@ -5,6 +5,8 @@
 package com.charitysm.services;
 
 import com.charitysm.pojo.Bid;
+import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.BidRequest;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  * @author ADMIN
  */
 public interface BidService {
-    Bid createBid(Bid b);
+    Bid createBid(BidRequest bq, User u);
     void deleteBid(Bid b);
     Bid findBid(String userId, int auctionId);
     void updateWinner(Bid b);

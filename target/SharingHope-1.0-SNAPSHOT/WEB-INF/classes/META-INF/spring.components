@@ -15,6 +15,7 @@ com.charitysm.controllers.ApiUserController=org.springframework.stereotype.Compo
 com.charitysm.controllers.AuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
 com.charitysm.controllers.LoginController=org.springframework.stereotype.Component
+com.charitysm.controllers.NotificationCenter=javax.websocket.server.ServerEndpoint
 com.charitysm.controllers.PostController=org.springframework.stereotype.Component
 com.charitysm.controllers.SearchController=org.springframework.stereotype.Component
 com.charitysm.controllers.UserInfoController=org.springframework.stereotype.Component

@@ -4,10 +4,18 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.NotificationCenter;
+import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactComment;
+import com.charitysm.pojo.ReactCommentPK;
+import com.charitysm.pojo.User;
 import com.charitysm.repositories.ReactRepository;
+import com.charitysm.services.CommentService;
 import com.charitysm.services.ReactService;
+import java.io.IOException;
+import java.util.Date;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +27,8 @@ import org.springframework.stereotype.Service;
 public class ReactServiceImpl implements ReactService {
     @Autowired
     private ReactRepository reactRepository;
+    @Autowired
+    private CommentService commentService;
     
     @Override
     public boolean createReact(React r) {
@@ -26,8 +36,8 @@ public class ReactServiceImpl implements ReactService {
     }
 
     @Override
-    public void deleteReact(React r) {
-        this.reactRepository.deleteReact(r);
+    public void deleteReact(String userId, int postId) {
+        this.reactRepository.deleteReact(userId, postId);
     }
 
     @Override
@@ -36,8 +46,24 @@ public class ReactServiceImpl implements ReactService {
     }
 
     @Override
-    public boolean createReactComment(ReactComment r) {
-        return this.reactRepository.createReactComment(r);
+    public void createReactComment(int commentId, User u) {
+        try {
+        ReactComment react = new ReactComment();
+        
+        Comment c = this.commentService.getCommentById(commentId);
+        ReactCommentPK rPK = new ReactCommentPK();
+        rPK.setCommentId(commentId);
+        rPK.setUserId(u.getId());
+        react.setReactCommentPK(rPK);
+        react.setComment(c);
+        react.setUser(u);
+        
+        if (this.reactRepository.createReactComment(react) == true)
+            NotificationCenter.sendMessage(c.getUserId().getId());
+        }
+        catch (IOException | EntityNotFoundException ex) {
+            ex.printStackTrace();
+        } 
     }
 
     @Override

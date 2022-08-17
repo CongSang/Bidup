@@ -224,7 +224,9 @@
 
 <script src="<c:url value="/resources/js/notification.js" />"></script>
 <script>
-                            $(function () {
-                                getNotifs();
-                            });
+    $(function () {
+        getNotifs();
+        currentUserId = '${sessionScope.currentUser.getId()}';
+    });
 </script>
+<script src="<c:url value="/resources/js/websocket.js"/>"></script>

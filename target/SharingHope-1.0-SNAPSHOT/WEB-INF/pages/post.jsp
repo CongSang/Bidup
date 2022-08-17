@@ -116,8 +116,8 @@
                             <div class="show-more-comment">
                                 <param id="commentPage" value="1"/>
                                 <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
-                                <span style="margin-left: auto">
-                                    <span id="showedCommentLength"></span>/<span id="commentSetLength"></span>
+                                <span>
+                                    <span id="showedCommentLength"></span>/<span id="commentSetLength">${post.commentSetLength}</span>
                                 </span>
                             </div>
                         </div>
@@ -140,8 +140,17 @@
             $('#userNotification').on("click", function () {
                 $('.notif-count').css('opacity', '0');
             });
+            let url = new URL(window.location.toString());
+            let commentId = url.searchParams.get('comment_id');
+            let notifType = url.searchParams.get('notif_type');
+            if (notifType !== 'REPLY_COMMENT' && notifType !== 'REACT_COMMENT')
+                showComment($('#showCommentBtn'), ${post.id});
+            else {
+                $("div.comment").addClass('is-show');
+                loadCommentNotifRef(commentId);
+            }
+//            else
             
-            showComment($('#showCommentBtn'), ${post.id});
         };
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);

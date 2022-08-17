@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface CommentRepository {
     int createComment(Comment c);
-    void deleteComment(int id);
+    void deleteComment(int id, String userId);
     List<Comment> getComments(int postId, int page);
     Comment getCommentById(int id);
     BigInteger getCommentCount(int postId);

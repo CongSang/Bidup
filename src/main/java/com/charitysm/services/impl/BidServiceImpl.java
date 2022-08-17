@@ -4,10 +4,19 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.NotificationCenter;
+import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
+import com.charitysm.pojo.BidPK;
+import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.BidRequest;
 import com.charitysm.repositories.BidRepository;
+import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +29,37 @@ public class BidServiceImpl implements BidService{
     
     @Autowired
     private BidRepository bidRepository;
+    @Autowired
+    private AuctionService auctionService;
 
     @Override
-    public Bid createBid(Bid b) {
-        return this.bidRepository.createBid(b);
+    public Bid createBid(BidRequest bq, User u) {
+        try {
+            Bid bid = new Bid();
+            bid.setBidDate(new Date());
+            bid.setMessage("");
+            bid.setMoney(bq.getMoney());
+            bid.setIsWinner((short) 0);
+
+            Auction a = auctionService.getAuctionById(bq.getAuctionId());
+
+            BidPK bidPK = new BidPK();
+            bidPK.setUserId(u.getId());
+            bidPK.setAuctionId(bq.getAuctionId());
+
+            bid.setBidPK(bidPK);
+            bid.setUser(u);
+            bid.setAuction(a);
+            if (this.bidRepository.createBid(bid) != null){ 
+                NotificationCenter.sendMessage(a.getUserId().getId());
+                return bid;
+            }
+        }
+        catch (IOException | EntityNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        } 
+        return null;
     }
 
     @Override

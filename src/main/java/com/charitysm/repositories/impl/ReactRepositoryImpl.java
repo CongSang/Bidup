@@ -7,6 +7,7 @@ package com.charitysm.repositories.impl;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactComment;
 import com.charitysm.pojo.ReactCommentPK;
+import com.charitysm.pojo.ReactPK;
 import com.charitysm.repositories.ReactRepository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,9 +36,12 @@ public class ReactRepositoryImpl implements ReactRepository{
     }
 
     @Override
-    public void deleteReact(React r) {
+    public void deleteReact(String userId, int postId) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        session.delete(r);
+        ReactPK rPK = new ReactPK(userId, postId);
+        Query q = session.createQuery("DELETE FROM React WHERE reactPK=:rPK");
+        q.setParameter("rPK", rPK);
+        q.executeUpdate();
     }
 
     @Override

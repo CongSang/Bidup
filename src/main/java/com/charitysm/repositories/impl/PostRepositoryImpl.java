@@ -72,7 +72,12 @@ public class PostRepositoryImpl implements PostRepository {
             query.setFirstResult(start);
             query.setMaxResults(size);
         }
-        return query.getResultList();
+        List<Post> rs = query.getResultList();
+        rs.forEach(p -> {
+            p.setCommentSetLength(p.getCommentSet().size());
+        });
+        
+        return rs;
     }
 
     @Override
@@ -105,8 +110,10 @@ public class PostRepositoryImpl implements PostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createNamedQuery("Post.findById");
         q.setParameter("id", id);
+        Post p = (Post)q.getSingleResult();
+        p.setCommentSetLength(p.getCommentSet().size());
         
-        return (Post)q.getSingleResult();
+        return p;
     }
 
     @Override
@@ -155,7 +162,12 @@ public class PostRepositoryImpl implements PostRepository {
             query.setFirstResult(start);
             query.setMaxResults(size);
         }
-        return query.getResultList();
+        List<Post> rs = query.getResultList();
+        rs.forEach(p -> {
+            p.setCommentSetLength(p.getCommentSet().size());
+        });
+        
+        return rs;
     }
 
     @Override
@@ -166,6 +178,7 @@ public class PostRepositoryImpl implements PostRepository {
 //        Object[] o =(Object[]) ;
         
         Post p = (Post) q.getSingleResult();
+        p.setCommentSetLength(p.getCommentSet().size());
 //        p.setId(Integer.parseInt(o[0].toString()));
 //        p.setContent(o[1].toString());
 //        p.setImage(o[2].toString());

@@ -103,16 +103,9 @@ function showComment(element, postId) {
         $(element).parents('.post').find('#commentPage').val(1);
     } else {
         comment.addClass('is-show');
-        $.ajax({
-            type: 'get',
-            url: `${ctxPath}/api/get-comment-count/` + postId,
-            dataType: 'json',
-            success: function (count) {
-                comment.find('#commentSetLength').text(count);
-            }
-        });
         loadComment(postId);
     }
+    
 }
 
 function loadComment(postId) {
@@ -121,65 +114,71 @@ function loadComment(postId) {
     var commentedComment = currentPost.find('#commentedComment');
 
     $.ajax({
-        type: 'get',
-        url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
-        dataType: 'json',
-        success: function (comments) {
-            currentPost.find('.comment-loading').css("display", "none");
-            if (comments.length <= 0 && comments === null)
-                return;
+            type: 'get',
+            url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
+            dataType: 'json',
+            success: function (comments) {
+                let loadedCommentIds = $('.comment--item').map(function(){
+                    return $(this).attr('id');
+                }).get();
+                
+                currentPost.find('.comment-loading').css("display", "none");
+                
+                let userComment = comments.filter(c => c.userId.id === currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
+                userComment.sort(function (a, b) {
+                    return new Date(b.commentDate) - new Date(a.commentDate);
+                });
+                let othersComment = comments.filter(c => c.userId.id !== currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
+                othersComment.sort(function (a, b) {
+                    return new Date(b.commentDate) - new Date(a.commentDate);
+                });
+                
+                $(commentedComment).append(`${(userComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
 
-            let userComment = comments.filter(c => c.userId.id === currentUserId);
-            userComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
-            let othersComment = comments.filter(c => c.userId.id !== currentUserId);
-            othersComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
-
-            $(commentedComment).append(`${(userComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
-
-            $(commentedComment).append(`${(othersComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
-
-            commentPage++;
-            currentPost.find('#commentPage').val(commentPage);
-        }
-    })
-            .fail(function () {
-                currentPost.find('div.comment').removeClass('comment-is-show');
-            })
-            .done(function () {
-                let count = currentPost.find('#commentedComment').children('.comment--item').length;
-                let max = currentPost.find('#commentSetLength').text();
-
-
-                currentPost.find('#showedCommentLength').text(count);
-                if (count == max)
-                    currentPost.find('.showMore').css('display', 'none');
-
-                let url = new URL(window.location.toString());
-                let commentId = url.searchParams.get('comment_id');
-                if (commentId === undefined || commentId === null)
-                    return;
-                if (commentId !== undefined || commentId !== null) {
+                $(commentedComment).append(`${(othersComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
+                
+                commentPage++;
+                currentPost.find('#commentPage').val(commentPage);
+            }
+        })
+        .fail(function () {
+                    currentPost.find('div.comment').removeClass('comment-is-show');
+        })
+        .done(function() {
+            let count = currentPost.find('#commentedComment').children('.comment--item').length;
+            let max = currentPost.find('#commentSetLength').text();
+            currentPost.find('#showedCommentLength').text(count);
+            if(count == max)
+                currentPost.find('.showMore').css('opacity', '0');
+            
+            let url = new URL(window.location.toString());
+            let commentId = url.searchParams.get('comment_id');
+            if(commentId === undefined || commentId === null) return;
+            if(commentId !== undefined || commentId !== null) {
+                if ($('#commentItem' + commentId) !== undefined) {
                     $(window).scrollTop($('#commentItem' + commentId).offset().top - 300);
                     $('#commentItem' + commentId).find('.comment-content' + commentId).addClass('tada');
                 }
-            });
+                else {
+                    let commentItem = getComment(commentId);
+                }
+            }
+        });
 }
 
 function commentItem(comment, postId) {
     let currentUserAvatar = $("#userAvatar").attr("src");
     let reactSetLength = comment.reactCommentSet === null ? 0 : comment.reactCommentSet.length;
     let postOwnerId = $(`#post${postId}OwnerId`).val();
-    let commentSetLength = comment.commentSet === null ? 0 : comment.commentSet.length;
-
-    return `<div id="commentItem${comment.id}" class="d-flex flex-column comment--item py-2 position-relative ${commentSetLength > 0 ? 'child-have-reply' : ''}">
+    let subLength = comment.commentSetLength;
+    
+    return `<div id="commentItem${comment.id}" class="d-flex flex-column comment--item py-2 position-relative ${subLength > 0 ? 'child-have-reply' : ''}">
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
@@ -243,12 +242,12 @@ function commentItem(comment, postId) {
                 
                         <param id="replyPage" value="1"/>
                     </div>
-                ${commentSetLength > 0 ? `
-                    <div class="btn-load-reply-comments position-relative" id="loadReply${comment.id}" onclick="loadReplies(${comment.id}, ${postId})">
+                ${subLength > 0 ? `
+                    <div class="btn-load-reply-comments" id="loadReply${comment.id}" onclick="loadReplies(${comment.id}, ${postId})">
                             <div class="point-to-showMore"></div>
                             <i class="fa-solid fa-reply me-2"></i>
-                            <span>Xem <span class="count-reply">${commentSetLength}</span> phản hồi</span>
-                ` : ``}
+                            <span>Xem <span class="count-reply">${subLength}</span> phản hồi</span>
+                `:``}
                 </div>
             </div>`;
 }
@@ -310,23 +309,24 @@ function loadReplies(commentId, postId) {
                 return $(this).attr('id');
             }).get();
 
-            let userComment = comments.filter(c => c.userId.id === currentUserId
+                let userComment = comments.filter(c => c.userId.id === currentUserId
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
-            userComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
-            let othersComment = comments.filter(c => c.userId.id !== currentUserId);
-            othersComment.sort(function (a, b) {
-                return new Date(b.commentDate) - new Date(a.commentDate);
-            });
+                userComment.sort(function (a, b) {
+                    return new Date(b.commentDate) - new Date(a.commentDate);
+                });
+                let othersComment = comments.filter(c => c.userId.id !== currentUserId
+                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
+                othersComment.sort(function (a, b) {
+                    return new Date(b.commentDate) - new Date(a.commentDate);
+                });
 
-            $(repliedComment).append(`${(userComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
+                $(repliedComment).append(`${(userComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
 
-            $(repliedComment).append(`${(othersComment).map((comment, index) => {
-                return commentItem(comment, postId);
-            }).join('')}`);
+                $(repliedComment).append(`${(othersComment).map((comment, index) => {
+                    return commentItem(comment, postId);
+                }).join('')}`);
             $('#loadReply' + commentId).remove();
         }
     })

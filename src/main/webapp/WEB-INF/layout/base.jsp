@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +16,7 @@
         <script src="<c:url value="/resources/js/hashtag/jquery.hashtags.js" />"></script>
         <script src="<c:url value="/resources/js/hashtag/jquery.autosize.js" />"></script>
         <script src="<c:url value="/resources/js/main.js" />"></script>
+        
         
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
@@ -60,7 +61,6 @@
             <tiles:insertAttribute name="footer" />
         </div>
             <tiles:insertAttribute name="chatbox" />
-
         <script src="<c:url value="/resources/js/chat.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
     </body>
