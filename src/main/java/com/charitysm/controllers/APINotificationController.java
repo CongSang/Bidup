@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,16 +31,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class APINotificationController {
     @Autowired
-    private UserService userService;
-    @Autowired
     private NotificationService notificationService;
     
     @Async
     @GetMapping("/get-notifs")
-    public ResponseEntity<List<NotificationResponse>> getNotifs(HttpSession session) {
+    public ResponseEntity<List<NotificationResponse>> getNotifs(@RequestParam Map<String, String> params 
+            ,HttpSession session) {
         
         User u = (User) session.getAttribute("currentUser");
-        List<NotificationResponse> res = notificationService.getNotifs(u.getId());
+        List<NotificationResponse> res = notificationService.getNotifs(u.getId(), params);
         
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

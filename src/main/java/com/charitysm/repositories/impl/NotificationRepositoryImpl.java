@@ -9,9 +9,12 @@ import com.charitysm.pojo.PostNotif;
 import com.charitysm.pojo.enumtype.NotifType;
 import com.charitysm.repositories.NotificationRepository;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,16 +25,28 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:messages.properties")
 public class NotificationRepositoryImpl implements NotificationRepository {
-
+    
+    @Autowired
+    private Environment env;
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Object[]> getNotifs(String userId) {
+    public List<Object[]> getNotifs(String userId, Map<String, String> params) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Query q = session.createSQLQuery("CALL sp_userGetNotifs(:userId)");
+        Query q = session.createSQLQuery("CALL sp_userGetNotifs(:userId, :start, :limit)");
         q.setParameter("userId", userId);
+        
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("comment.page.size")));
+        if (page > 0){
+            int start = (page - 1) * size;
+            q.setParameter("start", start);
+            q.setParameter("limit", size);
+        }
+        
         return q.getResultList();
     }
 

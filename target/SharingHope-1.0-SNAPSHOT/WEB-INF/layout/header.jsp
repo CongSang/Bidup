@@ -79,15 +79,15 @@
                                     <h5>Thông báo</h5>
                                 </div>
                             </li>
-                            <li  class="dropdown-item d-flex justify-content-center
-                                 align-items-center notif-loading text-center">
-                                <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
-                            </li>
                             <div class="position-relative" style="min-height: 40vh">
                                 <div class="p-2 list-notification">
 
                                 </div>
                             </div>
+                            <li  class="dropdown-item d-flex justify-content-center
+                                 align-items-center notif-loading text-center">
+                                <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
+                            </li>
                         </ul>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
