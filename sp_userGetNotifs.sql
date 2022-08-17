@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS sp_userGetNotifs;
 
 DELIMITER $
-CREATE PROCEDURE sp_userGetNotifs(IN user_id varchar(50))
+CREATE PROCEDURE sp_userGetNotifs(IN user_id varchar(50), IN start_offset int, IN limit_amount int)
 BEGIN
 	SELECT * FROM (
 		(SELECT target_id, type, is_read, count, u.firstname as last_modified_name, u.avatar as last_modified_avatar, last_modified, notif_id
@@ -69,5 +69,6 @@ BEGIN
 					GROUP BY b.auction_id) AS A
 			JOIN user u on A.last_modified_user=u.id)
 	) AS R
-    ORDER BY r.last_modified DESC;
+    ORDER BY r.last_modified DESC
+    LIMIT start_offset,limit_amount;
 END $

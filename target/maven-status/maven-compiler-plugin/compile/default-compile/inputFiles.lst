@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\BidRequest.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\BidService.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\NotificationResponse.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\ReactRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\ApiUserController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\ReactServiceImpl.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\UniqueEmailValidator.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\SearchController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\UserServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\SecurityWebApplicationInit.java
@@ -37,6 +37,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\React
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\ApiReportController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\AuctionRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\ApiPostController.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\UniqueEmail.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\Comment.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReportUser.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\enumtype\NotifType.java
@@ -80,88 +81,3 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\ReportRepo
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\TilesConfig.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\APINotificationController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\AuctionController.java
-=======
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\CommentRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\PostRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\React.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\NotificationService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\UserRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\UniqueEmail.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\APINotificationController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\ReportServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\APILoginFbController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\CommentRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\BidPK.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\enumtype\NotifType.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReactComment.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\UserServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\Auction.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\ReactServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\APICommentController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\AuctionRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\PostServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\Post.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\NotificationResponse.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\IndexController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\BidService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\CommentService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\ReactRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\BidRequest.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiReportController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\PostController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\BidRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\NotificationServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\NotificationCenter.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\HibernateConfig.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReactCommentPK.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\UtilsConfig.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\CommentRequest.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\AuctionService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\ReactService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\PostService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\BidRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\ReportService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\enumtype\ReportType.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\UniqueEmailValidator.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiAuctionController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\User.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\handlers\LoginSuccessHandler.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\NotificationRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\UserInfoController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportAuction.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\SecurityWebApplicationInit.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\SecurityConfig.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\ReportRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiPostController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\WebAppContextConfig.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\DispatcherServletInit.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\AuctionRequest.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\AuctionServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\AuctionRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\SearchController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\Bid.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\UserRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\CommentNotif.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReactPK.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\utils\RestFB.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\TilesConfig.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\Comment.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\UserService.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\PostNotif.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\NotificationRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\FileUploadResponse.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\AdminController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\ReactRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\ApiUserController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\LoginController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\impl\PostRepositoryImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\ReportRequest.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\repositories\ReportRepository.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\reobj\PostRequest.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportUser.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\pojo\ReportPost.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\controllers\AuctionController.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\BidServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\services\impl\CommentServiceImpl.java
-C:\Users\DELL\Desktop\Charity social network\SharingHope\src\main\java\com\charitysm\configs\EmailConfig.java
->>>>>>> main

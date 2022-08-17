@@ -14,7 +14,7 @@ import java.util.Map;
  * @author ADMIN
  */
 public interface NotificationService {
-    List<NotificationResponse> getNotifs(String userId);
+    List<NotificationResponse> getNotifs(String userId, Map<String, String> params);
     void updateNotif(int targetId, NotifType type);
     void updateAuctionNotif(int postId, NotifType type);
     void readNotif(int notifId, NotifType type);
