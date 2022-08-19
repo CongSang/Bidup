@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group text-start">
                                 <form:label path="birthdate" for="dateofbirth" id="dateofbirth" cssClass="me-1 small">Ngày sinh<span class="text-danger">*</span></form:label>
-                                <form:input path="birthdate" type="date" id="dateofbirth" name="dateofbirth" placeholder="Ngày sinh*" cssClass="form-control-sm" />
+                                <form:input path="birthdate" type="date" id="dateofbirth" placeholder="Ngày sinh*" cssClass="form-control-sm" />
                                 <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
@@ -69,8 +69,8 @@
                                 <form:password path="password" placeholder="Mật khẩu*" id="password"  cssClass="form-control-sm" />
                                 <div class="text-danger err-validate"></div>
                             </div>
-                             <div class="form-group text-start">
-                                 <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
+                            <div class="form-group text-start">
+                                <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
                                 <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
@@ -89,7 +89,6 @@
         </div>
 
         <script src="<c:url value="/resources/js/validate.js" />"></script>
-        <script type="module" src="<c:url value="/resources/js/chatFireBase/conversation.js" />"></script>
         <script>
             Validator({
                 form: '#form-register',
@@ -101,9 +100,9 @@
 
                     Validator.isRequired('#email'),
                     Validator.isEmail('#email'),
-                    
-                    Validator.isDate('#dateofbirth', 'Ngày sinh không được để trống'),
-                    
+
+                    Validator.isDate('#dateofbirth'),
+
                     Validator.isRequired('#phone'),
                     Validator.isPhone('#phone'),
 
@@ -117,8 +116,8 @@
                 onSubmit: () => {
 
                     document.querySelector('#form-register').submit();
-                  
-                  }
+
+                }
             });
         </script>
     </body>

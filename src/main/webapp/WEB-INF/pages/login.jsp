@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <input type="submit" class="b btn-login" value="Đăng nhập" />
                             </div>
-                        </form
+                        </form>
 
                         <p class="text-center my-2 text-secondary">Hoặc</p>
                         <a href="#">
