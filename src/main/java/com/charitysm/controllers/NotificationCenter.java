@@ -22,26 +22,42 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/notification/{userId}")
 public class NotificationCenter {
-    
+
     private static Map<String, Session> sessions = new HashMap<>();
-    
+
     @OnOpen
     public void onOpen(@PathParam("userId") String userId,
             Session session) throws IOException {
-        session.getBasicRemote().sendText(userId +  "Subscribed");
+        session.getBasicRemote().sendText(userId + "Subscribed");
         session.getUserProperties().put("userId", userId);
-        sessions.put(userId, session);
+        getSessions().put(userId, session);
     }
-    
+
     @OnClose
     public void onClose(@PathParam("userId") String userId, Session session) throws IOException {
         session.getBasicRemote().sendText("bye bye from Sharing Hope");
-        sessions.remove(userId);
+        getSessions().remove(userId);
     }
-    
+
     public static void sendMessage(String userId) throws IOException {
-        Session targetSession = sessions.get(userId);
-        if (targetSession != null)
+        Session targetSession = getSessions().get(userId);
+        if (targetSession != null) {
             targetSession.getBasicRemote().sendText("update_notif");
+        }
     }
+
+    /**
+     * @return the sessions
+     */
+    public static Map<String, Session> getSessions() {
+        return sessions;
+    }
+
+    /**
+     * @param aSessions the sessions to set
+     */
+    public static void setSessions(Map<String, Session> aSessions) {
+        sessions = aSessions;
+    }
+
 }

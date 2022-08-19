@@ -107,7 +107,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
+                                <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="logout()">
                                     <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                     Đăng xuất
                                 </a>
@@ -210,7 +210,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="FB.logout();">
+                            <a class="dropdown-item d-flex align-items-center" href="<c:url value="/logout" />" onclick="logout()">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                 Đăng xuất
                             </a>
@@ -223,6 +223,7 @@
 </header>
 
 <script src="<c:url value="/resources/js/notification.js" />"></script>
+<script src="<c:url value="/resources/js/login.js" />"></script>
 <script>
     $(function () {
         getNotifs();

@@ -81,7 +81,7 @@ public class User implements Serializable {
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{user.register.emailErr}")//if the field contains email address consider using this annotation to enforce field validation
     @UniqueEmail(message = "{user.register.uniqueEmail}")
     @Basic(optional = false)
-    @UniqueElements(message = "{user.register.uniqueEmail}")
+//    @Unique(message = "{user.register.uniqueEmail}")
     @NotNull(message = "{user.register.notnullErr}")
     @Size(min = 1, max = 45)
     @Column(name = "email")
