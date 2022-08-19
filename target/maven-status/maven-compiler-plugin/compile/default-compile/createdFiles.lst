@@ -62,6 +62,7 @@ com\charitysm\controllers\LoginController.class
 com\charitysm\services\impl\CommentServiceImpl.class
 com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\configs\UtilsConfig.class
+com\charitysm\controllers\NotificationCenter.class
 com\charitysm\repositories\impl\UserRepositoryImpl.class
 com\charitysm\pojo\reobj\BidRequest.class
 com\charitysm\configs\SecurityConfig.class

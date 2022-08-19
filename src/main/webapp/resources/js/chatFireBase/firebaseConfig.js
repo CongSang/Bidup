@@ -1,6 +1,5 @@
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js";
+import "https://www.gstatic.com/firebasejs/8.10.0/firebase.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCx8_tP8idRcZAPI_g2qSKnM4YKS9wfZYg",
@@ -12,5 +11,5 @@ const firebaseConfig = {
     databaseURL: "https://sharing-hope-default-rtdb.firebaseio.com"
 };
 
-const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.database();

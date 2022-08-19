@@ -4,7 +4,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 
-<header class="navbar-light fixed-top header-static">
+<header class="navbar-light fixed-top header-static" id="container">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <c:url value="/" var="mainUrl" />
@@ -50,10 +50,41 @@
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
-                        <a class="nav-link" href="#" id="chatMenu">
+                        <a class="nav-link dropdown-toggle" href="#" id="chatMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa-solid fa-comment menu-icon"></i>
                             Trò chuyện
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-end me-3 p-0" id="chatContainerMobile" aria-labelledby="chatMenu">
+                            <li>
+                                <div class="chat-menu-header">
+                                    <h5>Chat</h5>
+                                    <a href="#">Chuyển đến Messenger</a>
+                                </div>
+                            </li>
+                            <li class="px-3 my-2">
+                                <div class="form-search position-relative">
+                                    <input id="search-chat" class="form-control ps-5 bg-light w-100" type="text"
+                                           placeholder="Tìm kiếm trên Messenger" aria-label="Search" oninput="searchUserForChat(this)">
+                                    <div class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
+                                         style="outline: none; border: none; border-radius: 50%">
+                                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <div class="position-relative" style="min-height: 80vh">
+                                <li  class="justify-content-center
+                                     align-items-center text-center py-4 search-userchat-loading">
+                                    <div class="spinner-border text-muted"></div>
+                                </li>
+                                <div class="p-2 list-user-search" style="display: none">
+
+                                </div>
+                                <div class="p-2 list-user-chat">
+
+                                </div>
+                            </div>
+                        </ul>
                     </li>
 
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
@@ -73,7 +104,7 @@
                             Thông báo
                             <span class="notif-count" style="top: 2px; left: 6px;"></span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end me-3 p-0 notifContainer" aria-labelledby="notifyMenu">
+                        <ul class="dropdown-menu dropdown-menu-end me-3 p-0 notifContainer" id="notifContainerMobile" aria-labelledby="notifyMenu">
                             <li>
                                 <div class="notif-header">
                                     <h5>Thông báo</h5>
@@ -83,7 +114,7 @@
                                  align-items-center notif-loading text-center">
                                 <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
                             </li>
-                            <div class="position-relative" style="min-height: 40vh">
+                            <div class="position-relative" style="min-height: 90vh">
                                 <div class="p-2 list-notification">
 
                                 </div>
@@ -119,9 +150,9 @@
 
             <div class="d-lg-flex d-none flex-nowrap align-items-center ms-3">
                 <div class="dropdown">
-                    <a href="#" class="position-relative" id="userChatList" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="position-relative" id="userChatList" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-brands fa-facebook-messenger notify-icon me-4"></i>
-                    </a>
+                    </div>
                     <ul class="dropdown-menu dropdown-menu-end me-3 p-0" id="chatContainer" aria-labelledby="cardFeedAction">
                         <li>
                             <div class="chat-menu-header">
@@ -130,41 +161,25 @@
                             </div>
                         </li>
                         <li class="px-3 my-2">
-                            <form class="form-search position-relative" action="javascript:;">
-                                <input class="form-control ps-5 bg-light w-100" type="search" placeholder="Tìm kiếm trên Messenger" aria-label="Search">
-                                <button class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
-                                        style="outline: none; border: none; border-radius: 50%" type="submit">
+                            <div class="form-search position-relative">
+                                <input id="search-chat" class="form-control ps-5 bg-light w-100" type="text"
+                                       placeholder="Tìm kiếm trên Messenger" aria-label="Search" oninput="searchUserForChat(this)">
+                                <div class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
+                                     style="outline: none; border: none; border-radius: 50%">
                                     <i class="fa-solid fa-magnifying-glass text-secondary"></i>
-                                </button>
-                            </form>
+                                </div>
+                            </div>
                         </li>
 
                         <div class="position-relative" style="min-height: 80vh">
+                            <li  class="justify-content-center
+                                 align-items-center text-center py-4 search-userchat-loading">
+                                <div class="spinner-border text-muted"></div>
+                            </li>
+                            <div class="p-2 list-user-search" style="display: none">
+
+                            </div>
                             <div class="p-2 list-user-chat">
-                                <li class="dropdown-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
-                                        <div class="d-flex align-items-center">
-                                            <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                                            <img class="chat-menu-avatar rounded-circle me-2" src="${avatar}" alt="">
-                                            <div>
-                                                <p class="chat-side">Username</p>
-                                            </div>
-                                        </div>
-                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
-                                    </div>
-                                </li>
-                                <li class="dropdown-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
-                                        <div class="d-flex align-items-center">
-                                            <c:url value="/resources/img/non-avatar.png" var="avatar" />
-                                            <img class="chat-menu-avatar rounded-circle me-2" src="${avatar}" alt="">
-                                            <div>
-                                                <p class="chat-side">Username</p>
-                                            </div>
-                                        </div>
-                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
-                                    </div>
-                                </li>
 
                             </div>
                         </div>
@@ -199,8 +214,14 @@
                         <img id="userAvatar" src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                        <li class="dropdown-item">
-                            <span>Xin chào ${sessionScope.currentUser.getFirstname()} </span>
+                        <li class="py-2 px-3 d-none" style="white-space: nowrap">
+                            <span id="user-id">${sessionScope.currentUser.getId()}</span>
+                        </li>
+                        <li class="py-2 px-3 w-100" style="white-space: nowrap">
+                            <span id="fullname">${sessionScope.currentUser.getLastname()} ${sessionScope.currentUser.getFirstname()}</span>
+                        </li>
+                        <li class="py-2 px-3 w-100" style="white-space: nowrap">
+                            <span id="email">${sessionScope.currentUser.getEmail()}</span>
                         </li>
                         <li>
                             <c:url value="/user/${sessionScope.currentUser.getId()}" var="userInfoUrl" />
@@ -223,10 +244,12 @@
 </header>
 
 <script src="<c:url value="/resources/js/notification.js" />"></script>
+<script type="module" src="<c:url value="/resources/js/chatFireBase/conversation.js" />"></script>
+<script src="<c:url value="/resources/js/chat.js" />"></script>
 <script>
-    $(function () {
-        getNotifs();
-        currentUserId = '${sessionScope.currentUser.getId()}';
-    });
+                                $(function () {
+                                    getNotifs();
+                                    currentUserId = '${sessionScope.currentUser.getId()}';
+                                });
 </script>
 <script src="<c:url value="/resources/js/websocket.js"/>"></script>
