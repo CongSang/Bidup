@@ -10,7 +10,6 @@ import com.charitysm.repositories.NotificationRepository;
 import com.charitysm.services.NotificationService;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class NotificationServiceImpl implements NotificationService{
     private NotificationRepository notificationRepository;
 
     @Override
-    public List<NotificationResponse> getNotifs(String userId) {
-        List<Object[]> data = this.notificationRepository.getNotifs(userId);
+    public List<NotificationResponse> getNotifs(String userId, Map<String, String> params) {
+        List<Object[]> data = this.notificationRepository.getNotifs(userId, params);
         List<NotificationResponse> rs = new ArrayList<>();
         data.forEach(d -> {
             NotificationResponse n = new NotificationResponse();
