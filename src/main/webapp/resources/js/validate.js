@@ -188,6 +188,7 @@ Validator.isDate = function (selector, message) {
         selector: selector,
         test: function (value) {
             let isValidDate = Date.parse(value);
+            $("#dateofbirth").val(value);
             return !isNaN(isValidDate) ? undefined : message || `Ngày sinh bắt buộc nhập`;
         }
     };

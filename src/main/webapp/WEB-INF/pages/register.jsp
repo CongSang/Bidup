@@ -10,6 +10,7 @@
         <title><tiles:insertAttribute name="title" /></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="styleCss" />
         <c:url value="/resources/css/login.css" var="loginCss" />
@@ -68,8 +69,8 @@
                                 <form:password path="password" placeholder="Mật khẩu*" id="password"  cssClass="form-control-sm" />
                                 <div class="text-danger err-validate"></div>
                             </div>
-                             <div class="form-group text-start">
-                                 <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
+                            <div class="form-group text-start">
+                                <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
                                 <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
@@ -88,7 +89,6 @@
         </div>
 
         <script src="<c:url value="/resources/js/validate.js" />"></script>
-        <script type="module" src="<c:url value="/resources/js/chatFireBase/conversation.js" />"></script>
         <script>
             Validator({
                 form: '#form-register',
@@ -100,9 +100,9 @@
 
                     Validator.isRequired('#email'),
                     Validator.isEmail('#email'),
-                    
-                    Validator.isDate('#dateofbirth', 'Ngày sinh không được để trống'),
-                    
+
+                    Validator.isDate('#dateofbirth'),
+
                     Validator.isRequired('#phone'),
                     Validator.isPhone('#phone'),
 
@@ -116,8 +116,8 @@
                 onSubmit: () => {
 
                     document.querySelector('#form-register').submit();
-                  
-                  }
+
+                }
             });
         </script>
     </body>

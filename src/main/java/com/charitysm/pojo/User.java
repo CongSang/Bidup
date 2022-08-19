@@ -30,7 +30,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,7 +80,6 @@ public class User implements Serializable {
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{user.register.emailErr}")//if the field contains email address consider using this annotation to enforce field validation
     @UniqueEmail(message = "{user.register.uniqueEmail}")
     @Basic(optional = false)
-    @UniqueElements(message = "{user.register.uniqueEmail}")
     @NotNull(message = "{user.register.notnullErr}")
     @Size(min = 1, max = 45)
     @Column(name = "email")
