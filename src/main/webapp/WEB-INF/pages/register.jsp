@@ -89,6 +89,7 @@
         </div>
 
         <script src="<c:url value="/resources/js/validate.js" />"></script>
+        <script type="module" src="<c:url value="/resources/js/chatFireBase/conversation.js" />"></script>
         <script>
             Validator({
                 form: '#form-register',

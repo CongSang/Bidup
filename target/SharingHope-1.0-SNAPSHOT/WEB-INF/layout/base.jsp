@@ -62,6 +62,7 @@
         </div>
             <tiles:insertAttribute name="chatbox" />
         <script src="<c:url value="/resources/js/chat.js" />"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
     </body>
 </html>
