@@ -5,6 +5,7 @@
 package com.charitysm.utils;
 
 import com.charitysm.services.UserService;
+import com.charitysm.services.impl.UserServiceImpl;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,6 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value != null && !userService.isEmailAlreadyInUse(value);
+        return value != null && !this.userService.isEmailAlreadyInUse(value);
     }
 }

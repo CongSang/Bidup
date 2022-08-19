@@ -126,7 +126,6 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (NoResultException e) {
             user = null;
         }
-        System.out.println(user.getEmail());
         return user;
     }
 }

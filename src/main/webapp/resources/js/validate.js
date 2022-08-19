@@ -70,10 +70,8 @@ function Validator(options) {
                 if (typeof options.onSubmit === 'function') {
                     // NodeList thông tin đã nhập
                     var enableInputs = formElement.querySelectorAll('[name]:not([disabled])');
-
                     // Trả về Array thừ NodeList
                     var formValues = Array.from(enableInputs).reduce((acc, input) => {
-
                         switch (input.type) {
                             case 'radio':
                                 var rdoChecked = formElement.querySelector('input[name="' + input.name + '"]:checked');
@@ -188,6 +186,7 @@ Validator.isDate = function (selector, message) {
         selector: selector,
         test: function (value) {
             let isValidDate = Date.parse(value);
+            $("#dateofbirth").val(value);
             return !isNaN(isValidDate) ? undefined : message || `Ngày sinh bắt buộc nhập`;
         }
     };

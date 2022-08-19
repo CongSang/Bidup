@@ -4,7 +4,6 @@
  */
 package com.charitysm.configs;
 
-import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.utils.RestFB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

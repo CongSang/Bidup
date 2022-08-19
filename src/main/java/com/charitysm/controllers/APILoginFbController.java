@@ -52,35 +52,40 @@ public class APILoginFbController {
                     , "id,first_name,last_name,email,picture,birthday,location,hometown"));
             
             //create new user based on fb user here
-            String uniqueID = UUID.randomUUID().toString();
-            String pass = new StringBuilder(uniqueID).reverse().toString();
             com.charitysm.pojo.User user = new com.charitysm.pojo.User();
-            user.setId(uniqueID);
-            user.setAvatar(fbUser.getPicture().getUrl());
-            user.setFirstname(fbUser.getFirstName());
-            user.setLastname(fbUser.getLastName());
             user.setEmail(fbUser.getEmail());
-            user.setActive((short)1);
-            user.setCreatedDate(new Date());
-            user.setPassword(this.passwordEncoder.encode(pass));
-            user.setUserRole("ROLE_USER");
-            user.setBirthdate(fbUser.getBirthdayAsDate());
-            user.setAddress(fbUser.getLocale());
-            user.setHometown(fbUser.getHometownName());
-            user.setJob(null);
-            user.setPhone(null);
             
             session.setAttribute("loginType", "loginFB");
             try {
                 com.charitysm.pojo.User currentUser = this.userService.getUser(user.getEmail());
                 if ( currentUser != null) {
+                    String pass = this.passwordEncoder.encode(new StringBuilder(currentUser.getId()).reverse().toString());
                     session.setAttribute("currentUser", currentUser);
+                    model.addAttribute("pass", pass);
                     response.sendRedirect("login");
                 }
             } catch(NoResultException e){
+                String uniqueID = UUID.randomUUID().toString();
+                String pass = this.passwordEncoder.encode(new StringBuilder(uniqueID).reverse().toString());
+                user.setId(uniqueID);
+                user.setAvatar(fbUser.getPicture().getUrl());
+                user.setFirstname(fbUser.getFirstName());
+                user.setLastname(fbUser.getLastName());
+                user.setActive((short)1);
+                user.setCreatedDate(new Date());
+                user.setPassword(this.passwordEncoder.encode(pass));
+                user.setUserRole("ROLE_USER");
+                user.setBirthdate(fbUser.getBirthdayAsDate());
+                user.setAddress(fbUser.getLocale());
+                user.setHometown(fbUser.getHometownName());
+                user.setJob(null);
+                user.setPhone(null);
+                
                 if (this.userService.registerNewUser(user) == true) {
                 //done then set current user with created user and redirect
+                
                     session.setAttribute("currentUser", user);
+                    model.addAttribute("pass", pass);
                     
                     
                     response.sendRedirect("login");
@@ -88,8 +93,6 @@ public class APILoginFbController {
                 else
                     response.sendRedirect("login");  
             }
-             
-            model.addAttribute("pass", pass);
         }
     }
 }
