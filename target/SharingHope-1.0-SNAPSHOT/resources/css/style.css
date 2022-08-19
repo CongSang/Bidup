@@ -154,6 +154,22 @@ header {
     top: 32px;
 }
 
+#chatContainerMobile {
+    position: absolute !important;
+    right: 0 !important;
+    left: 0 !important;
+    top: 66px !important;
+    margin-right: 0 !important;
+}
+
+#notifContainerMobile {
+    position: absolute !important;
+    right: 0 !important;
+    left: 0 !important;
+    top: 66px !important;
+    margin-right: 0 !important;
+}
+
 .chat-side {
     font-weight: bold;
     font-size: 16px;
@@ -209,8 +225,19 @@ header {
     color: #6c757d;
 }
 
-li .chat--item:hover .go-chat,
-li .chat--item:hover .chat-side {
+.last-message {
+    font-size: 14px;
+    color: #676a79;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    word-break: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+li:hover .chat--item .go-chat {
     color: var(--primary-color-100);
 }
 
@@ -335,7 +362,12 @@ li .chat--item:hover .chat-side {
 }
 
 /*chat box css*/
-#chat-box {
+.chat-box {
+    
+}
+
+.chat-box-container {
+    display: none;
     min-width: 328px;
     position: fixed;
     bottom: 0;
@@ -345,6 +377,9 @@ li .chat--item:hover .chat-side {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     overflow: hidden;
+}
+
+.search-userchat-loading {
     display: none;
 }
 
@@ -368,6 +403,11 @@ li .chat--item:hover .chat-side {
     font-size: 20px;
     padding: 4px;
     cursor: pointer;
+    opacity: 0.7
+}
+
+.chat-box--close:hover {
+    opacity: 1;
 }
 
 .chat-box-message {
@@ -406,7 +446,7 @@ li .chat--item:hover .chat-side {
     left: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 101%;
+    height: 100%;
     width: 100%;    
 }
 
@@ -417,7 +457,7 @@ li .chat--item:hover .chat-side {
     overflow: hidden;
     width: auto;
     height: auto;
-    padding: 0 10px;
+    padding: 0 10px 4px;
 }
 
 .message-chat {
@@ -428,6 +468,15 @@ li .chat--item:hover .chat-side {
     line-height: 1.4;
     position: relative;
     border: 1px solid #ccc;
+    max-width: 230px;
+    height: auto;
+}
+
+.message-chat .text {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    min-width: 100%;
+    text-align: left;
 }
 
 .message-chat .avatar {
@@ -475,6 +524,7 @@ li .chat--item:hover .chat-side {
     font-size: 10px;
     color: #555;
     left: 2px;
+    width: 120px;
 }
 
 .send-time-right {
@@ -483,6 +533,7 @@ li .chat--item:hover .chat-side {
     font-size: 10px;
     color: #555;
     right: 2px;
+    width: 120px;
 }
 
 @keyframes bounce {
