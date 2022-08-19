@@ -21,7 +21,7 @@ BEGIN
 	ELSE
 		SET owner_id = (SELECT user_id from comment WHERE id=NEW.parent_id);
 		IF owner_id != NEW.user_id THEN
-			CALL sp_updateCommentNotif(parent_id, 'REPLY_COMMENT');
+			CALL sp_updateCommentNotif(NEW.parent_id, 'REPLY_COMMENT');
             
             SELECT (SELECT COUNT(id) FROM post_notif WHERE user_id=owner_id GROUP BY user_id) INTO count;
 			IF count > 20 THEN
