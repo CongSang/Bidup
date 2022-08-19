@@ -98,6 +98,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) throws IOException {
+        User u = (User) session.getAttribute("currentUser");
+        NotificationCenter.getSessions().remove(u.getId());
         session.removeAttribute("currentUser");
         response.sendRedirect("login");
     }
