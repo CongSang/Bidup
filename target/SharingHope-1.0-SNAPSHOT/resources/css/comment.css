@@ -68,7 +68,7 @@
     left: -26px;
 }
 
-#repliedComments .point-to-child {
+.repliedComments .point-to-child {
     width: 22px;
     height: 60px;
     background-color: transparent;

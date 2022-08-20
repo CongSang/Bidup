@@ -28,7 +28,9 @@ function findHashtags(searchText) {
     var regexp = /(\s|^)\#\w\w+\b/gm
     result = searchText.match(regexp);
     if (result) {
-        result = result.map(function(s){ return s.trim(); }).join(' ') + ' ';
+        result = result.map(function (s) {
+            return s.trim();
+        }).join(' ') + ' ';
         return result;
     } else {
         return "";
@@ -61,6 +63,44 @@ function loadSideBarLeft() {
                 $('.auction-side--item').append(html);
                 $('.sideleft-loading').css("display", "none");
             });
+        }
+    });
+}
+
+function loadSideBarRight() {
+    const kw = null;
+    const page = 0;
+    const limit = 10;
+    $.ajax({
+        type: 'get',
+        url: `${ctxPath}/api/users?limit=${limit}`,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $('.user-side--item').append(data.map(user => {
+                return `
+                    <div class="person-search-item justify-content-between px-3 pt-3">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="person-search-item-image">
+                                <a href="#">
+                                    <img class="avatar-search rounded-circle" src="${user.avatar}" style="width: 50px; height: 50px" alt="avatar">
+                                </a>
+                            </div>
+                            <div class="person-search-item-name">
+                                <h6 class="mb-0 py-1 side-right">
+                                    <a href="${ctxPath}/user/${user.id}">${user.lastname + ' ' + user.firstname}</a>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="btn-follow btn-follow${user.id}" onclick="follow('${user.id}')">
+                            <div class="line1"></div>
+                            <div class="line2"></div>
+                        </div>
+                    </div>
+                `;
+            }).join(''));
+
+            $('.sideright-loading').css("display", "none");
         }
     });
 }
@@ -191,7 +231,7 @@ function reportArticle(articleId, typeArticle) {
                 swal("Báo cáo bài viết này thành công", {
                     icon: "success"
                 });
-            }   
+            }
         }).fail(function () {
             swal("Có lỗi xảy ra!", {
                 icon: "error"
@@ -211,7 +251,7 @@ function reportArticle(articleId, typeArticle) {
                 swal("Báo cáo bài viết này thành công", {
                     icon: "success"
                 });
-            }    
+            }
         }).fail(function () {
             swal("Có lỗi xảy ra!", {
                 icon: "error"
