@@ -11,6 +11,16 @@ function getNotifs() {
         url: `${ctxPath}/api/get-notifs?page=${notifPage}`,
         dataType: 'json',
         success: function (data) {
+            if(data.length === 0 && notifPage === 1 && !disableLoadMoreNotif) {
+                disableLoadMoreNotif = true;
+                container.append(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                        <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                        <p class="text-center">Chưa có thông báo nào</p>
+                                    </div>`);
+                $('.loadingNotif').css('display', 'none');
+                return;
+            }
+            
             if(data.length === 0)
                 disableLoadMoreNotif = true;
             
@@ -27,12 +37,12 @@ function getNotifs() {
                 $('.notif-count').css('opacity','1');
                 counter.text(count);
             }
-            data.length > 0 ? $.each(data, function(index, notif){
-                container.append(notifItem(notif));
-            }) : container.append(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
-                                        <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
-                                        <p class="text-center">Chưa có thông báo nào</p>
-                                    </div>`);
+            
+            if (data.length > 0) {
+                $.each(data, function(index, notif){
+                    container.append(notifItem(notif));
+                });
+            }
             
             $('.loadingNotif').css('display', 'none');
             notifPage++;

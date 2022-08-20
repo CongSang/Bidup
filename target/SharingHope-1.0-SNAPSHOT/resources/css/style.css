@@ -506,7 +506,7 @@ li:hover .chat--item .go-chat {
     transform: scale(0);
     transform-origin: 0 0;
     -webkit-animation: bounce 500ms linear both;
-    animation: bounce 500ms linear both;
+    animation: bounce 0.5s linear both;
 }
 
 .message-chat.message--right {
