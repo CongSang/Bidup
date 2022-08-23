@@ -76,7 +76,6 @@ function loadSideBarRight() {
         url: `${ctxPath}/api/users?limit=${limit}`,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             $('.user-side--item').append(data.map(user => {
                 return `
                     <div class="person-search-item justify-content-between px-3 pt-3">

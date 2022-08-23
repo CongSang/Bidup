@@ -236,7 +236,7 @@ function commentItem(comment, postId) {
                         </form>
                     </div>
                
-                        <div id="repliedComments${comment.id}" class="repliedComments">
+                        <div id="repliedComments" class="repliedComments${comment.id} repliedComments">
                         
                         </div>
                 
@@ -298,7 +298,7 @@ function showFormReply(commentItemId) {
 
 function loadReplies(commentId, postId) {
     let currentComment = $('#commentItem' + commentId);
-    var repliedComment = currentComment.find(`#repliedComments${commentId}`);
+    var repliedComment = currentComment.find(`.repliedComments${commentId}`);
 
     $.ajax({
         type: 'get',
@@ -348,7 +348,7 @@ function addReply(currentCommentId, formEl, postId) {
     let currentComment = $(`#commentItem${currentCommentId}`);
 
     if (!isBlank(commentContent)) {
-            currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentLoading);
+            currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentLoading);
         $.ajax({
             type: 'post',
             url: `${ctxPath}/api/create-comment`,
@@ -362,7 +362,7 @@ function addReply(currentCommentId, formEl, postId) {
             success: function (data) {
                 currentComment.find('.comment-loading').remove();
 
-                currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
+                currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
 
                 currentComment.find('input[name=commentContent]').val("");
             }
