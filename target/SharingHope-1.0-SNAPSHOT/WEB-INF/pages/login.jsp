@@ -44,7 +44,7 @@
                             </div>
                         </c:if>
                         <c:url value="/login" var="action" />
-                        
+
                         <form action="${action}" method="post" id="loginForm">
                             <div class="form-group text-start">
                                 <input type="text" id="email" name="email" placeholder="Email"  class="form-control"/>
@@ -78,7 +78,7 @@
                             </div>
                         </a>
 
-                        <div class="line"></div>
+                        <div class="line-login"></div>
 
                         <div class="form-group">
                             <button class="b btn-register text-white">
@@ -107,18 +107,16 @@
                     Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự')
                 ],
                 onSubmit: () => {
-
                     document.querySelector('#loginForm').submit();
-                  
-                  }
+                }
             });
             <c:if test="${sessionScope.currentUser != null && sessionScope.loginType == 'loginFB'}">
-                window.onload = function () {
-                    $('input[name="email"]').val('${sessionScope.currentUser.email}');
-                    $('input[name="password"]').val(('${pass}');
-                    $('#loginForm').submit();
-                };
-                console.log('${sessionScope.currentUser.password}');
+            window.onload = function () {
+                $('input[name="email"]').val('${sessionScope.currentUser.email}');
+                $('input[name="password"]').val(('${pass}');
+                        $('#loginForm').submit();
+            };
+            console.log('${sessionScope.currentUser.password}');
             </c:if>
         </script>
     </body>

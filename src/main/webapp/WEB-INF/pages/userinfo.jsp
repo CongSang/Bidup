@@ -26,6 +26,7 @@
         <link href="<c:url value="/resources/css/userinfo.css" />" rel="stylesheet" />
         <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
         <link href="<c:url value="/resources/css/comment.css"/>" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/login.css"/>" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -54,13 +55,19 @@
 
                                 <div class="d-flex justify-content-center align-items-center">
                                     <c:if test="${userInfo.id == currentUser.id}">
-                                        <div class="btn-fix-profile">
+                                        <div class="btn-fix-profile" onclick="$('.update-info--modal').addClass('open')">
                                             <i class="fa-solid fa-pen me-2"></i>
                                             Cập nhật trang cá nhân
                                         </div>
                                     </c:if>
                                     <c:if test="${userInfo.id != currentUser.id}">
-                                        <div class="btn-report-user" onclick="openReportUser()">
+                                        <div class="btn-follow-user">
+                                            <i class="fa-solid fa-plus me-2"></i>
+                                            Theo dõi
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${userInfo.id != currentUser.id}">
+                                        <div class="btn-report-user ms-2" onclick="openReportUser()">
                                             <i class="fa-solid fa-flag me-2"></i>
                                             Báo cáo người dùng
                                         </div>
@@ -184,9 +191,72 @@
             <div class="spinner-border text-light"></div>
             <p class="ms-3 mb-0">Đang gửi email...</p>
         </div>
+                    
+         <!--Modal chỉnh sửa thông tin user-->
+        <div class="modal update-info--modal">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h3 class="my-2">Chỉnh sửa thông tin cá nhân</h3>
+                    <div class="modal--close modal--close-update" onclick="$('.modal--close-update').parents('.modal').removeClass('open')">
+                        <i class="fa-solid fa-xmark p-2"></i>
+                    </div>
+                </div>
+
+                <div class="modal-body ">
+                    <div class="authentication register">
+                        <form action="" class="form-register" enctype="multipart/form-data" id="form-update-info">
+                            <div class="form-group d-flex">
+                                <div class="text-start w-100 me-1">
+                                    <input id="lastname" placeholder="Họ" class="form-control-sm" />
+                                    <div class="text-danger err-validate"></div>
+                                </div>
+                                <div class="text-start w-100" >
+                                    <input id="firstname" placeholder="Tên" class="form-control-sm" />
+                                    <div class="text-danger err-validate"></div>
+                                </div>
+                            </div>
+                            <div class="form-group text-start">
+                                <input placeholder="Email" id="email" class="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
+                            </div>
+                            <div class="form-group text-start">
+                                <input placeholder="Số điện thoại*" id="phone" class="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
+                            </div>
+                            <div class="form-group text-start">
+                                <label for="dateofbirth" id="dateofbirth" cssClass="me-1 small">Ngày sinh</label>
+                                <input type="date" id="dateofbirth" placeholder="Ngày sinh*" class="form-control-sm" />
+                                <div class="text-danger err-validate"></div>
+                            </div>
+                            <div class="form-group text-start">
+                                <input placeholder="Địa chỉ" class="form-control-sm" />
+                            </div>
+                            <div class="form-group d-flex">
+                                <input path="hometown" placeholder="Quê quán" class="form-control-sm me-1" />
+                                <input path="job" placeholder="Nghề nghiệp" class="form-control-sm" />
+                            </div>
+                            <div class="form-group text-start">
+                                <label for="avatar" class="me-1 small">Thay đổi ảnh đại diện</form:label>
+                                <input id="avatar" type="file" placeholder="" class="form-control-sm" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="b btn-register w-50">
+                                    Cập nhật
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="register-load justify-content-center align-items-center position-fixed" style="top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); z-index: 10001; display: none">
+            <div class="spinner-border text-muted"></div>
+        </div>            
 
         <tiles:insertAttribute name="chatbox" />
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/feeds.js" />"></script>
         <script src="<c:url value="/resources/js/userPage.js" />"></script>
