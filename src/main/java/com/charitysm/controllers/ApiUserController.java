@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,9 +62,27 @@ public class ApiUserController {
     
     @Async
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers(@RequestParam Map<String, String> params) {
+    public ResponseEntity<List<User>> getUsers(@RequestParam Map<String, String> params, HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        return new ResponseEntity<>(this.userService.getUsers(params, currentUser.getId()), HttpStatus.OK);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/follow-user/{userId}")
+    public void followUser(@PathVariable(value="userId")String userId, HttpSession session){
+        User currentUser = (User)session.getAttribute("currentUser");
         
-        return new ResponseEntity<>(this.userService.getUsers(params), HttpStatus.OK);
+        this.userService.followUser(currentUser.getId(), userId);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/unfollow-user/{userId}")
+    public void unFollowUser(@PathVariable(value="userId")String userId, HttpSession session){
+        User currentUser = (User)session.getAttribute("currentUser");
+        
+        this.userService.unFollowUser(currentUser.getId(), userId);
     }
     
     @Async

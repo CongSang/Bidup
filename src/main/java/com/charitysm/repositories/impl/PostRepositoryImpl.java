@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -38,7 +39,7 @@ public class PostRepositoryImpl implements PostRepository {
     private Environment env;
 
     @Override
-    public List<Post> getPosts(Map<String, String> params) {
+    public List<Post> getPosts(Map<String, String> params, String currentUserId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Post> q = b.createQuery(Post.class);
@@ -46,6 +47,10 @@ public class PostRepositoryImpl implements PostRepository {
         q.select(root);
 
         if (params != null) {
+            
+            if (params.get("follow_only") != null)
+                return getFollowPosts(params, currentUserId);
+            
             List<Predicate> predicates = new ArrayList<>();
             String hashtagKw = params.get("hashtag");
             if (hashtagKw != null && !hashtagKw.isBlank()) {
@@ -188,6 +193,28 @@ public class PostRepositoryImpl implements PostRepository {
 //        p.setHashtag(o[6].toString());
         
         return p;
+    }
+
+    @Override
+    public List<Post> getFollowPosts(Map<String, String> params, String currentUserId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createNativeQuery("SELECT p.* FROM post p JOIN follow f on "
+                + "p.user_id=f.followed_id WHERE f.follower_id=:userId", Post.class);
+        q.setParameter("userId", currentUserId);
+        
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
+        if (page > 0){
+            int start = (page - 1) * size;
+            q.setFirstResult(start);
+            q.setMaxResults(size);
+        }
+        List<Post> rs = q.getResultList();
+        rs.forEach(p -> {
+            p.setCommentSetLength(p.getCommentSet().size());
+        });
+     
+        return rs;
     }
 
 }

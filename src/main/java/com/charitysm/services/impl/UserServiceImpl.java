@@ -78,8 +78,14 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.registerNewUser(user);
     }
         
-    public List<User> getUsers(Map<String, String> params) {
-        return this.userRepository.getUsers(params);
+    @Override
+    public List<User> getUsers(Map<String, String> params, String currentUserId) {
+        List<User> users = this.userRepository.getUsers(params);
+        users.forEach(u ->{
+            u.setIsFollowed(this.userRepository.checkFollowed(currentUserId, u.getId()));
+        }); 
+        
+        return users;
     }
 
     @Override
@@ -88,6 +94,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean followUser(String followerId, String followedId) {
+        return this.userRepository.followUser(followerId, followedId);
+    }
+
+    @Override
+    public boolean unFollowUser(String followerId, String followedId) {
+        return this.userRepository.unFollowUser(followerId, followedId);
+    }
+    
     public boolean editUserInfo(UserRequest req, String userId) {
         User user = this.userRepository.getUserById(userId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

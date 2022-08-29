@@ -34,6 +34,14 @@
                         </form>
                     </div>
                 </div>
+                
+            
+                <div class="create-post card home-menu">
+                    <div class="d-flex align-items-center">
+                        <div class="home-menu-item" onclick="homeMenu('home')">Tất cả</div>
+                        <div class="home-menu-item" onclick="homeMenu('follow')">Đang theo dõi</div>
+                    </div>
+                </div>
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <li class="nav-item px-2">

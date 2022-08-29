@@ -329,3 +329,22 @@ a {
 #likeAction:hover .list-user-liked {
     display: block;
 }
+
+.home-menu {
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+}
+
+
+.home-menu-item {
+    width: 10rem;
+    padding: 1rem 1rem 1rem 0 !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+.home-menu-item:hover {
+    cursor: pointer;
+    background-color: #c3c5c6;
+    border-radius: 5px;
+}

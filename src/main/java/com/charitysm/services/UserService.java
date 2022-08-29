@@ -20,8 +20,10 @@ public interface UserService extends UserDetailsService {
     User getUserById(String id);
     
     boolean registerNewUser(User user);
-    List<User> getUsers(Map<String, String> params);
+    List<User> getUsers(Map<String, String> params, String currentUserId);
     long countUserStats(int month, int year);
     boolean isEmailAlreadyInUse(String email);
+    boolean followUser(String followerId, String followedId);
+    boolean unFollowUser(String followerId, String followedId);
     boolean editUserInfo(UserRequest req, String userId);
 }

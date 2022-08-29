@@ -110,13 +110,12 @@
                     document.querySelector('#loginForm').submit();
                 }
             });
-            <c:if test="${sessionScope.currentUser != null && sessionScope.loginType == 'loginFB'}">
+            <c:if test="${sessionScope.currentUser == null && sessionScope.loginType == 'loginFB'}">
             window.onload = function () {
-                $('input[name="email"]').val('${sessionScope.currentUser.email}');
-                $('input[name="password"]').val(('${pass}');
+                $('input[name="email"]').val('${sessionScope.email}');
+                $('input[name="password"]').val('${sessionScope.pass}');
                         $('#loginForm').submit();
             };
-            console.log('${sessionScope.currentUser.password}');
             </c:if>
         </script>
     </body>

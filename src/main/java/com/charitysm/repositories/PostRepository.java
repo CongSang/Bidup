@@ -13,7 +13,9 @@ import java.util.Map;
  * @author ADMIN
  */
 public interface PostRepository {
-    List<Post> getPosts(Map<String, String> params);
+    List<Post> getPosts(Map<String, String> params, String currentUserId);
+    List<Post> getFollowPosts(Map<String, String> params, String currentUserId);
+    
     long countPostStats(int month, int year);
     Post getPostById(int id);
     int createPost(Post p);

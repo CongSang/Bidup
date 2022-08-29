@@ -63,7 +63,6 @@ public class LoginController {
     public String submitRegister(@ModelAttribute(value = "user") @Valid User user,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
             return "register";
         } else {
             FileUploadResponse res = new FileUploadResponse();

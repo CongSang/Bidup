@@ -6,6 +6,7 @@ package com.charitysm.controllers;
 
 import com.charitysm.services.UserService;
 import com.charitysm.utils.RestFB;
+import com.google.common.hash.HashCode;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -39,7 +40,7 @@ public class APILoginFbController {
     
     @RequestMapping("/login-facebook")
     public void loginFacebook(HttpServletRequest request
-            , HttpSession session, HttpServletResponse response, Model model) throws IOException {
+            , HttpSession session, HttpServletResponse response) throws IOException {
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) { 
             response.sendRedirect("login");
@@ -59,14 +60,14 @@ public class APILoginFbController {
             try {
                 com.charitysm.pojo.User currentUser = this.userService.getUser(user.getEmail());
                 if ( currentUser != null) {
-                    String pass = this.passwordEncoder.encode(new StringBuilder(currentUser.getId()).reverse().toString());
-                    session.setAttribute("currentUser", currentUser);
-                    model.addAttribute("pass", pass);
+                    String pass = new StringBuilder(currentUser.getId()).reverse().toString().substring(25);
+                    session.setAttribute("email", user.getEmail());
+                    session.setAttribute("pass", pass);
                     response.sendRedirect("login");
                 }
             } catch(NoResultException e){
                 String uniqueID = UUID.randomUUID().toString();
-                String pass = this.passwordEncoder.encode(new StringBuilder(uniqueID).reverse().toString());
+                String pass = new StringBuilder(uniqueID).reverse().toString().substring(25);
                 user.setId(uniqueID);
                 user.setAvatar(fbUser.getPicture().getUrl());
                 user.setFirstname(fbUser.getFirstName());
@@ -84,8 +85,8 @@ public class APILoginFbController {
                 if (this.userService.registerNewUser(user) == true) {
                 //done then set current user with created user and redirect
                 
-                    session.setAttribute("currentUser", user);
-                    model.addAttribute("pass", pass);
+                    session.setAttribute("email", user.getEmail());
+                    session.setAttribute("pass", pass);
                     
                     
                     response.sendRedirect("login");

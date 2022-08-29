@@ -76,6 +76,9 @@ function loadSideBarRight() {
         url: `${ctxPath}/api/users?limit=${limit}`,
         dataType: 'json',
         success: function (data) {
+            
+            data = data.filter(p => p.id !== currentUserId && p.isFollowed === false);
+            
             $('.user-side--item').append(data.map(user => {
                 return `
                     <div class="person-search-item justify-content-between px-3 pt-3">
