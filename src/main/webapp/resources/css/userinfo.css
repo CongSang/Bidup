@@ -159,3 +159,13 @@
     font-size: 16px;
     padding: 6px;
 }
+
+.btn-change-info {
+    color: var(--primary-color-200);
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.btn-change-info:hover {
+    color: var(--primary-color-300);
+}

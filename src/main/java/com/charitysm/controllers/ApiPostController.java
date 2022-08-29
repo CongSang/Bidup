@@ -175,7 +175,6 @@ public class ApiPostController {
             }
             
             p.setImage(pr.getImgUrl());
-            System.out.println(pr.getImgUrl());
             if(this.postService.updatePost(p) >= 1)
                 return new ResponseEntity<>(p, HttpStatus.OK);
         }

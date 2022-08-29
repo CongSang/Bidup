@@ -5,6 +5,7 @@
 package com.charitysm.services;
 
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.UserRequest;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,4 +23,5 @@ public interface UserService extends UserDetailsService {
     List<User> getUsers(Map<String, String> params);
     long countUserStats(int month, int year);
     boolean isEmailAlreadyInUse(String email);
+    boolean editUserInfo(UserRequest req, String userId);
 }

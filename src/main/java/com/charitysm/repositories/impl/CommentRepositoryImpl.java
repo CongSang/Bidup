@@ -5,7 +5,6 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Comment;
-import com.charitysm.pojo.React;
 import com.charitysm.repositories.CommentRepository;
 import java.math.BigInteger;
 import java.util.List;
@@ -106,6 +105,7 @@ public class CommentRepositoryImpl implements CommentRepository{
         return cs;
     }
     
+    @Override
     public long countCommentStats(int month, int year) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
@@ -128,6 +128,18 @@ public class CommentRepositoryImpl implements CommentRepository{
         
         Query query = session.createQuery(q);
         return (long) query.getSingleResult(); 
+    }
+
+    @Override
+    public boolean editComment(Comment c) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(c);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }
