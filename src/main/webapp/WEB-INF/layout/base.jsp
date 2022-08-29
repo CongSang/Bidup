@@ -47,13 +47,13 @@
             <tiles:insertAttribute name="singleContent"/>
                 <div class="container content">
                 <div class="row g-3">
-                    <div class="d-lg-block d-none col-lg-3">
+                    <div class="d-lg-block d-none col-lg-4 col-xl-3">
                         <tiles:insertAttribute name="sidebarLeft" />
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 g-3">
+                    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-6  g-3">
                         <tiles:insertAttribute name="content" />
                     </div>
-                    <div class="d-lg-block d-none col-lg-3 sidebar-right">
+                    <div class="d-none d-xl-block col-xl-3  sidebar-right">
                         <tiles:insertAttribute name="sidebarRight" />
                     </div>
                 </div>

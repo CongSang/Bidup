@@ -3,7 +3,7 @@
 
 <div class="row g-3">
     <div class="col-12">
-        <div class="card auction-card">
+        <div class="card auction-card" style="max-height: 100%; min-height: 88vh">
             <div class="card-header pb-0 pt-4 border-0">
                 <h5 class="card-title mb-0">Hoạt động đấu giá gần đây</h5>
             </div>

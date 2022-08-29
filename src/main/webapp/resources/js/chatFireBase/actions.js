@@ -1,12 +1,12 @@
 import { db } from './firebaseConfig.js'
 import {
-    getUserInfo,
-    newChatBox,
-    closeChatBox,
-    rightMessage,
-    leftMessage,
-    userContactItem,
-    updateScrollbar
+getUserInfo,
+        newChatBox,
+        closeChatBox,
+        rightMessage,
+        leftMessage,
+        userContactItem,
+        updateScrollbar
 } from './conversation.js'
 
 const fetchLastMessageChat = (currentUser, friend, roomKey) => {
@@ -71,6 +71,7 @@ export const fetchListContact = (currentUser) => {
 
 export const findRoomByUser = (currentUser, friend) => {
     let roomKey = null;
+    let findOnce = true;
     $(`.chat-box-container${friend} .form-chat`).on('submit', function () {
         event.preventDefault();
         const text = $(`.chat-box-container${friend} .chat-input`).val();
@@ -78,6 +79,7 @@ export const findRoomByUser = (currentUser, friend) => {
         $(`.chat-box-container${friend} .chat-input`).val('');
     });
     db.ref(`users/${currentUser.uid}/rooms`).on('value', rooms => {
+        if(!findOnce) return;
         if (rooms.val() === null) {
             return;
         }
@@ -96,16 +98,18 @@ export const findRoomByUser = (currentUser, friend) => {
             });
         });
 
+        if (!findOnce)
+            return;
+
         if (roomKey !== null) {
-
             fetchMessagesByRoom(friend, roomKey);
-
             $(`.chat-box-container${friend} .form-chat`).on('submit', function () {
                 event.preventDefault();
                 const text = $(`.chat-box-container${friend} .chat-input`).val();
                 sendMessage(currentUser, friend, text, roomKey);
                 $(`.chat-box-container${friend} .chat-input`).val('');
             });
+            findOnce = !findOnce;
         }
     }, error => {
         console.log('findRoomByUserError', error);

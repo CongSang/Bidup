@@ -215,7 +215,7 @@ function loadUserSearch(users) {
                                 </a>
                             </div>
                             <div class="person-search-item-name">
-                                <h6 class="mb-0">
+                                <h6 class="mb-0 py-1">
                                     <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
                                 </h6>
                             </div>
