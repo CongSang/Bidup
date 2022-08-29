@@ -180,8 +180,6 @@ public class UserRepositoryImpl implements UserRepository {
         catch (Exception e) {
             return false;
         }
-        
-        return false;
     }
     
     public boolean editUserInfo(User u) {
