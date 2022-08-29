@@ -134,7 +134,7 @@ public class User implements Serializable {
     @JoinTable(name = "follow", joinColumns = {
         @JoinColumn(name = "follower_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "followed_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<User> userSet;
     @ManyToMany(mappedBy = "userSet")
@@ -165,6 +165,8 @@ public class User implements Serializable {
     @JsonIgnore
     @XmlTransient
     private MultipartFile file;
+    @Transient
+    private boolean isFollowed;
 
     public User() {
     }
@@ -456,6 +458,20 @@ public class User implements Serializable {
 
     public void setCommentNotifSet(Set<CommentNotif> commentNotifSet) {
         this.commentNotifSet = commentNotifSet;
+    }
+
+    /**
+     * @return the isFollowed
+     */
+    public boolean isIsFollowed() {
+        return isFollowed;
+    }
+
+    /**
+     * @param isFollowed the isFollowed to set
+     */
+    public void setIsFollowed(boolean isFollowed) {
+        this.isFollowed = isFollowed;
     }
     
 }

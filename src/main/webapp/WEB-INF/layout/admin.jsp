@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
         <c:url value="/resources/css/global.css" var="globalCss" />
         <c:url value="/resources/css/style.css" var="mainCss" />
         <link href="${globalCss}" rel="stylesheet" />
@@ -97,7 +98,7 @@
         </div>
 
         <tiles:insertAttribute name="chatbox" />
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/admin.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>

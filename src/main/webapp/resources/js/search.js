@@ -105,6 +105,7 @@ function personSearch(limit) {
                 return;
             }
             personPage++;
+            data = data.filter(p => p.id !== currentUserId);
             loadUserSearch(data);
         }
     });
@@ -220,7 +221,9 @@ function loadUserSearch(users) {
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow btn-follow${u.id}" onclick="follow('${u.id}')">
+                        <div class="btn-follow btn-follow${u.id} ${u.isFollowed === true ? `active`:``}"
+                            onclick="follow('${u.id}')">
+        
                             <div class="line1"></div>
                             <div class="line2"></div>
                         </div>
@@ -231,6 +234,26 @@ function loadUserSearch(users) {
 }
 
 function follow(userId) {
-    $(`.btn-follow${userId}`).addClass('active');
-    console.log("You followed User: " + userId);
+    if(!$(`.btn-follow${userId}`).hasClass('active'))
+    {
+        
+        $(`.btn-follow${userId}`).addClass('active');
+        $.ajax({
+            type: 'post',
+            url: `${ctxPath}/api/follow-user/${userId}`,
+            dataType: 'json'
+        });
+    }
+    else
+    {
+        $.ajax({
+            type: 'delete',
+            url: `${ctxPath}/api/unfollow-user/${userId}`,
+            dataType: 'json',
+            success: function () {
+                $(`.btn-follow${userId}`).removeClass('active');
+            }
+        });
+        
+    }
 }

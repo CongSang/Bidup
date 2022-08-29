@@ -6,6 +6,7 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.NoResultException;
@@ -126,7 +127,62 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (NoResultException e) {
             user = null;
         }
-        System.out.println(user.getEmail());
         return user;
     }
+
+    @Override
+    public boolean followUser(String followerId, String followedId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Query q = session.createSQLQuery("INSERT INTO follow VALUES(:followerId, :followedId)");
+            q.setParameter("followerId", followerId);
+            q.setParameter("followedId", followedId);
+            
+            q.executeUpdate();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkFollowed(String followerId, String followedId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("SELECT * From follow WHERE follower_id=:followerId"
+                + " AND followed_id=:followedId");
+        q.setParameter("followerId", followerId);
+        q.setParameter("followedId", followedId);
+        try {
+            Object o = q.getSingleResult();
+            if (o != null)
+                return true;
+        }
+        catch (NoResultException e)
+        {
+            return false;
+        }
+        
+        return false;
+    }
+
+    @Override
+    public boolean unFollowUser(String followerId, String followedId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("DELETE FROM follow WHERE follower_id=:followerId"
+                + " AND followed_id=:followedId");
+        q.setParameter("followerId", followerId);
+        q.setParameter("followedId", followedId);
+        try {
+            q.executeUpdate();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    
 }

@@ -8,12 +8,17 @@ import com.charitysm.services.UserService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author CÔNG SANG
  */
+@ComponentScan(basePackages = {
+    "com.charitysm.controllers",
+    "com.charitysm.repositories",
+    "com.charitysm.services",})
 @Component
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String>{
     

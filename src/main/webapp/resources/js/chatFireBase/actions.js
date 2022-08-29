@@ -86,7 +86,7 @@ export const findRoomByUser = (currentUser, friend) => {
         rooms.forEach(room => {
             db.ref(`users/${friend}/rooms/${room.key}`).on('value', snap => {
                 if (snap.val()) {
-                    console.log('FOUND ROOM', room.key);
+                    
                     roomKey = room.key;
 
                     fetchLastMessageChat(currentUser, friend, roomKey);

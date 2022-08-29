@@ -13,21 +13,31 @@
                     <c:url value="/admin" var="action" />
                     <form action="${action}" class="d-flex">
                         <div class="d-flex flex-column flex-lg-row">
-                            <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="dash-daterange">
-                                <option value="0">Tất cả</option>
-                                <c:forEach begin="1" end="12" var="i">
-                                    <option value="${i}">${i}</option>
-                                </c:forEach>
-                            </select>
-                            <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="dash-daterange">
-                                <c:forEach begin="2022" end="${currentYear}" var="i">
-                                    <option value="${i}">${i}</option>
-                                </c:forEach>
-                            </select>
+                            <div class="form-group text-start">
+                                <label for="month" class="me-1 small">Tháng</label>
+                                <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="month">
+                                    <option value="0">Tất cả</option>
+                                    <c:forEach begin="1" end="12" var="i">
+                                        <option value="${i}">${i}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group text-start">
+                                <label for="month" class="me-1 small">Năm</label>
+                                <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="year">
+                                    <c:forEach begin="2022" end="${currentYear}" var="i">
+                                        <option value="${i}">${i}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
-                        <button type="submit" class="input-group-text bg-primary border-primary text-white mb-2 load-stats">
-                            <i class="fa-solid fa-rotate-right"></i>
-                        </button>
+                        <div class="form-group text-start">
+                            <label></label>
+                            <button type="submit" class="input-group-text bg-primary border-primary text-white mb-2 load-stats">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                        
                     </form>
                 </div>
                 <h5 class="page-title">Thống kê</h5>

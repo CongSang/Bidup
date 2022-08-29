@@ -22,4 +22,9 @@ public interface UserRepository {
     long countUserStats(int month, int year);
     
     User getActiveUser(String email);
+    
+    boolean followUser(String followerId, String followedId);
+    boolean unFollowUser(String followerId, String followedId);
+    
+    boolean checkFollowed(String followerId, String followedId);
 }
