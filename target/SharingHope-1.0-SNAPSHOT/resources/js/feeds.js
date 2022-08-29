@@ -68,7 +68,7 @@ function loadFeeds(posts) {
                                 <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                                <ul class="dropdown-menu dropdown-menu-end px-0" aria-labelledby="cardFeedAction">
                                     ${(currentUserId === post.userId.id) ?
                                             `<li>
                                                 <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">

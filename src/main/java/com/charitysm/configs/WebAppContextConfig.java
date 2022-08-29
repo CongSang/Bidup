@@ -28,7 +28,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.charitysm.controllers",
     "com.charitysm.repositories",
-    "com.charitysm.services",})
+    "com.charitysm.services",
+    "com.charitysm.utils"
+})
 public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override

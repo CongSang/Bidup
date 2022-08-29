@@ -57,8 +57,18 @@
     margin-top: 20px;
 }
 
+.btn-follow-user {
+    background-color: var(--primary-color-100);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
 .btn-fix-profile:hover,
-.btn-report-user:hover {
+.btn-report-user:hover,
+.btn-follow-user:hover {
     filter: brightness(1.1);
 }
 
@@ -92,6 +102,12 @@
     background-color: #e1e1e1;
 }
 
+@media (max-width: 1200px) {
+    .user-profile-name {
+        font-size: 28px;
+    }
+}
+
 @media (max-width: 992px) {
     .cover-img {
         height: 270px;
@@ -105,6 +121,7 @@
     .user-profile-name {
         margin-left: 0;
         margin-top: 90px;
+        font-size: 24px;
     }
     
     .user-avatar-img {
@@ -141,4 +158,14 @@
     max-width: 100%;
     font-size: 16px;
     padding: 6px;
+}
+
+.btn-change-info {
+    color: var(--primary-color-200);
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.btn-change-info:hover {
+    color: var(--primary-color-300);
 }

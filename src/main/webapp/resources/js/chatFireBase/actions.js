@@ -1,12 +1,12 @@
 import { db } from './firebaseConfig.js'
 import {
-getUserInfo,
-        newChatBox,
-        closeChatBox,
-        rightMessage,
-        leftMessage,
-        userContactItem,
-        updateScrollbar
+    getUserInfo,
+    newChatBox,
+    closeChatBox,
+    rightMessage,
+    leftMessage,
+    userContactItem,
+    updateScrollbar
 } from './conversation.js'
 
 const fetchLastMessageChat = (currentUser, friend, roomKey) => {
@@ -26,14 +26,14 @@ const fetchLastMessageChat = (currentUser, friend, roomKey) => {
 export const fetchListContact = (currentUser) => {
     const contacts = [];
     let fetchOnce = true;
-
+    
     $('.search-userchat-loading').css("display", "flex");
     $('.list-user-chat').empty();
 
     db.ref('users').on('value', (snapshot) => {
         if (!fetchOnce)
             return;
-
+        
         snapshot.forEach(contact => {
             if (contact.key !== currentUser.uid) {
                 const c = contact.val();

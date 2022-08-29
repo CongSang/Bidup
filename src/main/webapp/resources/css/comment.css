@@ -129,7 +129,7 @@
     font-weight: bold;
     color: #999;
     cursor: pointer;
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
 .count-like-comment {
@@ -161,7 +161,15 @@
     font-weight: bold;
     color: #999;
     cursor: pointer;
-    margin-right: 12px;
+    margin-right: 10px;
+}
+
+.comment-edit {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .comment-delete {
@@ -183,6 +191,27 @@
 
 .comment-content.tada {
     animation: tada 1s ease;
+}
+
+.cancel-edit-comment {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    float: right;
+}
+
+.form-edit-comment {
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    height: 70px;
+    border: 1px solid #c7cacb;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #fbfafa;
+    padding: 10px;
 }
 
 @keyframes tada {

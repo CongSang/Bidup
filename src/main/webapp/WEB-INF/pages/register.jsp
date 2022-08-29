@@ -20,10 +20,14 @@
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="modal">
+        <div class="modal register--modal">
             <div class="modal-container">
                 <div class="modal-header">
                     <h3 class="my-2">Đăng kí tài khoản️</h3>
+                     <c:url value="/login" var="loginUrl" />
+                     <a href="${loginUrl}" class="mt-1 redirect">
+                         <i class="fa-solid fa-arrow-left"></i>
+                     </a>
                 </div>
 
                 <div class="modal-body ">
@@ -83,10 +87,14 @@
                                 </form:button>
                             </div>
                         </form:form>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>
+                        
+        <div class="register-load justify-content-center align-items-center position-fixed" style="top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); z-index: 10001; display: none">
+            <div class="spinner-border text-muted"></div>
+        </div>                
 
         <script src="<c:url value="/resources/js/validate.js" />"></script>
         <script>
@@ -114,9 +122,8 @@
                     }, 'Mật khẩu nhập lại không chính xác')
                 ],
                 onSubmit: () => {
-
                     document.querySelector('#form-register').submit();
-
+                    $('.register-load').css("display", "flex");
                 }
             });
         </script>

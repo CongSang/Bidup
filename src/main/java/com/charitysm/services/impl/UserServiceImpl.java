@@ -5,17 +5,26 @@
 package com.charitysm.services.impl;
 
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.reobj.FileUploadResponse;
+import com.charitysm.pojo.reobj.UserRequest;
 import com.charitysm.repositories.UserRepository;
 import com.charitysm.services.UserService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +34,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ADMIN
  */
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private Cloudinary cloudinary;
     
     @Override
     @Transactional
@@ -90,5 +101,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public boolean unFollowUser(String followerId, String followedId) {
         return this.userRepository.unFollowUser(followerId, followedId);
+    }
+    
+    public boolean editUserInfo(UserRequest req, String userId) {
+        User user = this.userRepository.getUserById(userId);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if(req.getFirstname() != null) user.setFirstname(req.getFirstname());
+            if(req.getLastname() != null) user.setLastname(req.getLastname());
+            if(req.getBirthdate() != null) {
+                Date birth = format.parse(req.getBirthdate());
+                user.setBirthdate(birth);
+            }
+            if(req.getAddress() != null) user.setAddress(req.getAddress());
+            if(req.getHometown() != null) user.setHometown(req.getHometown());
+            if(req.getJob() != null) user.setJob(req.getJob());
+            if(req.getEmail() != null) user.setEmail(req.getEmail());
+            if(req.getPhone() != null) user.setPhone(req.getPhone());
+            
+            if(req.getAvatar() != null) {
+                cloudinary.uploader().destroy(user.getAvatar().substring(user.getAvatar().lastIndexOf("public_id=") + 10),
+                    ObjectUtils.asMap("resource_type", "image"));
+                
+                user.setAvatar(req.getAvatar());
+            }
+            
+            if(this.userRepository.editUserInfo(user) == true)
+                return true;
+        } catch (ParseException | IOException ex) {
+            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return false;
     }
 }

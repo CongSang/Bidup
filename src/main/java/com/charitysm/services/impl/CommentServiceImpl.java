@@ -91,6 +91,7 @@ public class CommentServiceImpl implements CommentService{
         return this.commentRepository.getCommentCount(postId);
     }
     
+    @Override
     public long countCommentStats(int month, int year) {
         return this.commentRepository.countCommentStats(month, year);
     }
@@ -98,5 +99,17 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<Comment> getReplies(int commentId, int page) {
         return this.commentRepository.getReplies(commentId, page);
+    }
+
+    @Override
+    public Comment editComment(CommentRequest req, int commentId) {
+        Comment currentComment = this.commentRepository.getCommentById(commentId);
+        currentComment.setContent(req.getContent());
+        currentComment.setCommentDate(new Date());
+        
+        if(this.commentRepository.editComment(currentComment) == true) {
+            return currentComment;
+        }
+        return null;
     }
 }

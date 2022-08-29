@@ -159,8 +159,7 @@ public class UserRepositoryImpl implements UserRepository {
             if (o != null)
                 return true;
         }
-        catch (NoResultException e)
-        {
+        catch (NoResultException e) {
             return false;
         }
         
@@ -179,6 +178,18 @@ public class UserRepositoryImpl implements UserRepository {
             return true;
         }
         catch (Exception e) {
+            return false;
+        }
+        
+        return false;
+    }
+    
+    public boolean editUserInfo(User u) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.update(u);
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

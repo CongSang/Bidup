@@ -27,4 +27,5 @@ public interface UserRepository {
     boolean unFollowUser(String followerId, String followedId);
     
     boolean checkFollowed(String followerId, String followedId);
+    boolean editUserInfo(User u);
 }
