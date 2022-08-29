@@ -20,4 +20,5 @@ public interface CommentRepository {
     BigInteger getCommentCount(int postId);
     List<Comment> getReplies(int commentId, int page);
     long countCommentStats(int month, int year);
+    boolean editComment(Comment c);
 }

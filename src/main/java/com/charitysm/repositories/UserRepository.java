@@ -22,4 +22,5 @@ public interface UserRepository {
     long countUserStats(int month, int year);
     
     User getActiveUser(String email);
+    boolean editUserInfo(User u);
 }
