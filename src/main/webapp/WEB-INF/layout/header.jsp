@@ -27,36 +27,53 @@
                 <div class="nav my-3 my-lg-0 flex-nowrap align-items-center px-2 px-lg-0">
                     <div class="nav-item w-100">
                         <form class="form-search position-relative" action="javascript:;" onsubmit="searchSubmit()">
-                            <input class="form-control ps-5 bg-light w-100" name="kw" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                            <input class="form-control ps-5 bg-light w-100" style="max-width: 210px" name="kw" type="search" placeholder="Tìm kiếm" aria-label="Search">
                             <button class="bg-transparent p-2 py-0 position-absolute top-50 start-0 translate-middle-y" style="outline: none; border: none; border-radius: 50%" type="submit">
                                 <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                             </button>
                         </form>
                     </div>
                 </div>
-                
-            
-                <div class="create-post card home-menu">
-                    <div class="d-flex align-items-center">
-                        <div class="home-menu-item" onclick="homeMenu('home')">Tất cả</div>
-                        <div class="home-menu-item" onclick="homeMenu('follow')">Đang theo dõi</div>
-                    </div>
-                </div>
+
+
+                <!--                <div class="create-post card home-menu">
+                                    <div class="d-flex align-items-center">
+                                        <div class="home-menu-item" onclick="homeMenu('home')">Tất cả</div>
+                                        <div class="home-menu-item" onclick="homeMenu('follow')">Đang theo dõi</div>
+                                    </div>
+                                </div>-->
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
-                    <li class="nav-item px-2">
-                        <a class="nav-link" href="${mainUrl}" id="homeMenu">
+                    <!--Menu mobile-->
+                    <li class="d-lg-none d-block nav-item px-2">
+                        <a class="nav-link homeMenu" href="${mainUrl}">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
                     </li>
-                    <li class="nav-item px-2">
+                    <li class="d-lg-none d-block nav-item px-2">
                         <c:url value="/auction" var="auctionUrl" />
-                        <a class="nav-link" href="${auctionUrl}" id="auctionMenu">
+                        <a class="nav-link auctionMenu" href="${auctionUrl}">
                             <i class="fa-solid fa-gavel menu-icon"></i>
                             Đấu giá
                         </a>
                     </li>
+                    <li class="d-lg-none d-block nav-item px-2">
+                        <a class="nav-link followMenu" href="">
+                            <i class="fa-solid fa-user-group menu-icon"></i>
+                            Đang theo dõi
+                        </a>
+                    </li>
+                    <!--Link này dành cho admin đăng nhập mới hiển thị-->
+                    <c:if test="${sessionScope.currentUser.getUserRole() == 'ROLE_ADMIN'}">
+                        <li class="d-lg-none d-block nav-item px-2">
+                            <c:url value="/admin" var="adminUrl" />
+                            <a class="nav-link chartMenu" href="${adminUrl}">
+                                <i class="fa-solid fa-chart-simple menu-icon"></i>
+                                Thống kê & báo cáo
+                            </a>
+                        </li>
+                    </c:if>
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link dropdown-toggle" href="#" id="chatMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa-solid fa-comment menu-icon"></i>
@@ -94,17 +111,6 @@
                             </div>
                         </ul>
                     </li>
-
-                    <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                    <c:if test="${sessionScope.currentUser.getUserRole() == 'ROLE_ADMIN'}">
-                        <li class="nav-item px-2">
-                            <c:url value="/admin" var="adminUrl" />
-                            <a class="nav-link" href="${adminUrl}" id="chartMenu">
-                                <i class="fa-solid fa-chart-simple menu-icon"></i>
-                                Thống kê & báo cáo
-                            </a>
-                        </li>
-                    </c:if>
 
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="notifyMenu">
@@ -156,10 +162,46 @@
                 </ul>
             </div>
 
+            <!--Menu desktop--> 
+            <div class="desktop-menu">
+                <ul class="navbar-nav navbar-nav-scroll ms-auto w-100">
+                    <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Trang chủ">
+                        <a class="nav-link homeMenu py-3 w-100" href="${mainUrl}" id="homeMenu">
+                            <i class="fa-solid fa-house desktop-menu-icon"></i>
+                        </a>
+                        <div class="menu-active homeMenu"></div>
+                    </li>
+                    <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Đấu giá">
+                        <c:url value="/auction" var="auctionUrl" />
+                        <a class="nav-link auctionMenu py-3 w-100" href="${auctionUrl}" id="auctionMenu">
+                            <i class="fa-solid fa-gavel desktop-menu-icon"></i>
+                        </a>
+                        <div class="menu-active auctionMenu"></div>
+                    </li>
+                    <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Theo dõi">
+                        <a class="nav-link followMenu py-3 w-100" href="" id="followMenu">
+                            <i class="fa-solid fa-user-group desktop-menu-icon"></i>
+                        </a>
+                        <div class="menu-active followMenu"></div>
+                    </li>
+                    <c:if test="${sessionScope.currentUser.getUserRole() == 'ROLE_ADMIN'}">
+                        <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Thống kê">
+                            <c:url value="/admin" var="adminUrl" />
+                            <a class="nav-link chartMenu py-3 w-100" href="${adminUrl}" id="chartMenu">
+                                <i class="fa-solid fa-chart-pie desktop-menu-icon"></i>
+                            </a>
+                            <div class="menu-active chartMenu"></div>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+
             <div class="d-lg-flex d-none flex-nowrap align-items-center ms-3">
                 <div class="dropdown">
                     <div class="position-relative" id="userChatList" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-brands fa-facebook-messenger notify-icon me-4"></i>
+                        <div class="btn-cover me-2">
+                            <i class="fa-brands fa-facebook-messenger notify-icon"></i>
+                        </div>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end me-3 p-0" id="chatContainer" aria-labelledby="cardFeedAction">
                         <li>
@@ -188,16 +230,18 @@
 
                             </div>
                             <div class="p-2 list-user-chat">
-                                
+
                             </div>
                         </div>
                     </ul>
                 </div>
 
                 <div class="dropdown">
-                    <a href="#" class="position-relative" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell notify-icon me-4"></i>
-                        <span class="notif-count"></span>
+                    <a href="#" id="userNotification" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="btn-cover me-2 position-relative">
+                            <i class="fa-solid fa-bell notify-icon"></i>
+                            <span class="notif-count"></span>
+                        </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end me-3 p-0 notifContainer" id="notifContainer" aria-labelledby="cardFeedAction">
                         <li>
