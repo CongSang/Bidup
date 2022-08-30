@@ -111,14 +111,18 @@
                                             <i class="fa-solid fa-envelope"></i>
                                         </div>
                                         <span class="intro-text">${userInfo.email}</span>
-                                        <i class="fa-solid fa-pen-to-square ms-2 btn-change-info" onclick="$('.modal-update-email').addClass('open')"></i>
+                                        <c:if test="${userInfo.id == currentUser.id}">
+                                            <i class="fa-solid fa-pen-to-square ms-2 btn-change-info" onclick="$('.modal-update-email').addClass('open')"></i>
+                                        </c:if>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">
                                             <i class="fa-solid fa-phone"></i>
                                         </div>
                                         <span class="intro-text">${userInfo.phone}</span>
-                                        <i class="fa-solid fa-pen-to-square ms-2 btn-change-info" onclick="$('.modal-update-phone').addClass('open')"></i>
+                                        <c:if test="${userInfo.id == currentUser.id}">
+                                            <i class="fa-solid fa-pen-to-square ms-2 btn-change-info" onclick="$('.modal-update-phone').addClass('open')"></i>
+                                        </c:if>
                                     </div>
                                     <div class="user-intro--item">
                                         <div class="intro-icon">

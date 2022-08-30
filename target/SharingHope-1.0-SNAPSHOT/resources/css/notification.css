@@ -11,7 +11,7 @@
 #notifContainer {
     width: 370px;
     right: -68px;
-    top:32px;
+    top: 42px;
 }
 
 .list-notification {
@@ -100,8 +100,8 @@
 .notif-count {
     opacity: 0;
     position: absolute;
-    top:-7px;
-    left: 10px;
+    top:-6px;
+    left: 28px;
     width: 16px;
     padding: 2px;
     font-size: 10px;
