@@ -84,12 +84,6 @@
     </div>
 </div>
 
-<script src="<c:url value="/resources/js/feeds.js" />"></script>                                    
-<script src="<c:url value="/resources/js/comment.js" />"></script>
-<script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
-<script src="<c:url value="/resources/js/bid.js" />"></script>
-<script src="<c:url value="/resources/js/auction.js" />"></script>
-<script src="<c:url value="/resources/js/post.js" />"></script>
 <script>
     window.onload = function () {
         postPage = 1;

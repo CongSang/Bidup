@@ -28,11 +28,14 @@
     <div class="auction-container">
 
     </div>
+        
+    <div id="feeds-container">
 
-    <div class="text-center mt-3 auction-loading">
+    </div>
+            
+    <div class="text-center mt-3 post-loading" id="loadingBottom">
         <div class="spinner-border text-muted"></div>
     </div>
-
 
     <!--modal create post-->
     <div class="modal modal-auction modal-post">
@@ -103,14 +106,9 @@
     </div>
 </div>
 
-<script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>
-<script src="<c:url value="/resources/js/auction.js" />"></script>
-<script src="<c:url value="/resources/js/bid.js" />"></script>
-<script src="<c:url value="/resources/js/feeds.js" />"></script>
 <script>
         $(function () {
             currentUserId = '${sessionScope.currentUser.id}';
-            loadAuctions();
             $("textarea").hashtags();
         });
 

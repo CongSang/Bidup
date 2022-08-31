@@ -15,14 +15,17 @@ $(window).scroll(function () {
         if ((windowHeight + scrollTop) >= documentHeight - 10) {
             var loca = window.location.pathname;
             if (!disableLoadMorePost) {
-                if(window.location === `${ctxPath}/`)
+                if(window.location === `${ctxPath}/`){
                     loadPosts(postPage);
+                }
                 if(loca.includes(`${ctxPath}/hashtag/`))
                     hashTagSearch();
                 if(loca.includes('/search/posts'))
                     contentSearch();
                 if(loca.includes('/search/people'))
                     personSearch();
+                if(loca.includes('/home/follow'))
+                    loadFollowPosts(postPage);
             }
         }
     }, 100);

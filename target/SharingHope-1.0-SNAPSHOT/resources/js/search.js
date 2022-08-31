@@ -221,7 +221,7 @@ function loadUserSearch(users) {
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow btn-follow${u.id} ${u.isFollowed === true ? `active`:``}"
+                        <div id="btnFollow${u.id}" class="btn-follow ${u.isFollowed === true ? `active`:``}"
                             onclick="follow('${u.id}')">
         
                             <div class="line1"></div>
@@ -234,10 +234,10 @@ function loadUserSearch(users) {
 }
 
 function follow(userId) {
-    if(!$(`.btn-follow${userId}`).hasClass('active'))
+    if(!$(`#btnFollow${userId}`).hasClass('active'))
     {
         
-        $(`.btn-follow${userId}`).addClass('active');
+        $(`#btnFollow${userId}`).addClass('active');
         $.ajax({
             type: 'post',
             url: `${ctxPath}/api/follow-user/${userId}`,
@@ -251,7 +251,7 @@ function follow(userId) {
             url: `${ctxPath}/api/unfollow-user/${userId}`,
             dataType: 'json',
             success: function () {
-                $(`.btn-follow${userId}`).removeClass('active');
+                $(`#btnFollow${userId}`).removeClass('active');
             }
         });
         

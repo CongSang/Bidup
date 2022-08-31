@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -19,7 +20,7 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
+    @GetMapping("")
     public String home(Model model, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
@@ -29,6 +30,12 @@ public class IndexController {
             session.setAttribute("currentUser", user);
             session.setAttribute("page", 1);
         }
+        
+        return "home";
+    }
+    
+    @GetMapping("/home/follow")
+    public String homeFollow(Model model, HttpSession session) {
         
         return "home";
     }

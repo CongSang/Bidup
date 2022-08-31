@@ -30,19 +30,23 @@ public class NotificationCenter {
             Session session) throws IOException {
         session.getBasicRemote().sendText(userId + "Subscribed");
         session.getUserProperties().put("userId", userId);
-        getSessions().put(userId, session);
+        sessions.put(userId, session);
     }
 
     @OnClose
     public void onClose(@PathParam("userId") String userId, Session session) throws IOException {
         session.getBasicRemote().sendText("bye bye from Sharing Hope");
-        getSessions().remove(userId);
+        sessions.remove(userId);
     }
 
     public static void sendMessage(String userId) throws IOException {
         Session targetSession = getSessions().get(userId);
-        if (targetSession != null) {
+        if (targetSession != null && targetSession.isOpen()) {
             targetSession.getBasicRemote().sendText("update_notif");
+        }
+        else
+        {
+            sessions.remove(userId);
         }
     }
 

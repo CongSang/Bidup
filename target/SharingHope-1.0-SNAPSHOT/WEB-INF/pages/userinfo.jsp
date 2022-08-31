@@ -27,6 +27,7 @@
         <link href="<c:url value="/resources/css/notification.css"/>" rel="stylesheet" />
         <link href="<c:url value="/resources/css/comment.css"/>" rel="stylesheet" />
         <link href="<c:url value="/resources/css/login.css"/>" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/search.css"/>" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -61,7 +62,9 @@
                                         </div>
                                     </c:if>
                                     <c:if test="${userInfo.id != currentUser.id}">
-                                        <div class="btn-follow-user">
+                                        <div id="btnFollow${userInfo.id}" class="btn-follow-user <c:if test="${userInfo.isFollowed == true}">
+                                             active
+                                        </c:if>" onclick="follow('${userInfo.id}')">
                                             <i class="fa-solid fa-plus me-2"></i>
                                             Theo dõi
                                         </div>
