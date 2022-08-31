@@ -131,9 +131,7 @@
             <img id="img01" style="max-width:100%; max-height:100vh;">
         </div>
     </div>
-    <script src="<c:url value="/resources/js/comment.js" />"></script>
-<script src="<c:url value="/resources/js/post.js" />"></script>
-<script src="<c:url value="/resources/js/feeds.js" />"></script>
+                                
 <script>
         window.onload = function () {
             currentUserId = '${sessionScope.currentUser.id}';

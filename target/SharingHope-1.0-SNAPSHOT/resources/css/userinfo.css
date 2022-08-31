@@ -169,3 +169,7 @@
 .btn-change-info:hover {
     color: var(--primary-color-300);
 }
+
+.btn-follow-user.active {
+    display: none;
+}

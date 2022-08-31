@@ -41,17 +41,17 @@ function auctionNextPage() {
     auctionPage++;
 }
 
-function loadAuctions(page) {
-    if (!page) {
-        page = 1;
+function loadAuctions() {
+    if (!auctionPage) {
+        auctionPage = 1;
     }
     
     $('.auction-loading').css("display", "block");
     auctionFetching = true;
     
-    $.ajax({
+    xhr = $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/auctions` + '?page=' + page,
+        url: `${ctxPath}/api/auctions` + '?page=' + auctionPage,
         dataType: 'json',
         success: function (data) {
             if (data.length === 0) {
@@ -61,6 +61,7 @@ function loadAuctions(page) {
             loadAuctionFeeds(data, '.auction-container');
             $('.auction-loading').css("display", "none");
             auctionFetching = false;
+            auctionPage++;
         }
     });
 }

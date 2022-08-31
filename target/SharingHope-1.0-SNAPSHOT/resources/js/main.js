@@ -5,24 +5,44 @@ function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 };
 
-$(function () {
-    let pathName = location.pathname.split("/").find(function (element) {
-        if (element.indexOf("SharingHope"))
-            return element;
-    });
 
+$(function () {
+    let pathName = window.location.pathname.toString();
+    
+    if(timer !== null) {
+        clearTimeout(timer);        
+    }
+    
+    timer = setTimeout(function() {
+        if (pathName.includes("/auction"))
+            homeMenu('auction');
+        else if (pathName.includes("/home/follow"))
+            homeMenu('follow');
+        else if (pathName === `${ctxPath}/`)
+            homeMenu('home');
+    }, 100);
+    
+});
+
+function menuActive(pathName) {
+    $(".menu-active").removeClass("active");
+    $("a.nav-link").removeClass("active");
+    
     switch (pathName) {
-        case undefined:
+        case `${ctxPath}/`:
             $('.homeMenu').addClass('active');
             break;
-        case "auction":
+        case `${ctxPath}/auction`:
             $('.auctionMenu').addClass('active');
             break;
-        case "admin":
+        case `${ctxPath}/admin`:
             $('.chartMenu').addClass('active');
             break;
+        case `${ctxPath}/home/follow`:
+            $('.followMenu').addClass('active');
+            break;
     }
-});
+}
 
 function findHashtags(searchText) {
     var regexp = /(\s|^)\#\w\w+\b/gm
@@ -94,7 +114,7 @@ function loadSideBarRight() {
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow btn-follow${user.id}" onclick="follow('${user.id}')">
+                        <div id="btnFollow${user.id}" class="btn-follow" onclick="follow('${user.id}')">
                             <div class="line1"></div>
                             <div class="line2"></div>
                         </div>
