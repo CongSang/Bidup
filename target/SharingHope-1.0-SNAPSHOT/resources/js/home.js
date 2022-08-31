@@ -1,27 +1,42 @@
-const modal = document.querySelector("#modalCreatePost");
-const btn_close = document.querySelectorAll(".modal--close-post");
-const btn_show = document.querySelectorAll(".btn-show--post");
+const modalPost = $("#modalCreatePost");
+const btnCloseModal = $(".modal-close-btn");
+const btnShowModal = $(".btn-show--modal");
 const loadingTop = $('#loadingTop');
 const loadingBottom = $('#loadingBottom');
+
+const modalAuction =  $(".modal-auction");
+const modalContainer1 = $(".modal-container-auction");
+
+btnShowModal.click(showModal);
+btnCloseModal.click(closeModal);
+
 var xhr;
 
 function showModal() {
-    modal.classList.add('open');
+    let pathName = window.location.pathname.toString();
+    if (pathName.includes("/auction"))
+        modalAuction.addClass('open');
+    else 
+        modalPost.addClass('open');
 }
 
 function closeModal() {
-    modal.classList.remove('open');
+    modalPost.removeClass('open');
+    modalAuction.removeClass('open');
 }
 
-btn_show.forEach(btn => {
-    btn.addEventListener("click", showModal);
+
+modalContainer1.on("click", function (event) {
+    event.stopPropagation();
 });
 
-btn_close.forEach(btn => {
-    btn.addEventListener("click", closeModal);
+modalPost.click(function (event) {
+    event.stopPropagation();
 });
 
 function homeMenu(menu) {
+//    if(window.location )
+    
     if (xhr !== undefined)
         xhr.abort();
     window.scrollTo(0, 0);
@@ -30,13 +45,11 @@ function homeMenu(menu) {
     $('.auction-container').empty();
     auctionPage = 1;
     postPage = 1;
-    let url = new URL(window.location.toString());
-    let pathname = window.location.pathname.toString();
     
     if (menu === 'home') {
         loadPosts();
         
-        let newPathname = ctxPath + "/";
+        let newPathname = ctxPath + "/home";
         let newUrl = 'http://' + window.location.host.toString() + newPathname ;
         
         window.history.replaceState('', 'SharingHope', newUrl);
@@ -54,7 +67,7 @@ function homeMenu(menu) {
     else {
         loadAuctions();
         
-        let newPathname = `${ctxPath}/auction`;
+        let newPathname = `${ctxPath}/home/auction`;
         let newUrl = 'http://' +  window.location.host.toString() + newPathname;
         
         window.history.replaceState('', 'SharingHope', newUrl);
@@ -63,7 +76,6 @@ function homeMenu(menu) {
 }
 
 function loadPosts() {
-    $(loadingBottom).css("display", "block");
 
     xhr = $.ajax({
         type: 'get',
@@ -75,6 +87,7 @@ function loadPosts() {
                 disableLoadMorePost = true;
                 return;
             }
+            
             postPage++;
             loadFeeds(data);
         }
@@ -82,7 +95,6 @@ function loadPosts() {
 }
 
 function loadFollowPosts() {
-    $(loadingBottom).css("display", "block");
 
     xhr = $.ajax({
         type: 'get',
@@ -99,7 +111,3 @@ function loadFollowPosts() {
         }
     });
 }
-
-modal.addEventListener("click", function (event) {
-    event.stopPropagation();
-});

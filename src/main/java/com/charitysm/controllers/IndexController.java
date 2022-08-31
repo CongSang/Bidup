@@ -19,8 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     @Autowired
     private UserService userService;
-
-    @GetMapping("")
+    
+    @GetMapping("/")
+    public String index() {
+       
+        return "redirect:/home";
+    }
+    
+    @GetMapping("/home")
     public String home(Model model, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {

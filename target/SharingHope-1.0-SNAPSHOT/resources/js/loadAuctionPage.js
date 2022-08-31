@@ -1,9 +1,4 @@
 
-const modal1 =  document.querySelector(".modal-auction");
-const modalContainer1 = $(".modal-container-auction");
-const btn_close1 = document.querySelectorAll(".modal--close-auction");
-const btn_show1 = document.querySelectorAll(".btn-show--auction");
-
 var auctionPage = 1;
 var auctionFetching = false;
 var disableLoadMoreAuction = false;
@@ -14,26 +9,6 @@ var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 </p>
                                <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1659441156/eocshmhivko3pjpa0kkg.png" alt="Error">
                             </div>`;
-
-function showModal() {
-    modal1.classList.add('open');
-}
-
-function closeModal() {
-    modal1.classList.remove('open');
-}
-
-btn_show1.forEach(btn => {
-    btn.addEventListener("click", showModal);
-});
-
-btn_close1.forEach(btn => {
-    btn.addEventListener("click", closeModal);
-});
-
-modalContainer1.on("click", function (event) {
-    event.stopPropagation();
-});
 
 function auctionNextPage() {
     if (auctionFetching) return;
@@ -46,7 +21,6 @@ function loadAuctions() {
         auctionPage = 1;
     }
     
-    $('.auction-loading').css("display", "block");
     auctionFetching = true;
     
     xhr = $.ajax({
@@ -55,11 +29,11 @@ function loadAuctions() {
         dataType: 'json',
         success: function (data) {
             if (data.length === 0) {
-                disableLoadMoreAuction = true;
+                disableLoadMorePost = true;
             }
             
             loadAuctionFeeds(data, '.auction-container');
-            $('.auction-loading').css("display", "none");
+            $('#loadingBottom').css("display", "none");
             auctionFetching = false;
             auctionPage++;
         }

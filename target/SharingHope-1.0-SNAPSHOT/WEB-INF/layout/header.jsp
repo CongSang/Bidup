@@ -7,7 +7,7 @@
 <header class="navbar-light fixed-top header-static" id="container">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <c:url value="/" var="mainUrl" />
+            <c:url value="/home" var="mainUrl" />
             <a class="navbar-brand" href="${mainUrl}">
                 <c:url value="/resources/img/logo.png" var="logo" />
                 <img class="light-mode-item navbar-brand-item logo-img" src="${logo}" alt="logo">

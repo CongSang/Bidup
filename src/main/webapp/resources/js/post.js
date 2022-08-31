@@ -140,29 +140,31 @@ function deletePost(id, el) {
         buttons: true,
         dangerMode: true
     }).then((isDeleted) => {
-        var loadingHtml =   `   <div class="text-center mt-3 post-loading">
-                                                <div class="spinner-border text-muted"></div>
-                                            </div>
-                                        `; 
-        var clickedPost = $(el).parents('.post');
-        var clickedPostHtml = $(clickedPost).html();
+        if (isDeleted) {
+            var loadingHtml =   `   <div class="text-center mt-3 post-loading">
+                                                    <div class="spinner-border text-muted"></div>
+                                                </div>
+                                            `; 
+            var clickedPost = $(el).parents('.post');
+            var clickedPostHtml = $(clickedPost).html();
 
-        $(clickedPost).html(loadingHtml);
+            $(clickedPost).html(loadingHtml);
 
-        $.ajax({
-                type: 'delete',
-                url: `${ctxPath}/api/delete-post/${id}`,
-                dataType: 'json',
-                success: function () {
-                    swal("Xóa bài viết thành công", {
-                        icon: "success"
-                    });
-                    $(clickedPost).remove();
-                }
-        })
-        .fail(function (){
-            $(clickedPost).html(clickedPostHtml);
-        });
+            $.ajax({
+                    type: 'delete',
+                    url: `${ctxPath}/api/delete-post/${id}`,
+                    dataType: 'json',
+                    success: function () {
+                        swal("Xóa bài viết thành công", {
+                            icon: "success"
+                        });
+                        $(clickedPost).remove();
+                    }
+            })
+            .fail(function (){
+                $(clickedPost).html(clickedPostHtml);
+            });
+        }
     });
 }
 

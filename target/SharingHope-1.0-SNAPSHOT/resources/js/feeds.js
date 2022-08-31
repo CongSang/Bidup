@@ -1,34 +1,44 @@
 var postPage = 1;
 var disableLoadMorePost = false;
 var timer = null;
+var timer2 = null;
+var loca = window.location.pathname;
 
 $(window).scroll(function () {
     var scrollTop = $(document).scrollTop();
     var windowHeight = $(this).height();
     var documentHeight = $(document).height();
     
-    if(timer !== null) {
-        clearTimeout(timer);        
-    }
     
-    timer = setTimeout(function() {
+    
         if ((windowHeight + scrollTop) >= documentHeight - 10) {
-            var loca = window.location.pathname;
             if (!disableLoadMorePost) {
-                if(window.location === `${ctxPath}/`){
-                    loadPosts(postPage);
+                $(loadingBottom).css("display", "block");
+                
+                if(timer !== null) {
+                    clearTimeout(timer);        
                 }
-                if(loca.includes(`${ctxPath}/hashtag/`))
-                    hashTagSearch();
-                if(loca.includes('/search/posts'))
-                    contentSearch();
-                if(loca.includes('/search/people'))
-                    personSearch();
-                if(loca.includes('/home/follow'))
-                    loadFollowPosts(postPage);
+                
+                timer = setTimeout(function() {
+                    if(loca === `${ctxPath}/home`) {
+                        loadPosts();
+                    }
+
+                    if(loca === `${ctxPath}/home/auction`)
+                        loadAuctions();
+
+                    if(loca.includes(`${ctxPath}/hashtag/`))
+                        hashTagSearch();
+                    if(loca.includes('/search/posts'))
+                        contentSearch();
+                    if(loca.includes('/search/people'))
+                        personSearch();
+                    if(loca.includes('/home/follow'))
+                        loadFollowPosts();
+                    
+                }, 1000);
             }
         }
-    }, 100);
     
 });
 
@@ -167,17 +177,6 @@ function loadFeeds(posts) {
         customHashtag(`.post-${post.id}`);
     });
 };
-
-function customHashtag(element) {
-    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
-    var str_content_origin = $(element).text();
-    var str_content = str_content_origin.match(rgxp);
-    $.each(str_content, function(index, v){
-        var hashtag = v.trim();
-        var repl = `<span class="tag">${v}</span>`;
-        $(element).html($(element).html().replace(hashtag, repl));
-    });
-}
 
 function prependFeeds(post) {
     const feedContainer = $('#feeds-container');

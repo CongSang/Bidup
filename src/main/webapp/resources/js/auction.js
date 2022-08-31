@@ -38,16 +38,16 @@ function showFull2(element) {
 //    }
 //};
 
-function customHashtag(element) {
-    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
-    var str_content_origin = $(element).text();
-    var str_content = str_content_origin.match(rgxp);
-    $.each(str_content, function(index, v){
-        var hashtag = v.trim();
-        var repl = `<span class="tag">${v}</span>`;
-        $(element).html($(element).html().replace(hashtag, repl));
-    });
-}
+//function customHashtag(element) {
+//    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
+//    var str_content_origin = $(element).text();
+//    var str_content = str_content_origin.match(rgxp);
+//    $.each(str_content, function(index, v){
+//        var hashtag = v.trim();
+//        var repl = `<span class="tag">${v}</span>`;
+//        $(element).html($(element).html().replace(hashtag, repl));
+//    });
+//}
 
 function deleteAuction(auctionId) {
     swal({
@@ -103,7 +103,7 @@ function createAuction() {
             alert("Không thể nhận loại file này!");
         }
         else {
-            $('#auctionLoadingTop').css('display', 'block');
+            $('#loadingTop').css('display', 'block');
 
             for (const file of fs.files) {
                 formData.append("file", file);
@@ -133,7 +133,7 @@ function createAuction() {
                     dataType : 'json',
                     contentType : 'application/json',
                     success: function (data) {
-                        $('#auctionLoadingTop').css('display', 'none');
+                        $('#loadingTop').css('display', 'none');
                         $('#statusContent1').val(null);
                         $('.highlighter').html('');
                         $('uploadImage1').val(null);
@@ -142,12 +142,12 @@ function createAuction() {
                     }
                 })
                 .fail(function(){
-                    $('#auctionLoadingTop').css('display', 'none');
+                    $('#loadingTop').css('display', 'none');
                         $('.auction-container').prepend(errorHtml);
                 });
             })
             .fail(function(){
-                $('#auctionLoadingTop').css('display', 'none');
+                $('#loadingTop').css('display', 'none');
                     $('.auction-container').prepend(errorHtml);
             });
 
