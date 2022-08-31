@@ -35,12 +35,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
     
-    <definition name="auction" extends="baseLayout">
-        <put-attribute name="title" value="Đấu giá" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/auction.jsp" />
-    </definition>
-    
     <definition name="userinfo" template="/WEB-INF/pages/userinfo.jsp">
         <put-attribute name="header"
                        value="/WEB-INF/layout/header.jsp" />

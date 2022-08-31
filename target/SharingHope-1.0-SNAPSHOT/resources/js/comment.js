@@ -76,20 +76,22 @@ function deleteComment(id) {
         buttons: true,
         dangerMode: true
     }).then((isDeleted) => {
-        $.ajax({
-            type: 'delete',
-            url: `${ctxPath}/api/delete-comment/${id}`,
-            dataType: 'json',
-            success: function () {
-                swal("Xóa bình luận thành công", {
-                    icon: "success"
-                });
-                $(clickedComment).remove();
-            }
-        })
-                .fail(function () {
-                    $(clickedComment).html(clickedCommentHtml);
-                });
+        if (isDeleted) {
+            $.ajax({
+                type: 'delete',
+                url: `${ctxPath}/api/delete-comment/${id}`,
+                dataType: 'json',
+                success: function () {
+                    swal("Xóa bình luận thành công", {
+                        icon: "success"
+                    });
+                    $(clickedComment).remove();
+                }
+            })
+            .fail(function () {
+                $(clickedComment).html(clickedCommentHtml);
+            });
+        }
     });
 }
 

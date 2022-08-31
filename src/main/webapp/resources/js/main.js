@@ -7,6 +7,8 @@ function isBlank(str) {
 
 
 $(function () {
+    postPage=1;
+    auctionPage=1;
     let pathName = window.location.pathname.toString();
     
     if(timer !== null) {
@@ -14,25 +16,36 @@ $(function () {
     }
     
     timer = setTimeout(function() {
-        if (pathName.includes("/auction"))
+        if (pathName === `${ctxPath}/home/auction`)
             homeMenu('auction');
         else if (pathName.includes("/home/follow"))
             homeMenu('follow');
-        else if (pathName === `${ctxPath}/`)
+        else if (pathName === `${ctxPath}/home`)
             homeMenu('home');
     }, 100);
     
 });
+
+function customHashtag(element) {
+    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
+    var str_content_origin = $(element).text();
+    var str_content = str_content_origin.match(rgxp);
+    $.each(str_content, function(index, v){
+        var hashtag = v.trim();
+        var repl = `<span class="tag">${v}</span>`;
+        $(element).html($(element).html().replace(hashtag, repl));
+    });
+}
 
 function menuActive(pathName) {
     $(".menu-active").removeClass("active");
     $("a.nav-link").removeClass("active");
     
     switch (pathName) {
-        case `${ctxPath}/`:
+        case `${ctxPath}/home`:
             $('.homeMenu').addClass('active');
             break;
-        case `${ctxPath}/auction`:
+        case `${ctxPath}/home/auction`:
             $('.auctionMenu').addClass('active');
             break;
         case `${ctxPath}/admin`:
@@ -58,22 +71,21 @@ function findHashtags(searchText) {
 }
 
 function loadSideBarLeft() {
-    const path = '/SharingHope/';
     $.ajax({
         type: 'get',
-        url: path + 'api/auction-side',
+        url: `${ctxPath}/api/auction-side`,
         dataType: 'json',
         success: function (data) {
             $.each(data, function (index, item) {
                 let html = `
                     <div class="d-flex align-items-center pt-4">
                         <div class="p-1">
-                            <a href="${path}user/${item.userId.id}">
+                            <a href="${ctxPath}/user/${item.userId.id}">
                                 <img src="${item.userId.avatar}" alt="avatar" class="avatar-img rounded-circle"/>
                             </a>
                         </div>
                         <div class="ms-2 small">
-                            <h6 class="card-title mb-0"><a href="${path}user/${item.userId.id}">${item.userId.lastname} ${item.userId.firstname}</a></h6>
+                            <h6 class="card-title mb-0"><a href="${ctxPath}/user/${item.userId.id}">${item.userId.lastname} ${item.userId.firstname}</a></h6>
                             đã đăng đấu giá
                             <span>${moment(item.auctionDate).fromNow()}</span>
                         </div>

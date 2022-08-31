@@ -28,9 +28,9 @@ public class AuctionController {
     @Autowired
     private NotificationService notificationService;
     
-    @GetMapping("/auction")
+    @GetMapping("/home/auction")
     public String auction(Model model) {
-        return "auction";
+        return "home";
     }
     
     @GetMapping("/auctions/{auctionId}")
