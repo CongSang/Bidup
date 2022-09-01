@@ -217,11 +217,11 @@ function commentItem(comment, postId) {
             `<div class="comment-like comment-like${comment.id}" onclick="likedComment(${comment.id})">Thích</div>`
             )}
 
-
                             <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
+                             ${(currentUserId === comment.userId.id) ?
+            `<div class="comment-edit" onclick="showEditComment(${comment.id}, ${postId})">Sửa</div>` : ``}
                             ${(currentUserId === comment.userId.id || currentUserId === postOwnerId) ?
-            `<div class="comment-edit" onclick="showEditComment(${comment.id}, ${postId})">Sửa</div>
-            <div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
+            `<div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
                   </div>
                 </div>

@@ -15,7 +15,7 @@
         </div>
 
         <div class="photo-post">
-            <div class="photo-post--item py-1 px-2 mb-0 text-secondary btn-show--post"> 
+            <div class="photo-post--item py-1 px-2 mb-0 text-secondary btn-show--modal"> 
                 <i class="fa-solid fa-image me-1 photo-icon"></i>
                 Ảnh
             </div>

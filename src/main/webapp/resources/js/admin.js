@@ -1,3 +1,7 @@
+$(function () {
+    $('.chartMenu').addClass('active');
+});
+
 function closeSideBar() {
     $('.leftside-menu').css("display", "none");
 }

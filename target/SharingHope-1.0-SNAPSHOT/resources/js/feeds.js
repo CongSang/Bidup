@@ -1,60 +1,59 @@
 var postPage = 1;
 var disableLoadMorePost = false;
-var timer = null;
 
 $(window).scroll(function () {
     var scrollTop = $(document).scrollTop();
     var windowHeight = $(this).height();
     var documentHeight = $(document).height();
-    
-    
-    
-        if ((windowHeight + scrollTop) >= documentHeight - 10) {
-            if (!disableLoadMorePost) {
-                $(loadingBottom).css("display", "block");
-                
-                switch(loca){
-                    case `${ctxPath}/home`:
-                        loadPosts();
-                        break;
-                    case `${ctxPath}/home/auction`:
-                        loadAuctions();
-                        break;
-                    case `${ctxPath}/hashtag/`:
-                        loadPosts();
-                        break;
-                    case `${ctxPath}/search/posts`:
-                        contentSearch();
-                        break;
-                    case `${ctxPath}/search/people`:
-                        personSearch();
-                        break;
-                    case `${ctxPath}/search/auctions`:
-                        auctionSearch();
-                        break;
-                    case `${ctxPath}/search/top`:
-                        $(loadingBottom).css("display", "none");
-                        break;
-                    case `${ctxPath}/home/follow`:
-                        loadFollowPosts();
-                        break;
-                }
-                    
+
+
+
+    if ((windowHeight + scrollTop) >= documentHeight - 200) {
+        if (!disableLoadMorePost) {
+            $(loadingBottom).css("display", "block");
+
+            switch (loca) {
+                case `${ctxPath}/home`:
+                    loadPosts();
+                    break;
+                case `${ctxPath}/home/auction`:
+                    loadAuctions();
+                    break;
+                case `${ctxPath}/search/posts`:
+                    contentSearch();
+                    break;
+                case `${ctxPath}/search/people`:
+                    personSearch();
+                    break;
+                case `${ctxPath}/search/auctions`:
+                    auctionSearch();
+                    break;
+                case `${ctxPath}/search/top`:
+                    $(loadingBottom).css("display", "none");
+                    break;
+                case `${ctxPath}/home/follow`:
+                    loadFollowPosts();
+                    break;
+//                default :
+//                    hashTagSearch();
+//                    break;
             }
+
         }
-    
+    }
+
 });
 
 function loadFeeds(posts) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
         let listUserReact;
-        if(post.reactSet.length <= 10 && post.reactSet.length > 0) {
-                 listUserReact = post.reactSet.map(react => {
+        if (post.reactSet.length <= 10 && post.reactSet.length > 0) {
+            listUserReact = post.reactSet.map(react => {
                 return `<p class="user-liked">${react.user.lastname} ${react.user.firstname}</p>`;
             }).join('');
         } else if (post.reactSet.length > 10) {
-            for(let i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 listUserReact += `<p class="user-liked">${post.reactSet[i].lastname} ${react.user.firstname}</p>`;
             }
             listUserReact += `<p class="user-liked">và ${post.reactSet.length - 10} người khác...</p>`;
@@ -86,7 +85,7 @@ function loadFeeds(posts) {
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end px-0" aria-labelledby="cardFeedAction">
                                     ${(currentUserId === post.userId.id) ?
-                                            `<li>
+                `<li>
                                                 <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">
                                                     Chỉnh sửa bài viết
                                                 </a>
@@ -95,12 +94,12 @@ function loadFeeds(posts) {
                                                 <a class="dropdown-item" href="#" onclick="deletePost(${post.id}, this)">
                                                     Xóa bài viết
                                                 </a>
-                                            </li>`  :    `<li>
+                                            </li>` : `<li>
                                                             <a class="dropdown-item" href="#" onclick="modalArticleReport(${post.id}, 'POST')">
                                                                 Báo cáo
                                                             </a>
                                                         </li>`
-                                        }
+                }
                                 </ul>
                             </div>
                         </div>
@@ -111,9 +110,9 @@ function loadFeeds(posts) {
                             ${post.content}
                         </p>
         
-                        ${(post.image === '') ?`
+                        ${(post.image === '') ? `
                         <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
-                        `:(`
+                        ` : (`
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
 
@@ -124,13 +123,13 @@ function loadFeeds(posts) {
                                 <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}', this)">
                                     ${listUserReact ? `<div class="list-user-liked">${listUserReact}</div>` : ``}
                                     ${((post.reactSet).length === 0) ? (
-                                            `<div class="heart-like-button"></div>`
-                                            ) : (
-                                            ((post.reactSet).some((react) => react.user.id === currentUserId)) ?
-                                                `<div class="heart-like-button liked"></div>`
-                                                : `<div class="heart-like-button"></div>`
-                                            )
-                                    }
+                `<div class="heart-like-button"></div>`
+                ) : (
+                ((post.reactSet).some((react) => react.user.id === currentUserId)) ?
+                `<div class="heart-like-button liked"></div>`
+                : `<div class="heart-like-button"></div>`
+                )
+                }
                                     <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>
                                 </div>
                             </div>
@@ -179,7 +178,8 @@ function loadFeeds(posts) {
         $('#feeds-container').append(html);
         customHashtag(`.post-${post.id}`);
     });
-};
+}
+;
 
 function prependFeeds(post) {
     const feedContainer = $('#feeds-container');
@@ -231,9 +231,9 @@ function prependFeeds(post) {
                         <p class="post--content mb-3 content--hashtag post-${post.id}">
                             ${post.content}
                         </p>
-                        ${(post.image === '') ?`
+                        ${(post.image === '') ? `
                         <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
-                        `:(`
+                        ` : (`
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
                         
@@ -289,7 +289,8 @@ function prependFeeds(post) {
             `;
     $(feedContainer).prepend(html);
     customHashtag(`.post-${post.id}`);
-};
+}
+;
 
 function loadAuctionFeeds(auctions, container) {
     var userAvatar = $("#userAvatar").attr("src");
@@ -324,27 +325,27 @@ function loadAuctionFeeds(auctions, container) {
                                 <div class="dropdown">
                                     
                                     ${auction.active == true ?
-                                    `<a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                `<a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                                         ${(auction.endDate <= Date.now() && !auction.mailTo) ?
-                                            `<li>
+                `<li>
                                                 <div class="dropdown-item cursor-pointer" onclick="confirmWinnerAndSendEmail(${auction.id}, this)">
                                                     Chốt kết quả và gửi email
                                                 </div>
                                             </li>` : ``}
                                         ${(auction.endDate <= Date.now() && auction.mailTo) ?
-                                            `
+                `
                                             <li>
                                                 <div class="dropdown-item cursor-pointer" onclick="confirmCompleteCharity(${auction.id})">
                                                     Hoàn thành từ thiện
                                                 </div>
                                             </li>
                                             ` : ``
-                                        }
+                }
                                         ${(auction.endDate > Date.now()) ?
-                                        `<li>
+                `<li>
                                             <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                                 Chỉnh sửa bài viết
                                             </div>
@@ -365,11 +366,11 @@ function loadAuctionFeeds(auctions, container) {
                             </p>
         
                             <p class="auction--price mb-1">
-                                ${auction.endDate <= Date.now() ? 
-                                `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, bấm gửi email xác nhận, kiểm tra thanh toán, thực hiện từ thiện và xác nhận hoàn thành việc từ thiện trong bài viết này, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
+                                ${auction.endDate <= Date.now() ?
+                `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, bấm gửi email xác nhận, kiểm tra thanh toán, thực hiện từ thiện và xác nhận hoàn thành việc từ thiện trong bài viết này, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
                                 <i class="fa-solid fa-triangle-exclamation text-danger"></i>
                                 </span>` :
-                                `Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>`}
+                `Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>`}
                             </p>
                             <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
 
@@ -379,15 +380,15 @@ function loadAuctionFeeds(auctions, container) {
 
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                    ${(auction.active) ? 
-                                    `<div class="auction--action-hover" id="showBidBtn" onclick="showBid(this, ${auction.id})">
+                                    ${(auction.active) ?
+                `<div class="auction--action-hover" id="showBidBtn" onclick="showBid(this, ${auction.id})">
                                         <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                         <i class="fa-solid fa-eye"></i>
                                         <span class="auction--action-text auction-follow ms-2">Theo dõi (${auction.bidSet.length} người đã tham gia)</span>
-                                    </div>` : 
-                                    `<div class="btn-disable">
+                                    </div>` :
+                `<div class="btn-disable">
                                         <i class="fa-solid fa-check"></i>
                                         <span class="auction--action-text auction-follow ms-2">Hoàn thành</span>
                                     </div>`}
@@ -449,8 +450,8 @@ function loadAuctionFeeds(auctions, container) {
                             </p>
                             
                             <p class="auction--price mb-1">
-                                ${(auction.active) ? `Giá khởi điểm:<span class="ms-2 auction-start-price">${formatMoney(auction.startingPrice)}</span>` 
-                                : `Hoạt động từ thiện đã được hoàn thành`}
+                                ${(auction.active) ? `Giá khởi điểm:<span class="ms-2 auction-start-price">${formatMoney(auction.startingPrice)}</span>`
+                : `Hoạt động từ thiện đã được hoàn thành`}
                             </p>
                             <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
 
@@ -461,8 +462,8 @@ function loadAuctionFeeds(auctions, container) {
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
                                     ${auction.endDate > Date.now() ?
-                                    `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
-                                            `<div class="auction--action-hover" onclick="deleteBid(${auction.id}, this, ${auction.startingPrice})">
+                `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                `<div class="auction--action-hover" onclick="deleteBid(${auction.id}, this, ${auction.startingPrice})">
                                                 <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
                                                     <div class="spinner-border text-muted"></div>
                                                 </div>
@@ -478,7 +479,7 @@ function loadAuctionFeeds(auctions, container) {
                                                 <span class="auction--action-text ms-2">Đấu giá (${auction.bidSet.length} người đã tham gia)</span>
                                             </div>
                                             `
-                                    }` : `<div class="btn-disable">
+                }` : `<div class="btn-disable">
                                                 <i class="fa-solid fa-circle-xmark"></i>
                                                 <span class="auction--action-text ms-2">Bài đấu giá đã kết thúc</span>
                                             </div>`}
@@ -487,8 +488,8 @@ function loadAuctionFeeds(auctions, container) {
                             
                             <div class="auction-user-join d-block">
                             ${auction.endDate > Date.now() ?
-                            `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
-                                    `${userAuction && `
+                `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                `${userAuction && `
                                             <div class="d-flex comment--item py-2">
                                                 <div class="me-2">
                                                     <a href="${ctxPath}/user/${auction.userId.id}">
@@ -522,7 +523,7 @@ function loadAuctionFeeds(auctions, container) {
                                             </form>
                                         </div>
                                     `
-                            }` : ``}
+                }` : ``}
                             </div>
 
                         </div>
@@ -530,7 +531,7 @@ function loadAuctionFeeds(auctions, container) {
                 </div>
             `}
         `;
-        
+
         $(container).append(html);
         customHashtag(`.auction-${auction.id}`);
     });

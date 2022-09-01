@@ -6,6 +6,7 @@ package com.charitysm.controllers;
 
 import com.charitysm.pojo.User;
 import com.charitysm.services.UserService;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,11 @@ public class UserInfoController {
     private UserService userService;
     
     @GetMapping("/user/{userId}")
-    public String userinfo(Model model, @PathVariable(value = "userId") String id) {
-        
+    public String userinfo(Model model, @PathVariable(value = "userId") String id, HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
         model.addAttribute("userInfo", this.userService.getUserById(id));
-        
+        model.addAttribute("isFollowed", this.userService.checkFollowed(currentUser.getId(), id));
+        System.out.println(this.userService.checkFollowed(currentUser.getId(), id));
         return "userinfo";
     }
 }

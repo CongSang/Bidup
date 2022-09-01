@@ -61,12 +61,16 @@
                                             Cập nhật trang cá nhân
                                         </div>
                                     </c:if>
-                                    <c:if test="${userInfo.id != currentUser.id}">
-                                        <div id="btnFollow${userInfo.id}" class="btn-follow-user <c:if test="${userInfo.isFollowed == true}">
-                                             active
-                                        </c:if>" onclick="follow('${userInfo.id}')">
+                                    <c:if test="${userInfo.id != currentUser.id && isFollowed == false}">
+                                        <div id="btnFollow${userInfo.id}" class="btn-follow-user btn-follow-user${userInfo.id}" onclick="follow('${userInfo.id}')">
                                             <i class="fa-solid fa-plus me-2"></i>
                                             Theo dõi
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${userInfo.id != currentUser.id && isFollowed == true}">
+                                        <div id="btnFollow${userInfo.id}" class="btn-follow-user active btn-follow-user${userInfo.id}" onclick="follow('${userInfo.id}')">
+                                           <i class="fa-solid fa-thumbs-up me-2"></i>
+                                            Đã theo dõi
                                         </div>
                                     </c:if>
                                     <c:if test="${userInfo.id != currentUser.id}">
@@ -149,7 +153,10 @@
                             </div>
 
                             <div class="user-content-container" id="feeds-container"></div>
-
+                            
+                            <div class="text-center mt-3 post-loading d-none" id="loadingBottom">
+                                <div class="spinner-border text-muted"></div>
+                            </div>
                             <div class="text-center mt-3 user-loading" style="display:none;">
                                 <div class="spinner-border text-muted"></div>
                             </div>
@@ -295,6 +302,7 @@
         <tiles:insertAttribute name="chatbox" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="<c:url value="/resources/js/main.js" />"></script>
+        <script src="<c:url value="/resources/js/home.js" />"></script>
         <script src="<c:url value="/resources/js/feeds.js" />"></script>
         <script src="<c:url value="/resources/js/userPage.js" />"></script>
         <script src="<c:url value="/resources/js/auction.js" />"></script>

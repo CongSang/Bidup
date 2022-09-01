@@ -43,6 +43,7 @@ function homeMenu(menu) {
     $('.auction-container').empty();
     auctionPage = 1;
     postPage = 1;
+    $(loadingBottom).css("display", "block");
     
     if (menu === 'home') {
         loadPosts();
@@ -64,7 +65,7 @@ function homeMenu(menu) {
         window.history.replaceState('', 'SharingHope', newUrl);
         menuActive(newPathname);
     }
-    else {
+    else if(menu === 'home/auction') {
         loadAuctions();
         
         let newPathname = `${ctxPath}/home/auction`;
@@ -105,6 +106,15 @@ function loadFollowPosts() {
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
+            if (data.length === 0 && postPage === 1) {
+                disableLoadMorePost = true;
+                $('#feeds-container').html(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                        <img style="width: 100px; height: 100px" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                        <p class="text-center">Chưa theo dõi người nào</p>
+                                    </div>`);
+                return;
+            }
+            
             if (data.length === 0) {
                 disableLoadMorePost = true;
                 return;

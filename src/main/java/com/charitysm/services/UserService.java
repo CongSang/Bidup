@@ -25,5 +25,6 @@ public interface UserService extends UserDetailsService {
     boolean isEmailAlreadyInUse(String email);
     boolean followUser(String followerId, String followedId);
     boolean unFollowUser(String followerId, String followedId);
+    boolean checkFollowed(String followerId, String followedId);
     boolean editUserInfo(UserRequest req, String userId);
 }
