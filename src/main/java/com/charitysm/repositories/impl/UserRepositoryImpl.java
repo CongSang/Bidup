@@ -182,6 +182,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
     
+    @Override
     public boolean editUserInfo(User u) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {

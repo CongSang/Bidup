@@ -15,11 +15,8 @@
         </div>
     </div>
     <div class="home-content row justify-content-center container mx-auto g-0 pb-5">
-        <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
-            <div class="spinner-border text-muted"></div>
-        </div>
-        <div id="feeds-container" class="col-sm-12 col-md-12 col-lg-6">
-
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <div id="feeds-container" ></div>
 
             <div class="text-center mt-3 post-loading" id="loadingBottom">
                 <div class="spinner-border text-muted"></div>
@@ -32,18 +29,32 @@
         <img id="img01" style="max-width:100%; max-height:100vh;">
     </div>
 </div>
-        
-<script>
-            window.onload = function () {
-                $('.content').hide();
-                currentUserId = '${sessionScope.currentUser.id}';
-                postPage = 1;
-                disableLoadMorePost = false;
-                $('#userNotification').on("click", function () {
-                    $('.notif-count').css('opacity', '0');
-                });
 
+<script>
+    window.onload = function () {
+        $('.content').hide();
+        currentUserId = '${sessionScope.currentUser.id}';
+        postPage = 1;
+        disableLoadMorePost = false;
+        $('#userNotification').on("click", function () {
+            $('.notif-count').css('opacity', '0');
+        });
+
+        hashTagSearch();
+    };
+
+    $(window).scroll(function () {
+        var scrollTop = $(document).scrollTop();
+        var windowHeight = $(this).height();
+        var documentHeight = $(document).height();
+
+        if ((windowHeight + scrollTop) >= documentHeight - 200) {
+            if (!disableLoadMorePost) {
+                $(loadingBottom).css("display", "block");
                 hashTagSearch();
-            };
-            $("textarea").hashtags();
+            }
+        }
+    });
+
+    $("textarea").hashtags();
 </script>

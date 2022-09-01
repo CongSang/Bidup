@@ -134,4 +134,9 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public boolean checkFollowed(String followerId, String followedId) {
+        return this.userRepository.checkFollowed(followerId, followedId);
+    }
 }

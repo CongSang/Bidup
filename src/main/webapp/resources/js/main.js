@@ -1,6 +1,7 @@
 var ctxPath = '/SharingHope';
 var currentUserId = "a";
 var loca = window.location.pathname;
+var timer = null;
 var xhr;
 
 function isBlank(str) {
@@ -19,9 +20,9 @@ $(function () {
     
     timer = setTimeout(function() {
         if (pathName === `${ctxPath}/home/auction`)
-            homeMenu('auction');
+            homeMenu('home/auction');
         else if (pathName.includes("/home/follow"))
-            homeMenu('follow');
+            homeMenu('home/follow');
         else if (pathName === `${ctxPath}/home`)
             homeMenu('home');
     }, 100);

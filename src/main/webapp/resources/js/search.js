@@ -13,6 +13,7 @@ function searchSubmit() {
 }
 
 function hashTagSearch() {
+    disableLoadMorePost = true;
     var hashtag = $('.hashtag-name-container').text().slice(1);
     $(loadingBottom).css("display", "block");
 
@@ -34,6 +35,7 @@ function hashTagSearch() {
             postPage++;
             loadFeeds(data);
             $('.hashtag-name-container-desciption').text(`${data.length} Bài viết với hashtag này`);
+            disableLoadMorePost = false;
         }
     });
 }
@@ -247,8 +249,9 @@ function loadUserSearch(users) {
 function follow(userId) {
     if(!$(`#btnFollow${userId}`).hasClass('active'))
     {
-        
         $(`#btnFollow${userId}`).addClass('active');
+        $(`.btn-follow-user${userId}`) && $(`.btn-follow-user${userId}`).html(`<i class="fa-solid fa-thumbs-up me-2"></i>
+                                                                                             Đã theo dõi`);
         $.ajax({
             type: 'post',
             url: `${ctxPath}/api/follow-user/${userId}`,
@@ -263,6 +266,8 @@ function follow(userId) {
             dataType: 'json',
             success: function () {
                 $(`#btnFollow${userId}`).removeClass('active');
+                $(`.btn-follow-user${userId}`) && $(`.btn-follow-user${userId}`).html(`<i class="fa-solid fa-plus me-2"></i>
+                                                                                            Theo dõi`);
             }
         });
         
