@@ -1,5 +1,7 @@
 var ctxPath = '/SharingHope';
 var currentUserId = "a";
+var loca = window.location.pathname;
+var xhr;
 
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));

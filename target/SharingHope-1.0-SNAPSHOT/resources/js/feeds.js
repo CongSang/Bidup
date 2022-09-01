@@ -1,8 +1,6 @@
 var postPage = 1;
 var disableLoadMorePost = false;
 var timer = null;
-var timer2 = null;
-var loca = window.location.pathname;
 
 $(window).scroll(function () {
     var scrollTop = $(document).scrollTop();
@@ -15,28 +13,33 @@ $(window).scroll(function () {
             if (!disableLoadMorePost) {
                 $(loadingBottom).css("display", "block");
                 
-                if(timer !== null) {
-                    clearTimeout(timer);        
-                }
-                
-                timer = setTimeout(function() {
-                    if(loca === `${ctxPath}/home`) {
+                switch(loca){
+                    case `${ctxPath}/home`:
                         loadPosts();
-                    }
-
-                    if(loca === `${ctxPath}/home/auction`)
+                        break;
+                    case `${ctxPath}/home/auction`:
                         loadAuctions();
-
-                    if(loca.includes(`${ctxPath}/hashtag/`))
-                        hashTagSearch();
-                    if(loca.includes('/search/posts'))
+                        break;
+                    case `${ctxPath}/hashtag/`:
+                        loadPosts();
+                        break;
+                    case `${ctxPath}/search/posts`:
                         contentSearch();
-                    if(loca.includes('/search/people'))
+                        break;
+                    case `${ctxPath}/search/people`:
                         personSearch();
-                    if(loca.includes('/home/follow'))
+                        break;
+                    case `${ctxPath}/search/auctions`:
+                        auctionSearch();
+                        break;
+                    case `${ctxPath}/search/top`:
+                        $(loadingBottom).css("display", "none");
+                        break;
+                    case `${ctxPath}/home/follow`:
                         loadFollowPosts();
+                        break;
+                }
                     
-                }, 1000);
             }
         }
     

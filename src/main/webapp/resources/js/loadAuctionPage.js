@@ -17,6 +17,7 @@ function auctionNextPage() {
 }
 
 function loadAuctions() {
+    disableLoadMorePost = true;
     if (!auctionPage) {
         auctionPage = 1;
     }
@@ -28,14 +29,16 @@ function loadAuctions() {
         url: `${ctxPath}/api/auctions` + '?page=' + auctionPage,
         dataType: 'json',
         success: function (data) {
+            $(loadingBottom).css("display", "none");
             if (data.length === 0) {
                 disableLoadMorePost = true;
+                return;
             }
             
             loadAuctionFeeds(data, '.auction-container');
-            $('#loadingBottom').css("display", "none");
             auctionFetching = false;
             auctionPage++;
+            disableLoadMorePost = false;
         }
     });
 }

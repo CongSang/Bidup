@@ -45,21 +45,21 @@
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <!--Menu mobile-->
-                    <li class="d-lg-none d-block nav-item px-2" onclick="homeMenu('home')">
-                        <a class="nav-link homeMenu" >
+                    <li class="d-lg-none d-block nav-item px-2" >
+                        <a class="nav-link homeMenu" href="javascript:;" onclick="homeMenu('home')">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
                         <c:url value="/auction" var="auctionUrl" />
-                        <a class="nav-link auctionMenu" href="${auctionUrl}">
+                        <a class="nav-link auctionMenu" href="javascript:;" onclick="homeMenu('home/auction')">
                             <i class="fa-solid fa-gavel menu-icon"></i>
                             Đấu giá
                         </a>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2"">
-                        <a class="nav-link followMenu" onclick="homeMenu('follow')">
+                        <a class="nav-link followMenu" href="javascript:;" onclick="homeMenu('home/follow')">
                             <i class="fa-solid fa-user-group menu-icon"></i>
                             Đang theo dõi
                         </a>
@@ -173,13 +173,13 @@
                     </li>
                     <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Đấu giá">
                         <c:url value="/auction" var="auctionUrl" />
-                        <a class="nav-link auctionMenu py-3 w-100" href="javascript:;" onclick="homeMenu('auction')" id="auctionMenu">
+                        <a class="nav-link auctionMenu py-3 w-100" href="javascript:;" onclick="homeMenu('home/auction')" id="auctionMenu">
                             <i class="fa-solid fa-gavel desktop-menu-icon"></i>
                         </a>
                         <div class="menu-active auctionMenu"></div>
                     </li>
                     <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Theo dõi">
-                        <a class="nav-link followMenu py-3 w-100" href="javascript:;" href="<c:url value="/home/follow"/>" onclick="homeMenu('follow')" id="followMenu">
+                        <a class="nav-link followMenu py-3 w-100" href="javascript:;" onclick="homeMenu('home/follow')" id="followMenu">
                             <i class="fa-solid fa-user-group desktop-menu-icon"></i>
                         </a>
                         <div class="menu-active followMenu"></div>

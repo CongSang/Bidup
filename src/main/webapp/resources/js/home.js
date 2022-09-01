@@ -10,8 +10,6 @@ const modalContainer1 = $(".modal-container-auction");
 btnShowModal.click(showModal);
 btnCloseModal.click(closeModal);
 
-var xhr;
-
 function showModal() {
     let pathName = window.location.pathname.toString();
     if (pathName.includes("/auction"))
@@ -35,8 +33,8 @@ modalPost.click(function (event) {
 });
 
 function homeMenu(menu) {
-//    if(window.location )
-    
+    if(!window.location.pathname.toString().includes(`/home`))
+        window.location = `${ctxPath}/${menu}`;
     if (xhr !== undefined)
         xhr.abort();
     window.scrollTo(0, 0);
@@ -52,15 +50,17 @@ function homeMenu(menu) {
         let newPathname = ctxPath + "/home";
         let newUrl = 'http://' + window.location.host.toString() + newPathname ;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
         menuActive(newPathname);
     }
-    else if(menu === 'follow') {
+    else if(menu === 'home/follow') {
         loadFollowPosts();
         
         let newPathname = `${ctxPath}/home/follow`;
         let newUrl = 'http://' +  window.location.host.toString() + newPathname;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
         menuActive(newPathname);
     }
@@ -70,13 +70,14 @@ function homeMenu(menu) {
         let newPathname = `${ctxPath}/home/auction`;
         let newUrl = 'http://' +  window.location.host.toString() + newPathname;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
         menuActive(newPathname);
     }
 }
 
 function loadPosts() {
-
+    disableLoadMorePost = true;
     xhr = $.ajax({
         type: 'get',
         url: `${ctxPath}/api/posts?page=${postPage}`,
@@ -90,12 +91,14 @@ function loadPosts() {
             
             postPage++;
             loadFeeds(data);
+            disableLoadMorePost = false;
         }
     });
 }
 
 function loadFollowPosts() {
 
+    disableLoadMorePost = true;
     xhr = $.ajax({
         type: 'get',
         url: `${ctxPath}/api/posts?page=${postPage}&follow_only=true`,
@@ -108,6 +111,7 @@ function loadFollowPosts() {
             }
             postPage++;
             loadFeeds(data);
+            disableLoadMorePost = false;
         }
     });
 }
