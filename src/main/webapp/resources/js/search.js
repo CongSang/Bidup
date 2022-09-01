@@ -42,9 +42,11 @@ function topSearch() {
     personSearch(topSearchPerson);
     contentSearch(topSearchPost);
     auctionSearch(topSearchAuction);
+    disableLoadMorePost = true;
 }
 
 function contentSearch(limit) {
+    disableLoadMorePost = true;
     $(loadingBottom).css("display", "block");
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
@@ -72,11 +74,13 @@ function contentSearch(limit) {
             }
             postPage++;
             loadFeeds(data);
+            disableLoadMorePost = false;
         }
     });
 }
 
 function personSearch(limit) {
+    disableLoadMorePost = true;
     $(loadingBottom).css("display", "block");
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
@@ -107,11 +111,13 @@ function personSearch(limit) {
             personPage++;
             data = data.filter(p => p.id !== currentUserId);
             loadUserSearch(data);
+            disableLoadMorePost = false;
         }
     });
 }
 
 function auctionSearch(limit) {
+    disableLoadMorePost = true;
     $(loadingBottom).css("display", "block");
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
@@ -138,6 +144,7 @@ function auctionSearch(limit) {
             }
             auctionPage++;
             loadAuctionFeeds(data, '.auction-container');
+            disableLoadMorePost = false;
         }
     });
 }
@@ -163,6 +170,7 @@ function searchFilter(filter) {
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/top';
         let newUrl = 'http://' + window.location.host.toString() + newPathname + '?kw=' + kw;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
     }
     else if (filter === 'people') {
@@ -174,6 +182,7 @@ function searchFilter(filter) {
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/people';
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
     }
     else if (filter === 'posts') {
@@ -185,6 +194,7 @@ function searchFilter(filter) {
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/posts';
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
     }
     else {
@@ -196,6 +206,7 @@ function searchFilter(filter) {
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/auctions';
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
+        loca = newPathname;
         window.history.replaceState('', 'SharingHope', newUrl);
     }
 }

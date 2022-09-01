@@ -95,15 +95,14 @@
         let url = new URL(window.location.toString());
         let kw = url.searchParams.get('kw');
         $('input[name=kw]').val(kw);
-        let locate = window.location.pathname;
 
-        if (locate === (ctxPath + '/search/top'))
+        if (loca === (ctxPath + '/search/top'))
             topSearch();
-        else if (locate === (ctxPath + '/search/people')) {
+        else if (loca === (ctxPath + '/search/people')) {
             personSearch();
             $('.post-search').css('display', 'none');
             $('.auction-search').css('display', 'none');
-        } else if (locate === (ctxPath + '/search/posts')) {
+        } else if (loca === (ctxPath + '/search/posts')) {
             contentSearch();
             $('.person-search').css('display', 'none');
             $('.auction-search').css('display', 'none');
