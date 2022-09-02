@@ -140,8 +140,6 @@ function loadParents(comment, postId) {
 var containerHeight = 90 * 10 * notifPage;
 $('.list-notification').scroll(function () {
     var scrollTop = $(this).scrollTop();
-//    console.log(scrollTop);
-//    console.log(containerHeight);
     
     if (scrollTop >= containerHeight) {
         containerHeight += scrollTop;

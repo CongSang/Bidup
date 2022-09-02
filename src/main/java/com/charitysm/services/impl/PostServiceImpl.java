@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
+
     @Autowired
     private PostRepository postRepository;
 
@@ -60,5 +61,5 @@ public class PostServiceImpl implements PostService{
     public Post findPostByCommentId(int commentId) {
         return this.postRepository.findPostByCommentId(commentId);
     }
-    
+
 }

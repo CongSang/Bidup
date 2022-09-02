@@ -4,11 +4,8 @@
  */
 package com.charitysm.controllers;
 
-import com.charitysm.pojo.enumtype.NotifType;
-import com.charitysm.services.NotificationService;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;

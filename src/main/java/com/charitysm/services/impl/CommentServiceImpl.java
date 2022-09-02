@@ -25,12 +25,13 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
+
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
     private PostService postService;
-    
+
     @Override
     public Comment createComment(CommentRequest cq, User u) {
         try {
@@ -47,8 +48,7 @@ public class CommentServiceImpl implements CommentService{
                     NotificationCenter.sendMessage(p.getUserId().getId());
                     return c;
                 }
-            }
-            else {
+            } else {
                 parent = this.commentRepository.getCommentById(cq.getCommentId());
                 c.setParentId(parent);
                 if (this.commentRepository.createComment(c) > 0) {
@@ -56,12 +56,11 @@ public class CommentServiceImpl implements CommentService{
                     return c;
                 }
             }
-            
-        }
-        catch (IOException | EntityNotFoundException ex) {
+
+        } catch (IOException | EntityNotFoundException ex) {
             ex.printStackTrace();
             return null;
-        } 
+        }
         return null;
     }
 
@@ -79,8 +78,7 @@ public class CommentServiceImpl implements CommentService{
     public Comment getCommentById(int id) {
         try {
             return this.commentRepository.getCommentById(id);
-        }
-        catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -90,12 +88,12 @@ public class CommentServiceImpl implements CommentService{
     public BigInteger getCommentCount(int postId) {
         return this.commentRepository.getCommentCount(postId);
     }
-    
+
     @Override
     public long countCommentStats(int month, int year) {
         return this.commentRepository.countCommentStats(month, year);
     }
-    
+
     @Override
     public List<Comment> getReplies(int commentId, int page) {
         return this.commentRepository.getReplies(commentId, page);
@@ -106,8 +104,8 @@ public class CommentServiceImpl implements CommentService{
         Comment currentComment = this.commentRepository.getCommentById(commentId);
         currentComment.setContent(req.getContent());
         currentComment.setCommentDate(new Date());
-        
-        if(this.commentRepository.editComment(currentComment) == true) {
+
+        if (this.commentRepository.editComment(currentComment) == true) {
             return currentComment;
         }
         return null;

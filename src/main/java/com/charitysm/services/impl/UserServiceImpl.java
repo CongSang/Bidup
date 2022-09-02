@@ -5,7 +5,6 @@
 package com.charitysm.services.impl;
 
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.reobj.UserRequest;
 import com.charitysm.repositories.UserRepository;
 import com.charitysm.services.UserService;
@@ -35,16 +34,19 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private Cloudinary cloudinary;
-    
+
     @Override
     @Transactional
     public boolean isEmailAlreadyInUse(String email) {
         boolean userInDb = true;
-        if (userRepository.getActiveUser(email) == null) userInDb = false;
+        if (userRepository.getActiveUser(email) == null) {
+            userInDb = false;
+        }
         return userInDb;
     }
 
@@ -77,14 +79,14 @@ public class UserServiceImpl implements UserService {
     public boolean registerNewUser(User user) {
         return this.userRepository.registerNewUser(user);
     }
-        
+
     @Override
     public List<User> getUsers(Map<String, String> params, String currentUserId) {
         List<User> users = this.userRepository.getUsers(params);
-        users.forEach(u ->{
+        users.forEach(u -> {
             u.setIsFollowed(this.userRepository.checkFollowed(currentUserId, u.getId()));
-        }); 
-        
+        });
+
         return users;
     }
 
@@ -102,7 +104,8 @@ public class UserServiceImpl implements UserService {
     public boolean unFollowUser(String followerId, String followedId) {
         return this.userRepository.unFollowUser(followerId, followedId);
     }
-    
+
+    @Override
     public boolean editUserInfo(UserRequest req, String userId) {
         User user = this.userRepository.getUserById(userId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,16 +121,17 @@ public class UserServiceImpl implements UserService {
             if(req.getJob() != null) user.setJob(req.getJob());
             if(req.getEmail() != null) user.setEmail(req.getEmail());
             if(req.getPhone() != null) user.setPhone(req.getPhone());
-            
-            if(req.getAvatar() != null) {
+
+            if (req.getAvatar() != null) {
                 cloudinary.uploader().destroy(user.getAvatar().substring(user.getAvatar().lastIndexOf("public_id=") + 10),
-                    ObjectUtils.asMap("resource_type", "image"));
-                
+                        ObjectUtils.asMap("resource_type", "image"));
+
                 user.setAvatar(req.getAvatar());
             }
-            
-            if(this.userRepository.editUserInfo(user) == true)
+
+            if (this.userRepository.editUserInfo(user) == true) {
                 return true;
+            }
         } catch (ParseException | IOException ex) {
             Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             return false;

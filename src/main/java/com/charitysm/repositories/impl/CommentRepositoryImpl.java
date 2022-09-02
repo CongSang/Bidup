@@ -27,33 +27,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 @PropertySource("classpath:messages.properties")
-public class CommentRepositoryImpl implements CommentRepository{
+public class CommentRepositoryImpl implements CommentRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
     @Autowired
     private Environment env;
-    
+
     @Override
     public int createComment(Comment c) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        return (int)session.save(c);
+        return (int) session.save(c);
     }
 
     @Override
     public void deleteComment(int id, String userId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Comment c = session.get(Comment.class, id);
-        if(c.getUserId().getId().equals(userId))
+        if (c.getUserId().getId().equals(userId)) {
             session.delete(c);
+        }
     }
 
     @Override
     public List<Comment> getComments(int postId, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        
+
         Query query = session.createNativeQuery("SELECT * FROM comment WHERE post_id= :postId ORDER BY comment_date DESC", Comment.class);
         query.setParameter("postId", postId);
-        
+
         if (page > 0) {
             int size = Integer.parseInt(env.getProperty("comment.page.size").toString());
             int start = (page - 1) * size;
@@ -80,8 +82,8 @@ public class CommentRepositoryImpl implements CommentRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createNativeQuery("SELECT COUNT(id) FROM comment WHERE post_id=:postId");
         q.setParameter("postId", postId);
-        
-        return (BigInteger)q.getSingleResult();
+
+        return (BigInteger) q.getSingleResult();
     }
 
     @Override
@@ -89,30 +91,30 @@ public class CommentRepositoryImpl implements CommentRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createQuery("FROM Comment WHERE parentId.id=:commentId", Comment.class);
         q.setParameter("commentId", commentId);
-        
+
         if (page > 0) {
             int size = Integer.parseInt(env.getProperty("comment.page.size").toString());
             int start = (page - 1) * size;
             q.setFirstResult(start);
             q.setMaxResults(size);
         }
-        
+
         List<Comment> cs = q.getResultList();
         cs.forEach(c -> {
             c.setCommentSetLength(c.getCommentSet().size());
         });
-        
+
         return cs;
     }
-    
+
     @Override
     public long countCommentStats(int month, int year) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rU = q.from(Comment.class);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("commentDate")), year));
             q.multiselect(b.count(rU));
@@ -125,9 +127,9 @@ public class CommentRepositoryImpl implements CommentRepository{
                     b.equal(b.function("YEAR", Integer.class, rU.get("commentDate")), year));
             q.multiselect(b.count(rU));
         }
-        
+
         Query query = session.createQuery(q);
-        return (long) query.getSingleResult(); 
+        return (long) query.getSingleResult();
     }
 
     @Override
@@ -141,5 +143,5 @@ public class CommentRepositoryImpl implements CommentRepository{
             return false;
         }
     }
-    
+
 }

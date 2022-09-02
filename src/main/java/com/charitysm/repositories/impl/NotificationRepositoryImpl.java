@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @PropertySource("classpath:messages.properties")
 public class NotificationRepositoryImpl implements NotificationRepository {
-    
+
     @Autowired
     private Environment env;
     @Autowired
@@ -38,15 +38,15 @@ public class NotificationRepositoryImpl implements NotificationRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createSQLQuery("CALL sp_userGetNotifs(:userId, :start, :limit)");
         q.setParameter("userId", userId);
-        
+
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("comment.page.size")));
-        if (page > 0){
+        if (page > 0) {
             int start = (page - 1) * size;
             q.setParameter("start", start);
             q.setParameter("limit", size);
         }
-        
+
         return q.getResultList();
     }
 
@@ -58,14 +58,13 @@ public class NotificationRepositoryImpl implements NotificationRepository {
             q.setParameter("postId", targetId);
             q.setParameter("type", type.toString());
             q.executeUpdate();
-        }
-        else if (type.equals(NotifType.REACT_COMMENT) || type.equals(NotifType.REPLY_COMMENT)) {
+        } else if (type.equals(NotifType.REACT_COMMENT) || type.equals(NotifType.REPLY_COMMENT)) {
             Query q = session.createSQLQuery("CALL sp_updateCommentNotif(:commentId, :type)");
             q.setParameter("commentId", targetId);
             q.setParameter("type", type.toString());
             q.executeUpdate();
         } else {
-            
+
         }
     }
 
@@ -85,11 +84,10 @@ public class NotificationRepositoryImpl implements NotificationRepository {
             Query q = session.createNamedQuery("PostNotif.findById");
             q.setParameter("id", notifId);
             PostNotif pn = (PostNotif) q.getSingleResult();
-            
+
             pn.setIsRead(true);
             session.update(pn);
-        }
-        else {
+        } else {
             CommentNotif cn = session.get(CommentNotif.class, notifId);
             cn.setIsRead(true);
             session.update(cn);

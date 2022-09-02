@@ -28,7 +28,6 @@ public class UserInfoController {
         User currentUser = (User)session.getAttribute("currentUser");
         model.addAttribute("userInfo", this.userService.getUserById(id));
         model.addAttribute("isFollowed", this.userService.checkFollowed(currentUser.getId(), id));
-        System.out.println(this.userService.checkFollowed(currentUser.getId(), id));
         return "userinfo";
     }
 }

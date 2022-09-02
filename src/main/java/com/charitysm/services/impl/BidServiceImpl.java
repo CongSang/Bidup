@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class BidServiceImpl implements BidService{
-    
+public class BidServiceImpl implements BidService {
+
     @Autowired
     private BidRepository bidRepository;
     @Autowired
@@ -50,15 +50,14 @@ public class BidServiceImpl implements BidService{
             bid.setBidPK(bidPK);
             bid.setUser(u);
             bid.setAuction(a);
-            if (this.bidRepository.createBid(bid) != null){ 
+            if (this.bidRepository.createBid(bid) != null) {
                 NotificationCenter.sendMessage(a.getUserId().getId());
                 return bid;
             }
-        }
-        catch (IOException | EntityNotFoundException ex) {
+        } catch (IOException | EntityNotFoundException ex) {
             ex.printStackTrace();
             return null;
-        } 
+        }
         return null;
     }
 
@@ -66,7 +65,7 @@ public class BidServiceImpl implements BidService{
     public void deleteBid(Bid b) {
         this.bidRepository.deleteBid(b);
     }
-    
+
     @Override
     public Bid findBid(String userId, int auctionId) {
         return bidRepository.findBid(userId, auctionId);
@@ -81,5 +80,5 @@ public class BidServiceImpl implements BidService{
     public List<Bid> getBids(int auctionId) {
         return this.bidRepository.getBids(auctionId);
     }
-    
+
 }

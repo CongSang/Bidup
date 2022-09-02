@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class BidRepositoryImpl implements BidRepository{
-    
+public class BidRepositoryImpl implements BidRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -37,7 +37,7 @@ public class BidRepositoryImpl implements BidRepository{
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.delete(b);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -48,8 +48,8 @@ public class BidRepositoryImpl implements BidRepository{
         Query q = session.createNamedQuery("Bid.findForUser");
         q.setParameter("userId", userId);
         q.setParameter("auctionId", auctionId);
-        
-        return (Bid)q.getSingleResult();
+
+        return (Bid) q.getSingleResult();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class BidRepositoryImpl implements BidRepository{
         Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createNamedQuery("Bid.findByAuctionId");
         q.setParameter("auctionId", auctionId);
-        
+
         return q.getResultList();
     }
-    
+
 }

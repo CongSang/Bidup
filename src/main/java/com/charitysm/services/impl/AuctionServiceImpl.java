@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class AuctionServiceImpl implements AuctionService{
-    
+public class AuctionServiceImpl implements AuctionService {
+
     @Autowired
     private AuctionRepository auctionRepository;
 
@@ -71,5 +71,5 @@ public class AuctionServiceImpl implements AuctionService{
     public long countAuctionStats(int month, int year) {
         return this.auctionRepository.countAuctionStats(month, year);
     }
-    
+
 }

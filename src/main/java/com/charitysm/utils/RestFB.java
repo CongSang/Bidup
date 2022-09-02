@@ -23,7 +23,7 @@ public class RestFB {
 
     public String getToken(final String code) throws IOException, ClientProtocolException {
         String link = String.format(getLinkGetToken(), getAppId(), getAppSecret(), getRedirectURL(), code);
-        
+
         String response = Request.Get(link).execute().returnContent().asString();
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
@@ -31,7 +31,7 @@ public class RestFB {
     }
 
     public RestFB() {
-    }   
+    }
 
     /**
      * @return the appId

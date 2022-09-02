@@ -88,7 +88,7 @@
                         <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
                             <div class="post--action-hover" id="showCommentBtn" onclick="showComment(this, ${post.id})">
                                 <i class="fa-regular fa-message post--action-icon"></i>
-                                <span class="post--action-text ms-2">Bình luận (<span id="commentCounter">${fn:length(post.commentSet)}</span>)</span>
+                                <span class="post--action-text ms-2">Bình luận</span>
                             </div>
                         </div>
                     </div>
@@ -147,12 +147,9 @@
                 $("div.comment").addClass('is-show');
                 loadCommentNotifRef(commentId);
             }
-//            else
             
         };
         $('#timeFromNow').text(moment('${post.postedDate}').fromNow());
         customHashtag(`.post-${post.id}`);
 
-//    ((${post.reactSet}).some((react) => react.userId.id === currentUserId)) ?
-//        ($('.heart-like-button').addClass('liked')) : ``;
 </script>

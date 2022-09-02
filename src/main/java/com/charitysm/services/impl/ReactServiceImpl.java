@@ -14,7 +14,6 @@ import com.charitysm.repositories.ReactRepository;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.ReactService;
 import java.io.IOException;
-import java.util.Date;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +24,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReactServiceImpl implements ReactService {
+
     @Autowired
     private ReactRepository reactRepository;
     @Autowired
     private CommentService commentService;
-    
+
     @Override
     public boolean createReact(React r) {
         return this.reactRepository.createReact(r);
@@ -48,22 +48,22 @@ public class ReactServiceImpl implements ReactService {
     @Override
     public void createReactComment(int commentId, User u) {
         try {
-        ReactComment react = new ReactComment();
-        
-        Comment c = this.commentService.getCommentById(commentId);
-        ReactCommentPK rPK = new ReactCommentPK();
-        rPK.setCommentId(commentId);
-        rPK.setUserId(u.getId());
-        react.setReactCommentPK(rPK);
-        react.setComment(c);
-        react.setUser(u);
-        
-        if (this.reactRepository.createReactComment(react) == true)
-            NotificationCenter.sendMessage(c.getUserId().getId());
-        }
-        catch (IOException | EntityNotFoundException ex) {
+            ReactComment react = new ReactComment();
+
+            Comment c = this.commentService.getCommentById(commentId);
+            ReactCommentPK rPK = new ReactCommentPK();
+            rPK.setCommentId(commentId);
+            rPK.setUserId(u.getId());
+            react.setReactCommentPK(rPK);
+            react.setComment(c);
+            react.setUser(u);
+
+            if (this.reactRepository.createReactComment(react) == true) {
+                NotificationCenter.sendMessage(c.getUserId().getId());
+            }
+        } catch (IOException | EntityNotFoundException ex) {
             ex.printStackTrace();
-        } 
+        }
     }
 
     @Override
@@ -75,5 +75,5 @@ public class ReactServiceImpl implements ReactService {
     public long countReactStats(int month, int year) {
         return this.reactRepository.countReactStats(month, year);
     }
-    
+
 }

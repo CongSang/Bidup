@@ -25,10 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class ReactRepositoryImpl implements ReactRepository{
+public class ReactRepositoryImpl implements ReactRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
-    
+
     @Override
     public boolean createReact(React r) {
         Session session = sessionFactory.getObject().getCurrentSession();
@@ -50,8 +51,8 @@ public class ReactRepositoryImpl implements ReactRepository{
         Query q = session.createNamedQuery("React.findForUser");
         q.setParameter("userId", userId);
         q.setParameter("postId", postId);
-        
-        return (React)q.getSingleResult();
+
+        return (React) q.getSingleResult();
     }
 
     @Override
@@ -74,9 +75,9 @@ public class ReactRepositoryImpl implements ReactRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rU = q.from(React.class);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year));
             q.multiselect(b.count(rU));
@@ -89,9 +90,9 @@ public class ReactRepositoryImpl implements ReactRepository{
                     b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year));
             q.multiselect(b.count(rU));
         }
-        
+
         Query query = session.createQuery(q);
-        return (long) query.getSingleResult(); 
+        return (long) query.getSingleResult();
     }
-    
+
 }

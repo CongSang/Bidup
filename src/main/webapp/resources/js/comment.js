@@ -1,5 +1,4 @@
 var is_show = false;
-//var commentPage = 1;
 var is_show_formReplyComment = false;
 let commentLoading = `<div class="text-center mt-3 comment-loading">
                         <div class="spinner-border text-muted"></div>
@@ -332,16 +331,7 @@ function loadReplies(commentId, postId) {
                 }).join('')}`);
             $('#loadReply' + commentId).remove();
         }
-    })
-            .done(function () {
-//            let url = new URL(window.location.toString());
-//            let commentId = url.searchParams.get('comment_id');
-//            if(commentId === undefined || commentId === null) return;
-//            if(commentId !== undefined || commentId !== null) {
-//                $(window).scrollTop($('#commentItem' + commentId).offset().top - 300);
-//                $('#commentItem' + commentId).find('.comment-content' + commentId).addClass('tada');
-//            }
-            });
+    });
 }
 
 function addReply(currentCommentId, formEl, postId) {
@@ -379,7 +369,7 @@ function formEditComment(commentId, postId) {
                     <input name="editContent" placeholder="Aa" rows=2 id="form-edit-comment${commentId}" class="form-edit-comment"></input>
                 </form>
                 <div class="cancel-edit-comment cancel-edit-comment${commentId}">Hủy</div>
-            </div>`
+            </div>`;
 }
 
 function showEditComment(commentId, postId) {
@@ -415,8 +405,6 @@ function editComment(commentId, formEl, postId) {
             success: function (comment) {
                 
                 currentComment.find('.comment-loading').remove();
-                let reactSetLength = comment.reactCommentSet === null ? 0 : comment.reactCommentSet.length;
-                let postOwnerId = $(`#post${postId}OwnerId`).val();
                 currentComment.html(commentItem(comment, postId));
 
             }

@@ -4,9 +4,6 @@
  */
 package com.charitysm.pojo.reobj;
 
-import java.util.Date;
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  *
  * @author CÔNG SANG
