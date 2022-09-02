@@ -6,7 +6,6 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.NoResultException;
@@ -137,10 +136,9 @@ public class UserRepositoryImpl implements UserRepository {
             Query q = session.createSQLQuery("INSERT INTO follow VALUES(:followerId, :followedId)");
             q.setParameter("followerId", followerId);
             q.setParameter("followedId", followedId);
-            
+
             q.executeUpdate();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -156,13 +154,13 @@ public class UserRepositoryImpl implements UserRepository {
         q.setParameter("followedId", followedId);
         try {
             Object o = q.getSingleResult();
-            if (o != null)
+            if (o != null) {
                 return true;
-        }
-        catch (NoResultException e) {
+            }
+        } catch (NoResultException e) {
             return false;
         }
-        
+
         return false;
     }
 
@@ -176,12 +174,11 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             q.executeUpdate();
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
-    
+
     @Override
     public boolean editUserInfo(User u) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -193,6 +190,5 @@ public class UserRepositoryImpl implements UserRepository {
             return false;
         }
     }
-    
-    
+
 }

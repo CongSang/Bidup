@@ -13,19 +13,24 @@ import java.util.Map;
  * @author ADMIN
  */
 public interface UserRepository {
+
     User getUser(String email);
 
     User getUserById(String id);
-    
+
     boolean registerNewUser(User user);
+
     List<User> getUsers(Map<String, String> params);
+
     long countUserStats(int month, int year);
-    
+
     User getActiveUser(String email);
-    
+
     boolean followUser(String followerId, String followedId);
+
     boolean unFollowUser(String followerId, String followedId);
-    
+
     boolean checkFollowed(String followerId, String followedId);
+
     boolean editUserInfo(User u);
 }

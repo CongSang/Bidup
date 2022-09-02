@@ -34,9 +34,6 @@ $(window).scroll(function () {
                 case `${ctxPath}/home/follow`:
                     loadFollowPosts();
                     break;
-//                default :
-//                    hashTagSearch();
-//                    break;
             }
 
         }
@@ -382,7 +379,7 @@ function loadAuctionFeeds(auctions, container) {
                                 <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                     ${(auction.active) ?
                 `<div class="auction--action-hover" id="showBidBtn" onclick="showBid(this, ${auction.id})">
-                                        <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
+                                        <div class="text-center me-2 bid-loading-${auction.id}" style="display: none">
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                         <i class="fa-solid fa-eye"></i>

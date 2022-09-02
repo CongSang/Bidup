@@ -13,10 +13,16 @@ import com.charitysm.pojo.User;
  * @author ADMIN
  */
 public interface ReactService {
+
     boolean createReact(React r);
+
     void createReactComment(int commentId, User u);
+
     void deleteReact(String userId, int postId);
+
     void deleteReactComment(String userId, int commentId);
+
     React findReact(String userId, int postId);
+
     long countReactStats(int month, int year);
 }

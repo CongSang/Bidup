@@ -20,7 +20,8 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class NotificationServiceImpl implements NotificationService{
+public class NotificationServiceImpl implements NotificationService {
+
     @Autowired
     private NotificationRepository notificationRepository;
 
@@ -30,12 +31,13 @@ public class NotificationServiceImpl implements NotificationService{
         List<NotificationResponse> rs = new ArrayList<>();
         data.forEach(d -> {
             NotificationResponse n = new NotificationResponse();
-            n.setTargetId((int)d[0]);
+            n.setTargetId((int) d[0]);
             n.setType(NotifType.valueOf((String) d[1]));
-            if (d[2].toString().equals("0"))
+            if (d[2].toString().equals("0")) {
                 n.setIs_read(false);
-            else
+            } else {
                 n.setIs_read(true);
+            }
             n.setCount(Integer.parseInt(d[3].toString()));
             n.setLast_modified_name((String) d[4]);
             n.setLast_modified_avatar((String) d[5]);
@@ -60,5 +62,5 @@ public class NotificationServiceImpl implements NotificationService{
     public void updateAuctionNotif(int postId, NotifType type) {
         this.notificationRepository.updateAuctionNotif(postId, type);
     }
-    
+
 }

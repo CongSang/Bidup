@@ -17,7 +17,6 @@ function Validator(options) {
         var errElement = groupElement.querySelector(options.errSelector);
         var errMsg;
 
-        // Lấy các rules của selector
         var rules = selectorRules[rule.selector];
 
         for (var i = 0; i < rules.length; i++) {
@@ -47,7 +46,6 @@ function Validator(options) {
         return !errMsg;
     }
 
-    // Form cần validate
     var formElement = document.querySelector(options.form);
     if (formElement) {
 
@@ -66,11 +64,8 @@ function Validator(options) {
             });
 
             if (isFormValid) {
-                // Submit với Javascript
                 if (typeof options.onSubmit === 'function') {
-                    // NodeList thông tin đã nhập
                     var enableInputs = formElement.querySelectorAll('[name]:not([disabled])');
-                    // Trả về Array thừ NodeList
                     var formValues = Array.from(enableInputs).reduce((acc, input) => {
                         switch (input.type) {
                             case 'radio':
@@ -102,7 +97,6 @@ function Validator(options) {
 
                     options.onSubmit(formValues);
                 }
-                // Submit với hành vi mặc định
                 else {
                     formElement.submit();
                 }
@@ -111,7 +105,6 @@ function Validator(options) {
             }
         };
 
-        // Lặp qua mỗi rule và xử lí
         options.rules.forEach(rule => {
 
             if (Array.isArray(selectorRules[rule.selector])) {
@@ -125,12 +118,10 @@ function Validator(options) {
             Array.from(inputElements).forEach(inputElement => {
                 if (inputElement) {
 
-                    // Trường hợp blur khỏi input
                     inputElement.onblur = () => {
                         validate(inputElement, rule);
                     };
 
-                    // Trường hợp khi đang nhập vào input (bor thông báo error)
                     inputElement.oninput = () => {
                         var groupElement = getParent(inputElement, options.formGroupSelector);
                         var errElement = groupElement.querySelector(options.errSelector);

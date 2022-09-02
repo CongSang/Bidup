@@ -20,23 +20,26 @@ import org.springframework.stereotype.Component;
 @ComponentScan(basePackages = {
     "com.charitysm.controllers",
     "com.charitysm.repositories",
-    "com.charitysm.services",})
+    "com.charitysm.services"
+})
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String>{
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+
     @Autowired
     private UserService userService;
-    
+
     @Override
     public void initialize(UniqueEmail constraintAnnotation) {
-        
+
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (userService == null)
-                return true;
-        
+        if (userService == null) {
+            return true;
+        }
+
         return value != null && (userService != null && !userService.isEmailAlreadyInUse(value));
     }
 }

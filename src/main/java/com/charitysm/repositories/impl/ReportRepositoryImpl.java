@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class ReportRepositoryImpl implements ReportRepository{
-    
+public class ReportRepositoryImpl implements ReportRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -44,7 +44,7 @@ public class ReportRepositoryImpl implements ReportRepository{
     @Override
     public void createAuctionReport(ReportAuction report) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-         try {
+        try {
             session.save(report);
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class ReportRepositoryImpl implements ReportRepository{
     @Override
     public void createUserReport(ReportUser report) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-         try {
+        try {
             session.save(report);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,9 +66,9 @@ public class ReportRepositoryImpl implements ReportRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rU = q.from(ReportUser.class);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
             q.multiselect(b.count(rU));
@@ -81,9 +81,9 @@ public class ReportRepositoryImpl implements ReportRepository{
                     b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
             q.multiselect(b.count(rU));
         }
-        
+
         Query query = session.createQuery(q);
-        return (long) query.getSingleResult(); 
+        return (long) query.getSingleResult();
     }
 
     @Override
@@ -91,10 +91,10 @@ public class ReportRepositoryImpl implements ReportRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<ReportPost> q = b.createQuery(ReportPost.class);
-        
+
         Root rU = q.from(ReportPost.class);
         q.select(rU);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         } else if (year == 0) {
@@ -104,11 +104,11 @@ public class ReportRepositoryImpl implements ReportRepository{
                     b.equal(b.function("MONTH", Integer.class, rU.get("reportedDate")), month),
                     b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         }
-        
+
         q.orderBy(b.desc(rU.get("reportedDate")));
-        
+
         Query query = session.createQuery(q);
-        return query.getResultList(); 
+        return query.getResultList();
     }
 
     @Override
@@ -116,10 +116,10 @@ public class ReportRepositoryImpl implements ReportRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<ReportAuction> q = b.createQuery(ReportAuction.class);
-        
+
         Root rU = q.from(ReportAuction.class);
         q.select(rU);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         } else if (year == 0) {
@@ -129,11 +129,11 @@ public class ReportRepositoryImpl implements ReportRepository{
                     b.equal(b.function("MONTH", Integer.class, rU.get("reportedDate")), month),
                     b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         }
-        
+
         q.orderBy(b.desc(rU.get("reportedDate")));
-        
+
         Query query = session.createQuery(q);
-        return query.getResultList(); 
+        return query.getResultList();
     }
 
     @Override
@@ -141,10 +141,10 @@ public class ReportRepositoryImpl implements ReportRepository{
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<ReportUser> q = b.createQuery(ReportUser.class);
-        
+
         Root rU = q.from(ReportUser.class);
         q.select(rU);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         } else if (year == 0) {
@@ -154,11 +154,11 @@ public class ReportRepositoryImpl implements ReportRepository{
                     b.equal(b.function("MONTH", Integer.class, rU.get("reportedDate")), month),
                     b.equal(b.function("YEAR", Integer.class, rU.get("reportedDate")), year));
         }
-        
+
         q.orderBy(b.desc(rU.get("reportedDate")));
-        
+
         Query query = session.createQuery(q);
-        return query.getResultList(); 
+        return query.getResultList();
     }
-    
+
 }

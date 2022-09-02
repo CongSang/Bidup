@@ -4,13 +4,9 @@
  */
 package com.charitysm.controllers;
 
-import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.NotificationResponse;
 import com.charitysm.services.NotificationService;
-import com.charitysm.services.UserService;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;

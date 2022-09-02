@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -47,32 +46,33 @@ public class PostRepositoryImpl implements PostRepository {
         q.select(root);
 
         if (params != null) {
-            
-            if (params.get("follow_only") != null)
+
+            if (params.get("follow_only") != null) {
                 return getFollowPosts(params, currentUserId);
-            
+            }
+
             List<Predicate> predicates = new ArrayList<>();
             String hashtagKw = params.get("hashtag");
             if (hashtagKw != null && !hashtagKw.isBlank()) {
-                Predicate p = b.like(root.get("hashtag").as(String.class),String.format("%%%s%%", "#" + hashtagKw + " "));
+                Predicate p = b.like(root.get("hashtag").as(String.class), String.format("%%%s%%", "#" + hashtagKw + " "));
                 predicates.add(p);
             }
-            
+
             String contentKw = params.get("kw");
             if (contentKw != null && !contentKw.isBlank()) {
-                Predicate p = b.like(root.get("content").as(String.class),String.format("%%%s%%", contentKw));
+                Predicate p = b.like(root.get("content").as(String.class), String.format("%%%s%%", contentKw));
                 predicates.add(p);
             }
 
             q.where(predicates.toArray(Predicate[]::new));
         }
-        
+
         q.orderBy(b.desc(root.get("postedDate")));
 
         Query query = session.createQuery(q);
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
-        if (page > 0){
+        if (page > 0) {
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);
@@ -81,7 +81,7 @@ public class PostRepositoryImpl implements PostRepository {
         rs.forEach(p -> {
             p.setCommentSetLength(p.getCommentSet().size());
         });
-        
+
         return rs;
     }
 
@@ -90,9 +90,9 @@ public class PostRepositoryImpl implements PostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root rU = q.from(Post.class);
-        
+
         if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("postedDate")), year));
             q.multiselect(b.count(rU));
@@ -105,19 +105,19 @@ public class PostRepositoryImpl implements PostRepository {
                     b.equal(b.function("YEAR", Integer.class, rU.get("postedDate")), year));
             q.multiselect(b.count(rU));
         }
-        
+
         Query query = session.createQuery(q);
         return (long) query.getSingleResult();
     }
-    
+
     @Override
     public Post getPostById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createNamedQuery("Post.findById");
         q.setParameter("id", id);
-        Post p = (Post)q.getSingleResult();
+        Post p = (Post) q.getSingleResult();
         p.setCommentSetLength(p.getCommentSet().size());
-        
+
         return p;
     }
 
@@ -126,8 +126,7 @@ public class PostRepositoryImpl implements PostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             return (int) session.save(p);
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
@@ -151,12 +150,12 @@ public class PostRepositoryImpl implements PostRepository {
     public List<Post> getUserPosts(String userId, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         User u = session.get(User.class, userId);
-        
+
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Post> q = b.createQuery(Post.class);
         Root root = q.from(Post.class);
         q.select(root);
-        
+
         q.where(b.equal(root.get("userId"), u));
         q.orderBy(b.desc(root.get("postedDate")));
 
@@ -171,7 +170,7 @@ public class PostRepositoryImpl implements PostRepository {
         rs.forEach(p -> {
             p.setCommentSetLength(p.getCommentSet().size());
         });
-        
+
         return rs;
     }
 
@@ -180,18 +179,10 @@ public class PostRepositoryImpl implements PostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createNativeQuery("CALL sp_findPostByCommentId(:commentId)", Post.class);
         q.setParameter("commentId", commentId);
-//        Object[] o =(Object[]) ;
-        
+
         Post p = (Post) q.getSingleResult();
         p.setCommentSetLength(p.getCommentSet().size());
-//        p.setId(Integer.parseInt(o[0].toString()));
-//        p.setContent(o[1].toString());
-//        p.setImage(o[2].toString());
-//        p.setPostedDate(new Date(o[3].toString()));
-//        p.setUserId(new User(o[4].toString()));
-//        p.setActive(Short.parseShort(o[5].toString()));
-//        p.setHashtag(o[6].toString());
-        
+
         return p;
     }
 
@@ -201,10 +192,10 @@ public class PostRepositoryImpl implements PostRepository {
         Query q = session.createNativeQuery("SELECT p.* FROM post p JOIN follow f on "
                 + "p.user_id=f.followed_id WHERE f.follower_id=:userId", Post.class);
         q.setParameter("userId", currentUserId);
-        
+
         int page = Integer.parseInt(params.getOrDefault("page", "0"));
         int size = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
-        if (page > 0){
+        if (page > 0) {
             int start = (page - 1) * size;
             q.setFirstResult(start);
             q.setMaxResults(size);
@@ -213,7 +204,7 @@ public class PostRepositoryImpl implements PostRepository {
         rs.forEach(p -> {
             p.setCommentSetLength(p.getCommentSet().size());
         });
-     
+
         return rs;
     }
 

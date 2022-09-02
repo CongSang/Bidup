@@ -13,12 +13,20 @@ import java.util.List;
  * @author ADMIN
  */
 public interface CommentRepository {
+
     int createComment(Comment c);
+
     void deleteComment(int id, String userId);
+
     List<Comment> getComments(int postId, int page);
+
     Comment getCommentById(int id);
+
     BigInteger getCommentCount(int postId);
+
     List<Comment> getReplies(int commentId, int page);
+
     long countCommentStats(int month, int year);
+
     boolean editComment(Comment c);
 }

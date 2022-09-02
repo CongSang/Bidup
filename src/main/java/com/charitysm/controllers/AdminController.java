@@ -4,7 +4,6 @@
  */
 package com.charitysm.controllers;
 
-import com.charitysm.pojo.enumtype.ReportType;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;

@@ -26,29 +26,6 @@ function showFull2(element) {
   document.getElementById("modal02").style.display = "flex";
 }
 
-//var is_show_follow = false;
-//function showFollowAuction(element) {
-//    var follow = $(element).parents("div.post").find("div.auction-follow-list");
-//    if(is_show_follow) {
-//        follow.css("display", "none");
-//        is_show_follow = false;
-//    } else {
-//        follow.css("display", "block");
-//        is_show_follow = true;
-//    }
-//};
-
-//function customHashtag(element) {
-//    var rgxp = new RegExp(/(\s|^)\#\w\w+\b/gm);
-//    var str_content_origin = $(element).text();
-//    var str_content = str_content_origin.match(rgxp);
-//    $.each(str_content, function(index, v){
-//        var hashtag = v.trim();
-//        var repl = `<span class="tag">${v}</span>`;
-//        $(element).html($(element).html().replace(hashtag, repl));
-//    });
-//}
-
 function deleteAuction(auctionId) {
     swal({
         title: "Bạn có chắc là xóa bài đấu giá này?",

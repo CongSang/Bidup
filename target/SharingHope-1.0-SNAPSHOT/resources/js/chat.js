@@ -34,56 +34,51 @@ function searchUserForChat(element) {
     }
 
     var searchTimeout = setTimeout(
-            $.ajax({
-                type: 'get',
-                url: `${ctxPath}/api/users?kw=${kw}&page=${chatPage}&limit=${limit}`,
-                dataType: 'json',
-                success: function (data) {
-                    $('.search-userchat-loading').css("display", "none");
+        $.ajax({
+            type: 'get',
+            url: `${ctxPath}/api/users?kw=${kw}&page=${chatPage}&limit=${limit}`,
+            dataType: 'json',
+            success: function (data) {
+                $('.search-userchat-loading').css("display", "none");
 
-                    if (data.length === 0 && chatPage === 1) {
-                        $('.list-user-search').html(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
-                                                <img style="width: 100px; height: 100px; opacity: 0.7;" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
-                                                <p class="text-center">Không có người nào được tìm thấy</p>
-                                            </div>`);
-                        disableLoadMoreUserSearch = true;
-                        return;
-                    }
-
-                    if (data.length === 0) {
-                        disableLoadMoreUserSearch = true;
-                        return;
-                    }
-
-                    const users = data.filter(d => d.id !== currentUserId);
-
-                    $('.list-user-search').append(`${(users).map((user) => {
-                        return `<li class="dropdown-item">
-                               <div class="${user.id} d-flex justify-content-between align-items-center mb-1 chat--item">
-                                   <div class="d-flex align-items-center">
-                                       <img class="chat-menu-avatar rounded-circle me-2" src="${user.avatar}" alt="">
-                                       <div>
-                                           <p class="chat-side">${user.lastname} ${user.firstname}</p>
-                                       </div>
-                                   </div>
-                                   <i class="fa-brands fa-facebook-messenger go-chat ms-1"></i>
-                               </div>
-                           </li>`;
-                    }).join('')}`);
-                    $.each(users, function (index, user) {
-                        $(`.${user.id}`).on('click', function () {
-                            $(`.chat-box-container`).css("display", "none");
-                            $(`.chat-box-container${user.id}`).css("display", "block");
-                            updateScrollbar(user.id);
-                        });
-//                        $(`.chat-box-container${user.uid} .chat-box--close`).on('click', () => {
-//                            closeChatBox(user);
-//                        });
-                     });
-
+                if (data.length === 0 && chatPage === 1) {
+                    $('.list-user-search').html(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                                            <img style="width: 100px; height: 100px; opacity: 0.7;" src="https://res.cloudinary.com/dynupxxry/image/upload/v1659765073/netflix/star_yepdul.png" />
+                                            <p class="text-center">Không có người nào được tìm thấy</p>
+                                        </div>`);
+                    disableLoadMoreUserSearch = true;
+                    return;
                 }
-            })
-            , 1000);
+
+                if (data.length === 0) {
+                    disableLoadMoreUserSearch = true;
+                    return;
+                }
+
+                const users = data.filter(d => d.id !== currentUserId);
+
+                $('.list-user-search').append(`${(users).map((user) => {
+                    return `<li class="dropdown-item">
+                           <div class="${user.id} d-flex justify-content-between align-items-center mb-1 chat--item">
+                               <div class="d-flex align-items-center">
+                                   <img class="chat-menu-avatar rounded-circle me-2" src="${user.avatar}" alt="">
+                                   <div>
+                                       <p class="chat-side">${user.lastname} ${user.firstname}</p>
+                                   </div>
+                               </div>
+                               <i class="fa-brands fa-facebook-messenger go-chat ms-1"></i>
+                           </div>
+                       </li>`;
+                }).join('')}`);
+                $.each(users, function (index, user) {
+                    $(`.${user.id}`).on('click', function () {
+                        $(`.chat-box-container`).css("display", "none");
+                        $(`.chat-box-container${user.id}`).css("display", "block");
+                        updateScrollbar(user.id);
+                    });
+                 });
+            }
+        }), 1000);
 
     if (searchTimeout) {
         clearTimeout(searchTimeout);

@@ -99,9 +99,6 @@ public class APICommentController {
     @Async
     @GetMapping(value = "/get-comment-count/{postId}")
     public ResponseEntity<BigInteger> getComments(@PathVariable(value="postId") int postId) {
-        Map<String,String> data = new HashMap<>();
-//        System.out.println("count: "+ count);
-//        data.put("count", "" + count);
         return new ResponseEntity<>(this.commentService.getCommentCount(postId), HttpStatus.OK);
     }
     

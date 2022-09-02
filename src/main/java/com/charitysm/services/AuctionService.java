@@ -15,13 +15,22 @@ import java.util.Map;
 public interface AuctionService {
 
     List<Auction> getAuctionSideBar();
+
     List<Auction> getAuctions(Map<String, String> params);
+
     Auction getAuctionById(int id);
+
     int createAuction(Auction a);
+
     void deleteAuction(int id);
+
     int updateAuction(Auction a);
+
     int confirmCompleteCharity(Auction a);
+
     void sendEmailAuction(Auction a);
+
     List<Auction> getUserAuction(String userId, int page);
-     long countAuctionStats(int month, int year);
+
+    long countAuctionStats(int month, int year);
 }

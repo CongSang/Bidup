@@ -35,14 +35,6 @@
                     </div>
                 </div>
 
-
-                <!--                <div class="create-post card home-menu">
-                                    <div class="d-flex align-items-center">
-                                        <div class="home-menu-item" onclick="homeMenu('home')">Tất cả</div>
-                                        <div class="home-menu-item" onclick="homeMenu('follow')">Đang theo dõi</div>
-                                    </div>
-                                </div>-->
-
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <!--Menu mobile-->
                     <li class="d-lg-none d-block nav-item px-2" >
@@ -124,15 +116,15 @@
                                     <h5>Thông báo</h5>
                                 </div>
                             </li>
-                            <li  class="dropdown-item d-flex justify-content-center
-                                 align-items-center notif-loading text-center">
-                                <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
-                            </li>
                             <div class="position-relative" style="min-height: 90vh">
                                 <div class="p-2 list-notification">
 
                                 </div>
                             </div>
+                            <li  class="dropdown-item d-flex justify-content-center
+                                 align-items-center notif-loading text-center">
+                                <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
+                            </li>
                         </ul>
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
@@ -249,15 +241,15 @@
                                 <h5>Thông báo</h5>
                             </div>
                         </li>
-                        <li  class="dropdown-item d-flex justify-content-center
-                             align-items-center notif-loading text-center">
-                            <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
-                        </li>
                         <div class="position-relative" style="min-height: 45vh">
                             <div class="p-2 list-notification">
 
                             </div>
                         </div>
+                        <li  class="dropdown-item d-flex justify-content-center
+                             align-items-center notif-loading text-center">
+                            <div class="spinner-border text-muted loadingNotif" id="loadingNotif"></div>
+                        </li>
                     </ul>
                 </div>
 

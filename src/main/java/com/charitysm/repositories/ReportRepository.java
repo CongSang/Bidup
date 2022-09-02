@@ -14,11 +14,18 @@ import java.util.List;
  * @author CÔNG SANG
  */
 public interface ReportRepository {
+
     void createPostReport(ReportPost report);
+
     void createAuctionReport(ReportAuction report);
+
     void createUserReport(ReportUser report);
+
     long countReportUserStats(int month, int year);
+
     List<ReportPost> getReportPost(int month, int year);
+
     List<ReportAuction> getReportAuction(int month, int year);
+
     List<ReportUser> getReportUser(int month, int year);
 }

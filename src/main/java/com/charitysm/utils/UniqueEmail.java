@@ -17,11 +17,14 @@ import javax.validation.Payload;
  */
 @Constraint(validatedBy = UniqueEmailValidator.class)
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target({ 
-    ElementType.FIELD, 
-    ElementType.METHOD })
+@Target({
+    ElementType.FIELD,
+    ElementType.METHOD})
 public @interface UniqueEmail {
+
     public String message() default "Email này đã được sử dụng";
+
     public Class<?>[] groups() default {};
-    public Class<? extends Payload>[] payload() default{};
+
+    public Class<? extends Payload>[] payload() default {};
 }

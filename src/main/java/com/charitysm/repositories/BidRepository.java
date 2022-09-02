@@ -12,9 +12,14 @@ import java.util.List;
  * @author ADMIN
  */
 public interface BidRepository {
+
     Bid createBid(Bid b);
+
     void deleteBid(Bid b);
+
     Bid findBid(String userId, int auctionId);
+
     void updateWinner(Bid b);
+
     List<Bid> getBids(int auctionId);
 }
