@@ -48,6 +48,9 @@ public class APICommentController {
     @DeleteMapping(value = "/delete-comment/{id}")
     public void deleteComment(@PathVariable(value = "id") int id, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
+        Comment c = this.commentService.getCommentById(id);
+        if (c.getUserId().getId() != u.getId())
+            return;
         this.commentService.deleteComment(id, u.getId());
     }
 
@@ -114,8 +117,9 @@ public class APICommentController {
     public ResponseEntity<Comment> editComment(@PathVariable(value="id") int id
             , @RequestBody CommentRequest req, HttpSession session) throws IOException {
         User u = (User)session.getAttribute("currentUser");
+        Comment c = this.commentService.getCommentById(id);
         
-        if (u != null) {
+        if (u != null && c.getUserId().getId().equals(u.getId())) {
             Comment res = this.commentService.editComment(req, id);
             if(res != null)
                 return new ResponseEntity<>(res, HttpStatus.OK);
