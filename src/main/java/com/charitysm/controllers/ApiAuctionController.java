@@ -134,9 +134,11 @@ public class ApiAuctionController {
     @Async
     @DeleteMapping("/auctions/{auctionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuction(@PathVariable(value = "auctionId") int id) throws IOException {
+    public void deleteAuction(@PathVariable(value = "auctionId") int id,
+            HttpSession session) throws IOException {
         Auction a = this.auctionService.getAuctionById(id);
-        if (a != null) {
+        User u = (User)session.getAttribute("currentUser");
+        if (a != null && a.getUserId().getId() == u.getId()) {
             this.auctionService.deleteAuction(id);
             if (!a.getImage().isEmpty()) {
                 String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
@@ -237,7 +239,7 @@ public class ApiAuctionController {
     public void deleteReact(@RequestBody BidRequest b, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
         Bid bid = bidService.findBid(u.getId(), b.getAuctionId());
-        if (bid != null) {
+        if (bid != null && bid.getUser().getId().equals(u.getId())) {
             bidService.deleteBid(bid);
         }
     }
@@ -253,7 +255,7 @@ public class ApiAuctionController {
     public void updateBid(@RequestBody BidRequest br, @PathVariable(value = "userId") String userId) {
         Bid b = this.bidService.findBid(userId, br.getAuctionId());
 
-        if (b != null) {
+        if (b != null ) {
             if (b.getIsWinner() == 0) {
                 b.setIsWinner((short) 1);
             } else {

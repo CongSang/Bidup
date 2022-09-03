@@ -68,7 +68,6 @@ function deleteComment(id) {
     var clickedComment = $(`#commentItem${id}`);
     var clickedCommentHtml = $(clickedComment).html();
 
-    clickedComment.html(loadingHtml);
     swal({
         title: "Bạn có chắc xóa bình luận này?",
         icon: "warning",
@@ -76,6 +75,8 @@ function deleteComment(id) {
         dangerMode: true
     }).then((isDeleted) => {
         if (isDeleted) {
+            clickedComment.html(loadingHtml);
+            
             $.ajax({
                 type: 'delete',
                 url: `${ctxPath}/api/delete-comment/${id}`,
