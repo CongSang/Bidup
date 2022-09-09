@@ -81,8 +81,9 @@ function createPost() {
                             $(loadingTop).css('display', 'none');
                             $('#statusContent').val(null);
                             $('.highlighter').html('');
-                            $('uploadImage').val(null);
-                            $('#uploadPreview').attr("src", "");
+                            $('#uploadImage').val(null);
+                            $('#uploadPreview').attr("src", null);
+                            $('.modal--remove-img').css('opacity', '0');
                             prependFeeds(data);
                         }
                     })
@@ -101,35 +102,44 @@ function createPost() {
         }
     }
     else
-        alert("Vui lòng nhập nội dung bài viết!");
+        swal("Không thể nhận loại file này", {
+            icon: "error"
+        });
 }
 
 function createStatus() {
-    $(loadingTop).css('display', 'block');
     var content = $('#statusContent').val();
-    $.ajax({
-            type: 'post',
-            url: `${ctxPath}/api/create-post`,
-            data: JSON.stringify({
-                'content':content,
-                'hashtag': findHashtags(content),
-                'imgUrl':''
-            }),
-            dataType : 'json',
-            contentType : 'application/json',
-            success: function (data) {
+    if (!isBlank(content)){
+    $(loadingTop).css('display', 'block');
+        $.ajax({
+                type: 'post',
+                url: `${ctxPath}/api/create-post`,
+                data: JSON.stringify({
+                    'content':content,
+                    'hashtag': findHashtags(content),
+                    'imgUrl':''
+                }),
+                dataType : 'json',
+                contentType : 'application/json',
+                success: function (data) {
+                    $(loadingTop).css('display', 'none');
+                    $('#statusContent').val("");
+                    $('.highlighter').html('');
+                    prependFeeds(data);
+                }
+            })
+            .fail(function(){
                 $(loadingTop).css('display', 'none');
-                $('#statusContent').val("");
-                $('.highlighter').html('');
-                prependFeeds(data);
-            }
-        })
-        .fail(function(){
-            $(loadingTop).css('display', 'none');
-            $(feedContainer).prepend(errorHtml);
+                $(feedContainer).prepend(errorHtml);
+            });
+
+            $('.modal-post').removeClass('open');
+    }
+    else {
+        swal("Vui lòng nhập nội dung", {
+            icon: "error"
         });
-        
-        $('.modal-post').removeClass('open');
+    }
 }
 
 function deletePost(id, el) {

@@ -19,6 +19,7 @@ $(function () {
     }
     
     timer = setTimeout(function() {
+    window.scrollTo(0, 0);
         if (pathName === `${ctxPath}/home/auction`)
             homeMenu('home/auction');
         else if (pathName.includes("/home/follow"))
@@ -193,7 +194,7 @@ function removeEditModal() {
 }
 
 function removeImg(el) {
-    $(el).parents('.modal-post').find('.imagePreview').attr('src', '');
+    $(el).parents('.modal-post').find('#uploadPreview').attr("src", null);
     $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0');
     $(el).parents('.modal-post').find('.upload-image').val(undefined);
 }

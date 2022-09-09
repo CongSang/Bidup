@@ -26,7 +26,12 @@ function addComment(currentPostId, formEl) {
 
                 var commentSection = $(formEl).parents('.comment').find('#commentedComment');
                 $(commentSection).prepend(commentItem(data, currentPostId));
-
+                
+                let count = $(formEl).parents('.comment').find('#commentSetLength').text();
+                $(formEl).parents('.comment').find('#commentSetLength').text(++count);
+                count = $(formEl).parents('.comment').find('#showedCommentLength').text();
+                $(formEl).parents('.comment').find('#showedCommentLength').text(++count);
+                
                 $(formEl).parents('.comment').find('.add-comment').val("");
             }
         });
@@ -156,7 +161,9 @@ function loadComment(postId) {
             let count = currentPost.find('#commentedComment').children('.comment--item').length;
             let max = currentPost.find('#commentSetLength').text();
             currentPost.find('#showedCommentLength').text(count);
-            if(count == max)
+            if(max > count)
+                currentPost.find('.showMore').css('opacity', '1');
+            else 
                 currentPost.find('.showMore').css('opacity', '0');
             
             let url = new URL(window.location.toString());
