@@ -25,7 +25,7 @@ Mạng xã hội từ thiện
 - Java Spring MVC, Spring security
 - MySQL, Hibernate
 - Firebase (chat realtime), FB Graph API, Cloudinary 
-- Javascript, Jquery, Ajax, Bootstrap5
+- Javascript, Jquery, Ajax, Bootstrap5, Websocket
 
 ### Made by
 
