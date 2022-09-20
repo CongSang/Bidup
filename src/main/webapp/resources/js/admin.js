@@ -50,10 +50,8 @@ function chart(labels, data) {
 
 function solveReportPost(postId, element) {
     deletePost(postId, element);
-    $(element).parents('.report-item').remove();
 }
 
-function solveReportAuction(auctionId) {
-    deleteAuction(auctionId);
-    $(element).parents('.report-item').remove();
+function solveReportAuction(auctionId, element) {
+    deleteAuction(auctionId, element);
 }

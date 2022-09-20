@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.PostBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
@@ -45,34 +46,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByPostedDate", query = "SELECT p FROM Post p WHERE p.postedDate = :postedDate"),
     @NamedQuery(name = "Post.findByActive", query = "SELECT p FROM Post p WHERE p.active = :active"),
     @NamedQuery(name = "Post.findByHashtag", query = "SELECT p FROM Post p WHERE p.hashtag = :hashtag")})
-public class Post implements Serializable {
+public class Post extends PostBase implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     @JsonIgnore
     private Set<ReportPost> reportPostSet;
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Size(max = 300)
-    @Column(name = "content")
-    private String content;
-    @Size(max = 200)
-    @Column(name = "image")
-    private String image;
     @Basic(optional = false)
     @NotNull
     @Column(name = "posted_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date postedDate;
-    @Column(name = "active")
-    private Short active;
-    @Size(max = 100)
-    @Column(name = "hashtag")
-    private String hashtag;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
@@ -101,52 +86,12 @@ public class Post implements Serializable {
         this.postedDate = postedDate;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public Date getPostedDate() {
         return postedDate;
     }
 
     public void setPostedDate(Date postedDate) {
         this.postedDate = postedDate;
-    }
-
-    public Short getActive() {
-        return active;
-    }
-
-    public void setActive(Short active) {
-        this.active = active;
-    }
-
-    public String getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(String hashtag) {
-        this.hashtag = hashtag;
     }
 
     public User getUserId() {

@@ -28,6 +28,7 @@ com\charitysm\controllers\PostController.class
 com\charitysm\pojo\ReportAuction_.class
 com\charitysm\repositories\impl\ReactRepositoryImpl.class
 com\charitysm\handlers\LoginSuccessHandler.class
+com\charitysm\pojo\base\PostBase_.class
 com\charitysm\configs\SecurityWebApplicationInit.class
 com\charitysm\pojo\BidPK.class
 com\charitysm\repositories\PostRepository.class
@@ -91,6 +92,7 @@ com\charitysm\pojo\BidPK_.class
 com\charitysm\pojo\Comment.class
 com\charitysm\pojo\React.class
 com\charitysm\services\impl\UserServiceImpl.class
+com\charitysm\pojo\base\ReportBase_.class
 com\charitysm\controllers\ApiReportController.class
 com\charitysm\pojo\PostNotif.class
 com\charitysm\controllers\ApiPostController.class

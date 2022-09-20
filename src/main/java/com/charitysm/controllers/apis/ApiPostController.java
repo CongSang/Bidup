@@ -1,6 +1,7 @@
 
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
+import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.reobj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
@@ -139,7 +140,7 @@ public class ApiPostController {
     public void deletePost(@PathVariable(value="id") int id, HttpSession session) throws IOException {
         Post p = this.postService.getPostById(id);
         User u = (User) session.getAttribute("currentUser");
-        if (p != null && p.getUserId().getId().equals(u.getId())) {
+        if ((p != null && p.getUserId().getId().equals(u.getId())) || u.getUserRole().equals("ROLE_ADMIN")) {
             this.postService.deletePost(id);
             if (!p.getImage().isEmpty()) {
                 String public_id = p.getImage().substring(p.getImage().lastIndexOf("public_id=") + 10);

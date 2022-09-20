@@ -4,11 +4,10 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.ReactBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,9 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,18 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReactComment.findByCommentId", query = "SELECT r FROM ReactComment r WHERE r.reactCommentPK.commentId = :commentId"),
     @NamedQuery(name = "ReactComment.findByType", query = "SELECT r FROM ReactComment r WHERE r.type = :type"),
     @NamedQuery(name = "ReactComment.findByCreatedDate", query = "SELECT r FROM ReactComment r WHERE r.createdDate = :createdDate")})
-public class ReactComment implements Serializable {
+public class ReactComment extends ReactBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ReactCommentPK reactCommentPK;
-    @Column(name = "type")
-    private Short type = 1;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate = new Date();
     @JoinColumn(name = "comment_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -78,22 +67,6 @@ public class ReactComment implements Serializable {
         this.reactCommentPK = reactCommentPK;
     }
 
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Comment getComment() {
         return comment;
     }
@@ -116,10 +89,7 @@ public class ReactComment implements Serializable {
             return false;
         }
         ReactComment other = (ReactComment) object;
-        if ((this.reactCommentPK == null && other.reactCommentPK != null) || (this.reactCommentPK != null && !this.reactCommentPK.equals(other.reactCommentPK))) {
-            return false;
-        }
-        return true;
+        return !((this.reactCommentPK == null && other.reactCommentPK != null) || (this.reactCommentPK != null && !this.reactCommentPK.equals(other.reactCommentPK)));
     }
 
     @Override

@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.ReportBase;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -35,39 +36,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReportUser.findById", query = "SELECT r FROM ReportUser r WHERE r.id = :id"),
     @NamedQuery(name = "ReportUser.findByReason", query = "SELECT r FROM ReportUser r WHERE r.reason = :reason"),
     @NamedQuery(name = "ReportUser.findByIsSolve", query = "SELECT r FROM ReportUser r WHERE r.isSolve = :isSolve")})
-public class ReportUser implements Serializable {
+public class ReportUser extends ReportBase implements Serializable {
 
-    @Size(max = 5)
-    @Column(name = "type")
-    private String type;
-
+    private static final long serialVersionUID = 1L;
+    
     @JoinColumn(name = "reported_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User reportedUser;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "reported_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date reportedDate;
-
+   
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "reason")
-    private String reason;
-    @Column(name = "is_solve")
-    private Short isSolve;
 
     public ReportUser() {
     }
@@ -81,29 +61,6 @@ public class ReportUser implements Serializable {
         this.reason = reason;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public Short getIsSolve() {
-        return isSolve;
-    }
-
-    public void setIsSolve(Short isSolve) {
-        this.isSolve = isSolve;
-    }
 
     @Override
     public int hashCode() {
@@ -119,10 +76,7 @@ public class ReportUser implements Serializable {
             return false;
         }
         ReportUser other = (ReportUser) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -138,14 +92,6 @@ public class ReportUser implements Serializable {
         this.userId = userId;
     }
 
-    public Date getReportedDate() {
-        return reportedDate;
-    }
-
-    public void setReportedDate(Date reportedDate) {
-        this.reportedDate = reportedDate;
-    }
-
     public User getReportedUser() {
         return reportedUser;
     }
@@ -154,12 +100,4 @@ public class ReportUser implements Serializable {
         this.reportedUser = reportedUser;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    
 }
