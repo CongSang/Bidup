@@ -19,9 +19,11 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\CommentReque
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\BidRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReportPost.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\CommentRepository.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\Base.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\PostServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\ReportServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\NotificationService.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\NotifBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\PostService.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\BidRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\NotificationRepositoryImpl.java
@@ -43,6 +45,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReportUser.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\enumtype\NotifType.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\RestFB.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\ReportRequest.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\PostBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\BidPK.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReactPK.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\EmailConfig.java
@@ -55,11 +58,13 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\AdminContro
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\AuctionRequest.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReactCommentPK.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\reobj\UserRequest.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\ReactBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\CommentServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\NotificationRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\DispatcherServletInit.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\UserInfoController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\Post.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\ReportBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\UserRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\PostRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReactComment.java

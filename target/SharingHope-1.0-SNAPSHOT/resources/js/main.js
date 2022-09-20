@@ -299,6 +299,12 @@ function reportArticle(articleId, typeArticle) {
     removeReportArticle();
 }
 
+
+function removeItem(element) {
+    $(element).parents('.report-item').remove();
+}
+
+
 function goToByScroll(id) {
     $('html,body').animate({
         scrollTop: $("#" + id).offset().top

@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.Base;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
     @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate")})
-public class Comment implements Serializable {
+public class Comment extends Base implements Serializable {
 
     @OneToMany(mappedBy = "parentId", fetch = FetchType.EAGER)
     @JsonIgnore
@@ -63,11 +64,6 @@ public class Comment implements Serializable {
     private Set<ReactComment> reactCommentSet;
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Size(max = 200)
     @Column(name = "content")
     private String content;
@@ -93,14 +89,6 @@ public class Comment implements Serializable {
     public Comment(Integer id, Date commentDate) {
         this.id = id;
         this.commentDate = commentDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getContent() {
@@ -149,10 +137,7 @@ public class Comment implements Serializable {
             return false;
         }
         Comment other = (Comment) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

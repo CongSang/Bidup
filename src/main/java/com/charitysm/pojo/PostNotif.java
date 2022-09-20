@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.NotifBase;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,25 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PostNotif.findById", query = "SELECT p FROM PostNotif p WHERE p.id = :id"),
     @NamedQuery(name = "PostNotif.findByType", query = "SELECT p FROM PostNotif p WHERE p.type = :type"),
     @NamedQuery(name = "PostNotif.findByIsRead", query = "SELECT p FROM PostNotif p WHERE p.isRead = :isRead")})
-public class PostNotif implements Serializable {
+public class PostNotif extends NotifBase implements Serializable {
 
-    @Column(name = "is_read")
-    private boolean isRead;
     @JoinColumn(name = "auction_id", referencedColumnName = "id")
     @ManyToOne
     private Auction auctionId;
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 12)
-    @Column(name = "type")
-    private String type;
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Post postId;
@@ -69,23 +58,6 @@ public class PostNotif implements Serializable {
         this.id = id;
         this.type = type;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
 
     public Post getPostId() {
         return postId;
@@ -117,29 +89,12 @@ public class PostNotif implements Serializable {
             return false;
         }
         PostNotif other = (PostNotif) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.charitysm.pojo.PostNotif[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the isRead
-     */
-    public Boolean getIsRead() {
-        return isRead;
-    }
-
-    /**
-     * @param isRead the isRead to set
-     */
-    public void setIsRead(Boolean isRead) {
-        this.isRead = isRead;
     }
 
     public Auction getAuctionId() {

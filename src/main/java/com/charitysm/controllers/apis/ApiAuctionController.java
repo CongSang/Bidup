@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
@@ -55,8 +55,6 @@ public class ApiAuctionController {
     private JavaMailSender mailSender;
     @Autowired
     private Cloudinary cloudinary;
-    @Autowired
-    private NotificationService notificationService;
 
     @Async
     @GetMapping("/auction-side")
@@ -138,7 +136,7 @@ public class ApiAuctionController {
             HttpSession session) throws IOException {
         Auction a = this.auctionService.getAuctionById(id);
         User u = (User)session.getAttribute("currentUser");
-        if (a != null && a.getUserId().getId() == u.getId()) {
+        if ((a != null && a.getUserId().getId() == u.getId()) || u.getUserRole().equals("ROLE_ADMIN")) {
             this.auctionService.deleteAuction(id);
             if (!a.getImage().isEmpty()) {
                 String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
