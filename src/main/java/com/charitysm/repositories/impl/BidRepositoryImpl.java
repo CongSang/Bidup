@@ -6,6 +6,7 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Bid;
 import com.charitysm.repositories.BidRepository;
+import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -26,7 +27,7 @@ public class BidRepositoryImpl implements BidRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public Bid createBid(Bid b) {
+    public Bid createBid(Bid b){
         Session session = sessionFactory.getObject().getCurrentSession();
         session.save(b);
         return b;

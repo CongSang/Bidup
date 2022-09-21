@@ -44,9 +44,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     public void deleteComment(int id, String userId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Comment c = session.get(Comment.class, id);
-        if (c.getUserId().getId().equals(userId)) {
-            session.delete(c);
-        }
+        session.delete(c);
     }
 
     @Override

@@ -5,7 +5,6 @@ $(function () {
     
     pushSocket.onmessage = function (event) {
         if (event.data === 'update_notif')
-            
             $('.list-notification').empty();
             notifPage = 1;
             getNotifs();

@@ -14,8 +14,11 @@ import com.charitysm.repositories.BidRepository;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,7 @@ public class BidServiceImpl implements BidService {
     private AuctionService auctionService;
 
     @Override
-    public Bid createBid(BidRequest bq, User u) {
+    public Bid createBid(BidRequest bq, User u){
         try {
             Bid bid = new Bid();
             bid.setBidDate(new Date());
@@ -51,10 +54,21 @@ public class BidServiceImpl implements BidService {
             bid.setUser(u);
             bid.setAuction(a);
             if (this.bidRepository.createBid(bid) != null) {
+                a.getBidSet().remove(bid);
+                a.getBidSet().forEach(b -> {
+                    try {
+                        NotificationCenter.sendMessage(b.getUser().getId());
+                    } catch (IOException ex) {
+                        Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+                
                 NotificationCenter.sendMessage(a.getUserId().getId());
                 return bid;
             }
         } catch (IOException | EntityNotFoundException ex) {
+//            if (ex instanceof SQLException)
+//                throw new SQLException("You must bid higher", "50");
             ex.printStackTrace();
             return null;
         }

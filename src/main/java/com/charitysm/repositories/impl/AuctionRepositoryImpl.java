@@ -5,6 +5,7 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Auction;
+import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.AuctionRepository;
 import java.util.ArrayList;
@@ -80,7 +81,13 @@ public class AuctionRepositoryImpl implements AuctionRepository {
             query.setFirstResult(start);
             query.setMaxResults(size);
         }
-        return query.getResultList();
+        
+        List<Auction> rs = query.getResultList();
+        rs.forEach(a -> {
+            a.setBidSetLength(a.getBidSet().size());
+        });
+        
+        return rs;
     }
 
     @Override

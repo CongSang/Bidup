@@ -17,9 +17,11 @@ $(function () {
     if(timer !== null) {
         clearTimeout(timer);        
     }
-    
+    window.scrollTo({top: 0,
+                    left: 0,
+                    behavior: 'instant',
+                  });
     timer = setTimeout(function() {
-    window.scrollTo(0, 0);
         if (pathName === `${ctxPath}/home/auction`)
             homeMenu('home/auction');
         else if (pathName.includes("/home/follow"))

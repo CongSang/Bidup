@@ -55,6 +55,10 @@
     cursor: pointer;
 }
 
+.hide {
+    display: none!important;
+}
+
 .winner-user.is-winner {
     color: #f7af31;
     animation: popup 0.4s ease;

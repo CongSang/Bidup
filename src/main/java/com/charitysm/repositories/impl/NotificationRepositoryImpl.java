@@ -80,7 +80,10 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     @Override
     public void readNotif(int notifId, NotifType type) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        if (type.equals(NotifType.REACT_POST) || type.equals(NotifType.COMMENT_POST) || type.equals(NotifType.JOIN_AUCTION)) {
+        if (type.equals(NotifType.REACT_POST) 
+                || type.equals(NotifType.COMMENT_POST)
+                || type.equals(NotifType.JOIN_AUCTION)
+                || type.equals(NotifType.COMPETE_AUCTION)) {
             Query q = session.createNamedQuery("PostNotif.findById");
             q.setParameter("id", notifId);
             PostNotif pn = (PostNotif) q.getSingleResult();

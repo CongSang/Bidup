@@ -24,7 +24,7 @@ public class ReactBase {
     @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date createdDate;
+    protected Date createdDate = new Date();
     
      public Short getType() {
         return type;

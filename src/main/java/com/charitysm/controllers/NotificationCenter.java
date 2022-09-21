@@ -46,6 +46,17 @@ public class NotificationCenter {
             sessions.remove(userId);
         }
     }
+    
+    public static void sendMessage(String userId, String message) throws IOException {
+        Session targetSession = getSessions().get(userId);
+        if (targetSession != null && targetSession.isOpen()) {
+            targetSession.getBasicRemote().sendText(message);
+        }
+        else
+        {
+            sessions.remove(userId);
+        }
+    }
 
     /**
      * @return the sessions
