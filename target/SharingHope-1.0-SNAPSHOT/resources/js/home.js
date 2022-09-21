@@ -37,7 +37,10 @@ function homeMenu(menu) {
         window.location = `${ctxPath}/${menu}`;
     if (xhr !== undefined)
         xhr.abort();
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0,
+                    left: 0,
+                    behavior: 'instant',
+                  });
     disableLoadMorePost = false;
     $('#feeds-container').empty();
     $('.auction-container').empty();

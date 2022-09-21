@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class NotifBase extends Base{
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 13)
+    @Size(min = 1, max = 20)
     @Column(name = "type")
     protected String type;
     @Column(name = "is_read")

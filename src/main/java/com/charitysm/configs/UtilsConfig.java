@@ -30,4 +30,5 @@ public class UtilsConfig {
         r.setRedirectURL(env.getProperty("fb.rediect_url"));
         return r ;
     }
+    
 }

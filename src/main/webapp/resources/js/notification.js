@@ -1,5 +1,6 @@
 let notifPage = 1;
 let disableLoadMoreNotif = false;
+let containerHeight;
 
 function getNotifs() {
     var container = $('.list-notification');
@@ -11,6 +12,7 @@ function getNotifs() {
         url: `${ctxPath}/api/get-notifs?page=${notifPage}`,
         dataType: 'json',
         success: function (data) {
+            
             if(data.length === 0 && notifPage === 1 && !disableLoadMoreNotif) {
                 disableLoadMoreNotif = true;
                 container.append(`<div class="d-flex flex-column justify-content-center align-items-center mt-4">
@@ -46,14 +48,18 @@ function getNotifs() {
             
             $('.loadingNotif').css('display', 'none');
             notifPage++;
-        }});
+        }}).done(function() {
+            containerHeight = 40 * $('.list-notification').first().children().size();
+        });
 }
 
 function notifItem(notif) {
     let typeMsg = notif.type === 'REACT_POST' ? (`thích bài viết của bạn`):
             notif.type === 'COMMENT_POST' ? `bình luận về bài viết của bạn`:
             notif.type === 'REACT_COMMENT' ? `thích bình luận của bạn`:
-            notif.type === 'REPLY_COMMENT' ? `trả lời bình luận của bạn`: `tham gia đấu giá bài viết của bạn`;
+            notif.type === 'REPLY_COMMENT' ? `trả lời bình luận của bạn`:
+            notif.type === 'JOIN_AUCTION' ? `tham gia đấu giá bài viết của bạn`:
+            `đặt ra giá cao hơn bạn trong một bài đấu giá`;
     let imgNotifType = notif.type === 'REACT_POST' ? `${imgNotifIcon.REACT_POST}`:
             notif.type === 'COMMENT_POST' ? `${imgNotifIcon.COMMENT_POST}`:
             notif.type === 'REACT_COMMENT' ? `${imgNotifIcon.REACT_COMMENT}`:
@@ -137,7 +143,6 @@ function loadParents(comment, postId) {
     }, 500);
 }
 
-var containerHeight = 90 * 10 * notifPage;
 $('.list-notification').scroll(function () {
     var scrollTop = $(this).scrollTop();
     

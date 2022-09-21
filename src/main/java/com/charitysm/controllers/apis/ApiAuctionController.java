@@ -11,10 +11,10 @@ import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
-import com.charitysm.services.NotificationService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -227,16 +228,23 @@ public class ApiAuctionController {
     @PostMapping("/create-bid")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
-        
-        return new ResponseEntity<>(this.bidService.createBid(b, u), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this.bidService.createBid(b, u), HttpStatus.CREATED);
+        }
+        catch (HibernateJdbcException ex) {
+            if (ex.getSQLException().getSQLState().equals("45001"))
+                return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+            
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete-bid")
-    public void deleteReact(@RequestBody BidRequest b, HttpSession session) {
+    @DeleteMapping("/delete-bid/{auctionId}")
+    public void deleteBid(@PathVariable(value="auctionId") int auctionId, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
-        Bid bid = bidService.findBid(u.getId(), b.getAuctionId());
+        Bid bid = bidService.findBid(u.getId(), auctionId);
         if (bid != null && bid.getUser().getId().equals(u.getId())) {
             bidService.deleteBid(bid);
         }

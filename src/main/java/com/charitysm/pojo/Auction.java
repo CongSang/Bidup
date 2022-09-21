@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,6 +50,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active"),
     @NamedQuery(name = "Auction.findByMailTo", query = "SELECT a FROM Auction a WHERE a.mailTo = :mailTo")})
 public class Auction extends PostBase implements Serializable {
+
+    /**
+     * @return the bidSetLength
+     */
+    public int getBidSetLength() {
+        return bidSetLength;
+    }
+
+    /**
+     * @param bidSetLength the bidSetLength to set
+     */
+    public void setBidSetLength(int bidSetLength) {
+        this.bidSetLength = bidSetLength;
+    }
 
     @OneToMany(mappedBy = "auctionId")
     @JsonIgnore
@@ -77,10 +92,13 @@ public class Auction extends PostBase implements Serializable {
     @Column(name = "mail_to")
     private Short mailTo;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "auction")
+    @JsonIgnore
     private Set<Bid> bidSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
+    @Transient
+    private int bidSetLength;
 
     public Auction() {
     }
