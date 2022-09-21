@@ -155,6 +155,16 @@ ul {
     color: var(--primary-color-200);
 }
 
+.btn-accept {
+    outline: none;
+    border: none;
+    background-color: #1baf89;
+    padding: 4px 12px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
 .btn-solve {
     outline: none;
     border: none;
@@ -165,8 +175,9 @@ ul {
     cursor: pointer;
 }
 
-.btn-solve:hover {
-    opacity: 0.8;
+.btn-solve:hover,
+.btn-accept:hover {
+    filter: brightness(90%);
 }
 
 .btn-solve.disable {

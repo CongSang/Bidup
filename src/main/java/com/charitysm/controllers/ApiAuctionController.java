@@ -87,7 +87,7 @@ public class ApiAuctionController {
         Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
 
         Auction a = new Auction();
-        a.setActive((short) 1);
+        a.setActive((short) 0);
         a.setContent(ar.getContent());
         a.setStartingPrice(ar.getStartPrice());
         a.setHashtag(ar.getHashtag());
@@ -138,12 +138,14 @@ public class ApiAuctionController {
             HttpSession session) throws IOException {
         Auction a = this.auctionService.getAuctionById(id);
         User u = (User)session.getAttribute("currentUser");
-        if (a != null && a.getUserId().getId() == u.getId()) {
-            this.auctionService.deleteAuction(id);
-            if (!a.getImage().isEmpty()) {
-                String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
-                System.out.println(public_id);
-                deleteImg(public_id);
+        if (a != null) {
+             if (a.getUserId().getId().equals(u.getId()) || u.getUserRole().equals("ROLE_ADMIN")) {
+                this.auctionService.deleteAuction(id);
+                if (!a.getImage().isEmpty()) {
+                    String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
+                    System.out.println(public_id);
+                    deleteImg(public_id);
+                }
             }
         }
     }
@@ -270,5 +272,17 @@ public class ApiAuctionController {
     @GetMapping(value = "/get-bids/{auctionId}")
     public ResponseEntity<List<Bid>> getBids(@PathVariable(value = "auctionId") int auctionId) {
         return new ResponseEntity<>(this.bidService.getBids(auctionId), HttpStatus.OK);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/accept-auction/{auctionId}")
+    public void AcceptAuction(@PathVariable(value = "auctionId") int id,
+            HttpSession session) throws IOException, ParseException {
+        User u = (User) session.getAttribute("currentUser");
+
+        if (u.getUserRole().equals("ROLE_ADMIN")) {
+            this.auctionService.acceptAuction(id);
+        }
     }
 }

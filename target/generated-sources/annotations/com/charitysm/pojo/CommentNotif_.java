@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-03T14:51:48")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-21T22:56:54")
 @StaticMetamodel(CommentNotif.class)
 public class CommentNotif_ { 
 

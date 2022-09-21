@@ -26,7 +26,7 @@ function showFull2(element) {
   document.getElementById("modal02").style.display = "flex";
 }
 
-function deleteAuction(auctionId) {
+function deleteAuction(auctionId, element) {
     swal({
         title: "Bạn có chắc là xóa bài đấu giá này?",
         icon: "warning",
@@ -45,6 +45,7 @@ function deleteAuction(auctionId) {
                     swal("Xóa bài đấu giá thành công", {
                     icon: "success"
                     });
+                    element && removeItem(element);
                     $(`.auction-post-${auctionId}`).remove();
                     $(`.auction-del-loading-${auctionId}`).css("display", "none");
                 }

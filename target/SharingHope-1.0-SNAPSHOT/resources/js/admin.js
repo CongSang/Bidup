@@ -53,7 +53,34 @@ function solveReportPost(postId, element) {
     $(element).parents('.report-item').remove();
 }
 
-function solveReportAuction(auctionId) {
-    deleteAuction(auctionId);
-    $(element).parents('.report-item').remove();
+function solveReportAuction(auctionId, element) {
+    deleteAuction(auctionId, element);
+}
+
+function acceptAuction (auctionId, element) {
+    swal({
+        title: "Duyệt bài đấu giá ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((isAccept) => {
+          if (isAccept) {
+            $.ajax({
+                type: 'put',
+                url: `${ctxPath}/api/accept-auction/${auctionId}`,
+                dataType: 'json',
+                success: function() {
+                    swal("Duyệt bài đấu giá thành công", {
+                        icon: "success"
+                    });
+                    $(element).parents('.report-item').remove();
+                }
+            }).fail(() => {
+                swal("Duyệt bài đấu giá thất bại", {
+                    icon: "warning"
+                    });
+            });
+        }
+    });
 }
