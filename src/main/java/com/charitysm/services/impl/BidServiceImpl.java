@@ -9,7 +9,8 @@ import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.BidPK;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.BidRequest;
+import com.charitysm.pojo.communicateObj.BidRequest;
+import com.charitysm.pojo.communicateObj.NotifMessage;
 import com.charitysm.repositories.BidRepository;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityNotFoundException;
+import javax.websocket.EncodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,16 +59,17 @@ public class BidServiceImpl implements BidService {
                 a.getBidSet().remove(bid);
                 a.getBidSet().forEach(b -> {
                     try {
-                        NotificationCenter.sendMessage(b.getUser().getId());
-                    } catch (IOException ex) {
-                        Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        NotificationCenter.sendMessage(b.getUser().getId(), new NotifMessage(111, null));
+                    } catch (IOException | EncodeException ex) {
+                        Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
                 
-                NotificationCenter.sendMessage(a.getUserId().getId());
+                NotificationCenter.broadcast(new NotifMessage(112, bid));
+                NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
                 return bid;
             }
-        } catch (IOException | EntityNotFoundException ex) {
+        } catch (IOException | EntityNotFoundException | EncodeException ex) {
 //            if (ex instanceof SQLException)
 //                throw new SQLException("You must bid higher", "50");
             ex.printStackTrace();

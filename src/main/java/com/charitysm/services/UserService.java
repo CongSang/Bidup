@@ -5,7 +5,7 @@
 package com.charitysm.services;
 
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.UserRequest;
+import com.charitysm.pojo.communicateObj.UserRequest;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;

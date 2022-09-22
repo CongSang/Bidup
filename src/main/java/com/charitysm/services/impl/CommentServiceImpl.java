@@ -8,7 +8,8 @@ import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.CommentRequest;
+import com.charitysm.pojo.communicateObj.CommentRequest;
+import com.charitysm.pojo.communicateObj.NotifMessage;
 import com.charitysm.repositories.CommentRepository;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
@@ -16,7 +17,10 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityNotFoundException;
+import javax.websocket.EncodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,20 +49,20 @@ public class CommentServiceImpl implements CommentService {
                 p = this.postService.getPostById(cq.getPostId());
                 c.setPostId(p);
                 if (this.commentRepository.createComment(c) > 0) {
-                    NotificationCenter.sendMessage(p.getUserId().getId());
+                    NotificationCenter.sendMessage(p.getUserId().getId(), new NotifMessage(111, null));
                     return c;
                 }
             } else {
                 parent = this.commentRepository.getCommentById(cq.getCommentId());
                 c.setParentId(parent);
                 if (this.commentRepository.createComment(c) > 0) {
-                    NotificationCenter.sendMessage(parent.getUserId().getId());
+                    NotificationCenter.sendMessage(parent.getUserId().getId(), new NotifMessage(111, null));
                     return c;
                 }
             }
 
-        } catch (IOException | EntityNotFoundException ex) {
-            ex.printStackTrace();
+        } catch (IOException | EntityNotFoundException | EncodeException ex) {
+            Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         return null;

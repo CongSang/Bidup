@@ -68,7 +68,8 @@ public class BidRepositoryImpl implements BidRepository {
         Session session = sessionFactory.getObject().getCurrentSession();
         Query q = session.createNamedQuery("Bid.findByAuctionId");
         q.setParameter("auctionId", auctionId);
-
+        
+        System.out.println(q.getResultList());
         return q.getResultList();
     }
 

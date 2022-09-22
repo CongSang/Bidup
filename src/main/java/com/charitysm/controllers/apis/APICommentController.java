@@ -7,7 +7,7 @@ package com.charitysm.controllers.apis;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.CommentRequest;
+import com.charitysm.pojo.communicateObj.CommentRequest;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;

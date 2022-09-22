@@ -5,7 +5,7 @@
 package com.charitysm.services.impl;
 
 import com.charitysm.pojo.enumtype.NotifType;
-import com.charitysm.pojo.reobj.NotificationResponse;
+import com.charitysm.pojo.communicateObj.NotificationResponse;
 import com.charitysm.repositories.NotificationRepository;
 import com.charitysm.services.NotificationService;
 import java.util.ArrayList;

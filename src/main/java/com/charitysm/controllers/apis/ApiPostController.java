@@ -2,12 +2,12 @@
 package com.charitysm.controllers.apis;
 
 import com.charitysm.controllers.NotificationCenter;
-import com.charitysm.pojo.reobj.FileUploadResponse;
+import com.charitysm.pojo.communicateObj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactPK;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.PostRequest;
+import com.charitysm.pojo.communicateObj.PostRequest;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
 import com.cloudinary.Cloudinary;
@@ -80,8 +80,7 @@ public class ApiPostController {
         react.setPost(p);
         react.setUser(u);
         react.setCreatedDate(new Date());
-        System.out.println("UserId : " + p.getUserId().getId());
-        NotificationCenter.sendMessage(p.getUserId().getId());
+        
         this.reactService.createReact(react);
     }
     

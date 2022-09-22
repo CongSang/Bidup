@@ -21,7 +21,6 @@ function addBid(currentAuctionId, formEl, startPrice) {
                
                const bided = $(formEl).parents('.post').find('.bided');
                bided.prepend(bidItem(data));
-               updateCount(currentAuctionId, 1);
                
            },
            statusCode: {
@@ -120,27 +119,31 @@ function showBid(element, auctionId) {
             url: `${ctxPath}/api/get-bids/` + auctionId,
             dataType: 'json',
             success: function (data) {
+                $(bidContainer).find('.bid-loading').css("display", "none");
                 data.sort(function (a, b) {
                     return b.money - a.money;
                 });
                 
-                $(bidAppend).append(`${[data[0]].map((bid, index) => {
+//                $(bidAppend).append(`${[data[0]].map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`);
+//              
+                
+//                $(bidAppend).append(`${(data).map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`);
+                
+//                data.shift();
+//                let userbid = data.filter(b => b.user.id === currentUserId);
+//                let otherBid = data.filter(b => b.user.id !== currentUserId);
+//                
+                $(bidAppend).append(`${(data).map((bid, index) => {
                     return bidItem(bid);
                 }).join('')}`);
                 
-                data.shift();
-                $(bidContainer).find('.bid-loading').css("display", "none");
-                let userbid = data.filter(b => b.user.id === currentUserId);
-                let otherBid = data.filter(b => b.user.id !== currentUserId);
-                
-                
-                $(bidAppend).append(`${(userbid).map((bid, index) => {
-                    return bidItem(bid);
-                }).join('')}`);
-                
-                 $(bidAppend).append(`${(otherBid).map((bid, index) => {
-                    return bidItem(bid);
-                }).join('')}`); 
+//                 $(bidAppend).append(`${(otherBid).map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`); 
             }
         }).done(function() {
             if (bidAppend.find(`#${currentUserId}`).length) 

@@ -6,7 +6,7 @@ package com.charitysm.services;
 
 import com.charitysm.pojo.Bid;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.BidRequest;
+import com.charitysm.pojo.communicateObj.BidRequest;
 import java.sql.SQLException;
 import java.util.List;
 

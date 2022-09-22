@@ -6,9 +6,9 @@ package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
-import com.charitysm.pojo.reobj.BidRequest;
+import com.charitysm.pojo.communicateObj.BidRequest;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.AuctionRequest;
+import com.charitysm.pojo.communicateObj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
 import com.cloudinary.Cloudinary;
