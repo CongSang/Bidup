@@ -48,7 +48,7 @@
                                 </c:if>
                                 <c:if test="${post.userId.id != sessionScope.currentUser.id}">
                                     <li>
-                                        <a class="dropdown-item" href="#">Báo cáo</a>
+                                        <a class="dropdown-item" href="#" onclick="modalArticleReport(${post.id}, 'POST')">Báo cáo</a>
                                     </li>
                                 </c:if>
                             </ul>

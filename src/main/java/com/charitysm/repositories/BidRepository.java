@@ -5,6 +5,7 @@
 package com.charitysm.repositories;
 
 import com.charitysm.pojo.Bid;
+import java.sql.SQLException;
 import java.util.List;
 
 /**

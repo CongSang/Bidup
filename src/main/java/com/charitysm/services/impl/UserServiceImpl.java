@@ -143,4 +143,9 @@ public class UserServiceImpl implements UserService {
     public boolean checkFollowed(String followerId, String followedId) {
         return this.userRepository.checkFollowed(followerId, followedId);
     }
+
+    @Override
+    public boolean blockAccount(String userId) {
+        return this.userRepository.blockAccount(userId);
+    }
 }

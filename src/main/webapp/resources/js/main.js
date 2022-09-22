@@ -17,7 +17,10 @@ $(function () {
     if(timer !== null) {
         clearTimeout(timer);        
     }
-    
+    window.scrollTo({top: 0,
+                    left: 0,
+                    behavior: 'instant',
+                  });
     timer = setTimeout(function() {
         if (pathName === `${ctxPath}/home/auction`)
             homeMenu('home/auction');
@@ -193,7 +196,7 @@ function removeEditModal() {
 }
 
 function removeImg(el) {
-    $(el).parents('.modal-post').find('.imagePreview').attr('src', '');
+    $(el).parents('.modal-post').find('#uploadPreview').attr("src", null);
     $(el).parents('.modal-post').find('.modal--remove-img').css('opacity', '0');
     $(el).parents('.modal-post').find('.upload-image').val(undefined);
 }
@@ -297,6 +300,12 @@ function reportArticle(articleId, typeArticle) {
 
     removeReportArticle();
 }
+
+
+function removeItem(element) {
+    $(element).parents('.report-item').remove();
+}
+
 
 function goToByScroll(id) {
     $('html,body').animate({

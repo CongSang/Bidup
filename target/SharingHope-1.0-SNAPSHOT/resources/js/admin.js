@@ -50,11 +50,50 @@ function chart(labels, data) {
 
 function solveReportPost(postId, element) {
     deletePost(postId, element);
-    $(element).parents('.report-item').remove();
 }
 
 function solveReportAuction(auctionId, element) {
     deleteAuction(auctionId, element);
+}
+
+async function deleteReportUser(reportId) {
+    $.ajax({
+        type: 'delete',
+        url: `${ctxPath}/api/delete-report-user/${reportId}`,
+        success: function() {
+            console.log("delete report success");
+        }
+    }).fail((res) => {
+        console.log(res);
+    });
+}
+
+function solveReportUser(userId, reportId, element) {
+    swal({
+        title: "Bạn chắc chắn khóa tài khoản này ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((isAccept) => {
+          if (isAccept) {
+            $.ajax({
+                type: 'put',
+                url: `${ctxPath}/api/block-user/${userId}`,
+                success: function() {
+                    deleteReportUser(reportId);
+                    swal("Đã khóa tài khoản người dùng này", {
+                        icon: "success"
+                    });
+                    $(element).parents('.report-item').remove();
+                }
+            }).fail((res) => {
+                swal("Có lỗi xảy ra. Khóa tài khoản thất bại", {
+                    icon: "warning"
+                    });
+            });
+        }
+    });
 }
 
 function acceptAuction (auctionId, element) {

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
@@ -11,10 +11,10 @@ import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
-import com.charitysm.services.NotificationService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +56,6 @@ public class ApiAuctionController {
     private JavaMailSender mailSender;
     @Autowired
     private Cloudinary cloudinary;
-    @Autowired
-    private NotificationService notificationService;
 
     @Async
     @GetMapping("/auction-side")
@@ -64,10 +63,10 @@ public class ApiAuctionController {
 
         return new ResponseEntity<>(this.auctionService.getAuctionSideBar(), HttpStatus.OK);
     }
-    
-     @Async
+
+    @Async
     @GetMapping("/auction-single/{auctionId}")
-    public ResponseEntity<Auction> getActionSingle(@PathVariable(value="auctionId") int auctionId) {
+    public ResponseEntity<Auction> getActionSingle(@PathVariable(value = "auctionId") int auctionId) {
 
         return new ResponseEntity<>(this.auctionService.getAuctionById(auctionId), HttpStatus.OK);
     }
@@ -81,7 +80,8 @@ public class ApiAuctionController {
 
     @Async
     @RequestMapping("/create-auction")
-    public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest ar, HttpSession session) throws ParseException {
+    public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest ar, HttpSession session)
+            throws ParseException {
         User u = (User) session.getAttribute("currentUser");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
@@ -137,9 +137,9 @@ public class ApiAuctionController {
     public void deleteAuction(@PathVariable(value = "auctionId") int id,
             HttpSession session) throws IOException {
         Auction a = this.auctionService.getAuctionById(id);
-        User u = (User)session.getAttribute("currentUser");
+        User u = (User) session.getAttribute("currentUser");
         if (a != null) {
-             if (a.getUserId().getId().equals(u.getId()) || u.getUserRole().equals("ROLE_ADMIN")) {
+            if (a.getUserId().getId().equals(u.getId()) || u.getUserRole().equals("ROLE_ADMIN")) {
                 this.auctionService.deleteAuction(id);
                 if (!a.getImage().isEmpty()) {
                     String public_id = a.getImage().substring(a.getImage().lastIndexOf("public_id=") + 10);
@@ -154,19 +154,19 @@ public class ApiAuctionController {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            
+
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
-            
+
             if (isHtmlMail) {
                 helper.setText("<html><body>" + content + "</html></body>", true);
             } else {
                 helper.setText(content);
             }
-            
+
             mailSender.send(mimeMessage);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -190,13 +190,15 @@ public class ApiAuctionController {
                                     + "Vui lòng thanh toán cho chủ sở hữu bài viết trong thời gian sớm nhất. "
                                     + "Cám ơn bạn đã tham gia.</p>"
                                     + "<img src='https://res.cloudinary.com/dynupxxry/image/upload/v1659719016/netflix/logo-sharing-hope_G_ql7czy.png' />",
-                                    b.getUser().getFirstname(), u.getFirstname(), u.getEmail()), true);
+                                    b.getUser().getFirstname(), u.getFirstname(), u.getEmail()),
+                            true);
                 } else {
                     sendEmail("honguyencongsang.dev@gmail.com", b.getUser().getEmail(), "ĐẤU GIÁ THẤT BẠI",
                             String.format("<p>Bài đấu giá của %s (%s) đã quyết định được người chiến thắng. "
                                     + "Cám ơn bạn đã dành thời gian tham gia. Chúc bạn một ngày tốt lành.</p>"
                                     + "<img src='https://res.cloudinary.com/dynupxxry/image/upload/v1659719016/netflix/logo-sharing-hope_G_ql7czy.png' />",
-                                    u.getFirstname(), u.getEmail()), true);
+                                    u.getFirstname(), u.getEmail()),
+                            true);
                 }
             }
 
@@ -231,16 +233,22 @@ public class ApiAuctionController {
     @PostMapping("/create-bid")
     public ResponseEntity<Bid> createBid(@RequestBody BidRequest b, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
-        
-        return new ResponseEntity<>(this.bidService.createBid(b, u), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this.bidService.createBid(b, u), HttpStatus.CREATED);
+        } catch (HibernateJdbcException ex) {
+            if (ex.getSQLException().getSQLState().equals("45001"))
+                return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete-bid")
-    public void deleteReact(@RequestBody BidRequest b, HttpSession session) {
+    @DeleteMapping("/delete-bid/{auctionId}")
+    public void deleteBid(@PathVariable(value = "auctionId") int auctionId, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
-        Bid bid = bidService.findBid(u.getId(), b.getAuctionId());
+        Bid bid = bidService.findBid(u.getId(), auctionId);
         if (bid != null && bid.getUser().getId().equals(u.getId())) {
             bidService.deleteBid(bid);
         }
@@ -257,7 +265,7 @@ public class ApiAuctionController {
     public void updateBid(@RequestBody BidRequest br, @PathVariable(value = "userId") String userId) {
         Bid b = this.bidService.findBid(userId, br.getAuctionId());
 
-        if (b != null ) {
+        if (b != null) {
             if (b.getIsWinner() == 0) {
                 b.setIsWinner((short) 1);
             } else {
@@ -267,13 +275,13 @@ public class ApiAuctionController {
             this.bidService.updateWinner(b);
         }
     }
-    
+
     @Async
     @GetMapping(value = "/get-bids/{auctionId}")
     public ResponseEntity<List<Bid>> getBids(@PathVariable(value = "auctionId") int auctionId) {
         return new ResponseEntity<>(this.bidService.getBids(auctionId), HttpStatus.OK);
     }
-    
+
     @Async
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/accept-auction/{auctionId}")

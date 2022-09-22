@@ -116,7 +116,9 @@ function createAuction() {
                         $('.highlighter').html('');
                         $('uploadImage1').val(null);
                         $('#uploadPreview1').attr("src", "");
-                         prependAuctionFeeds(data);
+                        swal("Tạo bài đấu giá thành công. Chờ xét duyệt", {
+                            icon: "success"
+                        });
                     }
                 })
                 .fail(function(){
@@ -218,7 +220,7 @@ function prependAuctionFeeds(auction) {
                                     </div>` : 
                                     `<div class="btn-disable">
                                         <i class="fa-solid fa-check"></i>
-                                        <span class="auction--action-text auction-follow ms-2">Hoàn thành</span>
+                                        <span class="auction--action-text auction-follow ms-2">Chờ duyệt bài viết</span>
                                     </div>`}
                                     
                                 </div>

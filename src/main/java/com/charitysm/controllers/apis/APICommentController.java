@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Comment;
+import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.reobj.CommentRequest;
 import com.charitysm.services.CommentService;
+import com.charitysm.services.PostService;
 import com.charitysm.services.ReactService;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +42,8 @@ public class APICommentController {
     private ReactService reactService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private PostService postService;
 
     @Async
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -49,7 +51,8 @@ public class APICommentController {
     public void deleteComment(@PathVariable(value = "id") int id, HttpSession session) {
         User u = (User) session.getAttribute("currentUser");
         Comment c = this.commentService.getCommentById(id);
-        if (c.getUserId().getId() != u.getId())
+        Post p = this.postService.findPostByCommentId(c.getId());
+        if (!p.getUserId().getId().equals(u.getId()) && !c.getUserId().getId().equals(u.getId()))
             return;
         this.commentService.deleteComment(id, u.getId());
     }

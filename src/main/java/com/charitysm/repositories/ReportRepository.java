@@ -28,4 +28,6 @@ public interface ReportRepository {
     List<ReportAuction> getReportAuction(int month, int year);
 
     List<ReportUser> getReportUser(int month, int year);
+    
+    boolean deleteReportUser(int reportId);
 }

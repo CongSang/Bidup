@@ -4,6 +4,7 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.PostBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,7 +49,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auction.findByHashtag", query = "SELECT a FROM Auction a WHERE a.hashtag = :hashtag"),
     @NamedQuery(name = "Auction.findByActive", query = "SELECT a FROM Auction a WHERE a.active = :active"),
     @NamedQuery(name = "Auction.findByMailTo", query = "SELECT a FROM Auction a WHERE a.mailTo = :mailTo")})
-public class Auction implements Serializable {
+public class Auction extends PostBase implements Serializable {
+
+    /**
+     * @return the bidSetLength
+     */
+    public int getBidSetLength() {
+        return bidSetLength;
+    }
+
+    /**
+     * @param bidSetLength the bidSetLength to set
+     */
+    public void setBidSetLength(int bidSetLength) {
+        this.bidSetLength = bidSetLength;
+    }
 
     @OneToMany(mappedBy = "auctionId")
     @JsonIgnore
@@ -58,17 +74,7 @@ public class Auction implements Serializable {
     private Set<ReportAuction> reportAuctionSet;
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Size(max = 300)
-    @Column(name = "content")
-    private String content;
-    @Size(max = 200)
-    @Column(name = "image")
-    private String image;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "starting_price")
@@ -83,18 +89,16 @@ public class Auction implements Serializable {
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Size(max = 100)
-    @Column(name = "hashtag")
-    private String hashtag;
-    @Column(name = "active")
-    private Short active;
     @Column(name = "mail_to")
     private Short mailTo;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "auction")
+    @JsonIgnore
     private Set<Bid> bidSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
+    @Transient
+    private int bidSetLength;
 
     public Auction() {
     }
@@ -108,30 +112,6 @@ public class Auction implements Serializable {
         this.startingPrice = startingPrice;
         this.auctionDate = auctionDate;
         this.endDate = endDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public long getStartingPrice() {
@@ -156,22 +136,6 @@ public class Auction implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public String getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(String hashtag) {
-        this.hashtag = hashtag;
-    }
-
-    public Short getActive() {
-        return active;
-    }
-
-    public void setActive(Short active) {
-        this.active = active;
     }
 
     public Short getMailTo() {

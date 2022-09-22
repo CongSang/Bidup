@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.ReactBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,9 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,18 +27,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "React.findByType", query = "SELECT r FROM React r WHERE r.type = :type"),
     @NamedQuery(name = "React.findByCreatedDate", query = "SELECT r FROM React r WHERE r.createdDate = :createdDate"),
     @NamedQuery(name = "React.findForUser", query = "SELECT r FROM React r WHERE r.reactPK.userId = :userId AND r.reactPK.postId = :postId")})
-public class React implements Serializable {
+public class React extends ReactBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ReactPK reactPK;
-    @Column(name = "type")
-    private Short type;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+   
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -79,22 +65,6 @@ public class React implements Serializable {
         this.reactPK = reactPK;
     }
 
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Post getPost() {
         return post;
     }
@@ -125,10 +95,7 @@ public class React implements Serializable {
             return false;
         }
         React other = (React) object;
-        if ((this.reactPK == null && other.reactPK != null) || (this.reactPK != null && !this.reactPK.equals(other.reactPK))) {
-            return false;
-        }
-        return true;
+        return !((this.reactPK == null && other.reactPK != null) || (this.reactPK != null && !this.reactPK.equals(other.reactPK)));
     }
 
     @Override

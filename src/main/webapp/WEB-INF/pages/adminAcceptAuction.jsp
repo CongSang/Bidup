@@ -25,7 +25,7 @@
                 <tr class="report-item">
                     <td style="width: auto;">${a.content}</td>
                     <td style="width: 250px;">
-                        <img style="width: 160px; height: 160px; object-fit: cover;" src="${a.image}" alt="auction${a.id}" />
+                        <img style="width: 160px; height: 100px; object-fit: cover;" src="${a.image}" alt="auction${a.id}" />
                     </td>
                     <td><fmt:formatNumber value="${a.startingPrice}" minFractionDigits="2"/>đ</td>
                     <td><fmt:formatDate value="${a.auctionDate}" pattern="dd-MM-yyyy HH:mm" /></td>

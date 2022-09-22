@@ -57,4 +57,9 @@ public class ReportServiceImpl implements ReportService {
     public List<ReportUser> getReportUser(int month, int year) {
         return this.reportRepository.getReportUser(month, year);
     }
+
+    @Override
+    public boolean deleteReportUser(int reportId) {
+        return this.reportRepository.deleteReportUser(reportId);
+    }
 }

@@ -4,20 +4,14 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.base.NotifBase;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,21 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CommentNotif.findById", query = "SELECT c FROM CommentNotif c WHERE c.id = :id"),
     @NamedQuery(name = "CommentNotif.findByType", query = "SELECT c FROM CommentNotif c WHERE c.type = :type"),
     @NamedQuery(name = "CommentNotif.findByIsRead", query = "SELECT c FROM CommentNotif c WHERE c.isRead = :isRead")})
-public class CommentNotif implements Serializable {
+public class CommentNotif extends NotifBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
-    @Column(name = "type")
-    private String type;
-    @Column(name = "is_read")
-    private Boolean isRead;
+    
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Comment commentId;
@@ -63,22 +46,6 @@ public class CommentNotif implements Serializable {
 
     public CommentNotif(Integer id, String type) {
         this.id = id;
-        this.type = type;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
         this.type = type;
     }
 
@@ -112,29 +79,12 @@ public class CommentNotif implements Serializable {
             return false;
         }
         CommentNotif other = (CommentNotif) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "com.charitysm.pojo.CommentNotif[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the isRead
-     */
-    public Boolean getIsRead() {
-        return isRead;
-    }
-
-    /**
-     * @param isRead the isRead to set
-     */
-    public void setIsRead(Boolean isRead) {
-        this.isRead = isRead;
     }
     
 }

@@ -161,4 +161,17 @@ public class ReportRepositoryImpl implements ReportRepository {
         return query.getResultList();
     }
 
+    @Override
+    public boolean deleteReportUser(int reportId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            ReportUser r = session.get(ReportUser.class, reportId);
+            session.delete(r);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

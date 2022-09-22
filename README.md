@@ -22,10 +22,10 @@ Mạng xã hội từ thiện
 
 ### Main technology used
 
-- Java Spring-mvc
+- Java Spring MVC, Spring security
 - MySQL, Hibernate
-- Firebase (chat realtime)
-- Javascript
+- Firebase (chat realtime), FB Graph API, Cloudinary 
+- Javascript, Jquery, Ajax, Bootstrap5, Websocket
 
 ### Made by
 

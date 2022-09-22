@@ -13,5 +13,6 @@ public enum NotifType {
     COMMENT_POST,
     REACT_COMMENT,
     REPLY_COMMENT,
-    JOIN_AUCTION
+    JOIN_AUCTION,
+    COMPETE_AUCTION
 }

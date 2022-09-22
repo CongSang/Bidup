@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
 import com.charitysm.services.UserService;
 import com.charitysm.utils.RestFB;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.charitysm.controllers;
+package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Post;
@@ -94,6 +94,18 @@ public class ApiUserController {
         
         if (u.getId().equals(userId)) {
             this.userService.editUserInfo(req, userId);
+        }
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/block-user/{userId}")
+    public void blockUser(@PathVariable(value="userId") String userId,
+            HttpSession session) throws IOException {
+        User u = (User)session.getAttribute("currentUser");
+        
+        if (u.getUserRole().equals("ROLE_ADMIN")) {
+            this.userService.blockAccount(userId);
         }
     }
 }

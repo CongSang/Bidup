@@ -38,7 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUser(String email) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM User WHERE email = :email");
+        Query q = session.createQuery("FROM User u WHERE u.email = :email AND u.active = 1");
         q.setParameter("email", email);
 
         return (User) q.getSingleResult();
@@ -184,6 +184,20 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.update(u);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean blockAccount(String userId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            User user = session.get(User.class, userId);
+            user.setActive((short)0);
+            session.update(user);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -37,9 +37,7 @@
         </div>
 
         <div class="home-content col-sm-12 col-md-12 col-lg-7">
-            <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
-                <div class="spinner-border text-muted"></div>
-            </div>
+            
             <div class="right-part">
                 <div class="person-search mb-3">
                     <h3 class="title">Mọi người</h3>

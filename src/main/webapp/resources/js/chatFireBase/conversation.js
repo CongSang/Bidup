@@ -17,14 +17,13 @@ $(function () {
 
 export function getUserInfo() {
     const id = $('#user-id').text();
-    const avatar = $("#userAvatar").attr("src");
     const fullname = $('#fullname').text();
     const email = $('#email').text();
     return {
         uid: id,
         displayName: fullname,
         email: email,
-        photoUrl: avatar
+        photoUrl: userAvatar
     };
 }
 

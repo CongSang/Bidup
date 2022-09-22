@@ -2,7 +2,6 @@
 var auctionPage = 1;
 var auctionFetching = false;
 var disableLoadMoreAuction = false;
-var userAvatar = $("#userAvatar").attr("src");
 var errorHtml =  `<div class="text-center mt-3 post-loading">
                                 <p class="post--content mb-3" style="font-size:30xp;">
                                     Có lỗi xảy ra, không thể đăng bài ngay lúc này!

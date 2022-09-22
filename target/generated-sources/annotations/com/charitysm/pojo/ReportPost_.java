@@ -2,21 +2,16 @@ package com.charitysm.pojo;
 
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
-import java.util.Date;
+import com.charitysm.pojo.base.ReportBase_;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-21T22:56:54")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-22T10:39:50")
 @StaticMetamodel(ReportPost.class)
-public class ReportPost_ { 
+public class ReportPost_ extends ReportBase_ {
 
-    public static volatile SingularAttribute<ReportPost, String> reason;
-    public static volatile SingularAttribute<ReportPost, Short> isSolve;
-    public static volatile SingularAttribute<ReportPost, Date> reportedDate;
-    public static volatile SingularAttribute<ReportPost, Integer> id;
     public static volatile SingularAttribute<ReportPost, Post> postId;
-    public static volatile SingularAttribute<ReportPost, String> type;
     public static volatile SingularAttribute<ReportPost, User> userId;
 
 }

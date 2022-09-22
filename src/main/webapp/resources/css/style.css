@@ -116,6 +116,22 @@ header {
     background-color: #e1e1e1;
 }
 
+.popup-auction {
+    top: 1px;
+    right: -15px;
+    font-size: 12px;
+    padding: 2px 4px;
+    animation: changebg 0.8s infinite; 
+    border-radius: 50px;
+    z-index: 10;
+}
+
+@keyframes changebg {
+    0%     {background-color:red;}
+    50.0%  {background-color:yellow;}
+    100.0%  {background-color:red;}
+}
+
 /*navbar mobile*/
 .navbar-toggler {
     border-color: #ffffff !important;

@@ -80,7 +80,7 @@
                             <button class="btn-solve" onclick="solveReportAuction(${r.auctionId.id}, this)">Xử lí</button>
                         </c:if>
                         <c:if test="${reportType == 'Báo cáo người dùng'}">
-                            <button class="btn-solve" onclick="">Xử lí</button>
+                            <button class="btn-solve" onclick="solveReportUser('${r.reportedUser.id}', ${r.id}, this)">Xử lí</button>
                         </c:if>
                     </td>
                 </tr>

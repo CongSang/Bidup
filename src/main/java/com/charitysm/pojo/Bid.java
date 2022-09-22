@@ -59,7 +59,6 @@ public class Bid implements Serializable {
     private Short isWinner;
     @JoinColumn(name = "auction_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Auction auction;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
