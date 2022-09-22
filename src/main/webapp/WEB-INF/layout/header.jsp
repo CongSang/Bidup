@@ -164,6 +164,7 @@
                         <div class="menu-active homeMenu"></div>
                     </li>
                     <li class="d-lg-flex d-none nav-item position-relative" style="flex: 1" title="Đấu giá">
+                        <div class="popup-auction position-absolute">Đấu giá</div>
                         <c:url value="/auction" var="auctionUrl" />
                         <a class="nav-link auctionMenu py-3 w-100" href="javascript:;" onclick="homeMenu('home/auction')" id="auctionMenu">
                             <i class="fa-solid fa-gavel desktop-menu-icon"></i>

@@ -79,6 +79,12 @@
     z-index: 10001;
 }
 
+.bided .comment--item:first-child .comment-content {
+    background-color: #dfe06f !important;
+    filter: brightness(110%);
+    box-shadow: 0 4px 8px #efcab3, 0 6px 12px #efcab3;
+}
+
 @keyframes popup {
   0% {
     transform: scale(.8);

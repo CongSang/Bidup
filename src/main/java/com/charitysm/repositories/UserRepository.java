@@ -33,4 +33,6 @@ public interface UserRepository {
     boolean checkFollowed(String followerId, String followedId);
 
     boolean editUserInfo(User u);
+    
+    boolean blockAccount(String userId);
 }

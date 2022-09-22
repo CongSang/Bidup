@@ -72,4 +72,14 @@ public class AuctionServiceImpl implements AuctionService {
         return this.auctionRepository.countAuctionStats(month, year);
     }
 
+    @Override
+    public List<Auction> getAuctionsNoActive() {
+        return this.auctionRepository.getAuctionsNoActive();
+    }
+
+    @Override
+    public boolean acceptAuction(int auctionId) {
+        return this.auctionRepository.acceptAuction(auctionId);
+    }
+
 }

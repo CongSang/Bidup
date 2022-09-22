@@ -72,6 +72,13 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="side-nav-item">
+                            <c:url value="/admin/auction-check" var="cUrl" />
+                            <a href="${cUrl}" class="side-nav-link">
+                                <i class="fa-solid fa-circle-check me-2"></i>
+                                <span>Duyệt bài đấu giá</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>

@@ -90,4 +90,11 @@ public class AdminController {
 
         return "adminReport";
     }
+    
+    @GetMapping("/admin/auction-check")
+    public String acceptAuction(Model model) {
+        model.addAttribute("auctions", this.auctionService.getAuctionsNoActive());
+        
+        return "adminAcceptAuction";
+    }
 }

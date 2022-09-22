@@ -35,4 +35,6 @@ public interface UserService extends UserDetailsService {
     boolean checkFollowed(String followerId, String followedId);
 
     boolean editUserInfo(UserRequest req, String userId);
+    
+    boolean blockAccount(String userId);
 }

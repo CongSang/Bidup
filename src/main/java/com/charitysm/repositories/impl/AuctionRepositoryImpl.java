@@ -67,6 +67,9 @@ public class AuctionRepositoryImpl implements AuctionRepository {
                 Predicate p = b.like(root.get("content").as(String.class), String.format("%%%s%%", contentKw));
                 predicates.add(p);
             }
+            
+            Predicate p = b.equal(root.get("active").as(int.class), 1);
+            predicates.add(p);
 
             q.where(predicates.toArray(Predicate[]::new));
         }
@@ -196,5 +199,29 @@ public class AuctionRepositoryImpl implements AuctionRepository {
 
         Query query = session.createQuery(q);
         return (long) query.getSingleResult();
+    }
+
+    @Override
+    public List<Auction> getAuctionsNoActive() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("FROM Auction a WHERE a.active = 0");
+        
+        return q.getResultList();
+    }
+
+    @Override
+    public boolean acceptAuction(int auctionId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Auction auction = session.get(Auction.class, auctionId);
+            auction.setActive((short)1);
+            session.update(auction);
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            return false;
+        }
     }
 }

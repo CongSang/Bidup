@@ -267,28 +267,20 @@ function auctionItem(auction) {
                             <!--Menu-->
                             <div class="dropdown">
 
-                                ${auction.active == true ?
-            `<a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                    ${(auction.endDate <= Date.now() && !auction.mailTo) ?
-            `<li>
-                                            <div class="dropdown-item cursor-pointer" onclick="confirmWinnerAndSendEmail(${auction.id}, this)">
-                                                Chốt kết quả và gửi email
-                                            </div>
-                                        </li>` : ``}
-                                    ${(auction.endDate <= Date.now() && auction.mailTo) ?
-            `
+                                    ${(auction.endDate <= Date.now()) ?
+                                        `
                                         <li>
-                                            <div class="dropdown-item cursor-pointer" onclick="confirmCompleteCharity(${auction.id})">
-                                                Hoàn thành từ thiện
+                                            <div class="dropdown-item cursor-default">
+                                                Đấu giá đã kết thúc
                                             </div>
                                         </li>
-                                        ` : ``
-            }
+                                        ` : ``}
                                     ${(auction.endDate > Date.now()) ?
-            `<li>
+                                    `<li>
                                         <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                             Chỉnh sửa bài viết
                                         </div>
@@ -299,7 +291,7 @@ function auctionItem(auction) {
                                         </div>
                                     </li>` : ``}
 
-                                </ul>` : ``}
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -310,7 +302,7 @@ function auctionItem(auction) {
 
                         <p class="auction--price mb-1">
                             ${(auction.endDate < Date.now()) ?
-            `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, bấm gửi email xác nhận, kiểm tra thanh toán, thực hiện từ thiện và xác nhận hoàn thành việc từ thiện trong bài viết này, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
+            `<span class="small">Đấu giá đã kết thúc (hãy xem người chiến thắng, nếu người thắng cuộc không thanh toán hãy báo cáo lại cho chúng tôi)
                             <i class="fa-solid fa-triangle-exclamation text-danger"></i>
                             </span>` :
             `Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>`}

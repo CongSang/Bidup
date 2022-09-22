@@ -55,3 +55,71 @@ function solveReportPost(postId, element) {
 function solveReportAuction(auctionId, element) {
     deleteAuction(auctionId, element);
 }
+
+async function deleteReportUser(reportId) {
+    $.ajax({
+        type: 'delete',
+        url: `${ctxPath}/api/delete-report-user/${reportId}`,
+        success: function() {
+            console.log("delete report success");
+        }
+    }).fail((res) => {
+        console.log(res);
+    });
+}
+
+function solveReportUser(userId, reportId, element) {
+    swal({
+        title: "Bạn chắc chắn khóa tài khoản này ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((isAccept) => {
+          if (isAccept) {
+            $.ajax({
+                type: 'put',
+                url: `${ctxPath}/api/block-user/${userId}`,
+                success: function() {
+                    deleteReportUser(reportId);
+                    swal("Đã khóa tài khoản người dùng này", {
+                        icon: "success"
+                    });
+                    $(element).parents('.report-item').remove();
+                }
+            }).fail((res) => {
+                swal("Có lỗi xảy ra. Khóa tài khoản thất bại", {
+                    icon: "warning"
+                    });
+            });
+        }
+    });
+}
+
+function acceptAuction (auctionId, element) {
+    swal({
+        title: "Duyệt bài đấu giá ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((isAccept) => {
+          if (isAccept) {
+            $.ajax({
+                type: 'put',
+                url: `${ctxPath}/api/accept-auction/${auctionId}`,
+                dataType: 'json',
+                success: function() {
+                    swal("Duyệt bài đấu giá thành công", {
+                        icon: "success"
+                    });
+                    $(element).parents('.report-item').remove();
+                }
+            }).fail(() => {
+                swal("Duyệt bài đấu giá thất bại", {
+                    icon: "warning"
+                    });
+            });
+        }
+    });
+}

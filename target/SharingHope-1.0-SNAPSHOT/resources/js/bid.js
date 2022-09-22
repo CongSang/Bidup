@@ -96,6 +96,16 @@ function selectIsWinnerAuction(auctionId, userId, element) {
     }
 }
 
+function unique(arr, data) {
+  var newArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (newArr.indexOf(arr[i]) === -1) {
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
+}
+
 function showBid(element, auctionId) {
     var bidContainer = $(element).parents(`.auction-post-${auctionId}`).find('.auction-user-join');
     var bidAppend = $(bidContainer).find('.bided').empty();
@@ -114,9 +124,15 @@ function showBid(element, auctionId) {
                     return b.money - a.money;
                 });
                 
+                $(bidAppend).append(`${[data[0]].map((bid, index) => {
+                    return bidItem(bid);
+                }).join('')}`);
+                
+                data.shift();
                 $(bidContainer).find('.bid-loading').css("display", "none");
                 let userbid = data.filter(b => b.user.id === currentUserId);
                 let otherBid = data.filter(b => b.user.id !== currentUserId);
+                
                 
                 $(bidAppend).append(`${(userbid).map((bid, index) => {
                     return bidItem(bid);

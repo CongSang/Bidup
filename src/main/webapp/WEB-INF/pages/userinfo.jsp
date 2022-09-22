@@ -194,7 +194,7 @@
                     <form>
                         <select class="form-control">
                             <option value="PAY">Đấu giá nhưng không thanh toán</option>
-                            <option value="WORDS">Dùng từ ngữ không đúng đắn</option>
+                            <option value="WORDS">Sử dụng ngôn từ không phù hợp</option>
                         </select>
 
                         <button type="button" class="btn btn-danger mt-3 ml-auto" onclick="reportUser('${userInfo.id}')">Gửi báo cáo</button>
@@ -304,6 +304,7 @@
         <script src="<c:url value="/resources/js/main.js" />"></script>
         <script src="<c:url value="/resources/js/home.js" />"></script>
         <script src="<c:url value="/resources/js/feeds.js" />"></script>
+        <script src="<c:url value="/resources/js/items.js" />"></script>
         <script src="<c:url value="/resources/js/userPage.js" />"></script>
         <script src="<c:url value="/resources/js/auction.js" />"></script>
         <script src="<c:url value="/resources/js/loadAuctionPage.js" />"></script>

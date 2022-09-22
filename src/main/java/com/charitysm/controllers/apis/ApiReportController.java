@@ -21,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -143,6 +145,17 @@ public class ApiReportController {
             p.setReason(reason);
 
             this.reportService.createUserReport(p);
+        }
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/delete-report-user/{reportId}")
+    public void deleteReportUser(@PathVariable(value="reportId")int reportId, HttpSession session){
+        User currentUser = (User)session.getAttribute("currentUser");
+        
+        if(currentUser.getUserRole().equals("ROLE_ADMIN")) {
+            this.reportService.deleteReportUser(reportId);
         }
     }
 }
