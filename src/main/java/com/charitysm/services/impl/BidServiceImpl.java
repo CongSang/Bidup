@@ -59,20 +59,20 @@ public class BidServiceImpl implements BidService {
                 a.getBidSet().remove(bid);
                 a.getBidSet().forEach(b -> {
                     try {
+                        //update notif of auction competitor
                         NotificationCenter.sendMessage(b.getUser().getId(), new NotifMessage(111, null));
                     } catch (IOException | EncodeException ex) {
                         Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
-                
+                //broadcast to notif users update UI
                 NotificationCenter.broadcast(new NotifMessage(112, bid));
+                //update notif of auction owner
                 NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
                 return bid;
             }
         } catch (IOException | EntityNotFoundException | EncodeException ex) {
-//            if (ex instanceof SQLException)
-//                throw new SQLException("You must bid higher", "50");
-            ex.printStackTrace();
+            Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         return null;
@@ -80,7 +80,23 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public void deleteBid(Bid b) {
-        this.bidRepository.deleteBid(b);
+        if (this.bidRepository.deleteBid(b)) {
+            Auction a = b.getAuction();
+            
+            a.getBidSet().forEach(bid -> {
+                try {
+                    NotificationCenter.sendMessage(bid.getUser().getId(), new NotifMessage(111, null));
+                } catch (IOException | EncodeException ex) {
+                    Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            try {
+                NotificationCenter.broadcast(new NotifMessage(114, b));
+                NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
+            } catch (IOException | EncodeException ex) {
+                Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -89,8 +105,26 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public void updateWinner(Bid b) {
-        this.bidRepository.updateWinner(b);
+    public void updateBid(BidRequest br) {
+        Bid b = this.bidRepository.findBid(br.getUserId(), br.getAuctionId());
+        b.setMoney(br.getMoney());
+        b.setBidDate(new Date());
+        if (this.bidRepository.updateBid(b)) {
+            Auction a = b.getAuction();
+            a.getBidSet().forEach(bid -> {
+                try {
+                    NotificationCenter.sendMessage(bid.getUser().getId(), new NotifMessage(111, null));
+                } catch (IOException | EncodeException ex) {
+                    Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            try {
+                NotificationCenter.broadcast(new NotifMessage(113, b));
+                NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
+            } catch (IOException | EncodeException ex) {
+                Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override

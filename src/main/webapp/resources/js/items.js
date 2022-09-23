@@ -142,16 +142,16 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="${ctxPath}/user/${comment.userId.id}">
-                        <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
-                    </a>
-                </div>
-                <div class="comment--item-content comment--item-content${comment.id}">
+                        <a href="${ctxPath}/user/${comment.userId.id}">
+                            <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                        </a>
+                    </div>
+                    <div class="comment--item-content comment--item-content${comment.id}">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
                             <h6 class="mb-1 me-2 d-flex align-items-center"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}
                                 ${comment.userId.id === postOwnerId ?
-            `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
+                        `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>
                             <small class="comment-date">${moment(comment.commentDate).fromNow()}</small>
                         </div>
@@ -214,28 +214,43 @@ function commentItem(comment, postId) {
 }
 
 function bidItem(bid) {
-    return `<div class="d-flex comment--item py-2 bid-item" id="${bid.user.id}">
-                <div class="me-2">
-                    <a href="${ctxPath}/user/${bid.user.id}">
-                        <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
-                    </a>
-                </div>
-                <div class="comment--item-content">
-                    <div class="bg-light comment-content">
-                          <div class="d-flex justify-content-start">
-                              <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
-                              <small>${moment(bid.bidDate).fromNow()}</small>
-                          </div>
-                          <p class="small mb-0">
-                              ${formatMoney(bid.money)}
-                          </p>
+    return `<div class="comment--item py-2 bid-item" id="${bid.auction.id}-${bid.user.id}">
+                <div class="d-flex point">
+                    <div class="me-2">
+                        <a href="${ctxPath}/user/${bid.user.id}">
+                            <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
+                        </a>
                     </div>
-                        <div class="d-flex justify-content-end me-2">
-                            ${(currentUserId === bid.user.id) ?
-                            `<div class="comment-edit" onclick="compete(${bid.auction.id}, this)">Giá mới</div>
-                            <div class="comment-edit" onclick="deleteBid(${bid.auction.id}, this)">Hủy tham gia</div>` : ``}
+                    <div class="comment--item-content">
+                        <div class="bg-light comment-content">
+                              <div class="d-flex justify-content-start">
+                                  <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
+                                  <small>${moment(bid.bidDate).fromNow()}</small>
+                              </div>
+                              <p class="small mb-0">
+                                  ${formatMoney(bid.money)}
+                              </p>
+                        </div>
+                            <div class="d-flex justify-content-end me-2">
+                                ${(currentUserId === bid.user.id) ?
+                                `<div class="comment-edit" onclick="showFormUpPrice(${bid.auction.id}, '${bid.user.id}')">Giá mới</div>
+                                <div class="comment-edit" onclick="deleteBid(${bid.auction.id}, this)">Hủy tham gia</div>` : ``}
+                        </div>
+                    </div>
+                    <div class="up-price-icon">
+                        ${(currentUserId === bid.user.id) ? 
+                        `<i class="fa-solid fa-caret-up cursor-pointer" 
+                            onclick="quickUpPrice(${bid.auction.id}, '${bid.user.id}')"></i>` : ``}
                     </div>
                 </div>
+                <div class="commentFormReply position-relative my-2 new-price-form">
+                    <form class="w-100" onsubmit="newPrice(${bid.auction.id}, '${bid.user.id}', this)">
+                        <input type="number" name="bidValue" autocomplete="off" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
+                        <span class="text-danger err-validate" style="display: none">Vui lòng đặt giá cao hơn</span>
+                    </form>
+                    <div class="point-to-formReply"></div>
+                </div>
+                <param id="money" value="${bid.money}"/>
             </div>`;
 }
 

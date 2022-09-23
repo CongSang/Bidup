@@ -85,6 +85,23 @@
     box-shadow: 0 4px 8px #efcab3, 0 6px 12px #efcab3;
 }
 
+.bided .comment--item:first-child .up-price-icon {
+    display: none;
+}
+
+.up-price-icon {
+    margin-top: 3vh;
+}
+
+.up-price-icon > i {
+    font-size: 30px;
+    color: darkgray;
+}
+
+.new-price-form {
+    margin-left: 2.7rem;
+}
+
 @keyframes popup {
   0% {
     transform: scale(.8);

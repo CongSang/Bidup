@@ -5,27 +5,44 @@ $(function () {
     
     pushSocket.onmessage = function (event) {
         const data = JSON.parse(event.data);
-        if (data.code === 111) {
-            $('.list-notification').empty();
-            notifPage = 1;
-            getNotifs();
-        }
-        else if (data.code === 112) {
-            $('.list-notification').empty();
-            notifPage = 1;
-            updateCount(data.data.auction.id, 1);
-            
-            if($(`.auction-post-${data.data.auction.id}`)
-                    .find('.auction-user-join').hasClass('show')
-                && data.data.user.id !== currentUserId) {
-                if ($(`.auction-post-${data.data.auction.id}`)
-                        .find(`.bided #${currentUserId}`).length > 0) {
-                        console.log("chinh sua realtime");
-                    }
-                else {
-                    $(`.auction-post-${data.data.auction.id}`)
-                        .find('.bided').prepend(bidItem(data.data));
+        switch(data.code) {
+            case 111: {
+                $('.list-notification').empty();
+                notifPage = 1;
+                getNotifs();
+                
+                break;
+            }
+            case 112: {
+                updateCount(data.data.auction.id, 1);
+                const auction = $(`.auction-post-${data.data.auction.id}`);
+
+                if(auction !== undefined) {
+                    auction.find('.bided').prepend(bidItem(data.data));
                 }
+                
+                break;
+            }
+            case 113: {
+                const bid = $(`#${data.data.auction.id}-${data.data.user.id}`);
+                const auction = $(`.auction-post-${data.data.auction.id}`);
+                
+                if (bid !== undefined) {
+                    bid.remove();
+                    auction.find('.bided').prepend(bidItem(data.data));
+                }
+                    
+                break;
+            }
+            case 114: {
+                updateCount(data.data.auction.id, 0);
+                
+                const bid = $(`#${data.data.auction.id}-${data.data.user.id}`);
+                if (bid !== undefined) {
+                    bid.remove();
+                }
+                
+                break;
             }
         }
     };

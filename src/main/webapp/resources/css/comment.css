@@ -82,10 +82,10 @@
 
 .commentFormReply .point-to-formReply {
     width: 22px;
-    height: 60px;
+    height: 40px;
     background-color: transparent;
     position: absolute;
-    top: -42px;
+    top: -22px;
     left: -26px;
     border-bottom-left-radius: 10px;
     border-bottom: 2px solid #c7cacb;

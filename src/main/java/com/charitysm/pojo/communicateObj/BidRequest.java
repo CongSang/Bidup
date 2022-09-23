@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class BidRequest implements Serializable {
     private long money;
     private int auctionId;
+    private String userId;
 
     public BidRequest() {
     }
@@ -43,6 +44,20 @@ public class BidRequest implements Serializable {
      */
     public void setAuctionId(int auctionId) {
         this.auctionId = auctionId;
+    }
+
+    /**
+     * @return the userId
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     
 }

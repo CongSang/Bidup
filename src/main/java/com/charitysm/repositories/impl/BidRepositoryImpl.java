@@ -34,12 +34,14 @@ public class BidRepositoryImpl implements BidRepository {
     }
 
     @Override
-    public void deleteBid(Bid b) {
+    public boolean deleteBid(Bid b) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.delete(b);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -54,12 +56,14 @@ public class BidRepositoryImpl implements BidRepository {
     }
 
     @Override
-    public void updateWinner(Bid b) {
+    public boolean updateBid(Bid b) {
         Session session = sessionFactory.getObject().getCurrentSession();
         try {
             session.update(b);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
