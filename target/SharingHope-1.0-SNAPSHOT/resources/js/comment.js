@@ -181,8 +181,6 @@ function loadComment(postId) {
         });
 }
 
-
-
 function likedComment(commentItemId) {
     let cItem = $(`#commentItem${commentItemId}`);
     let likeBtn = cItem.find(`.comment-like${commentItemId}`);

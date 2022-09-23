@@ -6,7 +6,7 @@ package com.charitysm.services;
 
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.CommentRequest;
+import com.charitysm.pojo.communicateObj.CommentRequest;
 import java.math.BigInteger;
 import java.util.List;
 

@@ -10,11 +10,15 @@ import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactComment;
 import com.charitysm.pojo.ReactCommentPK;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.communicateObj.NotifMessage;
 import com.charitysm.repositories.ReactRepository;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.ReactService;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityNotFoundException;
+import javax.websocket.EncodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +36,16 @@ public class ReactServiceImpl implements ReactService {
 
     @Override
     public boolean createReact(React r) {
-        return this.reactRepository.createReact(r);
+        try {
+            if (this.reactRepository.createReact(r) == true) {
+                NotificationCenter.sendMessage(r.getPost().getUserId().getId(), new NotifMessage(111, null));
+                return true;
+            }
+        } catch (IOException | EncodeException ex) {
+            Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        return false;
     }
 
     @Override
@@ -59,11 +72,11 @@ public class ReactServiceImpl implements ReactService {
             react.setUser(u);
 
             if (this.reactRepository.createReactComment(react) == true) {
-                NotificationCenter.sendMessage(c.getUserId().getId());
+                NotificationCenter.sendMessage(c.getUserId().getId(), new NotifMessage(111, null));
             }
-        } catch (IOException | EntityNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        } catch (IOException | EntityNotFoundException | EncodeException ex) {
+            Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.charitysm.pojo.ReportPost;
 import com.charitysm.pojo.ReportUser;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.enumtype.ReportType;
-import com.charitysm.pojo.reobj.ReportRequest;
+import com.charitysm.pojo.communicateObj.ReportRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.ReportService;

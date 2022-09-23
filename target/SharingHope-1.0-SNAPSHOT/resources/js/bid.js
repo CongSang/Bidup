@@ -20,8 +20,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
                $(formEl).parents('.post').find('#bidForm').addClass("hide");
                
                const bided = $(formEl).parents('.post').find('.bided');
-               bided.prepend(bidItem(data));
-               updateCount(currentAuctionId, 1);
+//               bided.prepend(bidItem(data));
                
            },
            statusCode: {
@@ -64,8 +63,8 @@ function deleteBid(auctionId, element) {
                     $(`.auction-post-${auctionId}`)
                             .find('#bidForm')
                             .removeClass('hide');
-                            updateCount(auctionId, 0);
-                    bid.remove();
+//                            updateCount(auctionId, 0);
+//                    bid.remove();
                     
                 }
              });
@@ -73,17 +72,39 @@ function deleteBid(auctionId, element) {
      });
 }
 
-function updateBid(auctionId, userId) {
+function quickUpPrice(auctionId, userId) {
+    let money = $(`.auction-post-${auctionId} .bided .comment--item:first-child #money`).val();
+    updateBid(parseInt(money) + minimumUp, auctionId, userId);
+}
+
+function newPrice(auctionId, userId, form) {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const money = formData.get('bidValue');
+    
+    updateBid(money, auctionId, userId);
+}
+
+function updateBid(money, auctionId, userId) {
     $.ajax({
-            type: 'put',
-            url: `${ctxPath}/api/update-bid/${userId}`,
-            data: JSON.stringify({
-                'auctionId': auctionId,
-                'money': ''
-            }),
-            dataType : 'json',
-            contentType : 'application/json'
-        });
+        type: 'put',
+        url: `${ctxPath}/api/update-bid`,
+        data: JSON.stringify({
+            userId: userId,
+            auctionId: auctionId,
+            money: money
+        }),
+        dataType : 'json',
+        contentType : 'application/json'
+    });
+}
+
+function showFormUpPrice(auctionId, userId) {
+    const form = $(`#${auctionId}-${userId} .new-price-form`);
+    if(form.hasClass('form-reply-is-show'))
+        form.removeClass('form-reply-is-show');
+    else
+        form.addClass('form-reply-is-show');
 }
 
 function selectIsWinnerAuction(auctionId, userId, element) {
@@ -120,30 +141,34 @@ function showBid(element, auctionId) {
             url: `${ctxPath}/api/get-bids/` + auctionId,
             dataType: 'json',
             success: function (data) {
+                $(bidContainer).find('.bid-loading').css("display", "none");
                 data.sort(function (a, b) {
                     return b.money - a.money;
                 });
                 
-                $(bidAppend).append(`${[data[0]].map((bid, index) => {
+//                $(bidAppend).append(`${[data[0]].map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`);
+//              
+                
+//                $(bidAppend).append(`${(data).map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`);
+                
+//                data.shift();
+//                let userbid = data.filter(b => b.user.id === currentUserId);
+//                let otherBid = data.filter(b => b.user.id !== currentUserId);
+//                
+                $(bidAppend).append(`${(data).map((bid, index) => {
                     return bidItem(bid);
                 }).join('')}`);
                 
-                data.shift();
-                $(bidContainer).find('.bid-loading').css("display", "none");
-                let userbid = data.filter(b => b.user.id === currentUserId);
-                let otherBid = data.filter(b => b.user.id !== currentUserId);
-                
-                
-                $(bidAppend).append(`${(userbid).map((bid, index) => {
-                    return bidItem(bid);
-                }).join('')}`);
-                
-                 $(bidAppend).append(`${(otherBid).map((bid, index) => {
-                    return bidItem(bid);
-                }).join('')}`); 
+//                 $(bidAppend).append(`${(otherBid).map((bid, index) => {
+//                    return bidItem(bid);
+//                }).join('')}`); 
             }
         }).done(function() {
-            if (bidAppend.find(`#${currentUserId}`).length) 
+            if (bidAppend.find(`#${auctionId}-${currentUserId}`).length) 
                 $(bidContainer).find('#bidForm').addClass("hide");
         });
     }

@@ -5,7 +5,7 @@
 package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.NotificationResponse;
+import com.charitysm.pojo.communicateObj.NotificationResponse;
 import com.charitysm.services.NotificationService;
 import java.util.List;
 import java.util.Map;

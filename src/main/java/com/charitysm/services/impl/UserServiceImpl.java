@@ -5,7 +5,7 @@
 package com.charitysm.services.impl;
 
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.UserRequest;
+import com.charitysm.pojo.communicateObj.UserRequest;
 import com.charitysm.repositories.UserRepository;
 import com.charitysm.services.UserService;
 import com.cloudinary.Cloudinary;

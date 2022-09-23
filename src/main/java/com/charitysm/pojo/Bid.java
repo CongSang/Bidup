@@ -54,7 +54,7 @@ public class Bid implements Serializable {
     @NotNull
     @Column(name = "bid_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date bidDate;
+    private Date bidDate = new Date();
     @Column(name = "is_winner")
     private Short isWinner;
     @JoinColumn(name = "auction_id", referencedColumnName = "id", insertable = false, updatable = false)

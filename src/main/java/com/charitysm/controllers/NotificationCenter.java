@@ -4,9 +4,12 @@
  */
 package com.charitysm.controllers;
 
+import com.charitysm.pojo.communicateObj.NotifMessage;
+import com.charitysm.utils.NotifMessageEncoder;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -17,15 +20,15 @@ import javax.websocket.server.ServerEndpoint;
  *
  * @author ADMIN
  */
-@ServerEndpoint("/notification/{userId}")
+@ServerEndpoint(value = "/notification/{userId}",
+                encoders = NotifMessageEncoder.class)
 public class NotificationCenter {
 
     private static Map<String, Session> sessions = new HashMap<>();
 
     @OnOpen
     public void onOpen(@PathParam("userId") String userId,
-            Session session) throws IOException {
-        session.getBasicRemote().sendText(userId + "Subscribed");
+            Session session) throws IOException, EncodeException {
         session.getUserProperties().put("userId", userId);
         sessions.put(userId, session);
     }
@@ -35,11 +38,11 @@ public class NotificationCenter {
         session.getBasicRemote().sendText("bye bye from Sharing Hope");
         sessions.remove(userId);
     }
-
-    public static void sendMessage(String userId) throws IOException {
+    
+    public static void sendMessage(String userId, Object message) throws IOException, EncodeException {
         Session targetSession = getSessions().get(userId);
         if (targetSession != null && targetSession.isOpen()) {
-            targetSession.getBasicRemote().sendText("update_notif");
+            targetSession.getBasicRemote().sendObject(message);
         }
         else
         {
@@ -47,14 +50,13 @@ public class NotificationCenter {
         }
     }
     
-    public static void sendMessage(String userId, String message) throws IOException {
-        Session targetSession = getSessions().get(userId);
-        if (targetSession != null && targetSession.isOpen()) {
-            targetSession.getBasicRemote().sendText(message);
-        }
-        else
-        {
-            sessions.remove(userId);
+    public static void broadcast(Object message) throws IOException, EncodeException {
+        for (Map.Entry<String, Session> entry : sessions.entrySet()){
+            Session s = entry.getValue();
+            if(s.isOpen())
+                s.getBasicRemote().sendObject(message);
+            else
+                sessions.remove(entry.getKey());
         }
     }
 

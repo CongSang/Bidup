@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS sp_updateCompeteAuctionNotif;
 DELIMITER $
 CREATE PROCEDURE sp_updateCompeteAuctionNotif(IN userId varchar(50), IN auction_id int)
 BEGIN
+	DECLARE count int;
 	DECLARE owner_id varchar(50);
     DECLARE done boolean default false;
     DECLARE cursor_list CURSOR FOR
@@ -32,6 +33,12 @@ BEGIN
                     AND user_id=owner_id
                     AND user_id!=userId;
 			END IF;
+            
+            SELECT (SELECT COUNT(id) FROM post_notif WHERE user_id=owner_id GROUP BY user_id) INTO count;
+			IF count > 30 THEN
+				DELETE FROM post_notif
+				WHERE id in (SELECT fn_oldest_post_notif(owner_id));
+			END IF; 
 		END IF;
 	UNTIL done END REPEAT;
 	CLOSE cursor_list;

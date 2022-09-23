@@ -98,8 +98,9 @@ public class AuctionRepositoryImpl implements AuctionRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         Query q = session.createNamedQuery("Auction.findById");
         q.setParameter("id", id);
-
-        return (Auction) q.getSingleResult();
+        Auction rs =(Auction) q.getSingleResult();
+        rs.setBidSetLength(rs.getBidSet().size());
+        return rs;
     }
 
     @Override

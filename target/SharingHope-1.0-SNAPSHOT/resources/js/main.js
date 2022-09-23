@@ -1,5 +1,6 @@
 var ctxPath = '/SharingHope';
 var currentUserId = "a";
+var minimumUp = 100000;
 var loca = window.location.pathname;
 var timer = null;
 var xhr;

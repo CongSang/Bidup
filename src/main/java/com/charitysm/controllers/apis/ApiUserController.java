@@ -7,7 +7,7 @@ package com.charitysm.controllers.apis;
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.UserRequest;
+import com.charitysm.pojo.communicateObj.UserRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.PostService;
 import com.charitysm.services.UserService;

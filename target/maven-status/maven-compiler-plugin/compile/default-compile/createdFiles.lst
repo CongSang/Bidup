@@ -1,6 +1,4 @@
-com\charitysm\pojo\reobj\AuctionRequest.class
 com\charitysm\controllers\apis\ApiUserController.class
-com\charitysm\pojo\reobj\CommentRequest.class
 com\charitysm\services\AuctionService.class
 com\charitysm\controllers\apis\ApiAuctionController.class
 com\charitysm\services\NotificationService.class
@@ -9,7 +7,6 @@ com\charitysm\repositories\CommentRepository.class
 com\charitysm\controllers\SearchController.class
 com\charitysm\repositories\ReportRepository.class
 com\charitysm\services\impl\ReactServiceImpl.class
-com\charitysm\pojo\reobj\UserRequest.class
 com\charitysm\services\CommentService.class
 com\charitysm\controllers\IndexController.class
 com\charitysm\pojo\Post.class
@@ -17,7 +14,6 @@ com\charitysm\services\PostService.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\pojo\User_.class
 com\charitysm\pojo\enumtype\NotifType.class
-com\charitysm\pojo\reobj\ReportRequest.class
 com\charitysm\pojo\enumtype\ReportType$3.class
 com\charitysm\pojo\base\NotifBase.class
 com\charitysm\repositories\impl\PostRepositoryImpl.class
@@ -69,7 +65,6 @@ com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\configs\UtilsConfig.class
 com\charitysm\controllers\NotificationCenter.class
 com\charitysm\repositories\impl\UserRepositoryImpl.class
-com\charitysm\pojo\reobj\BidRequest.class
 com\charitysm\configs\SecurityConfig.class
 com\charitysm\pojo\base\ReportBase.class
 com\charitysm\repositories\AuctionRepository.class
@@ -81,7 +76,6 @@ com\charitysm\controllers\apis\ApiPostController.class
 com\charitysm\pojo\Post_.class
 com\charitysm\pojo\ReportUser.class
 com\charitysm\pojo\ReactPK_.class
-com\charitysm\pojo\reobj\NotificationResponse.class
 com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\controllers\apis\ApiReportController.class
 com\charitysm\pojo\React_.class
@@ -109,8 +103,6 @@ com\charitysm\pojo\enumtype\ReportType$5.class
 com\charitysm\repositories\ReactRepository.class
 com\charitysm\controllers\UserInfoController.class
 com\charitysm\controllers\AdminController.class
-com\charitysm\pojo\reobj\FileUploadResponse.class
 com\charitysm\controllers\apis\APICommentController.class
 com\charitysm\controllers\AuctionController.class
 com\charitysm\pojo\Auction_.class
-com\charitysm\pojo\reobj\PostRequest.class

@@ -295,6 +295,7 @@
 <script>
     $(function () {
         currentUserId = '${sessionScope.currentUser.getId()}';
+        getNotifs();
     });
 </script>
 <script src="<c:url value="/resources/js/websocket.js"/>"></script>

@@ -6,9 +6,9 @@ package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
-import com.charitysm.pojo.reobj.BidRequest;
+import com.charitysm.pojo.communicateObj.BidRequest;
 import com.charitysm.pojo.User;
-import com.charitysm.pojo.reobj.AuctionRequest;
+import com.charitysm.pojo.communicateObj.AuctionRequest;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
 import com.cloudinary.Cloudinary;
@@ -260,20 +260,15 @@ public class ApiAuctionController {
     }
 
     @Async
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/update-bid/{userId}")
-    public void updateBid(@RequestBody BidRequest br, @PathVariable(value = "userId") String userId) {
-        Bid b = this.bidService.findBid(userId, br.getAuctionId());
-
-        if (b != null) {
-            if (b.getIsWinner() == 0) {
-                b.setIsWinner((short) 1);
-            } else {
-                b.setIsWinner((short) 0);
-            }
-
-            this.bidService.updateWinner(b);
-        }
+    @PutMapping("/update-bid")
+    public ResponseEntity updateBid(@RequestBody BidRequest br, HttpSession session) {
+        User u = (User) session.getAttribute("currentUser");
+        if (!u.getId().equals(br.getUserId()))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        
+        this.bidService.updateBid(br);
+        
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @Async
