@@ -49,6 +49,7 @@ $(function () {
     
     pushSocket.onopen = function (event) {
         //send empty message to initialize socket connnection
+        minimumUp = loadMinimumUp();
         pushSocket.send("");
     };
 

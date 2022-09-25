@@ -5,6 +5,7 @@
 package com.charitysm.repositories;
 
 import com.charitysm.pojo.Auction;
+import com.charitysm.pojo.communicateObj.Config;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +38,10 @@ public interface AuctionRepository {
     List<Auction> getAuctionsNoActive();
     
     boolean acceptAuction(int auctionId);
+    
+    long getMinimum();
+    
+    List<Config> getConfig();
+    
+    boolean updateConfig(Config c);
 }

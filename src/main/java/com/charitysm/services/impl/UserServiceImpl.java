@@ -91,11 +91,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public long countUserStats(int month, int year) {
-        return this.userRepository.countUserStats(month, year);
-    }
-
-    @Override
     public boolean followUser(String followerId, String followedId) {
         return this.userRepository.followUser(followerId, followedId);
     }
@@ -142,10 +137,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkFollowed(String followerId, String followedId) {
         return this.userRepository.checkFollowed(followerId, followedId);
-    }
-
-    @Override
-    public boolean blockAccount(String userId) {
-        return this.userRepository.blockAccount(userId);
     }
 }

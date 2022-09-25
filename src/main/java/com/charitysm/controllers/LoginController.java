@@ -1,6 +1,6 @@
 package com.charitysm.controllers;
 
-import com.charitysm.controllers.apis.ApiPostController;
+import com.charitysm.controllers.apis.APIPostController;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.FileUploadResponse;
 import com.charitysm.services.UserService;
@@ -79,7 +79,7 @@ public class LoginController {
                     res.setSize(12);
                     user.setAvatar(res.getUrl());
                 } catch (IOException ex) {
-                    Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(APIPostController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 user.setAvatar("https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png");

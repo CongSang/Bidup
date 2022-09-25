@@ -14,7 +14,6 @@ import com.charitysm.services.BidService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,10 +45,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiAuctionController {
+public class APIAuctionController {
 
     @Autowired
-    private AuctionService auctionService;
+    public AuctionService auctionService;
     @Autowired
     private BidService bidService;
     @Autowired
@@ -265,8 +264,13 @@ public class ApiAuctionController {
         User u = (User) session.getAttribute("currentUser");
         if (!u.getId().equals(br.getUserId()))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        
-        this.bidService.updateBid(br);
+        try {
+            this.bidService.updateBid(br);
+        } catch (HibernateJdbcException ex) {
+            if (ex.getSQLException().getSQLState().equals("45001"))
+                return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+
+        }
         
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -276,16 +280,11 @@ public class ApiAuctionController {
     public ResponseEntity<List<Bid>> getBids(@PathVariable(value = "auctionId") int auctionId) {
         return new ResponseEntity<>(this.bidService.getBids(auctionId), HttpStatus.OK);
     }
-
+    
     @Async
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/accept-auction/{auctionId}")
-    public void AcceptAuction(@PathVariable(value = "auctionId") int id,
-            HttpSession session) throws IOException, ParseException {
-        User u = (User) session.getAttribute("currentUser");
-
-        if (u.getUserRole().equals("ROLE_ADMIN")) {
-            this.auctionService.acceptAuction(id);
-        }
+    @GetMapping(value = "/get-minimum-up")
+    public ResponseEntity<Long> getMinimumUp() {
+        return new ResponseEntity<>(this.auctionService.getMinimum(), HttpStatus.OK);
     }
+    
 }

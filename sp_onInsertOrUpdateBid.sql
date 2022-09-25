@@ -15,7 +15,7 @@ BEGIN
     LIMIT 1
     INTO highest;
     
-    SELECT minimum_compete FROM config INTO minimum;
+    SET minimum = CAST((SELECT value FROM config WHERE name='minimum_compete') AS DECIMAL);
     
     IF (moneyBid - highest) < minimum THEN 
 		SIGNAL sqlstate '45001' set message_text = "Bid failed ! You must bid higher !"; 

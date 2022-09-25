@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiUserController {
+public class APIUserController {
     
     @Autowired
     private AuctionService auctionService;
@@ -94,18 +94,6 @@ public class ApiUserController {
         
         if (u.getId().equals(userId)) {
             this.userService.editUserInfo(req, userId);
-        }
-    }
-    
-    @Async
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/block-user/{userId}")
-    public void blockUser(@PathVariable(value="userId") String userId,
-            HttpSession session) throws IOException {
-        User u = (User)session.getAttribute("currentUser");
-        
-        if (u.getUserRole().equals("ROLE_ADMIN")) {
-            this.userService.blockAccount(userId);
         }
     }
 }

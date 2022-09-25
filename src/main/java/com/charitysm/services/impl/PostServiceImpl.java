@@ -28,11 +28,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public long countPostStats(int month, int year) {
-        return this.postRepository.countPostStats(month, year);
-    }
-
-    @Override
     public Post getPostById(int id) {
         return this.postRepository.getPostById(id);
     }

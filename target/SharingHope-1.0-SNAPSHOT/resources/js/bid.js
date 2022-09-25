@@ -95,7 +95,13 @@ function updateBid(money, auctionId, userId) {
             money: money
         }),
         dataType : 'json',
-        contentType : 'application/json'
+        contentType : 'application/json',
+        statusCode: {
+            406: function(xhr) {
+                $(`#${auctionId}-${userId} .err-validate`).css("display", "block");
+                $(`#${auctionId}-${userId} .err-validate`).text('Vui lòng đặt giá cao hơn!');
+            }
+        }
     });
 }
 
@@ -146,26 +152,9 @@ function showBid(element, auctionId) {
                     return b.money - a.money;
                 });
                 
-//                $(bidAppend).append(`${[data[0]].map((bid, index) => {
-//                    return bidItem(bid);
-//                }).join('')}`);
-//              
-                
-//                $(bidAppend).append(`${(data).map((bid, index) => {
-//                    return bidItem(bid);
-//                }).join('')}`);
-                
-//                data.shift();
-//                let userbid = data.filter(b => b.user.id === currentUserId);
-//                let otherBid = data.filter(b => b.user.id !== currentUserId);
-//                
                 $(bidAppend).append(`${(data).map((bid, index) => {
                     return bidItem(bid);
                 }).join('')}`);
-                
-//                 $(bidAppend).append(`${(otherBid).map((bid, index) => {
-//                    return bidItem(bid);
-//                }).join('')}`); 
             }
         }).done(function() {
             if (bidAppend.find(`#${auctionId}-${currentUserId}`).length) 

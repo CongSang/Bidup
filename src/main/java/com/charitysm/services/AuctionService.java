@@ -31,10 +31,8 @@ public interface AuctionService {
     void sendEmailAuction(Auction a);
 
     List<Auction> getUserAuction(String userId, int page);
-
-    long countAuctionStats(int month, int year);
     
     List<Auction> getAuctionsNoActive();
     
-    boolean acceptAuction(int auctionId);
+    long getMinimum();
 }

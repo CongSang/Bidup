@@ -72,6 +72,12 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/pages/adminAcceptAuction.jsp" />
         <put-attribute name="title" value="Duyệt bài đấu giá" />
     </definition>
+    <definition name="configurations" extends="admin">
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/configurations.jsp" />
+        <put-attribute name="title" value="Cấu hình trang web" />
+    </definition>
+    
     <definition name="postPage" extends="baseLayout">
         <put-attribute name="content" 
                        value="/WEB-INF/pages/post.jsp" />

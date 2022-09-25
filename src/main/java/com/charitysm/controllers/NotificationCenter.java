@@ -4,7 +4,6 @@
  */
 package com.charitysm.controllers;
 
-import com.charitysm.pojo.communicateObj.NotifMessage;
 import com.charitysm.utils.NotifMessageEncoder;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value = "/notification/{userId}",
                 encoders = NotifMessageEncoder.class)
 public class NotificationCenter {
-
     private static Map<String, Session> sessions = new HashMap<>();
 
     @OnOpen

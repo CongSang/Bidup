@@ -79,7 +79,7 @@ function solveReportUser(userId, reportId, element) {
           if (isAccept) {
             $.ajax({
                 type: 'put',
-                url: `${ctxPath}/api/block-user/${userId}`,
+                url: `${ctxPath}/admin/api/block-user/${userId}`,
                 success: function() {
                     deleteReportUser(reportId);
                     swal("Đã khóa tài khoản người dùng này", {
@@ -107,7 +107,7 @@ function acceptAuction (auctionId, element) {
           if (isAccept) {
             $.ajax({
                 type: 'put',
-                url: `${ctxPath}/api/accept-auction/${auctionId}`,
+                url: `${ctxPath}/admin/api/accept-auction/${auctionId}`,
                 dataType: 'json',
                 success: function() {
                     swal("Duyệt bài đấu giá thành công", {
@@ -123,3 +123,35 @@ function acceptAuction (auctionId, element) {
         }
     });
 }
+
+function updateConfig(element) {
+    const input = $(element);
+    
+    $.ajax({
+        type: 'put',
+        url: `${ctxPath}/admin/api/update-config`,
+        data: JSON.stringify({
+            name: input.attr('id'),
+            value: input.val() + "",
+            description: ''
+        }),
+        contentType: 'application/json',
+        success: function() {
+            swal("Cập nhật thành công", {
+                icon: "success"
+            });
+        }
+    }).fail(() => {
+        swal("Cập nhật thất bại", {
+            icon: "warning"
+        });
+    });
+}
+
+$('.config-item').keydown(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+        
+	if(keycode === 13){
+            this.blur();
+	}
+});

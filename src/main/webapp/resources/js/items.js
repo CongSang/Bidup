@@ -363,7 +363,9 @@ function auctionItem(auction) {
                             <div class="text-center mt-3 bid-loading" style="display:none;">
                                 <div class="spinner-border text-muted"></div>
                             </div>
-                            <div class="bided"></div>
+                            <div class="bided">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>

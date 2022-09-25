@@ -79,6 +79,13 @@
                                 <span>Duyệt bài đấu giá</span>
                             </a>
                         </li>
+                        <li class="side-nav-item">
+                            <c:url value="/admin/configurations" var="cUrl" />
+                            <a href="${cUrl}" class="side-nav-link">
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Cấu hình trang web</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>

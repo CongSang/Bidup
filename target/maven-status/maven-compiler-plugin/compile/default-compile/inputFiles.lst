@@ -4,7 +4,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\communicateObj\Not
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\ReactRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\communicateObj\AuctionRequest.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\ReactServiceImpl.java
-D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\ApiAuctionController.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\APIAuctionController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\UniqueEmailValidator.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\SearchController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\UserServiceImpl.java
@@ -18,6 +18,8 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\PostNotif.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\BidRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReportPost.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\CommentRepository.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\communicateObj\Config.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\AdminServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\Base.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\PostServiceImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\ReportServiceImpl.java
@@ -25,11 +27,12 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\NotificationSe
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\NotifBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\PostService.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\BidRepositoryImpl.java
-D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\ApiReportController.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\APIReportController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\NotificationRepositoryImpl.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\LoginController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\impl\CommentRepositoryImpl.java
-D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\ApiUserController.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\AdminService.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\APIUserController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\communicateObj\FileUploadResponse.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\UtilsConfig.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\BidServiceImpl.java
@@ -57,7 +60,7 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\ReportService.
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\User.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\utils\NotifMessageEncoder.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\AdminController.java
-D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\ApiPostController.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\APIPostController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\ReactCommentPK.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\base\ReactBase.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\services\impl\CommentServiceImpl.java
@@ -89,4 +92,5 @@ D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\PostReposi
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\pojo\Auction.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\repositories\ReportRepository.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\configs\TilesConfig.java
+D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\apis\APIAdminController.java
 D:\Java\Projects\SharingHope\src\main\java\com\charitysm\controllers\AuctionController.java
