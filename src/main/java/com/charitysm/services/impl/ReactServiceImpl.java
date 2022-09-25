@@ -84,9 +84,4 @@ public class ReactServiceImpl implements ReactService {
         this.reactRepository.deleteReactComment(userId, commentId);
     }
 
-    @Override
-    public long countReactStats(int month, int year) {
-        return this.reactRepository.countReactStats(month, year);
-    }
-
 }

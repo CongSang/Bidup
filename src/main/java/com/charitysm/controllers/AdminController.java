@@ -4,6 +4,7 @@
  */
 package com.charitysm.controllers;
 
+import com.charitysm.services.AdminService;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.CommentService;
 import com.charitysm.services.PostService;
@@ -23,31 +24,24 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class AdminController {
-
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private AuctionService auctionService;
     @Autowired
-    private ReactService reactService;
-    @Autowired
-    private CommentService commentService;
-    @Autowired
     private ReportService reportService;
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/admin")
     public String admin(Model model,
             @RequestParam(value = "month", required = false, defaultValue = "0") int month,
             @RequestParam(value = "year", defaultValue = "2022") int year) {
 
-        model.addAttribute("postCount", this.postService.countPostStats(month, year));
-        model.addAttribute("userCount", this.userService.countUserStats(month, year));
-        model.addAttribute("auctionCount", this.auctionService.countAuctionStats(month, year));
-        model.addAttribute("reactCount", this.reactService.countReactStats(month, year));
-        model.addAttribute("commentCount", this.commentService.countCommentStats(month, year));
-        model.addAttribute("reportUserCount", this.reportService.countReportUserStats(month, year));
+        model.addAttribute("postCount", this.adminService.countPostStats(month, year));
+        model.addAttribute("userCount", this.adminService.countUserStats(month, year));
+        model.addAttribute("auctionCount", this.adminService.countAuctionStats(month, year));
+        model.addAttribute("reactCount", this.adminService.countReactStats(month, year));
+        model.addAttribute("commentCount", this.adminService.countCommentStats(month, year));
+        model.addAttribute("reportUserCount", this.adminService.countReportUserStats(month, year));
 
         model.addAttribute("currentYear", Year.now().getValue());
         model.addAttribute("year", year);
@@ -96,5 +90,13 @@ public class AdminController {
         model.addAttribute("auctions", this.auctionService.getAuctionsNoActive());
         
         return "adminAcceptAuction";
+    }
+    
+    @GetMapping("/admin/configurations")
+    public String configurations(Model model) {
+        System.out.println("aa" + this.adminService.getConfig());
+        model.addAttribute("configs", this.adminService.getConfig());
+        
+        return "configurations";
     }
 }

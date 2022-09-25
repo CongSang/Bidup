@@ -128,3 +128,14 @@ function loadFollowPosts() {
         }
     });
 }
+
+function loadMinimumUp(){
+    $.ajax({
+        type: 'get',
+        url: `${ctxPath}/api/get-minimum-up`,
+        dataType: 'json',
+        success: function (data) {
+            minimumUp=data;
+        }
+    });
+}

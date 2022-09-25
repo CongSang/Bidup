@@ -15,7 +15,6 @@ import com.charitysm.repositories.BidRepository;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.BidService;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;

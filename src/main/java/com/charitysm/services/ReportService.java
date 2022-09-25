@@ -21,8 +21,6 @@ public interface ReportService {
 
     void createUserReport(ReportUser report);
 
-    long countReportUserStats(int month, int year);
-
     List<ReportPost> getReportPost(int month, int year);
 
     List<ReportAuction> getReportAuction(int month, int year);

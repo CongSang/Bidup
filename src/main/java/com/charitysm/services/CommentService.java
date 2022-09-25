@@ -28,7 +28,5 @@ public interface CommentService {
 
     List<Comment> getReplies(int commentId, int page);
 
-    long countCommentStats(int month, int year);
-
     Comment editComment(CommentRequest req, int commentId);
 }

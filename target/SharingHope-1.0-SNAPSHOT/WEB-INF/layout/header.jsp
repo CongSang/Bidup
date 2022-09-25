@@ -291,11 +291,10 @@
 <script src="<c:url value="/resources/js/notification.js" />"></script>
 <script src="<c:url value="/resources/js/login.js" />"></script>
 <script type="module" src="<c:url value="/resources/js/chatFireBase/conversation.js" />"></script>
-<script src="<c:url value="/resources/js/chat.js" />"></script>
+<!--<script src="<c:url value="/resources/js/chat.js" />"></script>-->
 <script>
     $(function () {
         currentUserId = '${sessionScope.currentUser.getId()}';
         getNotifs();
     });
 </script>
-<script src="<c:url value="/resources/js/websocket.js"/>"></script>

@@ -5,9 +5,10 @@
 package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.Auction;
-import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
+import com.charitysm.pojo.communicateObj.Config;
 import com.charitysm.repositories.AuctionRepository;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -223,6 +225,45 @@ public class AuctionRepositoryImpl implements AuctionRepository {
             e.printStackTrace();
             
             return false;
+        }
+    }
+
+    @Override
+    public long getMinimum() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("SELECT value FROM config WHERE name='minimum_compete'");
+        Object rs = q.getSingleResult();
+        return Long.parseLong(rs.toString());
+    }
+
+    @Override
+    public List<Config> getConfig() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("SELECT * FROM config");
+        List<Object[]> rs = q.getResultList();
+        List<Config> r = new ArrayList<>();
+        rs.forEach(o -> {
+            r.add(new Config(o[0].toString(), o[1].toString(), o[2].toString()));
+        });
+        
+        return r;
+    }
+
+    @Override
+    public boolean updateConfig(Config c) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Query q = session.createSQLQuery("UPDATE config "
+                    + "SET value=:value "
+                    + "WHERE name=:name");
+            q.setParameter("value", c.getValue());
+            q.setParameter("name", c.getName());
+
+            q.executeUpdate();
+            return true;
+        }
+        catch (HibernateJdbcException ex) {
+           return false;
         }
     }
 }

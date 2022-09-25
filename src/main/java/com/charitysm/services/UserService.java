@@ -24,8 +24,6 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsers(Map<String, String> params, String currentUserId);
 
-    long countUserStats(int month, int year);
-
     boolean isEmailAlreadyInUse(String email);
 
     boolean followUser(String followerId, String followedId);
@@ -35,6 +33,4 @@ public interface UserService extends UserDetailsService {
     boolean checkFollowed(String followerId, String followedId);
 
     boolean editUserInfo(UserRequest req, String userId);
-    
-    boolean blockAccount(String userId);
 }

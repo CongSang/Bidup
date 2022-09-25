@@ -67,10 +67,6 @@ public class AuctionServiceImpl implements AuctionService {
         return this.auctionRepository.getUserAuction(userId, page);
     }
 
-    @Override
-    public long countAuctionStats(int month, int year) {
-        return this.auctionRepository.countAuctionStats(month, year);
-    }
 
     @Override
     public List<Auction> getAuctionsNoActive() {
@@ -78,8 +74,9 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public boolean acceptAuction(int auctionId) {
-        return this.auctionRepository.acceptAuction(auctionId);
+    public long getMinimum() {
+        return this.auctionRepository.getMinimum();
     }
+
 
 }

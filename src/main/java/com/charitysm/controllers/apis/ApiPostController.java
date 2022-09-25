@@ -1,7 +1,6 @@
 
 package com.charitysm.controllers.apis;
 
-import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.communicateObj.FileUploadResponse;
 import com.charitysm.pojo.Post;
 import com.charitysm.pojo.React;
@@ -41,7 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiPostController {
+public class APIPostController {
     @Autowired
     private PostService postService;
     @Autowired
@@ -105,7 +104,7 @@ public class ApiPostController {
             res.setUrl((String) rs.get("secure_url")+ "?public_id="+ rs.get("public_id"));
             res.setSize(12);
         } catch (IOException ex) {
-            Logger.getLogger(ApiPostController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(APIPostController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(res, HttpStatus.UNPROCESSABLE_ENTITY);
         }
         

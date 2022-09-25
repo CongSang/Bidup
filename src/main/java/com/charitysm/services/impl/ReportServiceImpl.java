@@ -39,11 +39,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public long countReportUserStats(int month, int year) {
-        return this.reportRepository.countReportUserStats(month, year);
-    }
-
-    @Override
     public List<ReportPost> getReportPost(int month, int year) {
         return this.reportRepository.getReportPost(month, year);
     }
