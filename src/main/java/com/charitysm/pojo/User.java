@@ -4,9 +4,12 @@
  */
 package com.charitysm.pojo;
 
+import com.charitysm.pojo.communicateObj.UserRequest;
 import com.charitysm.utils.UniqueEmail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -30,6 +33,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -146,16 +151,16 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
     private Set<PostNotif> postNotifSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userId")
     @JsonIgnore
     private Set<Comment> commentSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
     @JsonIgnore
     private Set<React> reactSet;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore
     private Set<ReactComment> reactCommentSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     @JsonIgnore
     private Set<Bid> bidSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -169,6 +174,21 @@ public class User implements Serializable {
     private boolean isFollowed;
 
     public User() {
+    }
+    
+    public User(UserRequest req) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        this.email = req.getEmail();
+        this.firstname = req.getEmail();
+        this.lastname = req.getEmail();
+        this.birthdate = format.parse(req.getBirthdate());
+        this.createdDate = new Date();
+        this.userRole = req.getUserRole().toString();
+        this.address = req.getAddress();
+        this.hometown = req.getHometown();
+        this.job = req.getJob();
+        this.phone = req.getPhone();
+        this.active = req.getActive();
     }
 
     public User(String id) {

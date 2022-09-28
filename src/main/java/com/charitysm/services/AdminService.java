@@ -4,8 +4,11 @@
  */
 package com.charitysm.services;
 
+import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.Config;
+import com.charitysm.pojo.communicateObj.UserRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -31,4 +34,12 @@ public interface AdminService {
     long countUserStats(int month, int year);
     
     boolean blockAccount(String userId);
+    
+    boolean enableAccount(String userId);
+    
+    List<User> getUsers(Map<String, String> params);
+    
+    public boolean deleteUser(String userId);
+    
+    public User addUser(UserRequest req);
 }

@@ -68,6 +68,12 @@ public class APIUserController {
     }
     
     @Async
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUser(@PathVariable(value="id") String id) {
+        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
+    }
+    
+    @Async
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/follow-user/{userId}")
     public void followUser(@PathVariable(value="userId")String userId, HttpSession session){
@@ -92,7 +98,7 @@ public class APIUserController {
             , @RequestBody UserRequest req, HttpSession session) throws IOException {
         User u = (User)session.getAttribute("currentUser");
         
-        if (u.getId().equals(userId)) {
+        if (u.getId().equals(userId) || u.getUserRole().equals("ROLE_ADMIN")) {
             this.userService.editUserInfo(req, userId);
         }
     }

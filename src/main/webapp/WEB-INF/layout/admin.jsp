@@ -21,6 +21,8 @@
         <link href="${globalCss}" rel="stylesheet" />
         <link href="${mainCss}" rel="stylesheet" />
         <link href="<c:url value="/resources/css/admin.css" />" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" />
+        <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet" />
         <link href="<c:url value="/resources/css/notification.css" />" rel="stylesheet" />
     </head>
     <body>
@@ -86,6 +88,13 @@
                                 <span>Cấu hình trang web</span>
                             </a>
                         </li>
+                        <li class="side-nav-item">
+                            <c:url value="/admin/user-list" var="cUrl" />
+                            <a href="${cUrl}" class="side-nav-link">
+                                <i class="fa-solid fa-user-group"></i>
+                                <span>Danh sách người dùng</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>
@@ -118,5 +127,7 @@
         <script src="<c:url value="/resources/js/admin.js" />"></script>
         <script src="<c:url value="/resources/js/search.js" />"></script>
         <script src="<c:url value="/resources/js/chat.js" />"></script>
+        <script src="<c:url value="/resources/js/userPage.js" />"></script>
+        <script src="<c:url value="/resources/js/items.js" />"></script>
     </body>
 </html>

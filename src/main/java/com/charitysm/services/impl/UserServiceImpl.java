@@ -6,6 +6,7 @@ package com.charitysm.services.impl;
 
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.UserRequest;
+import com.charitysm.pojo.enumtype.UserRole;
 import com.charitysm.repositories.UserRepository;
 import com.charitysm.services.UserService;
 import com.cloudinary.Cloudinary;
@@ -25,6 +26,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -105,6 +109,8 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.getUserById(userId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
+            if(req.getEmail()!= null) user.setEmail(req.getEmail());
+            if(req.getPassword() != null) user.setPassword(passwordEncoder.encode(req.getPassword()));
             if(req.getFirstname() != null) user.setFirstname(req.getFirstname());
             if(req.getLastname() != null) user.setLastname(req.getLastname());
             if(req.getBirthdate() != null) {
@@ -116,6 +122,9 @@ public class UserServiceImpl implements UserService {
             if(req.getJob() != null) user.setJob(req.getJob());
             if(req.getEmail() != null) user.setEmail(req.getEmail());
             if(req.getPhone() != null) user.setPhone(req.getPhone());
+            if(req.getActive()!= null) user.setActive(req.getActive());
+            if(req.getUserRole() != null) 
+                user.setUserRole(req.getUserRole().toString());
 
             if (req.getAvatar() != null) {
                 cloudinary.uploader().destroy(user.getAvatar().substring(user.getAvatar().lastIndexOf("public_id=") + 10),

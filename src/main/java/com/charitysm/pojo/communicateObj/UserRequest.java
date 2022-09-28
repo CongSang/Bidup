@@ -4,6 +4,8 @@
  */
 package com.charitysm.pojo.communicateObj;
 
+import com.charitysm.pojo.enumtype.UserRole;
+
 /**
  *
  * @author CÔNG SANG
@@ -18,6 +20,14 @@ public class UserRequest {
     private String avatar;
     private String email;
     private String phone;
+    private String password;
+    private Short active;
+    private UserRole userRole;
+
+    public UserRequest() {
+    }
+    
+    
 
     /**
      * @return the firstname
@@ -144,4 +154,47 @@ public class UserRequest {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the active
+     */
+    public Short getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(Short active) {
+        this.active = active;
+    }
+
+    /**
+     * @return the userRole
+     */
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    /**
+     * @param userRole the userRole to set
+     */
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
 }

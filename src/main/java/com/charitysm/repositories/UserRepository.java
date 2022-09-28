@@ -35,4 +35,6 @@ public interface UserRepository {
     boolean editUserInfo(User u);
     
     boolean blockAccount(String userId);
+    
+    public boolean deleteUser(String userId);
 }

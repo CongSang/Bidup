@@ -112,17 +112,41 @@ function editUserInfo(userId) {
     $('.send-email-loading').css("display", "flex");
 
     var formData = new FormData();
-    let firstname = $('#firstname').val();
-    let lastname = $('#lastname').val();
-    let birthday = $('#dateofbirth').val();
-    let address = $('#address').val();
-    let hometown = $('#hometown').val();
-    let job = $('#job').val();
-    let avatarFile = document.getElementById('avatar');
-    if (!isBlank($.trim(firstname)) || !isBlank($.trim(lastname)) || !isBlank($.trim(birthday)) || !isBlank($.trim(address)) 
+    
+    const firstname = $('#firstname').val();
+    const lastname = $('#lastname').val();
+    const birthdate = $('#dateofbirth').val();
+    const address = $('#address').val();
+    const hometown = $('#hometown').val();
+    const job = $('#job').val();
+    const phone = $('#phone').val();
+    const avatarFile = document.getElementById('avatar');
+    if (!isBlank($.trim(firstname)) || !isBlank($.trim(lastname)) || !isBlank($.trim(birthdate)) || !isBlank($.trim(address)) 
             || !isBlank($.trim(address)) || !isBlank($.trim(hometown)) || !isBlank($.trim(job)) || avatarFile.files[0] !== undefined) {
+        if(avatarFile === null) {
+            updateUser({
+                id: userId,
+                firstname: firstname,
+                lastname: lastname,
+                birthdate: birthdate,
+                address: address,
+                hometown: hometown,
+                job: job,
+                phone: phone
+            });
+            return;
+        }
         if (avatarFile.files[0] === undefined) {
-            updateUser(userId, firstname, lastname, birthday, address, hometown, job, null, null, null);
+            updateUser({
+                id: userId,
+                firstname: firstname,
+                lastname: lastname,
+                birthdate: birthdate,
+                address: address,
+                hometown: hometown,
+                job: job,
+                phone: phone
+            });
         } else {
             var fileType = avatarFile.files[0]['type'];
             var validImageTypes = ['image/jpeg', 'image/png'];
@@ -141,7 +165,17 @@ function editUserInfo(userId) {
                     cache: false,
                     contentType: false
                 }).done(function (res) {
-                    updateUser(userId, firstname, lastname, birthday, address, hometown, job, res.url, null, null);
+                    updateUser({
+                        id: userId,
+                        firstname: firstname,
+                        lastname: lastname,
+                        birthdate: birthdate,
+                        address: address,
+                        hometown: hometown,
+                        job: job,
+                        avatar: res.url,
+                        phone: phone
+                    });
                 }).fail(function () {
                     $('.send-email-loading').css("display", "none");
                     swal("Có lỗi xảy ra. Cập nhật thất bại", {
@@ -153,20 +187,23 @@ function editUserInfo(userId) {
     }
 }
 
-function updateUser(userId, firstname, lastname, birthday, address, hometown, job, res, email, phone) {
+function updateUser(user, callback) {
     $.ajax({
         type: 'put',
-        url: `${ctxPath}/api/edit-user/${userId}`,
+        url: `${ctxPath}/api/edit-user/${user.id}`,
         data: JSON.stringify({
-            'firstname': firstname ? $.trim(firstname) : null,
-            'lastname': lastname ? $.trim(lastname) : null,
-            'birthday': birthday,
-            'address': address ? $.trim(address) : null,
-            'hometown': hometown ? $.trim(hometown) : null,
-            'job': job ? $.trim(job) : null,
-            'avatar': res,
-            'email': email,
-            'phone': phone
+            'firstname': user.firstname ? $.trim(user.firstname) : null,
+            'lastname': user.lastname ? $.trim(user.lastname) : null,
+            'birthdate': user.birthdate,
+            'address': user.address ? $.trim(user.address) : null,
+            'hometown': user.hometown ? $.trim(user.hometown) : null,
+            'job': user.job ? $.trim(user.job) : null,
+            'avatar': user.avatar,
+            'email': user.email,
+            'password': user.password,
+            'phone': user.phone,
+            'active': user.active,
+            'userRole': user.userRole
         }),
         contentType: 'application/json',
         success: function () {
@@ -174,6 +211,11 @@ function updateUser(userId, firstname, lastname, birthday, address, hometown, jo
             swal("Cập nhật thông tin cá nhân thành công", {
                 icon: "success"
             });
+            if (window.location.pathname.toString().includes('/admin/')) {
+                removeEditModal();
+                callback(user);
+                return;
+            }
             setTimeout(function () {
                 window.location.reload(true);
             }, 1000);

@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -31,6 +33,7 @@ public class React extends ReactBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected ReactPK reactPK;
    
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)

@@ -6,13 +6,17 @@ package com.charitysm.controllers.apis;
 
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.Config;
+import com.charitysm.pojo.communicateObj.UserRequest;
 import com.charitysm.services.AdminService;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +58,25 @@ public class APIAdminController {
         if (u.getUserRole().equals("ROLE_ADMIN")) {
             this.adminService.blockAccount(userId);
         }
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/enable-user/{userId}")
+    public void editUserInfo(@PathVariable(value="userId") String userId) throws IOException {
+        this.adminService.enableAccount(userId);
+    }
+    
+    @Async
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/delete-user/{userId}")
+    public void deleteUser(@PathVariable(value="userId") String userId) throws IOException {
+        this.adminService.deleteUser(userId);
+    }
+    
+    @Async
+    @PostMapping("/add-user")
+    public ResponseEntity<User> addUser(@RequestBody UserRequest req) throws IOException {
+        return new ResponseEntity<>(this.adminService.addUser(req), HttpStatus.CREATED);
     }
 }

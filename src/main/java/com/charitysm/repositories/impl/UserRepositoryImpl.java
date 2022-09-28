@@ -67,12 +67,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     public List<User> getUsers(Map<String, String> params) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM User WHERE LOWER(CONCAT(firstname,' ',lastname)) like :name");
+        Query q = session.createQuery("FROM User "
+                + "WHERE LOWER(CONCAT(firstname,' ',lastname)) like :name "
+                + "OR LOWER(email) like :email ");
         String kw = params.get("kw");
         if (kw == null || kw.isBlank()) {
             kw = "";
         }
         q.setParameter("name", String.format("%%%s%%", kw.toLowerCase()));
+        q.setParameter("email", String.format("%%%s%%", kw.toLowerCase()));
 
         int limit = Integer.parseInt(params.getOrDefault("limit", env.getProperty("page.size")));
 
@@ -93,16 +96,14 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
         Root rU = q.from(User.class);
-
-        if (month == 0) {
+        
+        if (year == 0) {
+            q.multiselect(b.count(rU));
+        } else if (month == 0) {
             q.where(b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year),
                     b.equal(rU.get("userRole"), "ROLE_USER"));
             q.multiselect(b.count(rU));
-        } else if (year == 0) {
-            q.where(b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month),
-                    b.equal(rU.get("userRole"), "ROLE_USER"));
-            q.multiselect(b.count(rU));
-        } else {
+        }  else {
             q.where(
                     b.equal(b.function("MONTH", Integer.class, rU.get("createdDate")), month),
                     b.equal(b.function("YEAR", Integer.class, rU.get("createdDate")), year),
@@ -184,6 +185,20 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.update(u);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean deleteUser(String userId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            Query q = session.createQuery("DELETE FROM User WHERE id=:id");
+            q.setParameter("id", userId);
+            q.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

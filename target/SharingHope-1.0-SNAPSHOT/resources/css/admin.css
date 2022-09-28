@@ -208,3 +208,11 @@ ul {
         width: 150px !important;
     }
 }
+
+.w-35 {
+    width: 35%!important;
+}
+
+.w-20 {
+    width: 20%!important;
+}
