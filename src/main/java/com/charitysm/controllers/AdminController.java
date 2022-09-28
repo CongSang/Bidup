@@ -6,13 +6,11 @@ package com.charitysm.controllers;
 
 import com.charitysm.services.AdminService;
 import com.charitysm.services.AuctionService;
-import com.charitysm.services.CommentService;
-import com.charitysm.services.PostService;
-import com.charitysm.services.ReactService;
 import com.charitysm.services.ReportService;
-import com.charitysm.services.UserService;
 import java.time.Year;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +28,8 @@ public class AdminController {
     private ReportService reportService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private Environment env;
 
     @GetMapping("/admin")
     public String admin(Model model,
@@ -94,9 +94,17 @@ public class AdminController {
     
     @GetMapping("/admin/configurations")
     public String configurations(Model model) {
-        System.out.println("aa" + this.adminService.getConfig());
         model.addAttribute("configs", this.adminService.getConfig());
         
         return "configurations";
+    }
+    
+    @GetMapping("/admin/user-list")
+    public String userList(Model model,
+            @RequestParam Map<String, String> params) {
+        model.addAttribute("users", this.adminService.getUsers(params));
+        model.addAttribute("count", this.adminService.countUserStats(0, 0));
+        model.addAttribute("size", env.getProperty("user.list.size"));
+        return "adminUsers";
     }
 }

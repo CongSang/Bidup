@@ -89,7 +89,6 @@ com\charitysm\pojo\ReactPK_.class
 com\charitysm\repositories\impl\AuctionRepositoryImpl.class
 com\charitysm\pojo\React_.class
 com\charitysm\pojo\ReportPost_.class
-com\charitysm\repositories\impl\AdminServiceImpl.class
 com\charitysm\utils\TimerTask.class
 com\charitysm\pojo\enumtype\ReportType$4.class
 com\charitysm\pojo\CommentNotif.class

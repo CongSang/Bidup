@@ -222,25 +222,28 @@
                         <form onsubmit="editUserInfo('${userInfo.id}')" enctype="multipart/form-data" id="form-update-info">
                             <div class="form-group d-flex">
                                 <div class="text-start w-100 me-1">
-                                    <input id="lastname" placeholder="Họ" class="form-control-sm" />
+                                    <input id="lastname" placeholder="Họ" class="form-control-sm" value="${userInfo.lastname}" />
                                     <div class="text-danger err-validate"></div>
                                 </div>
                                 <div class="text-start w-100" >
-                                    <input id="firstname" placeholder="Tên" class="form-control-sm" />
+                                    <input id="firstname" placeholder="Tên" class="form-control-sm" value="${userInfo.firstname}"/>
                                     <div class="text-danger err-validate"></div>
                                 </div>
                             </div>
                             <div class="form-group text-start">
                                 <label for="dateofbirth" class="me-1 small">Ngày sinh</label>
-                                <input type="date" id="dateofbirth" placeholder="Ngày sinh*" class="form-control-sm" />
+                                <input type="date" id="dateofbirth" placeholder="Ngày sinh*" class="form-control-sm" value="${userInfo.birthdate}"/>
                                 <div class="text-danger err-validate"></div>
                             </div>
                             <div class="form-group text-start">
-                                <input id="address" placeholder="Địa chỉ" class="form-control-sm" />
+                                <input placeholder="Số điện thoại*" id="phone" class="form-control-sm" value="${userInfo.phone}"/>
+                            </div>
+                            <div class="form-group text-start">
+                                <input id="address" placeholder="Địa chỉ" class="form-control-sm" value="${userInfo.address}"/>
                             </div>
                             <div class="form-group d-flex">
-                                <input id="hometown" placeholder="Quê quán" class="form-control-sm me-1" />
-                                <input id="job" placeholder="Nghề nghiệp" class="form-control-sm" />
+                                <input id="hometown" placeholder="Quê quán" class="form-control-sm me-1" value="${userInfo.hometown}"/>
+                                <input id="job" placeholder="Nghề nghiệp" class="form-control-sm" value="${userInfo.job}"/>
                             </div>
                             <div class="form-group text-start">
                                 <label for="avatar" class="me-1 small">Thay đổi ảnh đại diện</form:label>

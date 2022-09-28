@@ -371,3 +371,22 @@ function auctionItem(auction) {
                 </div>
             </div>`;
 }
+
+function userListItem(u) {
+    return `
+    <tr class="report-item" id="${u.id}">
+        <td colspan="2">${u.id}</td>
+        <td colspan="3">${u.email}</td>
+        <td colspan="1">${new Date(u.birthdate).toISOString().slice(0,10)}</td>
+        <td colspan="1">${u.userRole}</td>
+        <td colspan="1">${u.active}</td>
+        <td colspan="2" class="d-flex gap-1 w-auto">
+            <button class="btn btn-primary text-nowrap px-1" onclick="openUserModal('${u.id}')">Chỉnh sửa</button>
+            <button class="btn btn-danger text-nowrap px-1" onclick="deleteUser('${u.id}')">Xóa</button>
+            ${u.active === 0 ? `
+            <button class="btn btn-info text-nowrap px-1" onclick="enableUser('${u.id}')">Kích hoạt</button>
+            ` : ``}    
+        </td>
+    </tr>
+    `;
+}

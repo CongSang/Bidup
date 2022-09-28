@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-25T18:27:45")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-09-27T20:59:11")
 @StaticMetamodel(PostNotif.class)
 public class PostNotif_ extends NotifBase_ {
 
