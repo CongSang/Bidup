@@ -15,7 +15,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -82,8 +81,8 @@ public class APIAuctionController {
     public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest ar, HttpSession session)
             throws ParseException {
         User u = (User) session.getAttribute("currentUser");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date endDate = format.parse(ar.getEndDate() + " " + ar.getEndTime());
 
         Auction a = new Auction();
         a.setActive((short) 0);
@@ -91,7 +90,7 @@ public class APIAuctionController {
         a.setStartingPrice(ar.getStartPrice());
         a.setHashtag(ar.getHashtag());
         a.setAuctionDate(new Date());
-        a.setEndDate(endDate);
+//        a.setEndDate(endDate);
         a.setImage(ar.getImgUrl());
         a.setUserId(u);
         a.setMailTo((short) 0);
@@ -237,6 +236,8 @@ public class APIAuctionController {
         } catch (HibernateJdbcException ex) {
             if (ex.getSQLException().getSQLState().equals("45001"))
                 return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+            else if (ex.getSQLException().getSQLState().equals("45002"))
+                return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY);
 
         }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -269,7 +270,8 @@ public class APIAuctionController {
         } catch (HibernateJdbcException ex) {
             if (ex.getSQLException().getSQLState().equals("45001"))
                 return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
-
+            else if (ex.getSQLException().getSQLState().equals("45002"))
+                return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY);
         }
         
         return new ResponseEntity(HttpStatus.OK);

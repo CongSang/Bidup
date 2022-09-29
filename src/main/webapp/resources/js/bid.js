@@ -27,8 +27,15 @@ function addBid(currentAuctionId, formEl, startPrice) {
                 406: function(xhr) {
                     $(formEl).find('.err-validate').css("display", "block");
                     $(formEl).find('.err-validate').text('Vui lòng đặt giá cao hơn!');
+                },
+                424: function(xhr) {
+                    swal({
+                        title: "Bài đấu giá đã kết thúc!",
+                        icon: "warning",
+                        dangerMode: true
+                      })
                 }
-  }
+            }
        }).fail(function() {
             $(`.bid-loading-${currentAuctionId}`).css("display", "none");
        });
@@ -100,6 +107,13 @@ function updateBid(money, auctionId, userId) {
             406: function(xhr) {
                 $(`#${auctionId}-${userId} .err-validate`).css("display", "block");
                 $(`#${auctionId}-${userId} .err-validate`).text('Vui lòng đặt giá cao hơn!');
+            },
+            424: function(xhr) {
+                swal({
+                    title: "Bài đấu giá đã kết thúc!",
+                    icon: "warning",
+                    dangerMode: true
+                  })
             }
         }
     });

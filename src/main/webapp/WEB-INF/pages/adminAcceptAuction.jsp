@@ -8,7 +8,19 @@
         <i class="fa-solid fa-bars"></i>
     </button>
     
-    <h5 class="page-title pt-4">Đang chờ duyệt</h5>
+    <div class="d-flex justify-content-between align-items-center w-100  ">
+        <div class="w-100">
+            <h5 class="page-title pt-4 flex-grow-1">Đang chờ duyệt</h5>
+        </div>
+         <div class=" flex-shrink-1 mt-4">
+            <label for="month" class="me-1 small">Thời gian kết thúc sau duyệt</label>
+            <select type="number" class="form-control mb-2" name="hour" style="width: 230px" id="hour">
+                <c:forEach begin="1" end="12" var="i">
+                    <option value="${i}">${i} tiếng</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
     
     <table class="w-100 table-report">
         <thead>

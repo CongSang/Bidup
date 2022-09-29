@@ -17,7 +17,7 @@ import java.util.Map;
 public interface AdminService {
     List<Config> getConfig();
     
-    boolean acceptAuction(int auctionId);
+    boolean acceptAuction(int auctionId, int hour);
 
     long countAuctionStats(int month, int year);
     

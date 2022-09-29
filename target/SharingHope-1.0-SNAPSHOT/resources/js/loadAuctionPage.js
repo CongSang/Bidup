@@ -68,3 +68,20 @@ function formatDate(value) {
 function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
 }
+
+function countDown(end, element) {
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = end - now;
+//        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        $(element).html(`Thời gian còn lại <span class="text-danger ms-2">${hours}h ${minutes}m ${seconds}s</span>`);
+
+        if (distance < 0) {
+          clearInterval(x);
+          $(element).html(`<div class="text-danger">Đấu giá đã kết thúc</div>`);
+        }
+      }, 1000);
+}

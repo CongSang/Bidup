@@ -69,7 +69,9 @@ com\charitysm\services\impl\ReportServiceImpl.class
 META-INF\spring.components
 com\charitysm\controllers\LoginController.class
 com\charitysm\controllers\apis\APINotificationController.class
+com\charitysm\services\impl\AdminServiceImpl.class
 com\charitysm\services\impl\CommentServiceImpl.class
+com\charitysm\pojo\enumtype\UserRole.class
 com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\configs\UtilsConfig.class
 com\charitysm\controllers\NotificationCenter.class

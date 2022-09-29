@@ -59,7 +59,7 @@ function createAuction() {
     const fs = document.getElementById('uploadImage1');
     const content = $('#statusContent1').val();
     const startPrice = $('#start-price').val();
-    const endDate = $('#end-date').val();
+//    const endDate = $('#end-date').val();
     const endTime = $('#end-time').val();
     const q = new Date;
     const currentDate = new Date(q.getFullYear(),q.getMonth(),q.getDate());
@@ -69,12 +69,12 @@ function createAuction() {
         return;
     }
     
-    if((new Date(endDate)) < currentDate) {
-        $('.endDate-validate').css("display", "block");
-        return;
-    }
+//    if((new Date(endDate)) < currentDate) {
+//        $('.endDate-validate').css("display", "block");
+//        return;
+//    }
     
-    if (startPrice !== "" && endDate !== "" && endTime !== "" && fs.files[0] !== undefined)  {
+    if (startPrice !== "" && endTime !== "" && fs.files[0] !== undefined)  {
         var fileType = fs.files[0]['type'];
         var validImageTypes = ['image/jpeg', 'image/png'];
         if (!validImageTypes.includes(fileType)) {
@@ -105,7 +105,7 @@ function createAuction() {
                         'hashtag': findHashtags(content),
                         'imgUrl':data.url,
                         'startPrice': startPrice,
-                        'endDate': endDate,
+//                        'endDate': endDate,
                         'endTime': endTime + ':00'
                     }),
                     dataType : 'json',
