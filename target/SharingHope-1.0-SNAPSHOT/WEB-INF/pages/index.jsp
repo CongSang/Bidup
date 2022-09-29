@@ -111,14 +111,14 @@
                     <input id="start-price" type="number" class="form-control"/>
                     <span class="text-danger err-validate start-price-validate" style="display: none">Số tiền đấu giá tối thiểu phải là 1.000.000đ</span>
                 </div>
-                <div class="form-group mt-2">
+<!--                <div class="form-group mt-2">
                     <label for="end-date" class="small">Ngày kết thúc</label>
                     <div class="d-flex align-items-center">
                         <input id="end-date" type="date" class="form-control me-1"/>
                         <input id="end-time" type="time" class="form-control"/>
                     </div>
                     <span class="text-danger err-validate endDate-validate" style="display: none">Ngày giờ phải lớn hơn ngày giờ hiện tại</span>
-                </div>
+                </div>-->
                 <div class="dropzone card shadow-none mt-4">
                     <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)">
                         <i class="fa-solid fa-xmark p-2"></i>

@@ -102,6 +102,8 @@ function disableUser(userId, callback, reportId) {
 }
 
 function acceptAuction (auctionId, element) {
+    const hour = $('#hour').val();
+    console.log(hour);
     swal({
         title: "Duyệt bài đấu giá ?",
         icon: "warning",
@@ -112,7 +114,7 @@ function acceptAuction (auctionId, element) {
           if (isAccept) {
             $.ajax({
                 type: 'put',
-                url: `${ctxPath}/admin/api/accept-auction/${auctionId}`,
+                url: `${ctxPath}/admin/api/accept-auction/${auctionId}?hour=${hour}`,
                 dataType: 'json',
                 success: function() {
                     swal("Duyệt bài đấu giá thành công", {

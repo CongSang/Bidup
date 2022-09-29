@@ -8,8 +8,10 @@ import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.Config;
 import com.charitysm.repositories.AuctionRepository;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -213,10 +215,17 @@ public class AuctionRepositoryImpl implements AuctionRepository {
     }
 
     @Override
-    public boolean acceptAuction(int auctionId) {
+    public boolean acceptAuction(int auctionId, int hour) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             Auction auction = session.get(Auction.class, auctionId);
+            Date date = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.HOUR, hour);
+            
+            auction.setAuctionDate(date);
+            auction.setEndDate(cal.getTime());
             auction.setActive((short)1);
             session.update(auction);
             

@@ -84,14 +84,14 @@
                         <li class="side-nav-item">
                             <c:url value="/admin/configurations" var="cUrl" />
                             <a href="${cUrl}" class="side-nav-link">
-                                <i class="fa-solid fa-gear"></i>
+                                <i class="fa-solid fa-gear me-2"></i>
                                 <span>Cấu hình trang web</span>
                             </a>
                         </li>
                         <li class="side-nav-item">
                             <c:url value="/admin/user-list" var="cUrl" />
                             <a href="${cUrl}" class="side-nav-link">
-                                <i class="fa-solid fa-user-group"></i>
+                                <i class="fa-solid fa-user-group me-1" style="font-size: 15px"></i>
                                 <span>Danh sách người dùng</span>
                             </a>
                         </li>

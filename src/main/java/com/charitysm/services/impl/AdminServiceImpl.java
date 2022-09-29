@@ -52,8 +52,8 @@ public class AdminServiceImpl implements AdminService{
     }
     
     @Override
-    public boolean acceptAuction(int auctionId) {
-        return this.auctionRepository.acceptAuction(auctionId);
+    public boolean acceptAuction(int auctionId, int hour) {
+        return this.auctionRepository.acceptAuction(auctionId, hour);
     }
 
     @Override

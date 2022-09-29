@@ -1,6 +1,6 @@
 DROP FUNCTION IF EXISTS fn_oldest_post_notif;
 
-DELIMITER $
+DELIMITER $$
 CREATE FUNCTION fn_oldest_post_notif(owner_id varchar(50))
 RETURNS int
 BEGIN
@@ -49,4 +49,4 @@ BEGIN
     LIMIT 1);
     RETURN rs_id;
 END
-$
+$$

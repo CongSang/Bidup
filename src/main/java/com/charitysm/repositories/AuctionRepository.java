@@ -37,7 +37,7 @@ public interface AuctionRepository {
     
     List<Auction> getAuctionsNoActive();
     
-    boolean acceptAuction(int auctionId);
+    boolean acceptAuction(int auctionId, int hour);
     
     long getMinimum();
     

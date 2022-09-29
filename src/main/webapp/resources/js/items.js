@@ -255,7 +255,7 @@ function bidItem(bid) {
 }
 
 function auctionItem(auction) {
-    
+    countDown(auction.endDate, `.count-down${auction.id}`);
     return `<div class="post auction-post-${auction.id}">
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
@@ -322,7 +322,7 @@ function auctionItem(auction) {
                             </span>` :
             `Giá khởi điểm:<span class="ms-2">${formatMoney(auction.startingPrice)}</span>`}
                         </p>
-                        <p class="auction--price mb-3">Kết thúc ngày ${formatDate(auction.endDate)}</p>
+                        <p class="auction--price mb-3 count-down${auction.id}">Thời gian còn lại</p>
 
                         <img class="card-img post--img auction--img" src="${auction.image}" alt="Post image" onclick="showFull2(this)">
 
