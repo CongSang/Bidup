@@ -256,7 +256,12 @@
 
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="userAvatar" src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img" />
+                        <img id="userAvatar" 
+                             src="${sessionScope.currentUser.getAvatar() == null ? 
+                                    "http://localhost:8080/SharingHope/resources/img/non-avatar.png":
+                                    currentUser.getAvatar()}" 
+                             alt="avatar" 
+                             class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="py-2 px-3 d-none" style="white-space: nowrap">

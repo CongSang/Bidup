@@ -179,8 +179,8 @@ public class User implements Serializable {
     public User(UserRequest req) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         this.email = req.getEmail();
-        this.firstname = req.getEmail();
-        this.lastname = req.getEmail();
+        this.firstname = req.getFirstname();
+        this.lastname = req.getLastname();
         this.birthdate = format.parse(req.getBirthdate());
         this.createdDate = new Date();
         this.userRole = req.getUserRole().toString();

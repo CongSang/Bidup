@@ -84,7 +84,6 @@ public class Auction extends PostBase implements Serializable {
     @Column(name = "auction_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date auctionDate;
-    @Basic(optional = false)
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;

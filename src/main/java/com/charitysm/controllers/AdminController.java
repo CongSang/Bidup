@@ -102,6 +102,11 @@ public class AdminController {
     @GetMapping("/admin/user-list")
     public String userList(Model model,
             @RequestParam Map<String, String> params) {
+        if (params.get("limit") == null)
+            params.put("limit", "10");
+        if (params.get("page") == null)
+            params.put("page", "1");
+            
         model.addAttribute("users", this.adminService.getUsers(params));
         model.addAttribute("count", this.adminService.countUserStats(0, 0));
         model.addAttribute("size", env.getProperty("user.list.size"));

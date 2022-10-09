@@ -81,7 +81,8 @@ function countDown(end, element) {
 
         if (distance < 0) {
           clearInterval(x);
-          $(element).html(`<div class="text-danger">Đấu giá đã kết thúc</div>`);
+          $(element).html(`
+            <div class="text-danger">Đấu giá đã kết thúc vào lúc ${moment(end).format('HH:mm:ss DD-MM-yyyy')}</div>`);
         }
       }, 1000);
 }
