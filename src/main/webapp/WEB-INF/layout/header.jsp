@@ -4,6 +4,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 
+<c:url value="/resources/img/non-avatar.png" var="nonAva" />
 <header class="navbar-light fixed-top header-static" id="container">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
@@ -256,7 +257,11 @@
 
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="userAvatar" src="${sessionScope.currentUser.getAvatar()}" alt="avatar" class="user-img" />
+                        <img id="userAvatar" 
+                             src="${sessionScope.currentUser.getAvatar() == null ? 
+                                    nonAva : currentUser.getAvatar()}" 
+                             alt="avatar" 
+                             class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="py-2 px-3 d-none" style="white-space: nowrap">

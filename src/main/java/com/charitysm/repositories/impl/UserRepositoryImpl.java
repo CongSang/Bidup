@@ -6,14 +6,15 @@ package com.charitysm.repositories.impl;
 
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.UserRepository;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -113,6 +114,18 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query query = session.createQuery(q);
         return (long) query.getSingleResult();
+    }
+    
+    public List<Long> countUserMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countUserMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
+        return rs;
     }
 
     @Override

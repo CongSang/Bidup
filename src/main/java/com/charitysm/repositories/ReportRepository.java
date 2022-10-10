@@ -30,4 +30,6 @@ public interface ReportRepository {
     List<ReportUser> getReportUser(int month, int year);
     
     boolean deleteReportUser(int reportId);
+    
+    List<Long> countReportUserMonthly(int year);
 }

@@ -106,7 +106,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear());</script> © SharingHope
+                                <script>document.write(new Date().getFullYear());</script> © Bidup
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end footer-links">

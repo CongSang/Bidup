@@ -1,3 +1,6 @@
+const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'
+    , 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+
 $(function () {
     $('.chartMenu').addClass('active');
 });
@@ -10,14 +13,14 @@ function openSideBar() {
     $('.leftside-menu').css("display", "block");
 }
 
-function chart(labels, data) {
-    const ctx = document.getElementById('myChart').getContext('2d');
+function chart(labels, data, containerId, type, title) {
+    const ctx = document.getElementById(containerId).getContext('2d');
     const myChart = new Chart(ctx, {
-        type: 'pie',
+        type: type || 'pie',
         data: {
             labels: labels,
             datasets: [{
-                    label: 'Thống kê tăng trưởng của SharingHope',
+                    label: title || 'Thống kê tăng trưởng của Bidup',
                     data: data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

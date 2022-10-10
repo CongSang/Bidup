@@ -9,6 +9,8 @@ import com.charitysm.pojo.ReactComment;
 import com.charitysm.pojo.ReactCommentPK;
 import com.charitysm.pojo.ReactPK;
 import com.charitysm.repositories.ReactRepository;
+import java.util.Arrays;
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -93,6 +95,19 @@ public class ReactRepositoryImpl implements ReactRepository {
 
         Query query = session.createQuery(q);
         return (long) query.getSingleResult();
+    }
+
+    @Override
+    public List<Long> countReactMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countReactMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
+        return rs;
     }
 
 }

@@ -11,6 +11,7 @@ import com.charitysm.repositories.AuctionRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -274,5 +275,18 @@ public class AuctionRepositoryImpl implements AuctionRepository {
         catch (HibernateJdbcException ex) {
            return false;
         }
+    }
+
+    @Override
+    public List<Long> countAuctionMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countAuctionMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
+        return rs;
     }
 }

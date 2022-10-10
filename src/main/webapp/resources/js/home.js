@@ -55,7 +55,7 @@ function homeMenu(menu) {
         let newUrl = 'http://' + window.location.host.toString() + newPathname ;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
         menuActive(newPathname);
     }
     else if(menu === 'home/follow') {
@@ -65,7 +65,7 @@ function homeMenu(menu) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
         menuActive(newPathname);
     }
     else if(menu === 'home/auction') {
@@ -75,7 +75,7 @@ function homeMenu(menu) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
         menuActive(newPathname);
     }
 }

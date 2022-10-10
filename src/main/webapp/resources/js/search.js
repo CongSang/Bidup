@@ -173,7 +173,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' + window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else if (filter === 'people') {
         personSearch();
@@ -185,7 +185,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else if (filter === 'posts') {
         contentSearch();
@@ -197,7 +197,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else {
         auctionSearch();
@@ -209,7 +209,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
 }
 
@@ -221,28 +221,28 @@ function removeSearchResult() {
 
 function loadUserSearch(users) {
     $.each(users, function(index, u) {
-        let html = `<div class="person-search-item justify-content-between">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <div class="person-search-item-image">
-                                <a href="#">
-                                    <img class="avatar-search rounded-circle" src="${u.avatar}" alt="avatar">
-                                </a>
-                            </div>
-                            <div class="person-search-item-name">
-                                <h6 class="mb-0 py-1">
-                                    <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div id="btnFollow${u.id}" class="btn-follow ${u.isFollowed === true ? `active`:``}"
-                            onclick="follow('${u.id}')">
-        
-                            <div class="line1"></div>
-                            <div class="line2"></div>
-                        </div>
-                    </div>`;
+//        let html = `<div class="person-search-item justify-content-between">
+//                        <div class="d-flex justify-content-center align-items-center">
+//                            <div class="person-search-item-image">
+//                                <a href="#">
+//                                    <img class="avatar-search rounded-circle" src="${u.avatar}" alt="avatar">
+//                                </a>
+//                            </div>
+//                            <div class="person-search-item-name">
+//                                <h6 class="mb-0 py-1">
+//                                    <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
+//                                </h6>
+//                            </div>
+//                        </div>
+//                        <div id="btnFollow${u.id}" class="btn-follow ${u.isFollowed === true ? `active`:``}"
+//                            onclick="follow('${u.id}')">
+//        
+//                            <div class="line1"></div>
+//                            <div class="line2"></div>
+//                        </div>
+//                    </div>`;
     
-        $('#personsContainer').append(html);
+        $('#personsContainer').append(userSearchItem(u));
     });
 }
 

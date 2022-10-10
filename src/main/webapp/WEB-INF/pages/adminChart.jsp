@@ -1,4 +1,4 @@
-
+<%@page import="java.time.LocalDate"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -13,7 +13,7 @@
                     <c:url value="/admin" var="action" />
                     <form action="${action}" class="d-flex">
                         <div class="d-flex flex-column flex-lg-row">
-                            <div class="form-group text-start">
+<!--                            <div class="form-group text-start ">
                                 <label for="month" class="me-1 small">Tháng</label>
                                 <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="month">
                                     <option value="0">Tất cả</option>
@@ -21,11 +21,11 @@
                                         <option value="${i}">${i}</option>
                                     </c:forEach>
                                 </select>
-                            </div>
+                            </div>-->
                             <div class="form-group text-start">
                                 <label for="month" class="me-1 small">Năm</label>
                                 <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="year">
-                                    <c:forEach begin="2022" end="${currentYear}" var="i">
+                                    <c:forEach begin="2021" end="${currentYear}" var="i">
                                         <option value="${i}">${i}</option>
                                     </c:forEach>
                                 </select>
@@ -33,7 +33,8 @@
                         </div>
                         <div class="form-group text-start">
                             <label></label>
-                            <button type="submit" class="input-group-text bg-primary border-primary text-white mb-2 load-stats">
+                            <button type="submit" 
+                                    class="input-group-text form-control bg-primary border-primary text-white mb-2 load-stats">
                                 <i class="fa-solid fa-rotate-right"></i>
                             </button>
                         </div>
@@ -53,20 +54,10 @@
                         <i class="mdi mdi-account-multiple widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Người dùng</h5>
-                    <h3 class="mt-3 mb-3">+ ${userCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                            <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${userCount} (${year})
+                    </h3>
+                    <canvas id="userChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -78,20 +69,10 @@
                         <i class="mdi mdi-cart-plus widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Số bài viết</h5>
-                    <h3 class="mt-3 mb-3">+ ${postCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                            <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${postCount} (${year})
+                    </h3>
+                    <canvas id="postChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -105,20 +86,10 @@
                         <i class="mdi mdi-currency-usd widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Số bài đấu giá</h5>
-                    <h3 class="mt-3 mb-3">+ ${auctionCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                            <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${auctionCount} (${year})
+                    </h3>
+                    <canvas id="auctionChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -130,20 +101,10 @@
                         <i class="mdi mdi-pulse widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Growth">Báo cáo người dùng</h5>
-                    <h3 class="mt-3 mb-3">+ ${reportUserCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                            <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${reportUserCount} (${year})
+                    </h3>
+                    <canvas id="reportChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -156,20 +117,10 @@
                         <i class="mdi mdi-currency-usd widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Số lượt thích</h5>
-                    <h3 class="mt-3 mb-3">+ ${reactCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                            <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${reactCount} (${year})
+                    </h3>
+                    <canvas id="reactChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -181,20 +132,10 @@
                         <i class="mdi mdi-pulse widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Growth">Số lượt bình luận</h5>
-                    <h3 class="mt-3 mb-3">+ ${commentCount}</h3>
-                    <p class="mb-0 text-muted">
-                        <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                        <span class="text-nowrap">
-                        <c:choose>
-                                <c:when test="${month == 0 && year != 0}">
-                                    Năm ${year}
-                                </c:when>
-                                <c:when test="${month != 0 && year != 0}">
-                                    Trong tháng ${month} năm ${year}
-                                </c:when>
-                            </c:choose>
-                        </span>
-                    </p>
+                    <h3 class="mt-3 mb-3">
+                        + ${commentCount} (${year})
+                    </h3>
+                    <canvas id="commentChart"></canvas>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
@@ -212,9 +153,16 @@
 
 <script>
    $(function () {
-       let labels = ["@Người dùng", "@Bài viết", "@Bài đấu giá"];
-       let data = [${userCount}, ${postCount}, ${auctionCount}];
+//       let labels = ["@Người dùng", "@Bài viết", "@Bài đấu giá"];
+//       let data = [${userCount}, ${postCount}, ${auctionCount}];
        
-       chart(labels, data);
+       chart(months, ${countStats.countUser}, 'userChart', 'line', `Người dùng mới trong năm ${year}`);
+       chart(months, ${countStats.countPost}, 'postChart', 'line', `Bài viết mới trong năm ${year}`);
+       chart(months, ${countStats.countAuction}, 'auctionChart', 'line', `Bài đấu giá mới trong năm ${year}`);
+       chart(months, ${countStats.countReportUser}, 'reportChart', 'line', `Báo cáo người dùng mới trong năm ${year}`);
+       chart(months, ${countStats.countReact}, 'reactChart', 'line', `Lượt thích mới trong năm ${year}`);
+       chart(months, ${countStats.countComment}, 'commentChart', 'line', `Bình luận mới trong năm ${year}`);
+       
+//       chart(labels, data, 'myChart');
    });
 </script>

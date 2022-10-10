@@ -3,11 +3,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+<c:url value="/resources/img/non-avatar.png" var="nonAva" />
 <div class="home-content">
     <div class="create-post card card-body">
         <div class="d-flex align-items-center mb-3">
             <div>
-                <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
+                <a href="#"> 
+                    <img class="avatar-img rounded-circle" 
+                         src="${currentUser.getAvatar() == null ? 
+                                nonAva :
+                                currentUser.getAvatar()}" 
+                         alt=""> 
+                </a>
             </div>
             <div class="btn-post w-100 d-flex align-items-center btn-show--modal">
                 <span class="pe-4 border-0 text-secondary">Bạn đang nghĩ gì thế?</input>
@@ -49,7 +57,12 @@
             <div class="modal-body ">
                 <div class="d-flex mb-3">
                     <div>
-                        <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
+                        <a href="#">
+                            <img class="avatar-img rounded-circle" 
+                                 src="${currentUser.getAvatar() == null ? 
+                                        nonAva : currentUser.getAvatar()}" 
+                                 alt=""> 
+                        </a>
                     </div>
                     <form class="w-100">
                         <textarea id="statusContent" class="form-control ms-2 pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
@@ -99,7 +112,12 @@
             <div class="modal-body ">
                 <div class="d-flex mb-2">
                     <div>
-                        <a href="#"> <img class="avatar-img rounded-circle" src="${currentUser.getAvatar()}" alt=""> </a>
+                        <a href="#"> 
+                            <img class="avatar-img rounded-circle" 
+                                 src="${currentUser.getAvatar() == null ? 
+                                        nonAva : currentUser.getAvatar()}" 
+                                 alt=""> 
+                        </a>
                     </div>
 
                     <form class="w-100" id="postAuctionForm">

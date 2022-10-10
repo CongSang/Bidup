@@ -1,4 +1,4 @@
-var ctxPath = '/SharingHope';
+var ctxPath = '/Bidup';
 var currentUserId = "a";
 var minimumUp = 100000;
 var loca = window.location.pathname;
@@ -88,7 +88,10 @@ function loadSideBarLeft() {
                     <div class="d-flex align-items-center pt-4">
                         <div class="p-1">
                             <a href="${ctxPath}/user/${item.userId.id}">
-                                <img src="${item.userId.avatar}" alt="avatar" class="avatar-img rounded-circle"/>
+                                <img src="${item.userId.avatar === null ? 
+                                            nonAvatar : item.userId.avatar}" 
+                                    alt="avatar" 
+                                    class="avatar-img rounded-circle"/>
                             </a>
                         </div>
                         <div class="ms-2 small">
@@ -119,26 +122,7 @@ function loadSideBarRight() {
             data = data.filter(p => p.id !== currentUserId && p.isFollowed === false);
             
             $('.user-side--item').append(data.map(user => {
-                return `
-                    <div class="person-search-item justify-content-between px-3 pt-3">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <div class="person-search-item-image">
-                                <a href="#">
-                                    <img class="avatar-search rounded-circle" src="${user.avatar}" style="width: 50px; height: 50px" alt="avatar">
-                                </a>
-                            </div>
-                            <div class="person-search-item-name">
-                                <h6 class="mb-0 py-1 side-right">
-                                    <a href="${ctxPath}/user/${user.id}">${user.lastname + ' ' + user.firstname}</a>
-                                </h6>
-                            </div>
-                        </div>
-                        <div id="btnFollow${user.id}" class="btn-follow" onclick="follow('${user.id}')">
-                            <div class="line1"></div>
-                            <div class="line2"></div>
-                        </div>
-                    </div>
-                `;
+                return userSearchItem(user);
             }).join(''));
 
             $('.sideright-loading').css("display", "none");

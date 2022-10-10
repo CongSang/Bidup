@@ -53,8 +53,6 @@ public class NotificationCenter {
             Session s = entry.getValue();
             if(s.isOpen())
                 s.getBasicRemote().sendObject(message);
-            else
-                sessions.remove(entry.getKey());
         }
     }
 

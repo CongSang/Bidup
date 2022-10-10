@@ -44,4 +44,6 @@ public interface AuctionRepository {
     List<Config> getConfig();
     
     boolean updateConfig(Config c);
+    
+    List<Long> countAuctionMonthly(int year);
 }

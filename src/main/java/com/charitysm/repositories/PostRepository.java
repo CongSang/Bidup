@@ -31,4 +31,6 @@ public interface PostRepository {
     Post findPostByCommentId(int commentId);
 
     List<Post> getUserPosts(String userId, int page);
+    
+    List<Long> countPostMonthly(int year);
 }

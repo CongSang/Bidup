@@ -87,15 +87,22 @@
 }
 
 .person-search-item-name {
+    width: 80%;
     margin-left: 0.6rem;
     font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.person-search-item-name h6 {
-    overflow: hidden;
+.w-80 {
+    width: 80%;
+}
+
+.person-search-item-name h6 a {
+    width: inherit;
     word-break: break-word;
     word-wrap: break-word;
-    white-space: normal;
+    white-space: nowrap;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

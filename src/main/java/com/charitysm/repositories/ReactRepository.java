@@ -6,6 +6,7 @@ package com.charitysm.repositories;
 
 import com.charitysm.pojo.React;
 import com.charitysm.pojo.ReactComment;
+import java.util.List;
 
 /**
  *
@@ -24,4 +25,6 @@ public interface ReactRepository {
     React findReact(String userId, int postId);
 
     long countReactStats(int month, int year);
+    
+    List<Long> countReactMonthly(int year);
 }

@@ -1,4 +1,5 @@
 const userAvatar = $("#userAvatar").attr("src");
+const nonAvatar = `http://localhost:8080${ctxPath}/resources/img/non-avatar.png`;
 
 function postItem(post) {
     let listUserReact = 0;
@@ -22,7 +23,10 @@ function postItem(post) {
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
                                     <a href="${ctxPath}/user/${post.userId.id}">
-                                        <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
+                                        <img class="avatar-img rounded-circle" 
+                                        src="${post.userId.avatar === null ?
+                                                nonAvatar : post.userId.avatar}" 
+                                        alt="avatar">
                                     </a>
                                 </div>
                                 <!-- Info -->
@@ -143,7 +147,10 @@ function commentItem(comment, postId) {
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
                         <a href="${ctxPath}/user/${comment.userId.id}">
-                            <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                            <img class="comment--avatar rounded-circle" 
+                                src="${comment.userId.avatar === null ? 
+                                        nonAvatar : comment.userId.avatar}" 
+                                alt="avatar">
                         </a>
                     </div>
                     <div class="comment--item-content comment--item-content${comment.id}">
@@ -218,7 +225,10 @@ function bidItem(bid) {
                 <div class="d-flex point">
                     <div class="me-2">
                         <a href="${ctxPath}/user/${bid.user.id}">
-                            <img class="comment--avatar rounded-circle" src="${bid.user.avatar}" alt="avatar">
+                            <img class="comment--avatar rounded-circle" 
+                                src="${bid.user.avatar === null ?
+                                        nonAvatar : bid.user.avatar}" 
+                                alt="avatar">
                         </a>
                     </div>
                     <div class="comment--item-content">
@@ -263,7 +273,10 @@ function auctionItem(auction) {
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
                                     <a href="${ctxPath}/user/${auction.userId.id}">
-                                        <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
+                                        <img class="avatar-img rounded-circle" 
+                                            src="${auction.userId.avatar === null ?
+                                                    nonAvatar : auction.userId.avatar}" 
+                                            alt="avatar">
                                     </a>
                                 </div>
                                 <!-- Info -->
@@ -294,7 +307,7 @@ function auctionItem(auction) {
                                             </div>
                                         </li>
                                         ` : ``}
-                                    ${(auction.endDate > Date.now()) ?
+                                    ${(auction.endDate > Date.now() && auction.userId.id === currentUserId) ?
                                     `<li>
                                         <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                             Chỉnh sửa bài viết
@@ -304,7 +317,15 @@ function auctionItem(auction) {
                                         <div class="dropdown-item cursor-pointer" onclick="deleteAuction(${auction.id})">
                                             Xóa bài viết
                                         </div>
-                                    </li>` : ``}
+                                    </li>` : 
+                                    `<li>
+                                        <a class="dropdown-item" 
+                                            href="#" 
+                                            onclick="modalArticleReport(${auction.id}, 'AUCTION')"
+                                        >
+                                            Báo cáo
+                                        </a>
+                                    </li>`}
 
                                 </ul>
                             </div>
@@ -388,5 +409,32 @@ function userListItem(u) {
             ` : ``}    
         </td>
     </tr>
+    `;
+}
+
+function userSearchItem(user) {
+    return`
+        <div class="person-search-item justify-content-between px-3 pt-3">
+            <div class="d-flex justify-content-start align-items-center w-80">
+                <div class="person-search-item-image">
+                    <a href="#">
+                        <img class="avatar-search rounded-circle" 
+                            src="${user.avatar === null ? 
+                                nonAvatar : user.avatar}"  
+                            alt="avatar"
+                            style="width: 50px; height: 50px">
+                    </a>
+                </div>
+                <div class="person-search-item-name">
+                    <h6 class="mb-0 py-1 side-right">
+                        <a href="${ctxPath}/user/${user.id}">${user.lastname + ' ' + user.firstname}</a>
+                    </h6>
+                </div>
+            </div>
+            <div id="btnFollow${user.id}" class="btn-follow" onclick="follow('${user.id}')">
+                <div class="line1"></div>
+                <div class="line2"></div>
+            </div>
+        </div>
     `;
 }

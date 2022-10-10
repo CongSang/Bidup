@@ -8,7 +8,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
         $(`.bid-loading-${currentAuctionId}`).css("display", "block");
         $.ajax({
            type: 'post',
-           url: '/SharingHope/api/create-bid',
+           url: `${ctxPath}/api/create-bid`,
            data:JSON.stringify({
                'money':formData.get('bidValue'),
                'auctionId':currentAuctionId
@@ -58,7 +58,7 @@ function deleteBid(auctionId, element) {
             bid.html(commentLoading);
             $.ajax({
                 type: 'delete',
-                url: `/SharingHope/api/delete-bid/${auctionId}`,
+                url: `${ctxPath}/api/delete-bid/${auctionId}`,
                 contentType: 'application/json',
                 dataType: 'json',
                 success : function () {
