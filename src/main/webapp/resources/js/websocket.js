@@ -1,7 +1,7 @@
 /* global pushSocket */
 var pushSocket;
 $(function () {
-    pushSocket = new WebSocket(`ws://localhost:8080/SharingHope/notification/${currentUserId}`);
+    pushSocket = new WebSocket(`ws://localhost:8080${ctxPath}/notification/${currentUserId}`);
     
     pushSocket.onmessage = function (event) {
         const data = JSON.parse(event.data);

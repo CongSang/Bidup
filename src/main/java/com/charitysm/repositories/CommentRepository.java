@@ -29,4 +29,6 @@ public interface CommentRepository {
     long countCommentStats(int month, int year);
 
     boolean editComment(Comment c);
+    
+    List<Long> countCommentMonthly(int year);
 }

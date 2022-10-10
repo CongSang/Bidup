@@ -3,6 +3,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+<c:url value="/resources/img/non-avatar.png" var="nonAva" />
 <div class="home-content">
     <div class="create-post card card-body">
         <div class="d-flex align-items-center mb-3">
@@ -10,7 +12,7 @@
                 <a href="#"> 
                     <img class="avatar-img rounded-circle" 
                          src="${currentUser.getAvatar() == null ? 
-                                "http://localhost:8080/SharingHope/resources/img/non-avatar.png":
+                                nonAva :
                                 currentUser.getAvatar()}" 
                          alt=""> 
                 </a>
@@ -58,8 +60,7 @@
                         <a href="#">
                             <img class="avatar-img rounded-circle" 
                                  src="${currentUser.getAvatar() == null ? 
-                                        "http://localhost:8080/SharingHope/resources/img/non-avatar.png":
-                                        currentUser.getAvatar()}" 
+                                        nonAva : currentUser.getAvatar()}" 
                                  alt=""> 
                         </a>
                     </div>
@@ -114,8 +115,7 @@
                         <a href="#"> 
                             <img class="avatar-img rounded-circle" 
                                  src="${currentUser.getAvatar() == null ? 
-                                        "http://localhost:8080/SharingHope/resources/img/non-avatar.png":
-                                        currentUser.getAvatar()}" 
+                                        nonAva : currentUser.getAvatar()}" 
                                  alt=""> 
                         </a>
                     </div>

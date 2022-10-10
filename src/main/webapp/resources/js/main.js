@@ -1,4 +1,4 @@
-var ctxPath = '/SharingHope';
+var ctxPath = '/Bidup';
 var currentUserId = "a";
 var minimumUp = 100000;
 var loca = window.location.pathname;
@@ -88,7 +88,10 @@ function loadSideBarLeft() {
                     <div class="d-flex align-items-center pt-4">
                         <div class="p-1">
                             <a href="${ctxPath}/user/${item.userId.id}">
-                                <img src="${item.userId.avatar}" alt="avatar" class="avatar-img rounded-circle"/>
+                                <img src="${item.userId.avatar === null ? 
+                                            nonAvatar : item.userId.avatar}" 
+                                    alt="avatar" 
+                                    class="avatar-img rounded-circle"/>
                             </a>
                         </div>
                         <div class="ms-2 small">

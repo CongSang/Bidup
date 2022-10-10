@@ -7,6 +7,7 @@ package com.charitysm.repositories.impl;
 import com.charitysm.pojo.Comment;
 import com.charitysm.repositories.CommentRepository;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -140,6 +141,19 @@ public class CommentRepositoryImpl implements CommentRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<Long> countCommentMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countCommentMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
+        return rs;
     }
 
 }

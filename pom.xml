@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.charitysm</groupId>
-    <artifactId>SharingHope</artifactId>
+    <artifactId>Bidup</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>SharingHope</name>
+    <name>Bidup</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

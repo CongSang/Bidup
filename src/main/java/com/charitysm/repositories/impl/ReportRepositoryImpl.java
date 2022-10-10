@@ -9,6 +9,7 @@ import com.charitysm.pojo.ReportAuction;
 import com.charitysm.pojo.ReportPost;
 import com.charitysm.pojo.ReportUser;
 import com.charitysm.repositories.ReportRepository;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -172,6 +173,19 @@ public class ReportRepositoryImpl implements ReportRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<Long> countReportUserMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countReportUserMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
+        return rs;
     }
 
 }

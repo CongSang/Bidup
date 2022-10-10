@@ -37,4 +37,6 @@ public interface UserRepository {
     boolean blockAccount(String userId);
     
     public boolean deleteUser(String userId);
+    
+    List<Long> countUserMonthly(int year);
 }

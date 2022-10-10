@@ -173,7 +173,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' + window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else if (filter === 'people') {
         personSearch();
@@ -185,7 +185,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else if (filter === 'posts') {
         contentSearch();
@@ -197,7 +197,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
     else {
         auctionSearch();
@@ -209,7 +209,7 @@ function searchFilter(filter) {
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         loca = newPathname;
-        window.history.replaceState('', 'SharingHope', newUrl);
+        window.history.replaceState('', 'Bidup', newUrl);
     }
 }
 

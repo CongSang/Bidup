@@ -1,6 +1,6 @@
-# SharingHope
+# Bidup
 
-Mạng xã hội từ thiện
+trang mạng xã hội với tính năng đấu giá
 
 ### Features
 

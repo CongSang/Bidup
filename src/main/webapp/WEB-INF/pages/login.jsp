@@ -69,7 +69,7 @@
                             </div>
                         </a>
 
-                        <a href="https://www.facebook.com/dialog/oauth?client_id=800114437619089&redirect_uri=http://localhost:8080/SharingHope/login-facebook&scope=email,public_profile,user_location,user_birthday,user_hometown">
+                        <a href="https://www.facebook.com/dialog/oauth?client_id=800114437619089&redirect_uri=http://localhost:8080/Bidup/login-facebook&scope=email,public_profile,user_location,user_birthday,user_hometown">
                             <div class="form-group">
                                 <button class="b btn-facebook text-white">
                                     <i class="fa-brands fa-facebook-f me-1"></i>

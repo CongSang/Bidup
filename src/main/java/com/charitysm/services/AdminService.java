@@ -6,6 +6,7 @@ package com.charitysm.services;
 
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.Config;
+import com.charitysm.pojo.communicateObj.CountStats;
 import com.charitysm.pojo.communicateObj.UserRequest;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,9 @@ public interface AdminService {
     
     List<User> getUsers(Map<String, String> params);
     
-    public boolean deleteUser(String userId);
+    boolean deleteUser(String userId);
     
-    public User addUser(UserRequest req);
+    User addUser(UserRequest req);
+    
+    CountStats countStats(int year);
 }

@@ -1,5 +1,5 @@
 const userAvatar = $("#userAvatar").attr("src");
-const nonAvatar = "http://localhost:8080/SharingHope/resources/img/non-avatar.png";
+const nonAvatar = `http://localhost:8080${ctxPath}/resources/img/non-avatar.png`;
 
 function postItem(post) {
     let listUserReact = 0;
@@ -307,7 +307,7 @@ function auctionItem(auction) {
                                             </div>
                                         </li>
                                         ` : ``}
-                                    ${(auction.endDate > Date.now()) ?
+                                    ${(auction.endDate > Date.now() && auction.userId.id === currentUserId) ?
                                     `<li>
                                         <div class="dropdown-item cursor-pointer" onclick="editAuction(${auction.id}, this)">
                                             Chỉnh sửa bài viết
@@ -317,7 +317,15 @@ function auctionItem(auction) {
                                         <div class="dropdown-item cursor-pointer" onclick="deleteAuction(${auction.id})">
                                             Xóa bài viết
                                         </div>
-                                    </li>` : ``}
+                                    </li>` : 
+                                    `<li>
+                                        <a class="dropdown-item" 
+                                            href="#" 
+                                            onclick="modalArticleReport(${auction.id}, 'AUCTION')"
+                                        >
+                                            Báo cáo
+                                        </a>
+                                    </li>`}
 
                                 </ul>
                             </div>

@@ -4,9 +4,11 @@
  */
 package com.charitysm.controllers;
 
+import com.charitysm.pojo.communicateObj.CountStats;
 import com.charitysm.services.AdminService;
 import com.charitysm.services.AuctionService;
 import com.charitysm.services.ReportService;
+import com.charitysm.utils.ListUtils;
 import java.time.Year;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +36,25 @@ public class AdminController {
     @GetMapping("/admin")
     public String admin(Model model,
             @RequestParam(value = "month", required = false, defaultValue = "0") int month,
-            @RequestParam(value = "year", defaultValue = "2022") int year) {
-
-        model.addAttribute("postCount", this.adminService.countPostStats(month, year));
-        model.addAttribute("userCount", this.adminService.countUserStats(month, year));
-        model.addAttribute("auctionCount", this.adminService.countAuctionStats(month, year));
-        model.addAttribute("reactCount", this.adminService.countReactStats(month, year));
-        model.addAttribute("commentCount", this.adminService.countCommentStats(month, year));
-        model.addAttribute("reportUserCount", this.adminService.countReportUserStats(month, year));
+            @RequestParam(value = "year", required = false, defaultValue = "0") int year) {
+        
+        year = year == 0 ? Year.now().getValue() : year;
+        
+        CountStats c = this.adminService.countStats(year);
+        
+        model.addAttribute("postCount", ListUtils.sumLong(c.getCountPost()));
+        model.addAttribute("userCount", ListUtils.sumLong(c.getCountUser()));
+        model.addAttribute("auctionCount", ListUtils.sumLong(c.getCountAuction()));
+        model.addAttribute("reactCount", ListUtils.sumLong(c.getCountReact()));
+        model.addAttribute("commentCount", ListUtils.sumLong(c.getCountComment()));
+        model.addAttribute("reportUserCount", ListUtils.sumLong(c.getCountReportUser()));
 
         model.addAttribute("currentYear", Year.now().getValue());
         model.addAttribute("year", year);
         model.addAttribute("month", month);
+        
+        
+        model.addAttribute("countStats", c);
         return "adminChart";
     }
 

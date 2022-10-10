@@ -6,6 +6,7 @@ package com.charitysm.services.impl;
 
 import com.charitysm.pojo.User;
 import com.charitysm.pojo.communicateObj.Config;
+import com.charitysm.pojo.communicateObj.CountStats;
 import com.charitysm.pojo.communicateObj.UserRequest;
 import com.charitysm.repositories.AuctionRepository;
 import com.charitysm.repositories.CommentRepository;
@@ -45,6 +46,18 @@ public class AdminServiceImpl implements AdminService{
     private PostRepository postRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    
+    public CountStats countStats(int year) {
+        CountStats rs = new CountStats();
+        rs.setCountUser(this.userRepository.countUserMonthly(year));
+        rs.setCountPost(this.postRepository.countPostMonthly(year));
+        rs.setCountAuction(this.auctionRepository.countAuctionMonthly(year));
+        rs.setCountReportUser(this.reportRepository.countReportUserMonthly(year));
+        rs.setCountReact(this.reactRepository.countReactMonthly(year));
+        rs.setCountComment(this.commentRepository.countCommentMonthly(year));
+        
+        return rs;
+    }
     
     @Override
     public long countAuctionStats(int month, int year) {

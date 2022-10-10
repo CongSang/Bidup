@@ -8,6 +8,7 @@ import com.charitysm.pojo.Post;
 import com.charitysm.pojo.User;
 import com.charitysm.repositories.PostRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -205,6 +206,19 @@ public class PostRepositoryImpl implements PostRepository {
             p.setCommentSetLength(p.getCommentSet().size());
         });
 
+        return rs;
+    }
+
+    @Override
+    public List<Long> countPostMonthly(int year) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("CALL sp_countPostMonthly(:year)");
+        q.setParameter("year", year);
+        List<Long> rs = Arrays.asList(new Long[12]);
+        Object[] qs =(Object[]) q.getSingleResult();
+        for(int i = 0; i < 12; i++) {
+            rs.set(i, Long.parseLong(qs[i].toString()));
+        }
         return rs;
     }
 
