@@ -77,4 +77,15 @@ public class BidRepositoryImpl implements BidRepository {
         return q.getResultList();
     }
 
+    @Override
+    public long getTopPrice(int auctionId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query q = session.createSQLQuery("SELECT money FROM Bid "
+                + "WHERE auction_id=:auctionId "
+                + "ORDER BY money DESC LIMIT 1");
+        q.setParameter("auctionId", auctionId);
+        
+        return Long.parseLong(q.getSingleResult().toString());
+    }
+
 }

@@ -72,7 +72,7 @@
 
                     <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                         <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                            <div class="post--action-hover" id="likeAction" onclick="createReact('${post.id}', this)">
+                            <div class="post--action-hover" id="likeAction" onclick="createReact(${post.id})">
                                 <%
                                     Post p = (Post) request.getAttribute("post");
                                     List<String> rUserListId = p.getReactSet().stream().map(React::getUser).map(User::getId).collect(Collectors.toList());

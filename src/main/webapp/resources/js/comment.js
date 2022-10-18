@@ -25,52 +25,85 @@ function addComment(currentPostId, formEl) {
             success: function (data) {
                 $(formEl).parents('.comment').find('.comment-loading').css("display", "none");
 
-                var commentSection = $(formEl).parents('.comment').find('#commentedComment');
-                $(commentSection).prepend(commentItem(data, currentPostId));
-                
-                let count = $(formEl).parents('.comment').find('#commentSetLength').text();
-                $(formEl).parents('.comment').find('#commentSetLength').text(++count);
-                count = $(formEl).parents('.comment').find('#showedCommentLength').text();
-                $(formEl).parents('.comment').find('#showedCommentLength').text(++count);
-                
                 $(formEl).parents('.comment').find('.add-comment').val("");
+                
             }
         });
     }
 }
 
-function createReact(currentPostId, element) {
-    var heartReact = $(element).find(".heart-like-button");
+function handlePostCommentCount(postId, op) {
+    const showedCounterElement = $(`#post${postId} #showedCommentLength`);
+    const counterElement = $(`#post${postId} #commentSetLength`);
+    let showedCommentCount = parseInt(showedCounterElement.text());
+    let commentCount = parseInt(counterElement.text());
+    
+    switch(op) {
+        case 1: {
+            showedCommentCount += 1;
+            commentCount += 1;
+            
+            break;
+        }
+        case -1: {
+                
+            showedCommentCount -= 1;
+            commentCount -= 1;
+            
+            break;
+        }
+    }
+    
+    showedCounterElement.text(showedCommentCount);
+    counterElement.text(commentCount);
+}
+
+function createReact(postId) {
+    var heartReact = $(`#post${postId}`).find(".heart-like-button");
 
     if ($(heartReact).hasClass("liked")) {
 
         $(heartReact).removeClass("liked");
-        likeCounter = parseInt($(element).find('#likeCounter').text()) - 1;
-        $(element).find('#likeCounter').text(likeCounter);
-
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}/api/delete-react/${currentPostId}`,
+            url: `${ctxPath}/api/delete-react/${postId}`,
             dataType: 'json'
         });
     } else {
         $(heartReact).addClass("liked");
-        likeCounter = parseInt($(element).find('#likeCounter').text()) + 1;
-        $(element).find('#likeCounter').text(likeCounter);
 
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-react/${currentPostId}`,
+            url: `${ctxPath}/api/create-react/${postId}`,
             dataType: 'json'
         });
     }
 }
 
+function handlePostLikeCount(postId, op) {
+    const likeCounterElement = $(`#post${postId} #likeCounter`);
+    let likeCounter = parseInt(likeCounterElement.text());
+    switch(op) {
+        case 1: {
+                
+            likeCounter += 1;
+            likeCounterElement.text(likeCounter);
+            break;
+        }
+        case -1: {
+                
+            likeCounter -= 1;
+            likeCounterElement.text(likeCounter);
+            break;
+        }
+    }
+}
+
 function deleteComment(id) {
-    var loadingHtml = `   <div class="text-center mt-3 comment-loading">
+    const loadingHtml = `<div class="text-center mt-3 comment-loading" id="commentItem${id}">
                             <div class="spinner-border text-muted"></div>
-                        </div>
-                    `;
+                        </div>`;
+    
     var clickedComment = $(`#commentItem${id}`);
     var clickedCommentHtml = $(clickedComment).html();
 
@@ -91,7 +124,6 @@ function deleteComment(id) {
                     swal("Xóa bình luận thành công", {
                         icon: "success"
                     });
-                    $(clickedComment).remove();
                 }
             })
             .fail(function () {
@@ -188,12 +220,13 @@ function likedComment(commentItemId) {
     if (likeBtn.hasClass('liked')) {
         likeBtn.text("Thích");
         likeBtn.removeClass('liked');
-        likeCounter = parseInt(cItem.find(`#count-liked-comment${commentItemId}`).text()) - 1;
-        cItem.find(`#count-liked-comment${commentItemId}`).text(likeCounter);
-        if (likeCounter < 1) {
-            cItem.find(`.count-like-comment${commentItemId}`).css('display', 'none');
-        }
-
+//        likeCounter = parseInt(cItem.find(`#count-liked-comment${commentItemId}`).text()) - 1;
+//        cItem.find(`#count-liked-comment${commentItemId}`).text(likeCounter);
+//        if (likeCounter < 1) {
+//            cItem.find(`.count-like-comment${commentItemId}`).css('display', 'none');
+//        }
+        
+        
         $.ajax({
             type: 'delete',
             url: `${ctxPath}/api/delete-react-comment/${commentItemId}`,
@@ -202,17 +235,45 @@ function likedComment(commentItemId) {
     } else {
         likeBtn.text("Ðã Thích");
         likeBtn.addClass('liked');
-        likeCounter = parseInt(cItem.find(`#count-liked-comment${commentItemId}`).text()) + 1;
-        cItem.find(`#count-liked-comment${commentItemId}`).text(likeCounter);
-        if (likeCounter > 0) {
-            cItem.find(`.count-like-comment${commentItemId}`).css('display', 'flex');
-        }
-
+//        likeCounter = parseInt(cItem.find(`#count-liked-comment${commentItemId}`).text()) + 1;
+//        cItem.find(`#count-liked-comment${commentItemId}`).text(likeCounter);
+//        if (likeCounter > 0) {
+//            cItem.find(`.count-like-comment${commentItemId}`).css('display', 'flex');
+//        }
+        
+        
         $.ajax({
             type: 'post',
             url: `${ctxPath}/api/create-react-comment/${commentItemId}`,
             dataType: 'json'
         });
+    }
+}
+
+function handleCommentLikeCount(commentId, op) {
+    const likeCounterBg = $(`#commentItem${commentId} .count-like-comment${commentId}`);
+    const likeCounterElement = $(`#commentItem${commentId} #count-liked-comment${commentId}`);
+    let likeCounter = parseInt(likeCounterElement.text());
+    
+    switch(op) {
+        case 1: {
+                
+            likeCounter += 1;
+            likeCounterElement.text(likeCounter);
+            likeCounterBg.css('display', 'flex');
+            
+            break;
+        }
+        case -1: {
+                
+            likeCounter -= 1;
+            likeCounterElement.text(likeCounter);
+            if (likeCounter < 1) {
+                likeCounterBg.css('display', 'none');
+            }
+            
+            break;
+        }
     }
 }
 
@@ -263,12 +324,16 @@ function loadReplies(commentId, postId) {
 
 function addReply(currentCommentId, formEl, postId) {
     event.preventDefault();
+    const loadingHtml = `<div class="text-center mt-3 comment-loading" id="tempLoading">
+                            <div class="spinner-border text-muted"></div>
+                        </div>`;
+    
     var formData = new FormData(formEl);
     let commentContent = formData.get('commentContent');
     let currentComment = $(`#commentItem${currentCommentId}`);
 
     if (!isBlank(commentContent)) {
-            currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentLoading);
+        currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentLoading);
         $.ajax({
             type: 'post',
             url: `${ctxPath}/api/create-comment`,
@@ -282,7 +347,7 @@ function addReply(currentCommentId, formEl, postId) {
             success: function (data) {
                 currentComment.find('.comment-loading').remove();
 
-                currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
+//                currentComment.find(`.repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
 
                 currentComment.find('input[name=commentContent]').val("");
             }
@@ -290,32 +355,41 @@ function addReply(currentCommentId, formEl, postId) {
     }
 }
 
-function formEditComment(commentId, postId) {
+function formEditComment(commentId, content) {
     return `<div style="width: 200px">
-                <form class="w-100" onsubmit="editComment(${commentId}, this, ${postId})">
-                    <input name="editContent" placeholder="Aa" rows=2 id="form-edit-comment${commentId}" class="form-edit-comment"></input>
+                <form class="w-100" onsubmit="editComment(${commentId}, this)">
+                    <input name="editContent" placeholder="Aa" 
+                        rows=2 id="form-edit-comment${commentId}" 
+                        class="form-edit-comment">
+                    </input>
                 </form>
                 <div class="cancel-edit-comment cancel-edit-comment${commentId}">Hủy</div>
             </div>`;
 }
 
-function showEditComment(commentId, postId) {
-    const currentComment = $(`.comment--item-content${commentId}`).html();
-    $(`.comment--item-content${commentId}`).html(formEditComment(commentId, postId));
+function showEditComment(commentId) {
+    const currentComment = $(`#commentItem${commentId}`).html();
+    const currentContent = $(`#commentItem${commentId} #content${commentId}`).text().trim();
+    
+    $(`#commentItem${commentId}`).html(formEditComment(commentId, currentContent));
+    $(`#commentItem${commentId} #form-edit-comment${commentId}`).focus();
+    $(`#commentItem${commentId} #form-edit-comment${commentId}`).val(currentContent);
+    
     $(`.cancel-edit-comment${commentId}`).on('click', function () {
-        $(`.comment--item-content${commentId}`).empty();
-        $(`.comment--item-content${commentId}`).append(currentComment);
+        $(`#commentItem${commentId}`).html(currentComment);
     });
 }
 
-function editComment(commentId, formEl, postId) {
+function editComment(commentId, formEl) {
     event.preventDefault();
-    let editCommentLoading = `<div class="text-center comment-loading" style="padding: 26px;">
-                        <div class="spinner-border text-muted"></div>
-                    </div>`;
+    let editCommentLoading = `<div class="text-center comment-loading" 
+                                style="padding: 26px;" id="commentItem${commentId}">
+                                <div class="spinner-border text-muted"></div>
+                            </div>`;
     var formData = new FormData(formEl);
     const commentContent = formData.get('editContent');
     const currentComment = $(`#commentItem${commentId}`);
+    const tempContent = $(`#commentItem${commentId}`).html();
 
     if (!isBlank(commentContent)) {
         currentComment.html(editCommentLoading);
@@ -328,14 +402,9 @@ function editComment(commentId, formEl, postId) {
                 'commentId': null
             }),
             contentType: 'application/json',
-            dataType: 'json',
-            success: function (comment) {
-                
-                currentComment.find('.comment-loading').remove();
-                currentComment.html(commentItem(comment, postId));
-
-            }
+            dataType: 'json'
         }).fail(function (res) {
+            currentComment.html(tempContent);
             console.log(res);
         });
     }

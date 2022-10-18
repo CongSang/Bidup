@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS sp_updateCompeteAuctionNotif;
 
 DELIMITER $
-CREATE PROCEDURE sp_updateCompeteAuctionNotif(IN userId varchar(50), IN auction_id int)
+CREATE PROCEDURE sp_updateCompeteAuctionNotif(IN userId varchar(50), IN auctionId int)
 BEGIN
 	DECLARE count int;
 	DECLARE owner_id varchar(50);
@@ -9,7 +9,7 @@ BEGIN
     DECLARE cursor_list CURSOR FOR
 		SELECT b.user_id
         FROM bid b
-        WHERE b.auction_id=auction_id;
+        WHERE b.auction_id=auctionId;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     
 	OPEN cursor_list;
@@ -18,17 +18,16 @@ BEGIN
 		IF NOT done 
 		THEN
 			IF NOT EXISTS (SELECT n.auction_id 
-				FROM post_notif n 
-                WHERE n.auction_id=auction_id 
+				FROM post_notif n
+                WHERE n.auction_id=auctionId 
 					AND n.type='COMPETE_AUCTION'
-                    AND user_id=owner_id
-                    AND user_id!=userId)
+                    AND user_id=owner_id)
 			THEN
-				INSERT INTO post_notif(auction_id, user_id, type, is_read) VALUES(auction_id, owner_id, 'COMPETE_AUCTION', false);
+				INSERT INTO post_notif(auction_id, user_id, type, is_read) VALUES(auctionId, owner_id, 'COMPETE_AUCTION', false);
 			ELSE 
 				UPDATE post_notif
 				SET is_read=false
-				WHERE post_notif.auction_id=auction_id 
+				WHERE post_notif.auction_id=auctionId 
 					AND post_notif.type='COMPETE_AUCTION'
                     AND user_id=owner_id
                     AND user_id!=userId;

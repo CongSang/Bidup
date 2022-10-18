@@ -20,7 +20,7 @@ $(function () {
     }
     window.scrollTo({top: 0,
                     left: 0,
-                    behavior: 'instant',
+                    behavior: 'instant'
                   });
     timer = setTimeout(function() {
         if (pathName === `${ctxPath}/home/auction`)
@@ -47,13 +47,16 @@ function customHashtag(element) {
 function menuActive(pathName) {
     $(".menu-active").removeClass("active");
     $("a.nav-link").removeClass("active");
+    destroySocket();
     
     switch (pathName) {
         case `${ctxPath}/home`:
             $('.homeMenu').addClass('active');
+            homeSocketInit();
             break;
         case `${ctxPath}/home/auction`:
             $('.auctionMenu').addClass('active');
+            auctionSocketInit();
             break;
         case `${ctxPath}/admin`:
             $('.chartMenu').addClass('active');

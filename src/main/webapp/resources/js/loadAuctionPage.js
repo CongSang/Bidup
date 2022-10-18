@@ -69,20 +69,44 @@ function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
 }
 
-function countDown(end, element) {
+function countDown(end, auctionId) {
     var x = setInterval(function() {
         var now = new Date().getTime();
         var distance = end - now;
-//        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        $(element).html(`Thời gian còn lại <span class="text-danger ms-2">${hours}h ${minutes}m ${seconds}s</span>`);
+        
+        $(`.count-down${auctionId}`).html(`Thời gian còn lại <span class="text-danger ms-2">${days}d ${hours}h ${minutes}m ${seconds}s</span>`);
 
         if (distance < 0) {
-          clearInterval(x);
-          $(element).html(`
-            <div class="text-danger">Đấu giá đã kết thúc vào lúc ${moment(end).format('HH:mm:ss DD-MM-yyyy')}</div>`);
+            clearInterval(x);
+            getTopPrice(auctionId)
+            $(`.count-down${auctionId}`).html(`
+                <div class="text-danger">Đấu giá đã kết thúc vào lúc ${moment(end).format('HH:mm:ss DD-MM-yyyy')}</div>
+            `);
         }
       }, 1000);
 }
+
+
+
+function getTopPrice(auctionId) {
+    $.ajax({
+        type: 'get',
+        url: `${ctxPath}/api/get-top-price/${auctionId}`,
+        dataType: 'json',
+        statusCode: {
+            200: function(data) {
+                $(`.count-down${auctionId}`)
+                    .append(`<div class="text-danger">Giá chiến thắng: ${formatMoney(data)}</div>`);
+            },
+            204: function() {
+                $(`.count-down${auctionId}`)
+                    .append(`<div class="text-danger">Không có người chiến thắng</div>`);
+            }
+        }
+    });
+}
+

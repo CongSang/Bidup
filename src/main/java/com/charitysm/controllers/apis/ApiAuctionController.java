@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -287,6 +288,17 @@ public class APIAuctionController {
     @GetMapping(value = "/get-minimum-up")
     public ResponseEntity<Long> getMinimumUp() {
         return new ResponseEntity<>(this.auctionService.getMinimum(), HttpStatus.OK);
+    }
+    
+    @Async
+    @GetMapping(value = "/get-top-price/{auctionId}")
+    public ResponseEntity<Long> getTopPrice(@PathVariable(value = "auctionId")int auctionId) {
+        try {
+            return new ResponseEntity<>(this.bidService.getTopPrice(auctionId), HttpStatus.OK);
+        }
+        catch (NoResultException ex) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.HomeSocketController;
 import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.React;
@@ -39,6 +40,8 @@ public class ReactServiceImpl implements ReactService {
         try {
             if (this.reactRepository.createReact(r) == true) {
                 NotificationCenter.sendMessage(r.getPost().getUserId().getId(), new NotifMessage(111, null));
+                HomeSocketController.broadcast(new NotifMessage(120, r));
+                
                 return true;
             }
         } catch (IOException | EncodeException ex) {
@@ -50,7 +53,16 @@ public class ReactServiceImpl implements ReactService {
 
     @Override
     public void deleteReact(String userId, int postId) {
-        this.reactRepository.deleteReact(userId, postId);
+        React r = this.reactRepository.findReact(userId, postId);
+        if(this.reactRepository.deleteReact(r)) {
+            try {
+                HomeSocketController.broadcast(new NotifMessage(121, r));
+            } catch (IOException ex) {
+                Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (EncodeException ex) {
+                Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -73,6 +85,7 @@ public class ReactServiceImpl implements ReactService {
 
             if (this.reactRepository.createReactComment(react) == true) {
                 NotificationCenter.sendMessage(c.getUserId().getId(), new NotifMessage(111, null));
+                HomeSocketController.broadcast(new NotifMessage(122, react));
             }
         } catch (IOException | EntityNotFoundException | EncodeException ex) {
             Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +94,17 @@ public class ReactServiceImpl implements ReactService {
 
     @Override
     public void deleteReactComment(String userId, int commentId) {
-        this.reactRepository.deleteReactComment(userId, commentId);
+        ReactComment r = this.reactRepository.findReactComment(userId, commentId);
+        if(this.reactRepository.deleteReactComment(r)) {
+            try {
+                HomeSocketController.broadcast(new NotifMessage(123, r));
+                
+            } catch (IOException ex) {
+                Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (EncodeException ex) {
+                Logger.getLogger(ReactServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       }
     }
 
 }

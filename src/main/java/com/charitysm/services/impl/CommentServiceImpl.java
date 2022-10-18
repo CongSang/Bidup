@@ -4,6 +4,7 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.HomeSocketController;
 import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.Comment;
 import com.charitysm.pojo.Post;
@@ -50,6 +51,7 @@ public class CommentServiceImpl implements CommentService {
                 c.setPostId(p);
                 if (this.commentRepository.createComment(c) > 0) {
                     NotificationCenter.sendMessage(p.getUserId().getId(), new NotifMessage(111, null));
+                    HomeSocketController.broadcast(new NotifMessage(112, c));
                     return c;
                 }
             } else {
@@ -57,6 +59,7 @@ public class CommentServiceImpl implements CommentService {
                 c.setParentId(parent);
                 if (this.commentRepository.createComment(c) > 0) {
                     NotificationCenter.sendMessage(parent.getUserId().getId(), new NotifMessage(111, null));
+                    HomeSocketController.broadcast(new NotifMessage(112, c));
                     return c;
                 }
             }
@@ -69,8 +72,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(int id, String userId) {
-        this.commentRepository.deleteComment(id, userId);
+    public void deleteComment(int id) {
+        Comment c = this.commentRepository.getCommentById(id);
+        
+        if(this.commentRepository.deleteComment(c)) {
+            try {
+                HomeSocketController.broadcast(new NotifMessage(114, c));
+            } catch (IOException ex) {
+                Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (EncodeException ex) {
+                Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -105,8 +118,16 @@ public class CommentServiceImpl implements CommentService {
         currentComment.setContent(req.getContent());
         currentComment.setCommentDate(new Date());
 
-        if (this.commentRepository.editComment(currentComment) == true) {
-            return currentComment;
+        if (this.commentRepository.editComment(currentComment)) {
+            try {
+                HomeSocketController.broadcast(new NotifMessage(113, currentComment));
+                
+                return currentComment;
+            } catch (IOException ex) {
+                Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (EncodeException ex) {
+                Logger.getLogger(CommentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }

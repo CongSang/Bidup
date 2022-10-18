@@ -54,7 +54,7 @@ public class APICommentController {
         Post p = this.postService.findPostByCommentId(c.getId());
         if (!p.getUserId().getId().equals(u.getId()) && !c.getUserId().getId().equals(u.getId()))
             return;
-        this.commentService.deleteComment(id, u.getId());
+        this.commentService.deleteComment(id);
     }
 
     @Async

@@ -1,5 +1,5 @@
 const userAvatar = $("#userAvatar").attr("src");
-const nonAvatar = `http://localhost:8080${ctxPath}/resources/img/non-avatar.png`;
+const nonAvatar = `http://localhost:8080${ctxPath}/resources/img/non-avatar.png`; 
 
 function postItem(post) {
     let listUserReact = 0;
@@ -81,7 +81,7 @@ function postItem(post) {
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
-                                <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}', this)">
+                                <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}')">
                                     ${listUserReact ? `<div class="list-user-liked">${listUserReact}</div>` : ``}
                                     ${reactSetLength < 1 ? (
                 `<div class="heart-like-button"></div>`
@@ -162,7 +162,7 @@ function commentItem(comment, postId) {
                             </a></h6>
                             <small class="comment-date">${moment(comment.commentDate).fromNow()}</small>
                         </div>
-                        <p class="small mb-0">
+                        <p class="small mb-0" id="content${comment.id}">
                             ${comment.content}
                         </p>
 
@@ -184,7 +184,7 @@ function commentItem(comment, postId) {
 
                         <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
                         ${(currentUserId === comment.userId.id) ?
-                            `<div class="comment-edit" onclick="showEditComment(${comment.id}, ${postId})">Sửa</div>` : ``}
+                            `<div class="comment-edit" onclick="showEditComment(${comment.id})">Sửa</div>` : ``}
                         ${(currentUserId === comment.userId.id || currentUserId === postOwnerId) ?
                             `<div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
@@ -204,7 +204,7 @@ function commentItem(comment, postId) {
                         </form>
                     </div>
                
-                        <div id="repliedComments" class="repliedComments${comment.id} repliedComments">
+                        <div id="repliedComments${comment.id}" class="repliedComments${comment.id} repliedComments">
                         
                         </div>
                 
@@ -237,7 +237,7 @@ function bidItem(bid) {
                                   <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${bid.user.id}">${bid.user.lastname} ${bid.user.firstname}</a></h6>
                                   <small>${moment(bid.bidDate).fromNow()}</small>
                               </div>
-                              <p class="small mb-0">
+                              <p class="small mb-0" id="bidMoney">
                                   ${formatMoney(bid.money)}
                               </p>
                         </div>
@@ -265,7 +265,7 @@ function bidItem(bid) {
 }
 
 function auctionItem(auction) {
-    countDown(auction.endDate, `.count-down${auction.id}`);
+    countDown(auction.endDate, auction.id);
     return `<div class="post auction-post-${auction.id}">
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
@@ -376,7 +376,13 @@ function auctionItem(auction) {
                                     </a>
                                 </div>
                                 <form class="w-100" onsubmit="addBid(${auction.id}, this, ${auction.startingPrice})">
-                                    <input type="number" name="bidValue" autocomplete="off" placeholder="Nhập giá cạnh tranh (VNĐ)" class="add-comment" />
+                                    <input 
+                                        type="number" name="bidValue" 
+                                        step="100000" autocomplete="off" 
+                                        placeholder="Nhập giá cạnh tranh (VNĐ)" 
+                                        class="add-comment" 
+                                        min="0" id="bidValue"
+                                    />
                                     <span class="text-danger err-validate" style="display: none">Số tiền đấu giá tối thiểu phải là ${formatMoney(auction.startingPrice)}</span>
                                 </form>
                             </div>` : ``}    

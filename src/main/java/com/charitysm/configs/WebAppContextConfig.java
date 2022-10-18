@@ -32,7 +32,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.charitysm.services",
     "com.charitysm.utils"
 })
-@EnableScheduling
+//@EnableScheduling
 public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override

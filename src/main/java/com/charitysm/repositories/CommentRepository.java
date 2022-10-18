@@ -16,7 +16,7 @@ public interface CommentRepository {
 
     int createComment(Comment c);
 
-    void deleteComment(int id, String userId);
+    boolean deleteComment(Comment c);
 
     List<Comment> getComments(int postId, int page);
 

@@ -39,7 +39,7 @@ function homeMenu(menu) {
         xhr.abort();
     window.scrollTo({top: 0,
                     left: 0,
-                    behavior: 'instant',
+                    behavior: 'instant'
                   });
     disableLoadMorePost = false;
     $('#feeds-container').empty();
