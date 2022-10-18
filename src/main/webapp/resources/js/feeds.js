@@ -59,6 +59,7 @@ function loadAuctionFeeds(auctions, container) {
     $.each(auctions, function (index, auction) {
         $(container).append(auctionItem(auction));
         customHashtag(`.auction-${auction.id}`);
+        
     });
 }
 

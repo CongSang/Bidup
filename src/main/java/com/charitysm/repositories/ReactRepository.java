@@ -18,11 +18,13 @@ public interface ReactRepository {
 
     boolean createReactComment(ReactComment r);
 
-    void deleteReact(String userId, int postId);
+    boolean deleteReact(React r);
 
-    void deleteReactComment(String userId, int commentId);
+    boolean deleteReactComment(ReactComment r);
 
     React findReact(String userId, int postId);
+    
+    ReactComment findReactComment(String userId, int commentId);
 
     long countReactStats(int month, int year);
     

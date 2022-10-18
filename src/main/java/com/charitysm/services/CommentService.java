@@ -18,7 +18,7 @@ public interface CommentService {
 
     Comment createComment(CommentRequest cq, User u);
 
-    void deleteComment(int id, String userId);
+    void deleteComment(int id);
 
     List<Comment> getComments(int postId, int page);
 

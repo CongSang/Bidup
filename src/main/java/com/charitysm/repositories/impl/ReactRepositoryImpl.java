@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,22 +40,22 @@ public class ReactRepositoryImpl implements ReactRepository {
     }
 
     @Override
-    public void deleteReact(String userId, int postId) {
+    public boolean deleteReact(React r) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        ReactPK rPK = new ReactPK(userId, postId);
-        Query q = session.createQuery("DELETE FROM React WHERE reactPK=:rPK");
-        q.setParameter("rPK", rPK);
-        q.executeUpdate();
+        try {
+            session.delete(r);
+            return true;
+        } catch (HibernateJdbcException ex) {
+            return false;
+        }
     }
 
     @Override
     public React findReact(String userId, int postId) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        Query q = session.createNamedQuery("React.findForUser");
-        q.setParameter("userId", userId);
-        q.setParameter("postId", postId);
+        React r = session.get(React.class, new ReactPK(userId, postId));
 
-        return (React) q.getSingleResult();
+        return r;
     }
 
     @Override
@@ -64,12 +65,15 @@ public class ReactRepositoryImpl implements ReactRepository {
     }
 
     @Override
-    public void deleteReactComment(String userId, int commentId) {
+    public boolean deleteReactComment(ReactComment r) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        ReactCommentPK rPK = new ReactCommentPK(userId, commentId);
-        Query q = session.createQuery("DELETE FROM ReactComment WHERE reactCommentPK=:rPK");
-        q.setParameter("rPK", rPK);
-        q.executeUpdate();
+        try {
+            session.delete(r);
+            return true;
+        }
+        catch(HibernateJdbcException ex) {
+            return false;
+        }
     }
 
     @Override
@@ -108,6 +112,14 @@ public class ReactRepositoryImpl implements ReactRepository {
             rs.set(i, Long.parseLong(qs[i].toString()));
         }
         return rs;
+    }
+
+    @Override
+    public ReactComment findReactComment(String userId, int commentId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        ReactComment r = session.get(ReactComment.class, new ReactCommentPK(userId, commentId));
+
+        return r;
     }
 
 }

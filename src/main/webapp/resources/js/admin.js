@@ -105,8 +105,8 @@ function disableUser(userId, callback, reportId) {
 }
 
 function acceptAuction (auctionId, element) {
-    const hour = $('#hour').val();
-    console.log(hour);
+    const hour = $(`#hour${auctionId}`).val();
+    
     swal({
         title: "Duyệt bài đấu giá ?",
         icon: "warning",
@@ -393,4 +393,21 @@ function userModal(user) {
             </div>
         </div>
     </div>`;
+}
+
+function setExpectedDate(auctionId) {
+    if (auctionId !== undefined) {
+        return;
+    }
+    else {
+        setInterval(function() {
+            $('.expected-date').each(function(index) {
+                const hour = $(this).parents("td").find("input").val();
+                let date = new Date();
+                date = date.setHours(date.getHours() + 0) + hour * 1000 * 60 * 60;
+                const dateTime = new Date(date).toLocaleString();
+                $(this).text(dateTime);
+            });
+        }, 1000);
+    }
 }

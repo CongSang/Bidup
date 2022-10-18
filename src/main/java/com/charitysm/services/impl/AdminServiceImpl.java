@@ -47,6 +47,7 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     
+    @Override
     public CountStats countStats(int year) {
         CountStats rs = new CountStats();
         rs.setCountUser(this.userRepository.countUserMonthly(year));

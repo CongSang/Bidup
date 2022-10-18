@@ -17,6 +17,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateJdbcException;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +43,15 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public void deleteComment(int id, String userId) {
+    public boolean deleteComment(Comment c) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Comment c = session.get(Comment.class, id);
-        session.delete(c);
+        try {
+            session.delete(c);
+            return true;
+        }
+        catch (HibernateJdbcException ex) {
+            return false;
+        }
     }
 
     @Override

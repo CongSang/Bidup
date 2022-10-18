@@ -24,4 +24,6 @@ public interface BidService {
     void updateBid(BidRequest br);
 
     List<Bid> getBids(int auctionId);
+    
+    long getTopPrice(int auctionId);
 }

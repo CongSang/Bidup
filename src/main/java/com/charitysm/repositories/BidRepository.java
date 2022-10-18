@@ -23,4 +23,6 @@ public interface BidRepository {
     boolean updateBid(Bid b);
 
     List<Bid> getBids(int auctionId);
+    
+    long getTopPrice(int auctionId);
 }

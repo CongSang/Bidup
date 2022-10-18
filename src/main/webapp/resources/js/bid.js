@@ -1,4 +1,3 @@
-
 function addBid(currentAuctionId, formEl, startPrice) {
     event.preventDefault();
     var formData = new FormData(formEl);
@@ -19,7 +18,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
                $(`.bid-loading-${currentAuctionId}`).css("display", "none");
                $(formEl).parents('.post').find('#bidForm').addClass("hide");
                
-               const bided = $(formEl).parents('.post').find('.bided');
+//               const bided = $(formEl).parents('.post').find('.bided');
 //               bided.prepend(bidItem(data));
                
            },
@@ -33,7 +32,7 @@ function addBid(currentAuctionId, formEl, startPrice) {
                         title: "Bài đấu giá đã kết thúc!",
                         icon: "warning",
                         dangerMode: true
-                      })
+                    })
                 }
             }
        }).fail(function() {
@@ -101,8 +100,21 @@ function updateBid(money, auctionId, userId) {
             auctionId: auctionId,
             money: money
         }),
-        dataType : 'json',
         contentType : 'application/json',
+        beforeSend: function() {
+            swal({
+                content:{
+                    element: 'div',
+                    attributes: {
+                        className: "text-center spinner-border text-muted"
+                    }
+                },
+                closeOnClickOutside: false,
+                allowEnterKey:false,
+                button:false
+            });
+        }
+        ,
         statusCode: {
             406: function(xhr) {
                 $(`#${auctionId}-${userId} .err-validate`).css("display", "block");
@@ -113,10 +125,10 @@ function updateBid(money, auctionId, userId) {
                     title: "Bài đấu giá đã kết thúc!",
                     icon: "warning",
                     dangerMode: true
-                  })
+                });
             }
         }
-    });
+    }).done(() => swal.close());
 }
 
 function showFormUpPrice(auctionId, userId) {
@@ -190,3 +202,5 @@ function updateCount(auctionId, op) {
         countElement.text(count);
     }
 }
+
+

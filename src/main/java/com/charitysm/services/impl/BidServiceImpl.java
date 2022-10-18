@@ -4,6 +4,7 @@
  */
 package com.charitysm.services.impl;
 
+import com.charitysm.controllers.AuctionSocketController;
 import com.charitysm.controllers.NotificationCenter;
 import com.charitysm.pojo.Auction;
 import com.charitysm.pojo.Bid;
@@ -65,7 +66,7 @@ public class BidServiceImpl implements BidService {
                     }
                 });
                 //broadcast to notif users update UI
-                NotificationCenter.broadcast(new NotifMessage(112, bid));
+                AuctionSocketController.broadcast(new NotifMessage(112, bid));
                 //update notif of auction owner
                 NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
                 return bid;
@@ -90,7 +91,7 @@ public class BidServiceImpl implements BidService {
                 }
             });
             try {
-                NotificationCenter.broadcast(new NotifMessage(114, b));
+                AuctionSocketController.broadcast(new NotifMessage(114, b));
                 NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
             } catch (IOException | EncodeException ex) {
                 Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,7 +119,7 @@ public class BidServiceImpl implements BidService {
                 }
             });
             try {
-                NotificationCenter.broadcast(new NotifMessage(113, b));
+                AuctionSocketController.broadcast(new NotifMessage(113, b));
                 NotificationCenter.sendMessage(a.getUserId().getId(), new NotifMessage(111, null));
             } catch (IOException | EncodeException ex) {
                 Logger.getLogger(BidServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,6 +130,11 @@ public class BidServiceImpl implements BidService {
     @Override
     public List<Bid> getBids(int auctionId) {
         return this.bidRepository.getBids(auctionId);
+    }
+
+    @Override
+    public long getTopPrice(int auctionId) {
+        return this.bidRepository.getTopPrice(auctionId);
     }
 
 }

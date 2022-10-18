@@ -1,4 +1,3 @@
-<%@page import="java.time.LocalDate"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -13,15 +12,6 @@
                     <c:url value="/admin" var="action" />
                     <form action="${action}" class="d-flex">
                         <div class="d-flex flex-column flex-lg-row">
-<!--                            <div class="form-group text-start ">
-                                <label for="month" class="me-1 small">Tháng</label>
-                                <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="month">
-                                    <option value="0">Tất cả</option>
-                                    <c:forEach begin="1" end="12" var="i">
-                                        <option value="${i}">${i}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>-->
                             <div class="form-group text-start">
                                 <label for="month" class="me-1 small">Năm</label>
                                 <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="year">
