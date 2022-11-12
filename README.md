@@ -39,3 +39,11 @@ trang mạng xã hội với tính năng đấu giá
 ![Preview 2](https://res.cloudinary.com/dynupxxry/image/upload/v1660967302/SharingHopePreview/preview2_jn0hur.png)
 
 ![Preview 3](https://res.cloudinary.com/dynupxxry/image/upload/v1660967309/SharingHopePreview/preview4_ookazp.png)
+
+### Hướng dẫn cài đặt
+- Cài đặt Netbean
+- Mở thư mục project trên Netbean
+- Tạo database csmdb và import file csmdb.sql ở thư mục mysql để restore lại database.
+- Mở file src/main/resources/database.properties và chỉnh hibernate.connection.username và hibernate.connection.password cho chính xác với mysql account.
+- Cài đặt Tomcat 9 và run server Tomcat 9 ở mục Services
+- Run app

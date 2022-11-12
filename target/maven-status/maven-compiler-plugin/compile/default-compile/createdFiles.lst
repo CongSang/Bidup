@@ -1,5 +1,6 @@
 com\charitysm\services\AuctionService.class
 com\charitysm\services\NotificationService.class
+com\charitysm\controllers\AuctionSocketController.class
 com\charitysm\pojo\ReactCommentPK_.class
 com\charitysm\repositories\CommentRepository.class
 com\charitysm\pojo\communicateObj\PostRequest.class
@@ -13,6 +14,7 @@ com\charitysm\pojo\Post.class
 com\charitysm\services\PostService.class
 com\charitysm\pojo\ReactPK.class
 com\charitysm\pojo\User_.class
+com\charitysm\utils\ListUtils.class
 com\charitysm\pojo\enumtype\NotifType.class
 com\charitysm\controllers\apis\APIReportController.class
 com\charitysm\pojo\enumtype\ReportType$3.class
@@ -72,6 +74,7 @@ com\charitysm\controllers\apis\APINotificationController.class
 com\charitysm\services\impl\AdminServiceImpl.class
 com\charitysm\services\impl\CommentServiceImpl.class
 com\charitysm\pojo\enumtype\UserRole.class
+com\charitysm\pojo\communicateObj\CountStats.class
 com\charitysm\configs\DispatcherServletInit.class
 com\charitysm\configs\UtilsConfig.class
 com\charitysm\controllers\NotificationCenter.class
@@ -93,6 +96,7 @@ com\charitysm\pojo\React_.class
 com\charitysm\pojo\ReportPost_.class
 com\charitysm\utils\TimerTask.class
 com\charitysm\pojo\enumtype\ReportType$4.class
+com\charitysm\controllers\HomeSocketController.class
 com\charitysm\pojo\CommentNotif.class
 com\charitysm\services\UserService.class
 com\charitysm\pojo\enumtype\ReportType.class

@@ -7,6 +7,7 @@ com.charitysm.configs.WebAppContextConfig=org.springframework.stereotype.Compone
 com.charitysm.controllers.AdminController=org.springframework.stereotype.Component
 com.charitysm.controllers.AuctionController=org.springframework.stereotype.Component
 com.charitysm.controllers.AuctionSocketController=javax.websocket.server.ServerEndpoint
+com.charitysm.controllers.HomeSocketController=javax.websocket.server.ServerEndpoint
 com.charitysm.controllers.IndexController=org.springframework.stereotype.Component
 com.charitysm.controllers.LoginController=org.springframework.stereotype.Component
 com.charitysm.controllers.NotificationCenter=javax.websocket.server.ServerEndpoint

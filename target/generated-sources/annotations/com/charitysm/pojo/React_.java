@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-10-17T20:00:16")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2022-11-12T11:35:33")
 @StaticMetamodel(React.class)
 public class React_ extends ReactBase_ {
 
